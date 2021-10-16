@@ -14,7 +14,7 @@ const MainBody = ({children}) => {
       if (addresses == null) {
         return;
       }
-      const formatted = addresses.reduce( (sum, address) => {return sum + <br> </br> + address}, '');
+      const formatted = addresses.reduce( (sum, address) => {return sum + ' ' + address}, '');
       console.log(formatted);
       setFormattedAddresses(formatted);
     };
