@@ -2,11 +2,11 @@ import {
   MainBodyContainer
 } from './layout.css'
 
-const MainBody = () => {
+const MainBody = ({children}) => {
 
     return (
         <MainBodyContainer>
-        Main body2
+            {children}
         </MainBodyContainer>
     )
 }

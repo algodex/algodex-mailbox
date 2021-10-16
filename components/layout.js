@@ -5,13 +5,13 @@ import Header from './header'
 import MainBody from './main-body'
 import NavBar from './nav-bar'
 
-const Layout = () => {
+const Layout = ({children}) => {
 
     return (
         <LayoutContainer>
-              <Header></Header>
-                <NavBar></NavBar>
-                <MainBody></MainBody>
+              <Header/>
+                <NavBar/>
+                <MainBody>{children}</MainBody>
         </LayoutContainer>
     )
 }
