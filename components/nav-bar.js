@@ -1,12 +1,20 @@
 import {
-  NavBarContainer
+  NavBarContainer,
+  NavBarMenu
 } from './layout.css'
+
+import NavBarItem from './nav-bar-item'
 
 const NavBar = () => {
 
     return (
         <NavBarContainer>
-        NavBar
+          <NavBarMenu>
+            <NavBarItem title='Connect' />
+            <NavBarItem title='Stake' />
+            <NavBarItem title='Create Pool' />
+            <NavBarItem title='Configure Pool' />
+          </NavBarMenu>
         </NavBarContainer>
     )
 }

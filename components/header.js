@@ -1,12 +1,16 @@
 import {
-  HeaderC
+  HeaderC,
+  IconLogo
 } from './layout.css'
+import Link from 'next/link'
 
 const Header = () => {
 
     return (
         <HeaderC>
-        Headeraaassrr
+          <Link href='/'>
+            <IconLogo src="/algodex-logo.svg" style={{cursor:'pointer'}}/>
+          </Link>
         </HeaderC>
     )
 }
