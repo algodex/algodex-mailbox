@@ -13,8 +13,10 @@ const MainBody = ({children}) => {
 
     useEffect(() => {
       // Update the document title using the browser API
-      setAlgodClient(algodex.initAlgodClient('public_test'));
-      algodex.initIndexer('public_test');
+      const environment = process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test';
+      console.log({environment});
+      algodex.initIndexer(environment);
+      setAlgodClient(algodex.initAlgodClient(environment));
     }, []);
     const updateAddresses = (addresses) => {
           console.log('in updateAddresses');
