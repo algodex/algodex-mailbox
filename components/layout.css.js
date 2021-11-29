@@ -4,15 +4,32 @@ import { ReactSVG } from 'react-svg'
 export const LayoutContainer = styled.div`
   background-color: #555;
   display: grid;
-  grid-gap:5px;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
-  /* grid-template-rows: 100px 100px 100px 100px; */
-  /* Short record (rows / column) */
-  grid-template: 80px 1000px/ 200px 1fr 1fr 1fr;
-  grid-template-areas: 
-    "b b b b"
-    "a c c c"
-    ;
+
+  @media (max-width: 1000px) {
+    grid-gap:5px;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+    /* grid-template-rows: 100px 100px 100px 100px; */
+    /* Short record (rows / column) */
+    grid-template: 80px 1000px/ 0vw 1fr 1fr 1fr;
+
+    grid-template-areas: 
+        "b b b b"
+        "a c c c"
+        ;
+  }
+  @media (min-width: 1000px) {
+    grid-gap:5px;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+    /* grid-template-rows: 100px 100px 100px 100px; */
+    /* Short record (rows / column) */
+    grid-template: 80px 1000px/ 150px 1fr 1fr 1fr;
+
+    grid-template-areas: 
+        "b b b b"
+        "a c c c"
+        ;
+  }
+
 `
 
 export const NavBarContainer = styled.div`
