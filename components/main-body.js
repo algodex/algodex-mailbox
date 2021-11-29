@@ -20,7 +20,14 @@ const MainBody = ({children}) => {
 
     const { connect, addresses } = useMyAlgo(updateAddresses)
 
-
+    if (addresses == null || addresses.length == 0) {
+        return  (
+          <MainBodyContainer>
+            {children}
+            <button onClick={connect}>Connect Wallet</button>
+          </MainBodyContainer>
+        )
+    }
     return (
         <MainBodyContainer>
             {children}

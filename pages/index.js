@@ -9,6 +9,5 @@ const Title = styled.h1`
 export default function Home() {
   return <Layout>
     <Title/>
-    Main Body 2
   </Layout>
 }
