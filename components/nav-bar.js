@@ -10,10 +10,7 @@ const NavBar = () => {
     return (
         <NavBarContainer>
           <NavBarMenu>
-            <NavBarItem title='Connect' />
-            <NavBarItem title='Stake' />
-            <NavBarItem title='Create Pool' />
-            <NavBarItem title='Configure Pool' />
+            <NavBarItem title='Cancel Order' />
           </NavBarMenu>
         </NavBarContainer>
     )
