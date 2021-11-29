@@ -66,21 +66,28 @@ const MainBody = ({children}) => {
       
     };
 
+    const header = (
+      <div>
+        <h1 style={{'fontSize': '18px'}}> Cancel Order </h1>
+        <p></p>
+        <button onClick={connect}>Connect Wallet</button>
+        <p></p>
+      </div>
+    );
 
     if (addresses == null || addresses.length == 0) {
         return  (
           <MainBodyContainer>
+
             {children}
-            <button onClick={connect}>Connect Wallet</button>
+            {header}
           </MainBodyContainer>
         )
     }
     return (
         <MainBodyContainer>
             {children}
-            <p></p>
-            <button onClick={connect}>Connect Wallet</button>
-            <p></p>
+            {header}
             <form name="addresses" id="addresses">
             <ul>
             {formattedAddresses.map( addr => {
