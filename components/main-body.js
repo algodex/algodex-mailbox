@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react'
 import useMyAlgo from  '../hooks/use-my-algo'
+
 const algodex =  require('@algodex/algodex-sdk')
 const axios = require('axios')
 
@@ -10,10 +11,10 @@ import {
 const MainBody = ({children}) => {
     const [formattedAddresses, setFormattedAddresses] = useState(['']);
     const [algod, setAlgodClient] = useState();
+    const environment = process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test';
 
     useEffect(() => {
       // Update the document title using the browser API
-      const environment = process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test';
       console.log({environment});
       algodex.initIndexer(environment);
       setAlgodClient(algodex.initAlgodClient(environment));
@@ -68,21 +69,35 @@ const MainBody = ({children}) => {
       
     };
 
+    const instructionsImg = environment == 'production' ? '/instructions-mainnet.jpg' : 
+      '/instructions-testnet.jpg';
+
     const header = (
       <div>
-        <h1 style={{'fontSize': '18px'}}> Cancel Order </h1>
+        <h1 style={{'fontSize': '18px'}}> Cancel Order 
+           </h1> 
         <p></p>
         <button onClick={connect}>Connect Wallet</button>
         <p></p>
       </div>
     );
-
+    
+    const instructions = (
+      <div>
+        <p><i>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on 
+              AlgoExplorer or My Algo Wallet. <p> </p><a href='/instructions-testnet.jpg' target="_blank">
+              View Instructions</a></i></p>
+           
+      </div>
+    );
     if (addresses == null || addresses.length == 0) {
         return  (
           <MainBodyContainer>
 
             {children}
             {header}
+            {instructions}
+
           </MainBodyContainer>
         )
     }
@@ -99,8 +114,9 @@ const MainBody = ({children}) => {
             </ul>
             <label htmlFor='escrow-address'>Order Escrow Address:</label> 
                 <input type='text' name='escrow-address' id='escrow-address' size='70'></input>
+
             </form>
-            <p> </p>
+            {instructions}
             <button onClick={cancelOrder}>Cancel Order</button>
 
         </MainBodyContainer>
