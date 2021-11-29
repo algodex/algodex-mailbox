@@ -72,6 +72,10 @@ const MainBody = ({children}) => {
     const instructionsImg = environment == 'production' ? '/instructions-mainnet.jpg' : 
       '/instructions-testnet.jpg';
 
+    const isProduction = environment.toLowerCase() === 'production';
+    const algoExplorerLink = isProduction ? 'https://algoexplorer.io' : 'https://testnet.algoexplorer.io/';
+    const myAlgoLink = 'https://wallet.myalgo.com/';
+
     const header = (
       <div>
         <h1 style={{'fontSize': '18px'}}> Cancel Order 
@@ -84,8 +88,9 @@ const MainBody = ({children}) => {
     
     const instructions = (
       <div>
-        <p><i>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on 
-              AlgoExplorer or My Algo Wallet. <p> </p><a href='/instructions-testnet.jpg' target="_blank">
+        <p><i>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on  
+            &nbsp;<a href={algoExplorerLink}>AlgoExplorer</a> or <a href={myAlgoLink}>My Algo Wallet</a>. 
+            <p> </p><a href='/instructions-testnet.jpg' target="_blank">
               View Instructions</a></i></p>
            
       </div>
