@@ -4,6 +4,9 @@ import useMyAlgo from  '../hooks/use-my-algo'
 const algodex =  require('@algodex/algodex-sdk')
 const axios = require('axios')
 
+const environment = process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test';
+const isProduction = environment.toLowerCase() === 'production';
+
 import {
   MainBodyContainer
 } from './layout.css'
@@ -11,7 +14,18 @@ import {
 const MainBody = ({children}) => {
     const [formattedAddresses, setFormattedAddresses] = useState(['']);
     const [algod, setAlgodClient] = useState();
-    const environment = process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test';
+    const [submissionInfo, setSubmissionInfo] = useState();
+    const [submissionStyle, setSubmissionStyle] = useState();
+
+    const errorStyle = {
+      color: 'red',
+    };
+    const successStyle = {
+      color: 'green',
+    };
+    const neutralStyle = {
+      color: 'blue',
+    };
 
     useEffect(() => {
       // Update the document title using the browser API
@@ -25,8 +39,6 @@ const MainBody = ({children}) => {
       if (addresses == null) {
         return;
       }
-      
-
 
       console.log({addresses});
       setFormattedAddresses(addresses);
@@ -40,31 +52,44 @@ const MainBody = ({children}) => {
         return bytes;
     }
 
-    const cancelOrder = () => {
+    const cancelOrder = (environment) => {
       const addr = document.getElementById('escrow-address').value;
+      const algoIndexerLink = isProduction ? 'https://algoindexer.algoexplorerapi.io' :
+          'https://algoindexer.testnet.algoexplorerapi.io';
       (async function(addr) {
-        axios.get('https://testnet.algoexplorerapi.io/idx2/v2/transactions?address=' + addr)
-        .then(function (response) {
+        try {
+          const response = await axios.get(algoIndexerLink + '/v2/transactions?address=' + addr)
           // handle success
-          try {
-            console.log(response.data.transactions[0]);
-            const appArgs = response.data.transactions[0]['application-transaction']['application-args'];
-            const appId = response.data.transactions[0]['application-transaction']['application-id'];
-            const appArgsDecoded = appArgs.map( (arg) => Buffer.from(arg, 'base64').toString());
-            if (appArgsDecoded[0] !== 'open') {
-              throw 'first argument is not open';
-            }
-            const orderEntry = appArgsDecoded[1];
-            const version = appArgsDecoded[2].charCodeAt(0);
-            const ownerAddress = document.querySelector('input[name="owner-address"]:checked').value; 
-            console.log({ownerAddress});
-
-            algodex.closeOrderFromOrderBookEntry(algod, addr, ownerAddress,
-                orderEntry, version); 
-          } catch (e) {
-            console.log('could not get app id or transactions ', {e});
+          console.log(response.data.transactions[0]);
+          const appArgs = response.data.transactions[0]['application-transaction']['application-args'];
+          const appId = response.data.transactions[0]['application-transaction']['application-id'];
+          const appArgsDecoded = appArgs.map( (arg) => Buffer.from(arg, 'base64').toString());
+          if (appArgsDecoded[0] !== 'open') {
+            throw 'first argument is not open';
           }
-        });
+          const orderEntry = appArgsDecoded[1];
+          const version = appArgsDecoded[2].charCodeAt(0);
+          const ownerAddress = document.querySelector('input[name="owner-address"]:checked').value; 
+          console.log({ownerAddress});
+          try {
+            setSubmissionInfo(`Canceling, please wait...`);
+            setSubmissionStyle(neutralStyle);
+            const confirmation = await algodex.closeOrderFromOrderBookEntry(algod, addr, ownerAddress,
+              orderEntry, version); 
+            setSubmissionInfo(`Cancelled order for ${addr} ! `);
+            setSubmissionStyle(successStyle);
+          } catch (e) {
+              setSubmissionInfo(`Could not cancel order for ${addr} !`);
+              setSubmissionStyle(errorStyle);
+          }
+
+        } catch (e) {
+          console.log('could not get app id or transactions ', {e});
+          setSubmissionInfo(`${addr} not found! Could not find orderbook transactions. Please confirm on Algoexplorer`);
+          setSubmissionStyle(errorStyle);
+          return;
+        }
+
       })(addr);
       
     };
@@ -72,7 +97,6 @@ const MainBody = ({children}) => {
     const instructionsImg = environment == 'production' ? '/instructions-mainnet.jpg' : 
       '/instructions-testnet.jpg';
 
-    const isProduction = environment.toLowerCase() === 'production';
     const algoExplorerLink = isProduction ? 'https://algoexplorer.io' : 'https://testnet.algoexplorer.io/';
     const myAlgoLink = 'https://wallet.myalgo.com/';
 
@@ -123,7 +147,7 @@ const MainBody = ({children}) => {
             </form>
             {instructions}
             <button onClick={cancelOrder}>Cancel Order</button>
-
+            <p style={submissionStyle}>{submissionInfo}</p>
         </MainBodyContainer>
     )
 }
