@@ -78,9 +78,7 @@ const MainBody = ({children}) => {
           if (txNum === -1) {
             throw 'Could not find open transaction!';
           }
-          console.log("i is: " + txNum);
           // handle success
-          console.log(response.data.transactions[txNum]);
           const appArgs = response.data.transactions[txNum]['application-transaction']['application-args'];
           const appArgsDecoded = appArgs.map( (arg) => Buffer.from(arg, 'base64').toString());
 
@@ -90,7 +88,6 @@ const MainBody = ({children}) => {
           const orderEntry = appArgsDecoded[1];
           const version = appArgsDecoded[2].charCodeAt(0);
           const ownerAddress = document.querySelector('input[name="owner-address"]:checked').value; 
-          console.log({ownerAddress});
           try {
             setSubmissionInfo(`Canceling, please wait...`);
             setSubmissionStyle(neutralStyle);
