@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@algodex/algodex-sdk@^1.1.3":
-  version "1.1.3"
-  resolved "https://npm.pkg.github.com/download/@algodex/algodex-sdk/1.1.3/030162ccd1b038085522ac426d95af8ed9d6fc464b0757c4bee0202e7aadd7f7#9b613604109f7dd2f61ddd35e9429c33fd7a7511"
-  integrity sha512-hjcJ2+d5oFdNS4MB/ySctFmcReSEHYHFvCh3tLv0Shm5UTJWCj84oUAxVAXpmg9fsx6q8tzjW5V/0VDY8q+CZQ==
+"@algodex/algodex-sdk@^1.1.8":
+  version "1.1.8"
+  resolved "https://npm.pkg.github.com/download/@algodex/algodex-sdk/1.1.8/3ac6d6e7e1fecff7a5ed14673a4e578e4c7ae5ad5e49e7de345a821781825610#08d72156d9ad6b82a1ccff8df2c2b265da4f74ae"
+  integrity sha512-l5zbnd8Fb42gh9167UQyZmZmNTAfHuCzUDUVXjqsT8tu3QKnr5NZgxKIA6Kk7kKq3SbjnMJViK2xh8+qul7TNQ==
   dependencies:
     "@json-rpc-tools/utils" "^1.7.6"
     "@randlabs/myalgo-connect" "^1.0.1"
-    algosdk "^1.10.0"
-    axios "^0.21.1"
+    algosdk "^1.13.1"
+    axios "^0.21.4"
     js-big-decimal "^1.3.4"
     minimist "^1.2.5"
     mocha "^9.0.2"
@@ -459,10 +459,10 @@ algo-msgpack-with-bigint@^2.1.1:
   resolved "https://registry.yarnpkg.com/algo-msgpack-with-bigint/-/algo-msgpack-with-bigint-2.1.1.tgz#38bb717220525b3ff42232eefdcd9efb9ad405d6"
   integrity sha512-F1tGh056XczEaEAqu7s+hlZUDWwOBT70Eq0lfMpBP2YguSQVyxRbprLq5rELXKQOyOaixTWYhMeMQMzP0U5FoQ==
 
-algosdk@^1.10.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.13.0.tgz#c539050f4623d12f2e994f011b130f08f9291cd9"
-  integrity sha512-0hknXiP3sc/KxRUvoI1d14x2H/hM7LJZ1zA9DmEUX76z508QPgzjxyQag7THHu5rAW0VuzCgWcFlwI0lsTJMoQ==
+algosdk@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.13.1.tgz#c6b5b12121cb24efb5fb518e7886e81d87ed44e1"
+  integrity sha512-htyJI1/zVcOzpNZVT8PHn4K0yXXTS+b7RXplc7nmFqGVThbM8+ufbnBLChxVPh3BVxqqpqS13VTsQcNArK10jg==
   dependencies:
     algo-msgpack-with-bigint "^2.1.1"
     buffer "^6.0.2"
@@ -574,7 +574,7 @@ axe-core@^4.0.2:
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.3.3.tgz"
   integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
 
-axios@^0.21.1:
+axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
