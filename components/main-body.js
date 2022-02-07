@@ -119,6 +119,7 @@ const MainBody = ({children}) => {
 
     const algoExplorerLink = isProduction ? 'https://algoexplorer.io' : 'https://testnet.algoexplorer.io/';
     const myAlgoLink = 'https://wallet.myalgo.com/';
+    const pictureLink = isProduction ? '/instructions-mainnet.jpg' : '/instructions-testnet.jpg'
 
     const header = (
       <div>
@@ -134,7 +135,7 @@ const MainBody = ({children}) => {
       <div>
         <p><i>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on  
             &nbsp;<a href={algoExplorerLink}>AlgoExplorer</a> or <a href={myAlgoLink}>My Algo Wallet</a>. 
-            <p> </p><a href='/instructions-testnet.jpg' target="_blank">
+            <p> </p><a href={pictureLink} target="_blank">
               View Instructions</a></i></p>
            
       </div>
