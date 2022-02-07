@@ -52,6 +52,10 @@ const MainBody = ({children}) => {
         return bytes;
     }
 
+    const getFirstArg = (appArgs) => {
+        const appArgsDecoded = appArgs.map( (arg) => Buffer.from(arg, 'base64').toString());
+        return appArgsDecoded[0];
+    }
     const cancelOrder = (environment) => {
       const addr = document.getElementById('escrow-address').value;
       const algoIndexerLink = isProduction ? 'https://algoindexer.algoexplorerapi.io' :
@@ -59,21 +63,37 @@ const MainBody = ({children}) => {
       (async function(addr) {
         try {
           const response = await axios.get(algoIndexerLink + '/v2/transactions?address=' + addr)
+
+          // Find the transaction with appArgs
+          let txNum = -1;
+          for (let i = 0; i < response.data.transactions.length; i++) {
+            if (response.data.transactions[i]['application-transaction']
+              && getFirstArg(response.data.transactions[i]['application-transaction']['application-args'])
+                === 'open')
+            {
+              txNum = i;
+              break;
+            }
+          }
+          if (txNum === -1) {
+            throw 'Could not find open transaction!';
+          }
           // handle success
-          console.log(response.data.transactions[0]);
-          const appArgs = response.data.transactions[0]['application-transaction']['application-args'];
-          const appId = response.data.transactions[0]['application-transaction']['application-id'];
+          const appArgs = response.data.transactions[txNum]['application-transaction']['application-args'];
           const appArgsDecoded = appArgs.map( (arg) => Buffer.from(arg, 'base64').toString());
-          if (appArgsDecoded[0] !== 'open') {
+
+          if (getFirstArg(appArgs) !== 'open') {
             throw 'first argument is not open';
           }
           const orderEntry = appArgsDecoded[1];
           const version = appArgsDecoded[2].charCodeAt(0);
           const ownerAddress = document.querySelector('input[name="owner-address"]:checked').value; 
-          console.log({ownerAddress});
           try {
             setSubmissionInfo(`Canceling, please wait...`);
             setSubmissionStyle(neutralStyle);
+            console.debug( {algod, addr, ownerAddress,
+              orderEntry, version});
+
             const confirmation = await algodex.closeOrderFromOrderBookEntry(algod, addr, ownerAddress,
               orderEntry, version); 
             setSubmissionInfo(`Cancelled order for ${addr} ! `);
