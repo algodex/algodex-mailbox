@@ -94,7 +94,7 @@ const MainBody = ({children}) => {
           try {
             setSubmissionInfo(`Canceling, please wait...`);
             setSubmissionStyle(neutralStyle);
-            console.log( {algod, addr, ownerAddress,
+            console.debug( {algod, addr, ownerAddress,
               orderEntry, version});
 
             const confirmation = await algodex.closeOrderFromOrderBookEntry(algod, addr, ownerAddress,
