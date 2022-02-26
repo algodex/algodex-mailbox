@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Grommet} from "grommet";
-import PropTypes from 'prop-types';
 
 const theme = {
     global: {
@@ -23,7 +22,9 @@ export default function App({ Component, pageProps }) {
   )
 }
 
+{/*
 App.propTypes = {
     Component,
     pageProps: PropTypes.object.isRequired
 }
+*/}

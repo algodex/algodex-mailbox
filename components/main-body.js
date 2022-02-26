@@ -133,10 +133,11 @@ const MainBody = ({children}) => {
     
     const instructions = (
       <div>
-        <p><i>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on  
+        <i><div>First connect your wallet. Then enter the escrow address where your order is stored. You can find this on  
             &nbsp;<a href={algoExplorerLink}>AlgoExplorer</a> or <a href={myAlgoLink}>My Algo Wallet</a>. 
             <p> </p><a href={pictureLink} target="_blank" rel="noreferrer">
-              View Instructions</a></i></p>
+              View Instructions</a></div> 
+        </i>
            
       </div>
     );
