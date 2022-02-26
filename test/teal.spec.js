@@ -21,6 +21,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     await testHelper.transferFunds(client, openAccount, maliciousAccount, 1000000);
     
     await testHelper.transferASA(client, senderAccount, senderAccount, 0, assetId);
+    await testHelper.transferASA(client, receiverAccount, receiverAccount, 0, assetId);
     await testHelper.transferASA(client, openAccount, senderAccount, 1000000, assetId);
   }, JEST_MINUTE_TIMEOUT);
 
@@ -30,12 +31,15 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     console.log(client);
 
     const txns = await generateTxns.getFundEscrowTxns(client, assetId, 100000, senderAccount, receiverAccount.addr);
-    const firstTxn = txns[0].unsignedTxn;
+    /*const firstTxn = txns[0].unsignedTxn;
     console.log({firstTxn});
+    const secondTxn = txns[1].unsignedTxn;
+    console.log({secondTxn});
+    const thirdTxn = txns[2].unsignedTxn;
+    console.log({thirdTxn});*/
+
     const signedTxns = await testHelper.groupAndSignTransactions(txns);
 
-    console.log('printing txns');
-    console.log({signedTxns});
     await testHelper.sendAndCheckConfirmed(client, signedTxns);
   }, JEST_MINUTE_TIMEOUT);
 
