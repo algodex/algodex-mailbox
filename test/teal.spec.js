@@ -11,7 +11,7 @@ const config = {
   assetId: 66711302,
 };
 
-describe('Test Order Matching', () => {
+describe('Test Mailbox Funding And Withdrawal', () => {
 
   test('Setup', async () => {
     const {senderAccount, receiverAccount, openAccount, maliciousAccount, client, assetId} = config;
