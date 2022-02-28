@@ -50,7 +50,7 @@ const SendHistoryContainer = () => {
                 />
               </div>
               <button type="submit" disabled={!isValid}>
-                Connect Wallet
+                Refresh
               </button>
             </Form>
           );
