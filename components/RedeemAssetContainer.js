@@ -35,12 +35,17 @@ const RedeemAssetContainer = () => {
         validationSchema={validationSchema}
         onSubmit={submitForm}
       >
-        {({ handleSubmit, isValid }) => {
+        {({ handleSubmit, isValid, dirty }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="d-flex align-items-center mb-2">
                 <label>Asset Id:</label>
-                <Field className="form-control" name="assetId" id="assetId" />
+                <Field
+                  className="form-control"
+                  name="assetId"
+                  id="assetId"
+                  placeholder="Enter Sender Address"
+                />
               </div>
               <div className="d-flex align-items-center mb-2">
                 <label>Wallet Address:</label>
@@ -49,6 +54,7 @@ const RedeemAssetContainer = () => {
                   className="form-control"
                   name="walletAddress"
                   id="walletAddress"
+                  placeholder="Enter Wallet Address"
                 />
               </div>
               <div className="d-flex align-items-center mb-2">
@@ -57,7 +63,7 @@ const RedeemAssetContainer = () => {
               </div>
               <div className="d-flex align-items-center mb-2">
                 <ButtonWrapper>
-                  <button type="submit" disabled={!isValid}>
+                  <button type="submit" disabled={!isValid || !dirty}>
                     Redeem
                   </button>
                 </ButtonWrapper>

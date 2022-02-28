@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { PageTitle, PageWrapper } from "./layout.css";
@@ -13,9 +12,11 @@ const SendHistoryContainer = () => {
   const initialValues = {
     assetId: "",
     senderAddress: "",
+    csvTransactions: "",
   };
   const validationSchema = yup.object().shape({
     assetId: yup.string().label("Asset Id").required(),
+    csvTransactions: yup.string().label("CSV Transaction").required(),
     senderAddress: yup.string().label("Sender Address").required(),
   });
 
@@ -32,12 +33,17 @@ const SendHistoryContainer = () => {
         validationSchema={validationSchema}
         onSubmit={submitForm}
       >
-        {({ handleSubmit, isValid }) => {
+        {({ handleSubmit, isValid, dirty }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="d-flex align-items-center mb-2">
                 <label>Asset Id:</label>
-                <Field className="form-control" name="assetId" id="assetId" />
+                <Field
+                  className="form-control"
+                  name="assetId"
+                  id="assetId"
+                  placeholder="Enter Asset ID"
+                />
               </div>
 
               <div className="d-flex align-items-center mb-2">
@@ -47,19 +53,28 @@ const SendHistoryContainer = () => {
                   className="form-control"
                   name="senderAddress"
                   id="senderAddress"
+                  placeholder="Enter Sender Address"
                 />
               </div>
-              <button type="submit" disabled={!isValid}>
+
+              <TextAreaWrapper>
+                <label>Transactions</label>
+                <Field
+                  as="textarea"
+                  rows="9"
+                  className="form-control"
+                  name="csvTransactions"
+                  id="csvTransactions"
+                  placeholder="Enter CSV Transactions"
+                />
+              </TextAreaWrapper>
+              <button type="submit" disabled={!isValid || !dirty}>
                 Refresh
               </button>
             </Form>
           );
         }}
       </Formik>
-      <TextAreaWrapper>
-        <label>Transactions</label>
-        <textarea rows="9" className="form-control"></textarea>
-      </TextAreaWrapper>
     </PageWrapper>
   );
 };

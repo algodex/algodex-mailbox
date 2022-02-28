@@ -8,13 +8,19 @@ const NavBar = () => {
     <NavBarContainer>
       <NavBarMenu>
         <NavBarItem>
-          <Link href={"/"}>Send Asset</Link>
+          <Link href={"/"}>
+            <div>Send Asset</div>
+          </Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href={"/history"}>Send History</Link>
+          <Link href={"/history"}>
+            <div>Send History</div>
+          </Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href={"/redeem-asset"}>Redeem Asset</Link>
+          <Link href={"/redeem-asset"}>
+            <div>Redeem Asset</div>
+          </Link>
         </NavBarItem>
       </NavBarMenu>
     </NavBarContainer>

@@ -49,15 +49,15 @@ export const HeaderC = styled.div`
 `;
 export const NavBarItemC = styled.div`
   background-color: #fff;
-  padding: 0.3rem 0.8rem;
   width: 100%;
   line-height: 4vh;
   cursor: pointer;
-  a {
+  div {
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
     color: inherit;
+    padding: 0.4rem 0.8rem;
   }
 `;
 
@@ -130,9 +130,14 @@ export const PageWrapper = styled.section`
       border: 0.1rem solid rgba(0, 0, 0, 0.7);
       color: rgba(0, 0, 0, 0.9);
     }
-    &:disabled:hover {
-      border: 0.1rem solid rgba(0, 0, 0, 0.2);
-      color: rgba(0, 0, 0, 0.7);
+    &:disabled {
+      box-shadow: none;
+      color: rgba(0, 0, 0, 0.5);
+      cursor: default;
+      &:hover {
+        border: 0.1rem solid rgba(0, 0, 0, 0.2);
+        color: rgba(0, 0, 0, 0.5);
+      }
     }
     &:focus,
     &:active {
@@ -143,7 +148,7 @@ export const PageWrapper = styled.section`
   .form-control {
     min-height: 1.2rem;
     background: rgba(#002d6b, 0.07);
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     font-size: 0.9rem;
     width: 100%;
     border: 1px solid;

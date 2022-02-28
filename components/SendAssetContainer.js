@@ -41,14 +41,11 @@ const SendAssetContainer = () => {
 
   useEffect(() => {
     // Update the document title using the browser API
-    console.log({ environment });
     algodex.initIndexer(environment);
     setAlgodClient(algodex.initAlgodClient(environment));
   }, []);
 
   const updateAddresses = (addresses) => {
-    console.log("in updateAddresses");
-
     if (addresses == null) {
       return;
     }
@@ -62,9 +59,11 @@ const SendAssetContainer = () => {
   const initialValues = {
     assetId: "",
     walletAddress: "",
+    csvTransactions: "",
   };
   const validationSchema = yup.object().shape({
     assetId: yup.string().label("Asset Id").required(),
+    csvTransactions: yup.string().label("CSV Transaction").required(),
     walletAddress: yup.mixed().label("Wallet Address").required(),
   });
 
@@ -72,7 +71,6 @@ const SendAssetContainer = () => {
     console.log(formValues);
     window.alert("Form Submitted, check console for the log of your values");
   };
-  console.log(formattedAddresses);
   return (
     <PageWrapper className="w-fit">
       <PageTitle> Send Asset</PageTitle>
@@ -81,7 +79,7 @@ const SendAssetContainer = () => {
         validationSchema={validationSchema}
         onSubmit={submitForm}
       >
-        {({ handleSubmit, isValid }) => {
+        {({ handleSubmit, isValid, dirty }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="d-flex align-items-center">
@@ -92,7 +90,12 @@ const SendAssetContainer = () => {
                 </ButtonWrapper>
                 <div className="d-flex align-items-center">
                   <label>Asset Id:</label>
-                  <Field className="form-control" name="assetId" id="assetId" />
+                  <Field
+                    className="form-control"
+                    name="assetId"
+                    id="assetId"
+                    placeholder="Enter Asset ID"
+                  />
                 </div>
               </div>
               {formattedAddresses.length > 0 && formattedAddresses[0] != "" && (
@@ -112,13 +115,20 @@ const SendAssetContainer = () => {
                 </div>
               )}
               <TextAreaWrapper>
-                <textarea rows="9" className="form-control"></textarea>
+                <Field
+                  as="textarea"
+                  rows="9"
+                  className="form-control"
+                  name="csvTransactions"
+                  id="csvTransactions"
+                  placeholder="Enter CSV Transactions"
+                />
               </TextAreaWrapper>
 
               <button
                 style={{ marginBottom: "2rem" }}
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || !dirty}
               >
                 Send Assets
               </button>
