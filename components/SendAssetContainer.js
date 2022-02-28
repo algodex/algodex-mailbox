@@ -2,6 +2,16 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { PageTitle, PageWrapper } from "./layout.css";
+import * as yup from "yup";
+import { Field, Form, Formik } from "formik";
+import { useMemo, useState, useEffect } from "react";
+import useMyAlgo from "../hooks/use-my-algo";
+
+const algodex = require("@algodex/algodex-sdk");
+const axios = require("axios");
+const environment =
+  process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || "public_test";
+const isProduction = environment.toLowerCase() === "production";
 
 const ButtonWrapper = styled.div`
   margin-right: 2rem;
@@ -9,24 +19,113 @@ const ButtonWrapper = styled.div`
 const TextAreaWrapper = styled.div`
   margin-block: 2rem;
 `;
+
+const RadioLabel = styled.label`
+  cursor: pointer;
+`;
 const SendAssetContainer = () => {
+  const [formattedAddresses, setFormattedAddresses] = useState([""]);
+  const [algod, setAlgodClient] = useState();
+  const [submissionInfo, setSubmissionInfo] = useState();
+  const [submissionStyle, setSubmissionStyle] = useState();
+
+  const errorStyle = {
+    color: "red",
+  };
+  const successStyle = {
+    color: "green",
+  };
+  const neutralStyle = {
+    color: "blue",
+  };
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log({ environment });
+    algodex.initIndexer(environment);
+    setAlgodClient(algodex.initAlgodClient(environment));
+  }, []);
+
+  const updateAddresses = (addresses) => {
+    console.log("in updateAddresses");
+
+    if (addresses == null) {
+      return;
+    }
+
+    console.log({ addresses });
+    setFormattedAddresses(addresses);
+  };
+
+  const { connect, addresses } = useMyAlgo(updateAddresses);
+
+  const initialValues = {
+    assetId: "",
+    walletAddress: "",
+  };
+  const validationSchema = yup.object().shape({
+    assetId: yup.string().label("Asset Id").required(),
+    walletAddress: yup.mixed().label("Wallet Address").required(),
+  });
+
+  const submitForm = async (formValues) => {
+    console.log(formValues);
+    window.alert("Form Submitted, check console for the log of your values");
+  };
+  console.log(formattedAddresses);
   return (
     <PageWrapper className="w-fit">
       <PageTitle> Send Asset</PageTitle>
-      <div className="d-flex align-items-center">
-        <ButtonWrapper>
-          <button>Connect Wallet</button>
-        </ButtonWrapper>
-        <div className="d-flex align-items-center">
-          <label>Asset Id:</label>
-          <input type="text" className="form-control" />
-        </div>
-      </div>
-      <TextAreaWrapper>
-        <textarea rows="9" className="form-control"></textarea>
-      </TextAreaWrapper>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={submitForm}
+      >
+        {({ handleSubmit, isValid }) => {
+          return (
+            <Form onSubmit={handleSubmit}>
+              <div className="d-flex align-items-center">
+                <ButtonWrapper>
+                  <button type="button" onClick={connect}>
+                    Connect Wallet
+                  </button>
+                </ButtonWrapper>
+                <div className="d-flex align-items-center">
+                  <label>Asset Id:</label>
+                  <Field className="form-control" name="assetId" id="assetId" />
+                </div>
+              </div>
+              {formattedAddresses.length > 0 && formattedAddresses[0] != "" && (
+                <div className="mb-2">
+                  {formattedAddresses.map((w) => (
+                    <div key={w} className="d-flex">
+                      <Field
+                        type="radio"
+                        name="walletAddress"
+                        id={w}
+                        className="mr-1"
+                        value={w}
+                      />
+                      <RadioLabel htmlFor={w}>{w}</RadioLabel>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <TextAreaWrapper>
+                <textarea rows="9" className="form-control"></textarea>
+              </TextAreaWrapper>
 
-      <button style={{ marginBottom: "2rem" }}>Send Assets</button>
+              <button
+                style={{ marginBottom: "2rem" }}
+                type="submit"
+                disabled={!isValid}
+              >
+                Send Assets
+              </button>
+            </Form>
+          );
+        }}
+      </Formik>
       <div className="d-flex">
         <div className="mr-2">
           <Link href={"/instructions"}>View Instructions</Link>

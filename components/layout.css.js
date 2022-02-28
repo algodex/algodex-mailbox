@@ -105,6 +105,9 @@ export const PageWrapper = styled.section`
   .mr-2 {
     margin-right: 2rem;
   }
+  .mr-1 {
+    margin-right: 1rem;
+  }
   .d-flex {
     display: flex;
   }
@@ -120,6 +123,17 @@ export const PageWrapper = styled.section`
     border-radius: 0.3rem;
     padding: 0.4rem 0.6rem;
     border: 0.1rem solid rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.7);
+    transition: all ease 0.3s;
+    cursor: pointer;
+    &:hover {
+      border: 0.1rem solid rgba(0, 0, 0, 0.7);
+      color: rgba(0, 0, 0, 0.9);
+    }
+    &:disabled:hover {
+      border: 0.1rem solid rgba(0, 0, 0, 0.2);
+      color: rgba(0, 0, 0, 0.7);
+    }
     &:focus,
     &:active {
       outline: none !important;
