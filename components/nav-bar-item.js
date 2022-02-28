@@ -1,14 +1,7 @@
-import {
-  NavBarItemC
-} from './layout.css'
+import { NavBarItemC } from "./layout.css";
 
 const NavBarItem = (props) => {
+  return <NavBarItemC>{props.children}</NavBarItemC>;
+};
 
-    return (
-        <NavBarItemC>
-            {props.title}
-        </NavBarItemC>
-    )
-}
-
-export default NavBarItem
+export default NavBarItem;
