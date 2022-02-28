@@ -21,24 +21,50 @@ const negativeFundEscrowTests = [
     {txnNum: 0, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
     {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
     {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
-    {txnNum: 0, negTxn: {
-            unsignedTxnPromise: 
-            transactionGenerator.getAssetSendTxn(config.client, config.senderAccount.addr, config.maliciousAccount.addr,
-              1000, config.assetId, false),
-            senderAcct: config.senderAccount
-            }
-    },
+    {txnNum: 0, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
     {txnNum: 1, field: 'amount', val: 100000},
     {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
     {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.senderAccount.addr)},
     {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.senderAccount.addr)},
     {txnNum: 1, field: 'type', val: 'pay'},
+    {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
     {txnNum: 2, field: 'amount', val: 0},
     {txnNum: 2, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
     {txnNum: 2, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1},
     {txnNum: 2, field: 'to', val: algosdk.decodeAddress(config.senderAccount.addr)},
     {txnNum: 2, field: 'type', val: 'pay'},
     {txnNum: 2, field: 'assetIndex', val: 12400859},
+    {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+    {txnNum: 3, negTxn: {
+            unsignedTxnPromise: 
+            transactionGenerator.getAssetSendTxn(config.client, config.senderAccount.addr, config.maliciousAccount.addr,
+              1000, config.assetId, false),
+            senderAcct: config.senderAccount
+            }
+    },
+];
+
+const negativeWithdrawTests = [ 
+    {txnNum: 0, field: 'from', val: algosdk.decodeAddress(config.receiverAccount.addr)},
+    {txnNum: 0, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+    {txnNum: 0, field: 'amount', val: 1000},
+    {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+    {txnNum: 0, field: 'type', val: 'pay'},
+    {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+    {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.receiverAccount.addr)},
+    {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+    {txnNum: 1, field: 'amount', val: 1000},
+    {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+    {txnNum: 1, field: 'type', val: 'axfer'},
+    {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+    {txnNum: 2, negTxn: {
+            unsignedTxnPromise: 
+            transactionGenerator.getPayTxn(config.client, config.senderAccount.addr, config.maliciousAccount.addr,
+              1000, false),
+            senderAcct: config.senderAccount
+            }
+    }
+
 ];
 
 describe('Test Mailbox Funding And Withdrawal', () => {
@@ -63,14 +89,12 @@ describe('Test Mailbox Funding And Withdrawal', () => {
         negTestTxnConfig.negTxn.unsignedTxn = await negTestTxnConfig.negTxn.unsignedTxnPromise;
       }
       const outerTxns = await generateTxns.getFundEscrowTxns(client, assetId, 100000, senderAccount, receiverAccount.addr);
-      const txn = outerTxns[1].unsignedTxn;
-      //console.log('here1111');
-      //console.log({txn});
+      //const txn = outerTxns[1].unsignedTxn;
+
       const result = await helper.runNegativeTest(config, config.client, outerTxns, negTestTxnConfig);
       expect (result).toBeTruthy();
     }, JEST_MINUTE_TIMEOUT);
   });
-
 
   test('Fund escrow', async () => {
     const {senderAccount, receiverAccount, openAccount, maliciousAccount, client, assetId} = config;
@@ -83,6 +107,22 @@ describe('Test Mailbox Funding And Withdrawal', () => {
 
     await testHelper.sendAndCheckConfirmed(client, signedTxns);
   }, JEST_MINUTE_TIMEOUT);
+
+  negativeWithdrawTests.map( (negTestTxnConfig) => {
+    const {senderAccount, receiverAccount, openAccount, maliciousAccount, client, assetId} = config;
+
+    const testName = `Negative withdraw test: txnNum: ${negTestTxnConfig.txnNum} field: ${negTestTxnConfig.field} val: ${negTestTxnConfig.val}`;
+    test (testName, async () => {
+      if (negTestTxnConfig.negTxn) {
+        negTestTxnConfig.negTxn.unsignedTxn = await negTestTxnConfig.negTxn.unsignedTxnPromise;
+      }
+      const outerTxns = await generateTxns.getCloseEscrowTxns(client, assetId, receiverAccount.addr);
+      //const txn = outerTxns[1].unsignedTxn;
+
+      const result = await helper.runNegativeTest(config, config.client, outerTxns, negTestTxnConfig);
+      expect (result).toBeTruthy();
+    }, JEST_MINUTE_TIMEOUT);
+  });
 
   test('Withdraw from escrow', async () => {
     const {senderAccount, receiverAccount, openAccount, maliciousAccount, client, assetId} = config;
