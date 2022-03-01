@@ -23,6 +23,7 @@ const RadioLabel = styled.label`
 `;
 const SendAssetContainer = () => {
   const [formattedAddresses, setFormattedAddresses] = useState([""]);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const [algod, setAlgodClient] = useState();
 
   const errorStyle = {
@@ -39,6 +40,7 @@ const SendAssetContainer = () => {
     // Update the document title using the browser API
     algodex.initIndexer(environment);
     setAlgodClient(algodex.initAlgodClient(environment));
+    setPageLoaded(true);
   }, []);
 
   const updateAddresses = (addresses) => {
@@ -66,7 +68,7 @@ const SendAssetContainer = () => {
   const uiSchema = {
     csvTransactions: {
       "ui:widget": "textarea",
-      "ui:placeholder": "Enter CSV Transactions",
+      "ui:placeholder": pageLoaded ? "Enter CSV Transactions" : "",
       "ui:options": {
         rows: 9,
       },
