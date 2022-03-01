@@ -102,11 +102,16 @@ const SendAssetContainer = () => {
       )}
       <Form
         schema={schema}
+        disabled={formattedAddresses[0] == ""}
         uiSchema={uiSchema}
         onSubmit={submitForm}
         liveValidate={true}
       >
-        <button style={{ marginBottom: "2rem" }} type="submit">
+        <button
+          style={{ marginBottom: "2rem" }}
+          disabled={formattedAddresses[0] == ""}
+          type="submit"
+        >
           Send Assets
         </button>
       </Form>
