@@ -1,29 +1,34 @@
-import Link from "next/link";
-import { NavBarContainer, NavBarMenu } from "./layout.css";
-
+import Grid from "@mui/material/Grid";
 import NavBarItem from "./nav-bar-item";
+import { colors } from "theme";
 
-const NavBar = () => {
+const containerStyles = {
+  height: "calc(100vh - 5.3rem)",
+  overflow: "scroll",
+  gridArea: "a",
+  padding: "1rem",
+  backgroundColor: colors.gray["000"],
+  marginTop: 0,
+};
+const NavBar = ({ navLinks }) => {
   return (
-    <NavBarContainer>
-      <NavBarMenu>
-        <NavBarItem>
-          <Link href={"/"}>
-            <div>Send Asset</div>
-          </Link>
+    <Grid container direction="column" spacing={4} sx={containerStyles}>
+      {navLinks.map(({ title, path }, i) => (
+        <NavBarItem
+          key={`${title}${i}`}
+          href={path}
+          variant="button"
+          sx={{
+            color: "primary",
+            opacity: 0.9,
+            textDecoration: "none",
+            padding: "0.6rem 1.5rem 0",
+          }}
+        >
+          {title}
         </NavBarItem>
-        <NavBarItem>
-          <Link href={"/history"}>
-            <div>Send History</div>
-          </Link>
-        </NavBarItem>
-        <NavBarItem>
-          <Link href={"/redeem-asset"}>
-            <div>Redeem Asset</div>
-          </Link>
-        </NavBarItem>
-      </NavBarMenu>
-    </NavBarContainer>
+      ))}
+    </Grid>
   );
 };
 

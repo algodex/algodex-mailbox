@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@algodex/algodex-sdk": "^1.1.12",
+    "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.1",
+    "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
@@ -18,6 +20,7 @@
     "@randlabs/myalgo-connect": "^1.1.1",
     "@rjsf/core": "^4.0.1",
     "@rjsf/material-ui": "^4.0.1",
+    "clsx": "^1.1.1",
     "grommet": "^2.18.0",
     "grommet-icons": "^4.6.2",
     "next": "latest",
