@@ -15,6 +15,11 @@ const config = {
 };
 
 
+console.log('sender account: ' + config.senderAccount.addr);
+console.log('receiver account: ' + config.receiverAccount.addr);
+console.log('open account: ' + config.openAccount.addr);
+console.log('malicious account: ' + config.maliciousAccount.addr);
+
 const negativeFundEscrowTests = [ 
     {txnNum: 0, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1}, //set to from escrow
     {txnNum: 0, field: 'amount', val: 100000},
