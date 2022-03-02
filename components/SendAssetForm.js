@@ -7,7 +7,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
-import { colors } from "theme";
 
 const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
   const CustomSelectComponent = () => {
@@ -15,11 +14,11 @@ const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
       <Box sx={{ marginBottom: "1rem" }}>
         <FormControl>
           <RadioGroup aria-labelledby="wallets" name="wallets">
-            {[1, 2, 3, 4].map((address) => (
+            {formattedAddresses.map((address) => (
               <FormControlLabel
                 key={address}
                 value={address}
-                control={<Radio color="secondary"/>}
+                control={<Radio color="secondary" />}
                 label={address}
               />
             ))}
