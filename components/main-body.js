@@ -1,4 +1,4 @@
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import { colors } from "theme";
 
 const containerStyles = {
@@ -9,7 +9,7 @@ const containerStyles = {
   backgroundColor: colors.gray["000"],
 };
 const MainBody = ({ children }) => {
-  return <Container sx={containerStyles}>{children}</Container>;
+  return <Box sx={containerStyles}>{children}</Box>;
 };
 
 export default MainBody;

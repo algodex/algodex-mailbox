@@ -4,7 +4,6 @@ import { colors } from "theme";
 
 const containerStyles = {
   height: "calc(100vh - 5.3rem)",
-  overflow: "scroll",
   gridArea: "a",
   padding: "1rem",
   backgroundColor: colors.gray["000"],

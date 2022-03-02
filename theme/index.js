@@ -239,6 +239,9 @@ let theme = createTheme({
     primary: {
       main: colors.gray["800"],
     },
+    secondary: {
+      main: colors.blue["800"],
+    },
     background: {
       light: colors.gray["000"],
       dark: colors.gray["800"],

@@ -31,7 +31,6 @@ const SendHistoryForm = ({ onSubmit }) => {
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
-      liveValidate={true}
     >
       <Button type="submit" variant="contained" sx={{ marginTop: "2rem" }}>
         Refresh

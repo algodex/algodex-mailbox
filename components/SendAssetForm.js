@@ -1,30 +1,30 @@
-import Link from "next/link";
 import React from "react";
 import { MuiForm5 as Form } from "@rjsf/material-ui";
 import PropTypes from "prop-types";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
+import { colors } from "theme";
 
 const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
   const CustomSelectComponent = () => {
     return (
-      <Box sx={{ marginBottom: "2rem" }}>
-        {formattedAddresses.map((address) => (
-          <FormControl key={address}>
-            <RadioGroup aria-labelledby={address} name="wallets">
+      <Box sx={{ marginBottom: "1rem" }}>
+        <FormControl>
+          <RadioGroup aria-labelledby="wallets" name="wallets">
+            {[1, 2, 3, 4].map((address) => (
               <FormControlLabel
+                key={address}
                 value={address}
-                control={<Radio />}
+                control={<Radio color="secondary"/>}
                 label={address}
               />
-            </RadioGroup>
-          </FormControl>
-        ))}
+            ))}
+          </RadioGroup>
+        </FormControl>
       </Box>
     );
   };
@@ -60,49 +60,22 @@ const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
   };
 
   return (
-    <>
-      {/* {formattedAddresses.length > 0 && (
-        <Box sx={{ marginBottom: "2rem" }}>
-          {formattedAddresses.map((address) => (
-            <FormControl>
-              <RadioGroup aria-labelledby={address} name="wallets">
-                <FormControlLabel
-                  value={address}
-                  control={<Radio />}
-                  label={address}
-                />
-              </RadioGroup>
-            </FormControl>
-          ))}
-        </Box>
-      )} */}
-      <Form
-        schema={schema}
+    <Form
+      schema={schema}
+      disabled={formattedAddresses.length < 1}
+      uiSchema={uiSchema}
+      widgets={widgets}
+      onSubmit={onSubmit}
+    >
+      <Button
+        variant="contained"
+        xs={{ marginBottom: "2rem" }}
         disabled={formattedAddresses.length < 1}
-        uiSchema={uiSchema}
-        widgets={widgets}
-        onSubmit={onSubmit}
-        liveValidate={true}
+        type="submit"
       >
-        <Button
-          variant="contained"
-          xs={{ marginBottom: "2rem" }}
-          disabled={formattedAddresses.length < 1}
-          type="submit"
-        >
-          Send Assets
-        </Button>
-      </Form>
-
-      <Grid container spacing={2} sx={{ marginTop: "2rem" }}>
-        <Grid item xs={6} lg={5} className="mr-2">
-          <Link href={"/instructions"}>View Instructions</Link>
-        </Grid>
-        <Grid item xs={6} lg={5}>
-          <Link href={"/downloadlink"}>Download CSV Example</Link>
-        </Grid>
-      </Grid>
-    </>
+        Send Assets
+      </Button>
+    </Form>
   );
 };
 

@@ -1,5 +1,5 @@
+import Link from "next/link";
 import SendAssetForm from "@/components/SendAssetForm";
-import Container from "@mui/material/Container";
 import Layout from "../components/layout";
 import { useCallback, useState } from "react";
 import useMyAlgo from "../hooks/use-my-algo";
@@ -40,6 +40,14 @@ export default function Home() {
             formattedAddresses={formattedAddresses}
             onSubmit={submitForm}
           />
+          <Grid container spacing={2} sx={{ marginTop: "2rem" }}>
+            <Grid item xs={6} lg={5} className="mr-2">
+              <Link href={"/instructions"}>View Instructions</Link>
+            </Grid>
+            <Grid item xs={6} lg={5}>
+              <Link href={"/downloadlink"}>Download CSV Example</Link>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Layout>

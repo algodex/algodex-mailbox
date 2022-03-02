@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MuiForm5 as Form } from "@rjsf/material-ui";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -6,7 +6,6 @@ import ErrorMessage from "./ErrorMessage";
 import PropTypes from "prop-types";
 
 const RedeemAssetForm = ({ onSubmit }) => {
-  const [isValid, setIsValid] = useState(false);
   const schema = {
     required: ["assetId", "walletAddress"],
     properties: {
@@ -15,13 +14,6 @@ const RedeemAssetForm = ({ onSubmit }) => {
     },
   };
 
-  // const CheckValidState = ({ formData }) => {
-  //   if (formData.assetId != "" && formData.walletAddress != "") {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
   return (
     <Form schema={schema} onSubmit={onSubmit}>
       <Grid container spacing={2} marginTop={"2rem"} marginBottom={"2rem"}>
