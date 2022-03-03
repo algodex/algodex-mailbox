@@ -6,6 +6,7 @@ import useMyAlgo from "../hooks/use-my-algo";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+const SendAssetsHelper = require('../lib/send_assets.js');
 
 export default function Home() {
   const [formattedAddresses, setFormattedAddresses] = useState([]);
@@ -23,8 +24,9 @@ export default function Home() {
 
   const { connect } = useMyAlgo(updateAddresses);
   const submitForm = async ({ formData }) => {
-    console.log(formData);
-    window.alert("Form Submitted, check console for the log of your values");
+    const {wallet, assetId, csvTransactions} = formData;
+    console.log({formData});
+    SendAssetsHelper.send(assetId,wallet,csvTransactions);
   };
   return (
     <Layout>
