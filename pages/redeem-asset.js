@@ -1,49 +1,82 @@
-import Layout from "@/components/layout";
-import RedeemAssetForm from "@/components/RedeemAssetForm";
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Link from "next/link";
-const RedeemAssetsHelper = require('../lib/redeem_assets.js');
+import React from 'react'
+import {defaults} from '@/next-i18next.config'
+import {useTranslation} from 'next-i18next'
+import Head from 'next/head'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
-const RedeemAsset = () => {
+// MUI Components
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
+
+// Custom Components
+import RedeemAssetForm from '@/components/RedeemAssetForm'
+import Link from '@/components/Nav/Link'
+const RedeemAssetsHelper = require('../lib/redeem_assets.js')
+
+/**
+ * Generate Static Properties
+ * @param locale
+ */
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(
+        locale,
+        [...defaults]
+      )),
+    },
+  }
+}
+
+/**
+ * Redeem Asset page
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export function RedeemAssetPage() {
+  const {t} = useTranslation('common')
   const submitForm = async ({ formData }) => {
-    console.log(formData);
+    console.log(formData)
 
-    await RedeemAssetsHelper.redeem(formData.assetId, formData.walletAddress);
-  };
+    await RedeemAssetsHelper.redeem(formData.assetId, formData.walletAddress)
+  }
   return (
-    <Layout>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          <Typography variant="h5"> Redeem Asset</Typography>
-          <RedeemAssetForm onSubmit={submitForm} />
-          <Grid container spacing={7} sx={{ marginBottom: "2rem" }}>
-            <Grid item>
-              <Typography variant="p" fontWeight="500">
-                Balance:
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="p" fontSize={"1.2rem"} fontWeight="500">
+    <>
+      <Head>
+        <title>{`${t('/redeem-asset')} | ${t('app-title')}`}</title>
+      </Head>
+      <Container sx={{my:4}}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={8} lg={6} xl={5}>
+            <Typography variant="h5">{t('/redeem-asset')}</Typography>
+            <RedeemAssetForm onSubmit={submitForm} />
+            <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
+              <Grid item>
+                <Typography variant="p" fontWeight="500">
+                  {t('balance')}:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="p" fontSize={'1.2rem'} fontWeight="500">
                 100 LAMP
-              </Typography>
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid container spacing={2} sx={{ marginTop: "2rem" }}>
-            <Grid item xs={6} lg={5}>
-              <Link href={"/instructions"}>View Instructions</Link>
-            </Grid>
-            <Grid item xs={6} lg={5}>
-              <Link href={"/"}>Open AlgoExplorer</Link>
+            <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+              <Grid item xs={6} lg={5}>
+                <Link href={'/instructions'}>{t('view-instructions-link')}</Link>
+              </Grid>
+              <Grid item xs={6} lg={5}>
+                <Link href={'/'}>{t('open-algoexplorer-link')}</Link>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Layout>
-  );
-};
+      </Container>
+    </>
+  )
+}
 
-export default RedeemAsset;
+export default RedeemAssetPage

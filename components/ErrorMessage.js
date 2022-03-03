@@ -1,7 +1,14 @@
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { colors } from "theme";
 
+/**
+ * @todo: Move to theme
+ * @deprecated
+ * @param success
+ * @param message
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ErrorMessage = ({ success, message }) => {
   return (
     <Typography

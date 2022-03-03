@@ -1,3 +1,21 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "jest/globals": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:storybook/recommended",
+    "next/core-web-vitals"
+  ],
+  "plugins": ["jest"],
+  "rules": {
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "max-len": ["error", 100],
+    "comma-dangle": ["error", "only-multiline"],
+    "indent": ["error", 2]
+  }
 }
