@@ -9,11 +9,12 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 
 const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
-  const CustomSelectComponent = () => {
+  const CustomSelectComponent = (props) => {
     return (
       <Box sx={{ marginBottom: "1rem" }}>
         <FormControl>
-          <RadioGroup aria-labelledby="wallets" name="wallets">
+          <RadioGroup aria-labelledby="wallet" name="wallet" 
+            onChange={(event, value) => props.onChange(value)}>
             {formattedAddresses.map((address) => (
               <FormControlLabel
                 key={address}
@@ -29,9 +30,9 @@ const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
   };
 
   const schema = {
-    required: ["assetId", "csvTransactions", "wallets"],
+    required: ["assetId", "csvTransactions", "wallet"],
     properties: {
-      wallets: { type: "string", title: "Wallets", default: "" },
+      wallet: { type: "string", title: "wallet", default: "" },
       assetId: { type: "string", title: "Asset Id", default: "" },
       csvTransactions: {
         type: "string",
@@ -49,7 +50,7 @@ const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
         rows: 9,
       },
     },
-    wallets: {
+    wallet: {
       "ui:widget": "CustomSelect",
     },
   };
