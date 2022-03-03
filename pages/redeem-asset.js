@@ -5,11 +5,13 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Link from "next/link";
+const RedeemAssetsHelper = require('../lib/redeem_assets.js');
 
 const RedeemAsset = () => {
   const submitForm = async ({ formData }) => {
     console.log(formData);
-    window.alert("Form Submitted, check console for the log of your values");
+
+    await RedeemAssetsHelper.redeem(formData.assetId, formData.walletAddress);
   };
   return (
     <Layout>
