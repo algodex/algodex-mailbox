@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles'
-import { red, pink, purple } from '@mui/material/colors'
 
 const muiTheme = createTheme()
 
@@ -57,14 +56,26 @@ const theme = {
   palette: {
     ...muiTheme.palette,
     primary: {
-      main: purple.A400,
+      light: '#fcfcff',
+      main: '#c9c9e7',
+      dark: '#9898b5',
+      contrastText: '#000000'
     },
     secondary: {
-      main: pink.A400,
+      light: '#fffcff',
+      main: '#d8c9e7',
+      dark: '#a698b5',
+      contrastText: '#000000'
     },
-    error: {
-      main: red.A400,
+    accent:{
+      light: '#fffffc',
+      main: '#E7E7C9',
+      dark: '#b5b598',
+      contrastText: '#000000'
     }
+    // error: {
+    //   main: red.A400,
+    // }
   },
 }
 
