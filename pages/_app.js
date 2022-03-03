@@ -1,30 +1,40 @@
-import React, {Component} from 'react';
-import {Grommet} from "grommet";
+import React, { Component } from "react";
 
-const theme = {
-    global: {
-        font: {
-            family: 'Roboto',
-            size: '14px',
-            height: '20px',
-        },
-    },
-    colors: {
-        primary: '#0070f3',
-     },
-};
+// Material UI
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider, Global, css } from "@emotion/react";
+import createEmotionCache from "utils/createEmotionCache";
 
-export default function App({ Component, pageProps }) {
+//Algodex
+import theme from "theme";
+import Head from "next/head";
+
+const clientSideEmotionCache = createEmotionCache();
+
+export default function App(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
   return (
-     <Grommet full theme={theme}>
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>Algodex Mailbox</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
         <Component {...pageProps} />
-     </Grommet>
-  )
+      </ThemeProvider>
+    </CacheProvider>
+  );
 }
 
-{/*
+{
+  /*
 App.propTypes = {
     Component,
     pageProps: PropTypes.object.isRequired
 }
-*/}
+*/
+}
