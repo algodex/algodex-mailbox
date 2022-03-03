@@ -69,7 +69,7 @@ export const LocaleNavMenu = ( {isMobile, onClick} ) => {
       <Button
         data-testid="dropdown-container-web"
         variant="contained"
-        color={isMobile ? 'secondary' : 'info'}
+        color={isMobile ? 'secondary' : 'accent'}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}

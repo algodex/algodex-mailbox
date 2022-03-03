@@ -15,6 +15,8 @@ import CustomLink from '@/components/Nav/Link'
  *
  * @param icon
  * @param primary
+ * @param onClick
+ * @param locale
  * @param to
  * @returns {JSX.Element}
  * @see https://mui.com/guides/routing/#list
@@ -29,7 +31,7 @@ function MenuItemLink({ onClick, locale, icon, primary, to }) {
       forwardRef(function Link(itemProps, ref) {
         return <CustomLink locale={locale} href={to} ref={ref} {...itemProps} role={undefined} />
       }),
-    [to],
+    [to, locale],
   )
 
   return (
