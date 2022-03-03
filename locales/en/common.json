@@ -1,0 +1,12 @@
+{
+  "app-title": "Algodex Mailbox",
+  "actions": "Actions",
+  "balance": "Balance",
+  "/send-asset": "Send Asset",
+  "/redeem-asset": "Redeem Asset",
+  "/send-history": "Send History",
+  "view-instructions-link": "View Instructions",
+  "download-csv-example-link": "Download CSV Example",
+  "open-algoexplorer-link": "Open AlgoExplorer",
+  "connect-wallet": "Connect Wallet"
+}

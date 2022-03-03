@@ -1,0 +1,12 @@
+{
+  "app-title": "Buzón de Algodex",
+  "actions": "Acciones",
+  "balance": "Saldo",
+  "/send-asset": "Enviar activo",
+  "/redeem-asset": "Canjear activo",
+  "/send-history": "Enviar historial",
+  "view-instructions-link": "Ver instrucciones",
+  "download-csv-example-link": "Descargar ejemplo de CSV",
+  "open-algoexplorer-link": "Abrir AlgoExplorer",
+  "connect-wallet": "Conectar billetera"
+}
