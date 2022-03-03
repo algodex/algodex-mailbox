@@ -53,12 +53,12 @@ export function RedeemAssetPage() {
             <RedeemAssetForm onSubmit={submitForm} />
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
               <Grid item>
-                <Typography variant="p" fontWeight="500">
+                <Typography variant="p" component="p">
                   {t('balance')}:
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="p" fontSize={'1.2rem'} fontWeight="500">
+                <Typography variant="p" component="p">
                 100 LAMP
                 </Typography>
               </Grid>
