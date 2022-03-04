@@ -1,11 +1,11 @@
 import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-const RedeemAssetForm = ({ onSubmit, actionStatus }) => {
+const RedeemAssetForm = ({ onSubmit, actionStatus, loading }) => {
   const schema = {
     required: ['assetId', 'walletAddress'],
     properties: {
@@ -18,9 +18,9 @@ const RedeemAssetForm = ({ onSubmit, actionStatus }) => {
     <Form schema={schema} onSubmit={onSubmit}>
       <Grid container spacing={2} marginTop={'2rem'} marginBottom={'2rem'}>
         <Grid item xs={6} lg={4}>
-          <Button variant="contained" type="submit">
+          <LoadingButton loading={loading} variant="contained" type="submit">
             Redeem
-          </Button>
+          </LoadingButton>
         </Grid>
         <Grid item xs={6}>
           {actionStatus.message != '' && (

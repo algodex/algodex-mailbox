@@ -33,18 +33,30 @@ export async function getStaticProps({ locale }) {
  */
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
+  const [loading, setLoading] = useState(false)
   const [actionStatus, setActionStatus] = useState({
-    message: 'Success/Error code here',
+    message: '',
     success: false,
   })
   const submitForm = async ({ formData }) => {
-    console.log(formData)
-
-    await RedeemAssetsHelper.redeem(formData.assetId, formData.walletAddress)
-    setActionStatus({
-      message: 'Success',
-      success: true,
-    })
+    setLoading(true)
+    const responseData = await RedeemAssetsHelper.redeem(
+      formData.assetId,
+      formData.walletAddress
+    )
+    console.log('responseData', responseData)
+    setLoading(false)
+    if (responseData.status == 'confirmed') {
+      setActionStatus({
+        message: responseData.statusMsg,
+        success: true,
+      })
+    } else {
+      setActionStatus({
+        message: responseData.body?.message || 'Sorry an error occured',
+        success: false,
+      })
+    }
   }
 
   return (
@@ -59,6 +71,7 @@ export function RedeemAssetPage() {
             <RedeemAssetForm
               onSubmit={submitForm}
               actionStatus={actionStatus}
+              loading={loading}
             />
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
               <Grid item>
