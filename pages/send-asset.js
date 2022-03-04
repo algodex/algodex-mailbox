@@ -15,6 +15,7 @@ import Link from '@/components/Nav/Link'
 import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
+import Helper from '@/lib/helper'
 
 /**
  * Generate Static Properties
@@ -35,6 +36,8 @@ export async function getStaticProps({ locale }) {
  */
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
+  const [fromAddress, setFromAddress] = useState('')
+  const [assetId, setAssetId] = useState('')
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -81,6 +84,22 @@ export function SendAssetPage() {
       })
     }
   }
+
+  const getAssetBalance = async () => {
+    if (fromAddress && assetId) {
+      const responseData = await Helper.getFormattedAssetBalance(
+        fromAddress,
+        assetId,
+        true
+      )
+      console.log(responseData)
+    }
+  }
+
+  setInterval(() => {
+    getAssetBalance()
+  }, 3000)
+
   return (
     <>
       <Head>
@@ -99,6 +118,8 @@ export function SendAssetPage() {
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
+              setFromAddress={setFromAddress}
+              setAssetId={setAssetId}
             />
             {actionStatus.message != '' && (
               <Typography
