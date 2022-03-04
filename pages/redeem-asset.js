@@ -53,7 +53,7 @@ export function RedeemAssetPage() {
       })
     } else {
       setActionStatus({
-        message: responseData || 'Sorry an error occured',
+        message: typeof responseData === 'string' ? responseData : 'Sorry an error occured',
         success: false,
       })
     }
