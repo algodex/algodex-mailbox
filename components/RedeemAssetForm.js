@@ -2,10 +2,10 @@ import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
-import ErrorMessage from './ErrorMessage'
+import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
 
-const RedeemAssetForm = ({ onSubmit }) => {
+const RedeemAssetForm = ({ onSubmit, actionStatus }) => {
   const schema = {
     required: ['assetId', 'walletAddress'],
     properties: {
@@ -23,7 +23,14 @@ const RedeemAssetForm = ({ onSubmit }) => {
           </Button>
         </Grid>
         <Grid item xs={6}>
-          <ErrorMessage success={true} message={'Success/Error code here'} />
+          {actionStatus.message != '' && (
+            <Typography
+              variant="error-message"
+              color={actionStatus.success ? 'green' : 'error'}
+            >
+              {actionStatus.message}
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Form>
