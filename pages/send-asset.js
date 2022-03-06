@@ -37,6 +37,7 @@ export async function getStaticProps({ locale }) {
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState('')
+  const [assetBalance, setAssetBalance] = useState('')
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -83,15 +84,25 @@ export function SendAssetPage() {
       })
     }
   }
-  const getFormData = (formData) => {
-    console.log(formData)
-    setFormData(formData)
+  const getFormData = async (newValues) => {
+    console.log(newValues)
+    getAssetBalance(newValues)
   }
 
-  const getAssetBalance = async () => {
-    if (formData.fromAddress && formData.assetId) {
+  const getAssetBalance = async (newValues) => {
+    if (newValues && newValues.wallet != '' && newValues.assetId != '') {
+      console.log(newValues)
       const responseData = await Helper.getFormattedAssetBalance(
-        formData.fromAddress,
+        newValues.wallet,
+        newValues.assetId,
+        true
+      )
+      console.log(responseData)
+      setAssetBalance(responseData)
+      setFormData(newValues)
+    } else if (formData.wallet && formData.assetId) {
+      const responseData = await Helper.getFormattedAssetBalance(
+        formData.wallet,
         formData.assetId,
         true
       )
@@ -99,9 +110,9 @@ export function SendAssetPage() {
     }
   }
 
-  setInterval(() => {
-    getAssetBalance()
-  }, 3000)
+  // setInterval(() => {
+  //   getAssetBalance()
+  // }, 3000)
 
   return (
     <>
@@ -117,10 +128,14 @@ export function SendAssetPage() {
             <Button variant="contained" onClick={connect}>
               {t('connect-wallet')}
             </Button>
+            <Typography variant="p" fontWeight={700} marginLeft={'1rem'}>
+              {assetBalance}
+            </Typography>
             <SendAssetForm
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
+              assetBalance={assetBalance}
               getFormData={getFormData}
             />
             {actionStatus.message != '' && (
