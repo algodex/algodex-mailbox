@@ -110,9 +110,9 @@ export function SendAssetPage() {
     }
   }
 
-  // setInterval(() => {
-  //   getAssetBalance()
-  // }, 3000)
+  setInterval(() => {
+    getAssetBalance()
+  }, 3000)
 
   return (
     <>
