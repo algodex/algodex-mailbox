@@ -37,7 +37,10 @@ export async function getStaticProps({ locale }) {
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState('')
-  const [assetBalance, setAssetBalance] = useState('')
+  const [assetBalance, setAssetBalance] = useState({
+    success: false,
+    message: '',
+  })
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -50,7 +53,7 @@ export function SendAssetPage() {
       if (addresses == null) {
         return
       }
-      console.log({ addresses })
+      // console.log({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -59,14 +62,17 @@ export function SendAssetPage() {
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
     const { wallet, assetId, csvTransactions } = formData
-    console.log({ formData })
     setLoading(true)
+    setActionStatus({
+      message: '',
+      success: false,
+    })
     const responseData = await SendAssetsHelper.send(
       assetId,
       wallet,
       csvTransactions
     )
-    console.log('responseData', responseData)
+    // console.log('responseData', responseData)
     setLoading(false)
     if (responseData.error == false) {
       const totalAssets = responseData.confirmedTransactions.length
@@ -84,34 +90,36 @@ export function SendAssetPage() {
       })
     }
   }
-  const getFormData = async (newValues) => {
-    console.log(newValues)
-    getAssetBalance(newValues)
+  const getFormData = async (formValues) => {
+    getAssetBalance(formValues, true)
   }
 
-  const getAssetBalance = async (newValues) => {
-    if (newValues && newValues.wallet != '' && newValues.assetId != '') {
-      console.log(newValues)
+  const getAssetBalance = async (formValues, update) => {
+    if (formValues && formValues.wallet != '' && formValues.assetId != '') {
+      // console.log(formValues)
       const responseData = await Helper.getFormattedAssetBalance(
-        newValues.wallet,
-        newValues.assetId,
+        formValues.wallet,
+        formValues.assetId,
         true
       )
-      console.log(responseData)
-      setAssetBalance(responseData)
-      setFormData(newValues)
-    } else if (formData.wallet && formData.assetId) {
-      const responseData = await Helper.getFormattedAssetBalance(
-        formData.wallet,
-        formData.assetId,
-        true
-      )
-      console.log(responseData)
+      update && setFormData(formValues)
+      // console.log(responseData)
+      if (responseData && responseData.error == false) {
+        setAssetBalance({ success: true, message: responseData.balance })
+      } else {
+        setAssetBalance({
+          success: false,
+          message:
+            responseData?.data?.message ||
+            // eslint-disable-next-line max-len
+            'An error occurred while getting your asset balance, pls ensure you enter a valid asset id',
+        })
+      }
     }
   }
 
   setInterval(() => {
-    getAssetBalance()
+    getAssetBalance(formData, false)
   }, 3000)
 
   return (
@@ -128,9 +136,16 @@ export function SendAssetPage() {
             <Button variant="contained" onClick={connect}>
               {t('connect-wallet')}
             </Button>
-            <Typography variant="p" fontWeight={700} marginLeft={'1rem'}>
-              {assetBalance}
-            </Typography>
+            {assetBalance.message != '' && (
+              <Typography
+                variant="error-message"
+                display='block'
+                marginTop='1rem'
+                color={assetBalance.success ? 'green' : 'error'}
+              >
+                {assetBalance.message} {assetBalance.success ? 'available' : ''}
+              </Typography>
+            )}
             <SendAssetForm
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
@@ -147,7 +162,7 @@ export function SendAssetPage() {
                 {actionStatus.message}
               </Typography>
             )}
-            <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+            <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
               <Grid item xs={6} lg={5} className="mr-2">
                 <Link href={'/instructions'} color="primary.dark">
                   {t('view-instructions-link')}
