@@ -48,7 +48,6 @@ export function RedeemAssetPage() {
       formData.assetId,
       formData.walletAddress
     )
-    console.log('responseData', responseData)
     setLoading(false)
     if (responseData.status == 'confirmed') {
       setActionStatus({
