@@ -36,8 +36,7 @@ export async function getStaticProps({ locale }) {
  */
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
-  const [fromAddress, setFromAddress] = useState('')
-  const [assetId, setAssetId] = useState('')
+  const [formData, setFormData] = useState('')
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -84,12 +83,16 @@ export function SendAssetPage() {
       })
     }
   }
+  const getFormData = (formData) => {
+    console.log(formData)
+    setFormData(formData)
+  }
 
   const getAssetBalance = async () => {
-    if (fromAddress && assetId) {
+    if (formData.fromAddress && formData.assetId) {
       const responseData = await Helper.getFormattedAssetBalance(
-        fromAddress,
-        assetId,
+        formData.fromAddress,
+        formData.assetId,
         true
       )
       console.log(responseData)
@@ -118,8 +121,7 @@ export function SendAssetPage() {
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
-              setFromAddress={setFromAddress}
-              setAssetId={setAssetId}
+              getFormData={getFormData}
             />
             {actionStatus.message != '' && (
               <Typography
@@ -132,12 +134,12 @@ export function SendAssetPage() {
             )}
             <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
               <Grid item xs={6} lg={5} className="mr-2">
-                <Link href={'/instructions'} color='primary.dark'>
+                <Link href={'/instructions'} color="primary.dark">
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/downloadlink'} color='primary.dark'>
+                <Link href={'/downloadlink'} color="primary.dark">
                   {t('download-csv-example-link')}
                 </Link>
               </Grid>

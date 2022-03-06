@@ -12,8 +12,7 @@ const SendAssetForm = ({
   formattedAddresses,
   onSubmit,
   isLoading,
-  setFromAddress,
-  setAssetId,
+  getFormData,
 }) => {
   const CustomSelectComponent = (props) => {
     return (
@@ -77,9 +76,7 @@ const SendAssetForm = ({
       onSubmit={onSubmit}
       onChange={(e) => {
         const { formData } = e
-        console.log('formData', formData)
-        // setAssetId(formData.assetId)
-        // setFromAddress(formData.wallet)
+        getFormData(formData)
       }}
     >
       <LoadingButton
