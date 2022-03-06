@@ -132,12 +132,12 @@ export function SendAssetPage() {
             )}
             <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
               <Grid item xs={6} lg={5} className="mr-2">
-                <Link href={'/instructions'}>
+                <Link href={'/instructions'} color='primary.dark'>
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/downloadlink'}>
+                <Link href={'/downloadlink'} color='primary.dark'>
                   {t('download-csv-example-link')}
                 </Link>
               </Grid>
