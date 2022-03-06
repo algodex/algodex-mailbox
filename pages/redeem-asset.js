@@ -94,12 +94,14 @@ export function RedeemAssetPage() {
 
             <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
               <Grid item xs={6} lg={5}>
-                <Link href={'/instructions'}>
+                <Link href={'/instructions'} color='primary.dark'>
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/'}>{t('open-algoexplorer-link')}</Link>
+                <Link href={'/'} color='primary.dark'>
+                  {t('open-algoexplorer-link')}
+                </Link>
               </Grid>
             </Grid>
           </Grid>
