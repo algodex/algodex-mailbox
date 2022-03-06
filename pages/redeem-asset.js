@@ -39,6 +39,10 @@ export function RedeemAssetPage() {
     success: false,
   })
   const submitForm = async ({ formData }) => {
+    setActionStatus({
+      message: '',
+      success: '',
+    })
     setLoading(true)
     const responseData = await RedeemAssetsHelper.redeem(
       formData.assetId,
@@ -53,7 +57,10 @@ export function RedeemAssetPage() {
       })
     } else {
       setActionStatus({
-        message: typeof responseData === 'string' ? responseData : 'Sorry an error occured',
+        message:
+          typeof responseData === 'string'
+            ? responseData
+            : 'Sorry, an error occurred',
         success: false,
       })
     }
