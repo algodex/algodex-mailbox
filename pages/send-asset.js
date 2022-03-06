@@ -79,7 +79,7 @@ export function SendAssetPage() {
       })
     } else {
       setActionStatus({
-        message: responseData.body?.message || 'Sorry an error occured',
+        message: responseData.body?.message || 'Sorry, an error occurred',
         success: false,
       })
     }

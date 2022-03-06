@@ -77,8 +77,9 @@ const SendAssetForm = ({
       onSubmit={onSubmit}
       onChange={(e) => {
         const { formData } = e
-        setAssetId(formData.assetId)
-        setFromAddress(formData.wallet)
+        console.log('formData', formData)
+        // setAssetId(formData.assetId)
+        // setFromAddress(formData.wallet)
       }}
     >
       <LoadingButton
