@@ -6,7 +6,7 @@
   "type": "object",
   "examples": [
     {
-      "type": "RedeemFromMailbox",
+      "type": "Transaction.RedeemFromMailbox",
       "assetId": 224234,
       "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
     }

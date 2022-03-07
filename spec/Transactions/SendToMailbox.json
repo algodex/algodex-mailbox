@@ -6,7 +6,7 @@
   "type": "object",
   "examples": [
     {
-      "type": "sendToMailbox",
+      "type": "Transaction.SendToMailbox",
       "assetId": 224234,
       "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
       "destinationWallets": [
@@ -26,10 +26,10 @@
       "const": "Transaction.SendToMailbox"
     },
     "assetId": {
-      "$ref": "../Asset/Index.json"
+      "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
     },
     "wallet": {
-      "$ref": "../Wallet/Address.json"
+      "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
     },
     "destinationWallets": {
       "type": "array",
@@ -47,7 +47,7 @@
       "description": "Represents a transfer",
       "properties": {
         "wallet": {
-          "$ref": "../Wallet/Address.json"
+          "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
         },
         "amount": {
           "type": "integer",
