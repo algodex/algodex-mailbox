@@ -1,9 +1,9 @@
 import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
-import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-const SendHistoryForm = ({ onSubmit }) => {
+const SendHistoryForm = ({ onSubmit, isLoading }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -27,14 +27,15 @@ const SendHistoryForm = ({ onSubmit }) => {
   }
 
   return (
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      onSubmit={onSubmit}
-    >
-      <Button type="submit" variant="contained" sx={{ marginTop: '2rem' }}>
+    <Form schema={schema} uiSchema={uiSchema} onSubmit={onSubmit}>
+      <LoadingButton
+        loading={isLoading}
+        variant="contained"
+        sx={{ marginTop: '2rem' }}
+        type="submit"
+      >
         Refresh
-      </Button>
+      </LoadingButton>
     </Form>
   )
 }
