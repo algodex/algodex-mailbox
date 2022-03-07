@@ -8,12 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 
-const SendAssetForm = ({
-  formattedAddresses,
-  onSubmit,
-  isLoading,
-  getFormData,
-}) => {
+const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
   const CustomSelectComponent = (props) => {
     return (
       <Box sx={{ marginBottom: '1rem' }}>
@@ -74,10 +69,6 @@ const SendAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
       onSubmit={onSubmit}
-      onChange={(e) => {
-        const { formData } = e
-        getFormData(formData)
-      }}
     >
       <LoadingButton
         loading={isLoading}

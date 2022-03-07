@@ -36,7 +36,7 @@ export async function getStaticProps({ locale }) {
  */
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState('')
+  // const [formData, setFormData] = useState('')
   const [assetBalance, setAssetBalance] = useState({
     success: false,
     message: '',
@@ -83,15 +83,13 @@ export function SendAssetPage() {
         message: `${sentAssets}/${totalAssets} asset(s) sent successfully`,
         success: true,
       })
+      getAssetBalance(formData, true)
     } else {
       setActionStatus({
         message: responseData.body?.message || 'Sorry, an error occurred',
         success: false,
       })
     }
-  }
-  const getFormData = async (formValues) => {
-    getAssetBalance(formValues, true)
   }
 
   const getAssetBalance = async (formValues, update) => {
@@ -102,7 +100,10 @@ export function SendAssetPage() {
         formValues.assetId,
         true
       )
-      update && setFormData(formValues)
+      if (update) {
+        console.log('update form')
+        // setFormData(formValues)
+      }
       // console.log(responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
@@ -118,9 +119,9 @@ export function SendAssetPage() {
     }
   }
 
-  setInterval(() => {
-    getAssetBalance(formData, false)
-  }, 3000)
+  // setInterval(() => {
+  //   getAssetBalance(formData, false)
+  // }, 3000)
 
   return (
     <>
@@ -139,8 +140,8 @@ export function SendAssetPage() {
             {assetBalance.message != '' && (
               <Typography
                 variant="error-message"
-                display='block'
-                marginTop='1rem'
+                display="block"
+                marginTop="1rem"
                 color={assetBalance.success ? 'green' : 'error'}
               >
                 {assetBalance.message} {assetBalance.success ? 'available' : ''}
@@ -151,7 +152,6 @@ export function SendAssetPage() {
               onSubmit={submitForm}
               isLoading={loading}
               assetBalance={assetBalance}
-              getFormData={getFormData}
             />
             {actionStatus.message != '' && (
               <Typography
