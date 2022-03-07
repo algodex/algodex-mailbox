@@ -46,8 +46,8 @@ export function RedeemAssetPage() {
     setLoading(true)
     const responseData = await RedeemAssetsHelper.redeem(
       formData.assetId,
-      formData.senderAddress,
       formData.receiverAddress,
+      formData.senderAddress,
     )
     setLoading(false)
     if (responseData.status == 'confirmed') {
