@@ -23,7 +23,8 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
       <TextareaAutosize
         minRows={9}
         maxRows={14}
-        placeholder="CSV Transactions"
+        // eslint-disable-next-line max-len
+        placeholder="Enter your assetId and sender's address above, your CSV transactions will be listed here"
         readOnly
         value={props.value}
         required={props.required}
