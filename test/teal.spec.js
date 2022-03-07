@@ -85,6 +85,39 @@ const negativeWithdrawTests = [
 
 ]
 
+const negativeReturnToSenderTests = [
+  {txnNum: 0, field: 'from', val: algosdk.decodeAddress(config.receiverAccount2.addr)},
+  {txnNum: 0, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 0, field: 'amount', val: 1000},
+  {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 0, field: 'type', val: 'pay'},
+  {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.receiverAccount2.addr)},
+  {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 1, field: 'amount', val: 1000},
+  {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 1, field: 'type', val: 'axfer'},
+  {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 2, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 2, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 2, field: 'amount', val: 1000},
+  {txnNum: 2, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 2, field: 'type', val: 'axfer'},
+  {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 3, negTxn: {
+    unsignedTxnPromise:
+            transactionGenerator.getPayTxn(
+              config.client,
+              config.senderAccount.addr,
+              config.maliciousAccount.addr,
+              1000,
+              false
+            ),
+    senderAcct: config.senderAccount
+  }
+  }
+]
+
 describe('Test Mailbox Funding And Withdrawal', () => {
 
   test('Setup', async () => {
@@ -140,6 +173,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     const {
       senderAccount,
       receiverAccount,
+      receiverAccount2,
       //openAccount,
       //maliciousAccount,
       client,
@@ -148,7 +182,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     console.log('destructuring')
     console.log(client)
 
-    const txns = await generateTxns.getFundEscrowTxns(
+    let txns = await generateTxns.getFundEscrowTxns(
       client,
       assetId,
       100000,
@@ -156,7 +190,19 @@ describe('Test Mailbox Funding And Withdrawal', () => {
       receiverAccount.addr
     )
 
-    const signedTxns = await testHelper.groupAndSignTransactions(txns)
+    let signedTxns = await testHelper.groupAndSignTransactions(txns)
+
+    await testHelper.sendAndCheckConfirmed(client, signedTxns)
+
+    txns = await generateTxns.getFundEscrowTxns(
+      client,
+      assetId,
+      100000,
+      senderAccount,
+      receiverAccount2.addr
+    )
+
+    signedTxns = await testHelper.groupAndSignTransactions(txns)
 
     await testHelper.sendAndCheckConfirmed(client, signedTxns)
   }, JEST_MINUTE_TIMEOUT)
@@ -209,6 +255,35 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     await testHelper.sendAndCheckConfirmed(client, signedTxns)
   }, JEST_MINUTE_TIMEOUT)
 
+  negativeReturnToSenderTests.map( (negTestTxnConfig) => {
+    const {
+      senderAccount,
+      receiverAccount2,
+      //openAccount,
+      //maliciousAccount,
+      client,
+      assetId
+    } = config
+
+    // eslint-disable-next-line max-len
+    const testName = `Negative return to sender test: txnNum: ${negTestTxnConfig.txnNum} field: ${negTestTxnConfig.field} val: ${negTestTxnConfig.val}`
+    test (testName, async () => {
+      if (negTestTxnConfig.negTxn) {
+        negTestTxnConfig.negTxn.unsignedTxn = await negTestTxnConfig.negTxn.unsignedTxnPromise
+      }
+      const outerTxns = await generateTxns.getReturnToSenderTxns(client, assetId, 
+        receiverAccount2.addr, senderAccount)
+      //const txn = outerTxns[1].unsignedTxn;
+
+      const result = await helper.runNegativeTest(
+        config,
+        config.client,
+        outerTxns,
+        negTestTxnConfig
+      )
+      expect (result).toBeTruthy()
+    }, JEST_MINUTE_TIMEOUT)
+  })
 
   test('Return To Sender', async () => {
     const {
@@ -221,22 +296,10 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     } = config
 
 
-    let txns = await generateTxns.getFundEscrowTxns(
-      client,
-      assetId,
-      100000,
-      senderAccount,
-      receiverAccount2.addr
-    )
-
-    let signedTxns = await testHelper.groupAndSignTransactions(txns)
-
-    await testHelper.sendAndCheckConfirmed(client, signedTxns)
-
-    txns = await generateTxns.getReturnToSenderTxns(client, assetId, 
+    const txns = await generateTxns.getReturnToSenderTxns(client, assetId, 
       receiverAccount2.addr, senderAccount)
     // const firstTxn = txns[0].unsignedTxn
-    signedTxns = await testHelper.groupAndSignTransactions(txns)
+    const signedTxns = await testHelper.groupAndSignTransactions(txns)
 
     await testHelper.sendAndCheckConfirmed(client, signedTxns)
   }, JEST_MINUTE_TIMEOUT)
