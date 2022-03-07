@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Transaction.json",
+  "title": "Transaction",
+  "examples": [
+    {
+      "type": "sendToMailbox",
+      "assetId": 224234,
+      "fromWallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
+      "destinationWallets": [
+        {
+          "toAddress": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
+          "amount": 123231
+        },
+        {
+          "toAddress": "OOU3O5OSZGVFE5C3KZKH33TSD77UFB445OWVHDBYI6BB542HWU3A6ZLFHI",
+          "amount": 4242
+        }
+      ]
+    },
+    {
+      "type": "redeemFromMailbox",
+      "assetId": 224234,
+      "ownerWallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+    }
+  ],
+  "oneOf": [
+    {
+      "$ref": "https://schemas.algodex.com/v1/Transactions/RedeemFromMailbox.json"
+    },
+    {
+      "$ref": "https://schemas.algodex.com/v1/Transactions/SendToMailbox.json"
+    }
+  ]
+}

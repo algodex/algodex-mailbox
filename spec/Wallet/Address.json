@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Wallet/Address.json",
+  "type": "string",
+  "pattern": "[A-Z0-9]{58}",
+  "description": "An account public key"
+}

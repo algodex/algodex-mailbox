@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Transactions/SendToMailbox.json",
+  "title": "Send to Mailbox Transaction",
+  "description": "Allow for transfers of an ASA **to** an escrow account",
+  "type": "object",
+  "examples": [
+    {
+      "type": "Transaction.SendToMailbox",
+      "assetId": 224234,
+      "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
+      "destinationWallets": [
+        {
+          "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
+          "amount": 123231
+        },
+        {
+          "wallet": "OOU3O5OSZGVFE5C3KZKH33TSD77UFB445OWVHDBYI6BB542HWU3A6ZLFHI",
+          "amount": 4242
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "type": {
+      "const": "Transaction.SendToMailbox"
+    },
+    "assetId": {
+      "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
+    },
+    "wallet": {
+      "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+    },
+    "destinationWallets": {
+      "type": "array",
+      "description": "TODO: Add detailed description of this array",
+      "items": {
+        "$ref": "#/definitions/DestinationWallets"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "DestinationWallets": {
+      "type": "object",
+      "title": "Send To Mailbox Transaction Destination",
+      "description": "Represents a transfer",
+      "properties": {
+        "wallet": {
+          "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+        },
+        "amount": {
+          "type": "integer",
+          "description": "Amount of the ASA to be transferred",
+          "minimum": 0
+        }
+      },
+      "required": ["wallet", "amount"],
+      "additionalProperties": false
+    }
+  }
+}

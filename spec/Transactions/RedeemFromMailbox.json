@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Transactions/RedeemFromMailbox.json",
+  "title": "Redeem from Mailbox Transaction",
+  "description": "Allow for transfers of an ASA **from** an escrow account",
+  "type": "object",
+  "examples": [
+    {
+      "type": "Transaction.RedeemFromMailbox",
+      "assetId": 224234,
+      "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+    }
+  ],
+  "properties": {
+    "type": {
+      "const": "Transaction.RedeemFromMailbox"
+    },
+    "assetId": {
+      "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
+    },
+    "wallet": {
+      "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+    }
+  },
+  "required": ["type", "assetId", "wallet"],
+  "additionalProperties": false
+}
