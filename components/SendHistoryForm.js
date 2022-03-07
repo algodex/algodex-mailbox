@@ -3,7 +3,7 @@ import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 
-const SendHistoryForm = ({ onSubmit, isLoading }) => {
+const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -27,7 +27,16 @@ const SendHistoryForm = ({ onSubmit, isLoading }) => {
   }
 
   return (
-    <Form schema={schema} uiSchema={uiSchema} onSubmit={onSubmit}>
+    <Form
+      schema={schema}
+      uiSchema={uiSchema}
+      onSubmit={onSubmit}
+      formData={{
+        assetId: formData.assetId,
+        senderAddress: formData.senderAddress,
+        csvTransactions: formData.csvTransactions,
+      }}
+    >
       <LoadingButton
         loading={isLoading}
         variant="contained"

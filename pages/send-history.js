@@ -30,7 +30,11 @@ export async function getStaticProps({ locale }) {
 
 export function SendHistoryPage() {
   const { t } = useTranslation('common')
-  const [allTransactions, setAllTransactions] = useState([])
+  const [formData, setFormData] = useState({
+    assetId: '',
+    senderAddress: '',
+    csvTransactions: '',
+  })
   const [loading, setLoading] = useState(false)
   const [actionStatus, setActionStatus] = useState({
     message: '',
@@ -51,16 +55,19 @@ export function SendHistoryPage() {
     )
     console.log('responseData', responseData)
     setLoading(false)
-    if (responseData.error == false) {
-      setAllTransactions(responseData)
-    } else {
+    if (responseData.error == true) {
       setActionStatus({
         message: responseData.body?.message || 'Sorry an error occured',
         success: false,
       })
+    } else {
+      setFormData({
+        assetId,
+        senderAddress,
+        csvTransactions: responseData,
+      })
     }
   }
-  console.log('allTransactions')
   return (
     <>
       <Head>
@@ -72,7 +79,11 @@ export function SendHistoryPage() {
             <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
               {t('/send-history')}
             </Typography>
-            <SendHistoryForm onSubmit={submitForm} isLoading={loading} />
+            <SendHistoryForm
+              onSubmit={submitForm}
+              isLoading={loading}
+              formData={formData}
+            />
             {actionStatus.message != '' && (
               <Typography
                 variant="error-message"
