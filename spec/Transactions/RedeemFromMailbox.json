@@ -13,7 +13,7 @@
   ],
   "properties": {
     "type": {
-      "const": "RedeemFromMailbox"
+      "const": "Transaction.RedeemFromMailbox"
     },
     "assetId": {
       "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"

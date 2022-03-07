@@ -23,10 +23,7 @@
   ],
   "properties": {
     "type": {
-      "type": "string",
-      "description": "Transaction Type",
-      "default": "sendToMailbox",
-      "enum": ["sendToMailbox"]
+      "const": "Transaction.SendToMailbox"
     },
     "assetId": {
       "$ref": "../Asset/Index.json"
