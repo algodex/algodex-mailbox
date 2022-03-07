@@ -33,18 +33,37 @@ export async function getStaticProps({ locale }) {
  */
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
+  const [loading, setLoading] = useState(false)
   const [actionStatus, setActionStatus] = useState({
-    message: 'Success/Error code here',
+    message: '',
     success: false,
   })
   const submitForm = async ({ formData }) => {
-    console.log(formData)
-
-    await RedeemAssetsHelper.redeem(formData.assetId, formData.walletAddress)
     setActionStatus({
-      message: 'Success',
-      success: true,
+      message: '',
+      success: '',
     })
+    setLoading(true)
+    const responseData = await RedeemAssetsHelper.redeem(
+      formData.assetId,
+      formData.receiverAddress,
+      formData.senderAddress,
+    )
+    setLoading(false)
+    if (responseData.status == 'confirmed') {
+      setActionStatus({
+        message: responseData.statusMsg,
+        success: true,
+      })
+    } else {
+      setActionStatus({
+        message:
+          typeof responseData === 'string'
+            ? responseData
+            : 'Sorry, an error occurred',
+        success: false,
+      })
+    }
   }
 
   return (
@@ -59,6 +78,7 @@ export function RedeemAssetPage() {
             <RedeemAssetForm
               onSubmit={submitForm}
               actionStatus={actionStatus}
+              loading={loading}
             />
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
               <Grid item>
@@ -75,12 +95,14 @@ export function RedeemAssetPage() {
 
             <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
               <Grid item xs={6} lg={5}>
-                <Link href={'/instructions'}>
+                <Link href={'/instructions'} color='primary.dark'>
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/'}>{t('open-algoexplorer-link')}</Link>
+                <Link href={'/'} color='primary.dark'>
+                  {t('open-algoexplorer-link')}
+                </Link>
               </Grid>
             </Grid>
           </Grid>
