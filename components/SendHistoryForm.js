@@ -13,6 +13,7 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
         type: 'string',
         title: 'CSV Transactions',
         default: '',
+        readOnly: true,
       },
     },
   }
