@@ -28,6 +28,7 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
         readOnly
         value={props.value}
         required={props.required}
+        style={{padding:'0.9rem'}}
         onChange={(event) => props.onChange(event.target.value)}
       />
     )
