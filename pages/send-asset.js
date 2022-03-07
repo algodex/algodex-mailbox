@@ -113,7 +113,7 @@ export function SendAssetPage() {
           message:
             responseData?.data?.message ||
             // eslint-disable-next-line max-len
-            'An error occurred while getting your asset balance, pls ensure you enter a valid asset id',
+            'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
         })
       }
     }
