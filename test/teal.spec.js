@@ -8,6 +8,7 @@ const JEST_MINUTE_TIMEOUT = 60 * 1000
 const config = {
   senderAccount: testHelper.getRandomAccount(),
   receiverAccount: testHelper.getRandomAccount(),
+  receiverAccount2: testHelper.getRandomAccount(),
   openAccount: testHelper.getOpenAccount(),
   maliciousAccount: testHelper.getRandomAccount(),
   client: testHelper.getLocalClient(),
@@ -17,6 +18,7 @@ const config = {
 
 console.log('sender account: ' + config.senderAccount.addr)
 console.log('receiver account: ' + config.receiverAccount.addr)
+console.log('receiver account2: ' + config.receiverAccount2.addr)
 console.log('open account: ' + config.openAccount.addr)
 console.log('malicious account: ' + config.maliciousAccount.addr)
 
@@ -86,13 +88,16 @@ const negativeWithdrawTests = [
 describe('Test Mailbox Funding And Withdrawal', () => {
 
   test('Setup', async () => {
-    const {senderAccount, receiverAccount, openAccount, maliciousAccount, client, assetId} = config
+    const {senderAccount, receiverAccount, receiverAccount2,
+      openAccount, maliciousAccount, client, assetId} = config
     await testHelper.transferFunds(client, openAccount, receiverAccount, 1000000)
+    await testHelper.transferFunds(client, openAccount, receiverAccount2, 1000000)
     await testHelper.transferFunds(client, openAccount, senderAccount, 1000000)
     await testHelper.transferFunds(client, openAccount, maliciousAccount, 1000000)
 
     await testHelper.transferASA(client, senderAccount, senderAccount, 0, assetId)
     await testHelper.transferASA(client, receiverAccount, receiverAccount, 0, assetId)
+    await testHelper.transferASA(client, receiverAccount, receiverAccount2, 0, assetId)
     await testHelper.transferASA(client, openAccount, senderAccount, 1000000, assetId)
   }, JEST_MINUTE_TIMEOUT)
 
@@ -204,11 +209,45 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     await testHelper.sendAndCheckConfirmed(client, signedTxns)
   }, JEST_MINUTE_TIMEOUT)
 
+
+  test('Return To Sender', async () => {
+    const {
+      senderAccount,
+      receiverAccount2,
+      //openAccount,
+      //maliciousAccount,
+      client,
+      assetId
+    } = config
+
+
+    let txns = await generateTxns.getFundEscrowTxns(
+      client,
+      assetId,
+      100000,
+      senderAccount,
+      receiverAccount2.addr
+    )
+
+    let signedTxns = await testHelper.groupAndSignTransactions(txns)
+
+    await testHelper.sendAndCheckConfirmed(client, signedTxns)
+
+    txns = await generateTxns.getReturnToSenderTxns(client, assetId, 
+      receiverAccount2.addr, senderAccount)
+    // const firstTxn = txns[0].unsignedTxn
+    signedTxns = await testHelper.groupAndSignTransactions(txns)
+
+    await testHelper.sendAndCheckConfirmed(client, signedTxns)
+  }, JEST_MINUTE_TIMEOUT)
+
+
   test('Close Accounts', async () => {
     const {
       //lsigAccount,
       senderAccount,
       receiverAccount,
+      receiverAccount2,
       openAccount,
       maliciousAccount,
       client,
@@ -216,6 +255,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
     } = config
 
     await testHelper.closeAccount(client, receiverAccount, openAccount)
+    await testHelper.closeAccount(client, receiverAccount2, openAccount)
     await testHelper.closeAccount(client, maliciousAccount, openAccount)
     await testHelper.closeAccount(client, senderAccount, openAccount)
 
