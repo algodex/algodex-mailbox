@@ -7,10 +7,11 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 const RedeemAssetForm = ({ onSubmit, actionStatus, loading }) => {
   const schema = {
-    required: ['assetId', 'walletAddress'],
+    required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
       assetId: { type: 'string', title: 'Asset Id' },
-      walletAddress: { type: 'string', title: 'Wallet Address' },
+      senderAddress: { type: 'string', title: 'Sender Address' },
+      receiverAddress: { type: 'string', title: 'Receiver Address' },
     },
   }
 
