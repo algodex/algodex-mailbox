@@ -1,9 +1,10 @@
 import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
-import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-const SendHistoryForm = ({ onSubmit }) => {
+const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -12,17 +13,34 @@ const SendHistoryForm = ({ onSubmit }) => {
       csvTransactions: {
         type: 'string',
         title: 'CSV Transactions',
-        default: '',
+        readOnly: true,
       },
     },
   }
 
+  const customTextArea = (props) => {
+    return (
+      <TextareaAutosize
+        minRows={9}
+        maxRows={14}
+        // eslint-disable-next-line max-len
+        placeholder="Enter your assetId and sender's address above, your CSV transactions will be listed here"
+        readOnly
+        value={props.value}
+        required={props.required}
+        style={{padding:'0.9rem'}}
+        onChange={(event) => props.onChange(event.target.value)}
+      />
+    )
+  }
+
+  const widgets = {
+    customTextArea: customTextArea,
+  }
+
   const uiSchema = {
     csvTransactions: {
-      'ui:widget': 'textarea',
-      'ui:options': {
-        rows: 9,
-      },
+      'ui:widget': customTextArea,
     },
   }
 
@@ -31,10 +49,21 @@ const SendHistoryForm = ({ onSubmit }) => {
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
+      widgets={widgets}
+      formData={{
+        assetId: formData.assetId,
+        senderAddress: formData.senderAddress,
+        csvTransactions: formData.csvTransactions,
+      }}
     >
-      <Button type="submit" variant="contained" sx={{ marginTop: '2rem' }}>
+      <LoadingButton
+        loading={isLoading}
+        variant="contained"
+        sx={{ marginTop: '2rem' }}
+        type="submit"
+      >
         Refresh
-      </Button>
+      </LoadingButton>
     </Form>
   )
 }
