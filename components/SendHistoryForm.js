@@ -2,6 +2,7 @@ import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
   const schema = {
@@ -12,18 +13,32 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
       csvTransactions: {
         type: 'string',
         title: 'CSV Transactions',
-        default: '',
         readOnly: true,
       },
     },
   }
 
+  const customTextArea = (props) => {
+    return (
+      <TextareaAutosize
+        minRows={9}
+        maxRows={14}
+        placeholder="CSV Transactions"
+        readOnly
+        value={props.value}
+        required={props.required}
+        onChange={(event) => props.onChange(event.target.value)}
+      />
+    )
+  }
+
+  const widgets = {
+    customTextArea: customTextArea,
+  }
+
   const uiSchema = {
     csvTransactions: {
-      'ui:widget': 'textarea',
-      'ui:options': {
-        rows: 9,
-      },
+      'ui:widget': customTextArea,
     },
   }
 
@@ -32,6 +47,7 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
+      widgets={widgets}
       formData={{
         assetId: formData.assetId,
         senderAddress: formData.senderAddress,
