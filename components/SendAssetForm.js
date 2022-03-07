@@ -6,15 +6,18 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
+const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
   const CustomSelectComponent = (props) => {
     return (
       <Box sx={{ marginBottom: '1rem' }}>
         <FormControl>
-          <RadioGroup aria-labelledby="wallet" name="wallet" 
-            onChange={(event, value) => props.onChange(value)}>
+          <RadioGroup
+            aria-labelledby="wallet"
+            name="wallet"
+            onChange={(event, value) => props.onChange(value)}
+          >
             {formattedAddresses.map((address) => (
               <FormControlLabel
                 key={address}
@@ -67,14 +70,15 @@ const SendAssetForm = ({ formattedAddresses, onSubmit }) => {
       widgets={widgets}
       onSubmit={onSubmit}
     >
-      <Button
+      <LoadingButton
+        loading={isLoading}
         variant="contained"
         xs={{ marginBottom: '2rem' }}
         disabled={formattedAddresses.length < 1}
         type="submit"
       >
         Send Assets
-      </Button>
+      </LoadingButton>
     </Form>
   )
 }
