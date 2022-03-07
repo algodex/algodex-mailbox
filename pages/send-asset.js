@@ -71,7 +71,7 @@ export function SendAssetPage() {
         (asset) => asset.value.status == 'confirmed'
       ).length
       setActionStatus({
-        message: `${sentAssets}/${totalAssets} asset(s) sent successfully`,
+        message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
         success: true,
       })
     } else {
