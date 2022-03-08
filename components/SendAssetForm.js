@@ -45,7 +45,7 @@ const SendAssetForm = ({
   const CustomInputComponent = (props) => {
     return (
       <Box>
-        <FormControl fullWidth sx={{ m: 1 }}>
+        <FormControl fullWidth>
           <TextField
             required
             id="outlined-required"

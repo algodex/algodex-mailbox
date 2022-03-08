@@ -54,7 +54,7 @@ export function SendAssetPage() {
       if (addresses == null) {
         return
       }
-      // console.log({ addresses })
+      console.log({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -62,7 +62,8 @@ export function SendAssetPage() {
 
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
-    const { wallet, assetId, csvTransactions } = formData
+    const { csvTransactions } = formData
+    console.log('first', wallet, assetId, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
@@ -73,9 +74,9 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    // console.log('responseData', responseData)
+    console.log('responseData', responseData)
     setLoading(false)
-    if (responseData.error == false) {
+    if (responseData?.error == false) {
       const totalAssets = responseData.confirmedTransactions.length
       const sentAssets = responseData.confirmedTransactions.filter(
         (asset) => asset.value.status == 'confirmed'
@@ -94,29 +95,33 @@ export function SendAssetPage() {
   }
 
   useEffect(() => {
-    if (wallet && assetId) {
-      getAssetBalance({ wallet, assetId })
-    }
+    getAssetBalance({ wallet, assetId })
   }, [assetId, wallet])
 
-  const getAssetBalance = async ({ wallet, assetId }) => {
-    const responseData = await Helper.getFormattedAssetBalance(
-      wallet,
-      assetId,
-      true
-    )
+  setTimeout(() => {
+    getAssetBalance({ wallet, assetId })
+  }, 3000)
 
-    // console.log('responseData', responseData)
-    if (responseData && responseData.error == false) {
-      setAssetBalance({ success: true, message: responseData.balance })
-    } else {
-      setAssetBalance({
-        success: false,
-        message:
-          responseData?.data?.message ||
-          // eslint-disable-next-line max-len
-          'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
-      })
+  const getAssetBalance = async ({ wallet, assetId }) => {
+    if (wallet && assetId) {
+      const responseData = await Helper.getFormattedAssetBalance(
+        wallet,
+        assetId,
+        true
+      )
+
+      // console.log('responseData', responseData)
+      if (responseData && responseData.error == false) {
+        setAssetBalance({ success: true, message: responseData.balance })
+      } else {
+        setAssetBalance({
+          success: false,
+          message:
+            responseData?.data?.message ||
+            // eslint-disable-next-line max-len
+            'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
+        })
+      }
     }
   }
 
