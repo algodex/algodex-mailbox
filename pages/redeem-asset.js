@@ -34,33 +34,46 @@ export async function getStaticProps({ locale }) {
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
   const [loading, setLoading] = useState(false)
+  const [escrowBalance, setEscrowBalance] = useState('')
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
   })
-  const submitForm = async ({ formData }) => {
+
+  const submitForm = async ({
+    formData: { assetId, receiverAddress, senderAddress },
+  }) => {
     setActionStatus({
       message: '',
       success: '',
     })
     setLoading(true)
     const responseData = await RedeemAssetsHelper.redeem(
-      formData.assetId,
-      formData.receiverAddress,
-      formData.senderAddress,
+      assetId,
+      receiverAddress,
+      senderAddress
     )
     setLoading(false)
+    // console.log('responseData', responseData)
+    // console.log('responseData', responseData?.response)
     if (responseData.status == 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
         success: true,
       })
+      const res = await RedeemAssetsHelper.getEscrowBalance(
+        assetId,
+        receiverAddress,
+        senderAddress
+      )
+      setEscrowBalance(res)
     } else {
       setActionStatus({
         message:
           typeof responseData === 'string'
             ? responseData
-            : 'Sorry, an error occurred',
+            : responseData?.response?.body?.message ||
+              'Sorry, an error occurred',
         success: false,
       })
     }
@@ -80,27 +93,29 @@ export function RedeemAssetPage() {
               actionStatus={actionStatus}
               loading={loading}
             />
-            <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
-              <Grid item>
-                <Typography variant="p" component="p">
-                  {t('balance')}:
-                </Typography>
+            {escrowBalance && (
+              <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
+                <Grid item>
+                  <Typography variant="p" component="p">
+                    {t('balance')}:
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="p" component="p">
+                    {escrowBalance}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography variant="p" component="p">
-                  100 LAMP
-                </Typography>
-              </Grid>
-            </Grid>
+            )}
 
             <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
               <Grid item xs={6} lg={5}>
-                <Link href={'/instructions'} color='primary.dark'>
+                <Link href={'/instructions'} color="primary.dark">
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/'} color='primary.dark'>
+                <Link href={'/'} color="primary.dark">
                   {t('open-algoexplorer-link')}
                 </Link>
               </Grid>
