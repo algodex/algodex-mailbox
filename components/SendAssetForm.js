@@ -7,8 +7,15 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
+import TextField from '@mui/material/TextField'
 
-const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
+const SendAssetForm = ({
+  formattedAddresses,
+  onSubmit,
+  isLoading,
+  setWallet,
+  setAssetId,
+}) => {
   const CustomSelectComponent = (props) => {
     return (
       <Box sx={{ marginBottom: '1rem' }}>
@@ -16,7 +23,10 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
           <RadioGroup
             aria-labelledby="wallet"
             name="wallet"
-            onChange={(event, value) => props.onChange(value)}
+            onChange={(event, value) => {
+              props.onChange(value)
+              setWallet(value)
+            }}
           >
             {formattedAddresses.map((address) => (
               <FormControlLabel
@@ -32,6 +42,23 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
     )
   }
 
+  const CustomInputComponent = (props) => {
+    return (
+      <Box>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            required
+            id="outlined-required"
+            label="Asset Id"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setAssetId(value)
+            }}
+          />
+        </FormControl>
+      </Box>
+    )
+  }
   const schema = {
     required: ['assetId', 'csvTransactions', 'wallet'],
     properties: {
@@ -46,6 +73,9 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
   }
 
   const uiSchema = {
+    assetId: {
+      'ui:widget': 'CustomInput',
+    },
     csvTransactions: {
       'ui:widget': 'textarea',
       'ui:placeholder': 'Enter CSV Transactions',
@@ -60,6 +90,7 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
 
   const widgets = {
     CustomSelect: CustomSelectComponent,
+    CustomInput: CustomInputComponent,
   }
 
   return (

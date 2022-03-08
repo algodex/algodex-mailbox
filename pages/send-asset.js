@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -36,7 +36,8 @@ export async function getStaticProps({ locale }) {
  */
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
-  // const [formData, setFormData] = useState('')
+  const [assetId, setAssetId] = useState()
+  const [wallet, setWallet] = useState()
   const [assetBalance, setAssetBalance] = useState({
     success: false,
     message: '',
@@ -83,7 +84,7 @@ export function SendAssetPage() {
         message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
         success: true,
       })
-      getAssetBalance(formData, true)
+      getAssetBalance({ wallet, assetId })
     } else {
       setActionStatus({
         message: responseData.body?.message || 'Sorry, an error occurred',
@@ -92,36 +93,32 @@ export function SendAssetPage() {
     }
   }
 
-  const getAssetBalance = async (formValues, update) => {
-    if (formValues && formValues.wallet != '' && formValues.assetId != '') {
-      // console.log(formValues)
-      const responseData = await Helper.getFormattedAssetBalance(
-        formValues.wallet,
-        formValues.assetId,
-        true
-      )
-      if (update) {
-        console.log('update form')
-        // setFormData(formValues)
-      }
-      // console.log(responseData)
-      if (responseData && responseData.error == false) {
-        setAssetBalance({ success: true, message: responseData.balance })
-      } else {
-        setAssetBalance({
-          success: false,
-          message:
-            responseData?.data?.message ||
-            // eslint-disable-next-line max-len
-            'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
-        })
-      }
+  useEffect(() => {
+    if (wallet && assetId) {
+      getAssetBalance({ wallet, assetId })
+    }
+  }, [assetId, wallet])
+
+  const getAssetBalance = async ({ wallet, assetId }) => {
+    const responseData = await Helper.getFormattedAssetBalance(
+      wallet,
+      assetId,
+      true
+    )
+
+    // console.log('responseData', responseData)
+    if (responseData && responseData.error == false) {
+      setAssetBalance({ success: true, message: responseData.balance })
+    } else {
+      setAssetBalance({
+        success: false,
+        message:
+          responseData?.data?.message ||
+          // eslint-disable-next-line max-len
+          'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
+      })
     }
   }
-
-  // setInterval(() => {
-  //   getAssetBalance(formData, false)
-  // }, 3000)
 
   return (
     <>
@@ -151,7 +148,8 @@ export function SendAssetPage() {
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
-              assetBalance={assetBalance}
+              setWallet={setWallet}
+              setAssetId={setAssetId}
             />
             {actionStatus.message != '' && (
               <Typography
