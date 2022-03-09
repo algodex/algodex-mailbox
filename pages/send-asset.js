@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -85,7 +85,7 @@ export function SendAssetPage() {
         message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
         success: true,
       })
-      getAssetBalance({ wallet, assetId })
+      getAssetBalance()
     } else {
       setActionStatus({
         message: responseData.body?.message || 'Sorry, an error occurred',
@@ -94,23 +94,21 @@ export function SendAssetPage() {
     }
   }
 
-  useEffect(() => {
-    getAssetBalance({ wallet, assetId })
-  }, [assetId, wallet])
-
   setTimeout(() => {
-    getAssetBalance({ wallet, assetId })
+    getAssetBalance()
   }, 3000)
 
-  const getAssetBalance = async ({ wallet, assetId }) => {
+  const getAssetBalance = async () => {
+    console.log('first', wallet, assetId)
     if (wallet && assetId) {
+      console.log('sec', wallet, assetId)
       const responseData = await Helper.getFormattedAssetBalance(
         wallet,
-        assetId,
+        parseInt(assetId),
         true
       )
 
-      // console.log('responseData', responseData)
+      console.log('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
       } else {
