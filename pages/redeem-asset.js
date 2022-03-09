@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { defaults } from '@/next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
@@ -35,18 +35,20 @@ export function RedeemAssetPage() {
   const { t } = useTranslation('common')
   const [loading, setLoading] = useState(false)
   const [escrowBalance, setEscrowBalance] = useState('')
+  const [assetId, setAssetId] = useState()
+  const [receiverAddress, setReceiverAddress] = useState()
+  const [senderAddress, setSenderAddress] = useState()
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
   })
 
-  const submitForm = async ({
-    formData: { assetId, receiverAddress, senderAddress },
-  }) => {
+  const submitForm = async () => {
     setActionStatus({
       message: '',
       success: '',
     })
+    console.log('submit', assetId, receiverAddress, senderAddress)
     setLoading(true)
     const responseData = await RedeemAssetsHelper.redeem(
       assetId,
@@ -61,12 +63,7 @@ export function RedeemAssetPage() {
         message: responseData.statusMsg,
         success: true,
       })
-      const res = await RedeemAssetsHelper.getEscrowBalance(
-        parseInt(assetId),
-        receiverAddress,
-        senderAddress
-      )
-      setEscrowBalance(res)
+      getBalance(assetId, receiverAddress, senderAddress)
     } else {
       setActionStatus({
         message:
@@ -79,6 +76,21 @@ export function RedeemAssetPage() {
     }
   }
 
+  const getBalance = async (assetId, receiverAddress, senderAddress) => {
+    const res = await RedeemAssetsHelper.getEscrowBalance(
+      parseInt(assetId),
+      receiverAddress,
+      senderAddress
+    )
+    setEscrowBalance(res)
+  }
+
+  useEffect(() => {
+    if (assetId && receiverAddress && senderAddress) {
+      console.log('here', assetId, receiverAddress, senderAddress)
+      getBalance(assetId, receiverAddress, senderAddress)
+    }
+  }, [assetId, receiverAddress, senderAddress])
   return (
     <>
       <Head>
@@ -92,6 +104,9 @@ export function RedeemAssetPage() {
               onSubmit={submitForm}
               actionStatus={actionStatus}
               loading={loading}
+              setSenderAddress={setSenderAddress}
+              setReceiverAddress={setReceiverAddress}
+              setAssetId={setAssetId}
             />
             {escrowBalance && (
               <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
