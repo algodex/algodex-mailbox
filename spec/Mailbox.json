@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Mailbox.json",
+  "title": "Mailbox",
+  "type": "object",
+  "examples": [
+    {
+      "type": "Mailbox",
+      "config": {
+        "algod": {
+          "uri": "https://testnet.algoexplorerapi.io",
+          "token": ""
+        },
+        "indexer": {
+          "uri": "https://algoindexer.testnet.algoexplorerapi.io",
+          "token": ""
+        }
+      },
+      "asset": {
+        "id": 224234
+      },
+      "wallet": {
+        "address": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+      }
+    }
+  ],
+  "properties": {
+    "type": {
+      "const": "Mailbox"
+    },
+    "config": {
+      "$ref": "https://schemas.algodex.com/v1/Config.json"
+    },
+    "asset": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
+        }
+      },
+      "required": ["id"]
+    },
+    "wallet": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+        }
+      },
+      "required": ["address"]
+    },
+    "addresses": {
+      "type": "array"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useCallback, useState} from 'react'
 import { defaults } from '@/next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
@@ -12,7 +12,8 @@ import Container from '@mui/material/Container'
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
 import Link from '@/components/Nav/Link'
-const RedeemAssetsHelper = require('../lib/redeem_assets.js')
+import useMailbox from '@/hooks/useMailbox'
+// const RedeemAssetsHelper = require('@/lib/pure/redeemAsset')
 
 /**
  * Generate Static Properties
@@ -33,24 +34,36 @@ export async function getStaticProps({ locale }) {
  */
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
+  const {mailbox} = useMailbox()
+
   const [loading, setLoading] = useState(false)
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
   })
+
+  const handleChanges = useCallback((e, value)=>{
+    console.log('Changes!!!!!!!!', e, value)
+  }, [])
+
+  const handleErrors = useCallback((e, value)=>{
+    console.log('Errors!!!!!!!!', e, value)
+  }, [])
+
   const submitForm = async ({ formData }) => {
+
     setActionStatus({
       message: '',
       success: '',
     })
     setLoading(true)
-    const responseData = await RedeemAssetsHelper.redeem(
-      formData.assetId,
-      formData.receiverAddress,
-      formData.senderAddress,
-    )
+    mailbox.setWallet({address: formData.receiverAddress})
+    const responseData = await mailbox.redeem({
+      asset:{ id: formData.assetId},
+      wallet:{address: formData.senderAddress},
+    })
     setLoading(false)
-    if (responseData.status == 'confirmed') {
+    if (responseData.status === 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
         success: true,
@@ -77,6 +90,8 @@ export function RedeemAssetPage() {
             <Typography variant="h5">{t('/redeem-asset')}</Typography>
             <RedeemAssetForm
               onSubmit={submitForm}
+              onChange={handleChanges}
+              onError={handleErrors}
               actionStatus={actionStatus}
               loading={loading}
             />

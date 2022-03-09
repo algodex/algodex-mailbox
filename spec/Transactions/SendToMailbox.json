@@ -7,15 +7,15 @@
   "examples": [
     {
       "type": "Transaction.SendToMailbox",
-      "assetId": 224234,
-      "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
-      "destinationWallets": [
+      "asset": {"id":224234},
+      "from": {"address": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI" },
+      "to": [
         {
-          "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
+          "address": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI",
           "amount": 123231
         },
         {
-          "wallet": "OOU3O5OSZGVFE5C3KZKH33TSD77UFB445OWVHDBYI6BB542HWU3A6ZLFHI",
+          "address": "OOU3O5OSZGVFE5C3KZKH33TSD77UFB445OWVHDBYI6BB542HWU3A6ZLFHI",
           "amount": 4242
         }
       ]
@@ -28,10 +28,10 @@
     "assetId": {
       "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
     },
-    "wallet": {
+    "from": {
       "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
     },
-    "destinationWallets": {
+    "to": {
       "type": "array",
       "description": "TODO: Add detailed description of this array",
       "items": {
@@ -46,7 +46,7 @@
       "title": "Send To Mailbox Transaction Destination",
       "description": "Represents a transfer",
       "properties": {
-        "wallet": {
+        "address": {
           "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
         },
         "amount": {

@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Wallet/AddressList.json",
+  "title": "Address List",
+  "type": "array",
+  "items": {
+    "$ref": "https://schemas.algodex.com/v1/Wallet.json"
+  }
+}

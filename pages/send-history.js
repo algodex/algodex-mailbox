@@ -11,7 +11,8 @@ import Grid from '@mui/material/Grid'
 
 // Custom Components
 import SendHistoryForm from '@/components/SendHistoryForm'
-import * as SendHistoryHelper from '@/lib/send_history'
+import useMailbox from '@/hooks/useMailbox'
+import Mailbox from '@/lib/Mailbox'
 
 /**
  * Generate Static Properties
@@ -29,8 +30,10 @@ export async function getStaticProps({ locale }) {
 }
 
 export function SendHistoryPage() {
+  const mailbox = useMailbox()
+  console.log(mailbox)
   const { t } = useTranslation('common')
-  const [formData, setFormData] = useState({
+  const [formData /*, setFormData*/] = useState({
     assetId: '',
     senderAddress: '',
     csvTransactions: '',
@@ -49,24 +52,26 @@ export function SendHistoryPage() {
       message: '',
       success: true,
     })
-    const responseData = await SendHistoryHelper.getSendHistory(
+    const responseData = await Mailbox.getHistory(
       assetId,
-      senderAddress
+      senderAddress,
+      mailbox.config
     )
-    // console.log('responseData', responseData)
-    setLoading(false)
-    if (responseData.error == true) {
-      setActionStatus({
-        message: responseData.body?.message || 'Sorry an error occured',
-        success: false,
-      })
-    } else {
-      setFormData({
-        assetId,
-        senderAddress,
-        csvTransactions: responseData,
-      })
-    }
+    console.log(responseData)
+    // // console.log('responseData', responseData)
+    // setLoading(false)
+    // if (responseData.error == true) {
+    //   setActionStatus({
+    //     message: responseData.body?.message || 'Sorry an error occured',
+    //     success: false,
+    //   })
+    // } else {
+    //   setFormData({
+    //     assetId,
+    //     senderAddress,
+    //     csvTransactions: responseData,
+    //   })
+    // }
   }
   return (
     <>
@@ -84,7 +89,7 @@ export function SendHistoryPage() {
               isLoading={loading}
               formData={formData}
             />
-            {actionStatus.message != '' && (
+            {actionStatus.message !== '' && (
               <Typography
                 variant="error-message"
                 sx={{ display: 'flex', justifyContent: 'end' }}

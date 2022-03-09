@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Wallet.json",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "my-algo-wallet"
+    },
+    "address": {
+      "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

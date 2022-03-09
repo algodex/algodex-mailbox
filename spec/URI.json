@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/URI.json",
+  "type": "string",
+  "format": "uri"
+}

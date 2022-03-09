@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.algodex.com/v1/Config.json",
+  "type": "object",
+  "properties": {
+    "algod": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "$ref": "https://schemas.algodex.com/v1/URI.json"
+        },
+        "token": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ]
+    },
+    "indexer": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "$ref": "https://schemas.algodex.com/v1/URI.json"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ]
+    }
+  }
+}

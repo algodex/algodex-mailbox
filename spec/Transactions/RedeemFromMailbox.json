@@ -8,7 +8,12 @@
     {
       "type": "Transaction.RedeemFromMailbox",
       "assetId": 224234,
-      "wallet": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+      "to": {
+        "address": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+      },
+      "from": {
+        "address": "WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI"
+      }
     }
   ],
   "properties": {
@@ -18,10 +23,13 @@
     "assetId": {
       "$ref": "https://schemas.algodex.com/v1/Asset/Index.json"
     },
-    "wallet": {
-      "$ref": "https://schemas.algodex.com/v1/Wallet/Address.json"
+    "from": {
+      "$ref": "https://schemas.algodex.com/v1/Wallet.json"
+    },
+    "to": {
+      "$ref": "https://schemas.algodex.com/v1/Wallet.json"
     }
   },
-  "required": ["type", "assetId", "wallet"],
+  "required": ["type", "assetId", "from", "to"],
   "additionalProperties": false
 }
