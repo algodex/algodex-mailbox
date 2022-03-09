@@ -4,6 +4,7 @@
   "balance": "Saldo",
   "/send-asset": "Enviar activo",
   "/redeem-asset": "Canjear activo",
+  "/return-asset": "Regreso activo",
   "/send-history": "Enviar historial",
   "view-instructions-link": "Ver instrucciones",
   "download-csv-example-link": "Descargar ejemplo de CSV",
