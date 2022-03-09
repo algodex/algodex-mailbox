@@ -67,7 +67,10 @@ const theme = {
       fontStyle: 'italic',
       fontFamily: fontFamilies.body,
       fontWeight: 700,
-      fontSize: fontSizes[3], // Feel free to convert the array of sizes to `rem`
+      fontSize: fontSizes[3],
+    },
+    p: {
+      display: 'block',
     },
   },
   // Color System
