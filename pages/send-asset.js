@@ -64,10 +64,7 @@ export function SendAssetPage() {
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
     console.log(formData)
-    console.log(assetId,
-      wallet,
-      csvTransactions)
-    // const { csvTransactions } = formData
+    console.log(assetId, wallet, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
