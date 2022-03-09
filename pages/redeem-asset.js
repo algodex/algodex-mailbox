@@ -62,7 +62,7 @@ export function RedeemAssetPage() {
         success: true,
       })
       const res = await RedeemAssetsHelper.getEscrowBalance(
-        assetId,
+        parseInt(assetId),
         receiverAddress,
         senderAddress
       )
