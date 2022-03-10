@@ -38,6 +38,7 @@ export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
+  const [csvTransactions, setCsvTransactions] = useState()
   const [assetBalance, setAssetBalance] = useState({
     success: false,
     message: '',
@@ -62,7 +63,8 @@ export function SendAssetPage() {
 
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
-    const { csvTransactions } = formData
+    console.log(formData)
+    console.log(assetId, wallet, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
@@ -93,9 +95,10 @@ export function SendAssetPage() {
     }
   }
 
-  setTimeout(() => {
-    getAssetBalance()
-  }, 3000)
+  // This shouldn't be called on every render!
+  //setTimeout(() => {
+  //  getAssetBalance()
+  //}, 3000)
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {
@@ -150,6 +153,7 @@ export function SendAssetPage() {
               isLoading={loading}
               setWallet={setWallet}
               setAssetId={setAssetId}
+              setCsvTransactions={setCsvTransactions}
             />
             {actionStatus.message != '' && (
               <Typography
