@@ -95,9 +95,10 @@ export function SendAssetPage() {
     }
   }
 
-  setTimeout(() => {
-    getAssetBalance()
-  }, 3000)
+  // This shouldn't be called on every render!
+  //setTimeout(() => {
+  //  getAssetBalance()
+  //}, 3000)
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {
