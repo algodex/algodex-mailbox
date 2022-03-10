@@ -13,7 +13,7 @@ import Box from '@mui/material/Box'
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 
 //Algodex
-import helper from '../lib/helper.js'
+import Helper from '@/lib/helper'
 
 /**
  * Toolbar
@@ -27,7 +27,7 @@ import helper from '../lib/helper.js'
  */
 function Toolbar({ title, height, isMobile, onClick, ...rest }) {
   const { t } = useTranslation('common')
-  const { environment } = helper.getAlgodex()
+  const { environment } = Helper.getAlgodex()
   const environmentText = environment.toUpperCase()
   return (
     <MUIToolbar sx={{ height }} {...rest}>
