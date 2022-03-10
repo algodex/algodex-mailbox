@@ -12,6 +12,9 @@ import Box from '@mui/material/Box'
 // Custom Language Selector
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 
+//Algodex
+import helper from '../lib/helper.js'
+
 /**
  * Toolbar
  * @param title
@@ -24,9 +27,8 @@ import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
  */
 function Toolbar({ title, height, isMobile, onClick, ...rest }) {
   const { t } = useTranslation('common')
-  const environment =
-    process.env.NEXT_PUBLIC_ALGODEX_ENVIRONMENT || 'public_test'
-  const environmentText = environment == 'production' ? 'Mainnet' : 'Testnet'
+  const { environment } = helper.getAlgodex()
+  const environmentText = environment.toUpperCase()
   return (
     <MUIToolbar sx={{ height }} {...rest}>
       {/* TODO: Make Menu Collapsable*/}
@@ -46,7 +48,12 @@ function Toolbar({ title, height, isMobile, onClick, ...rest }) {
         <Typography variant="h6" component="div">
           {title || t('app-title')}
         </Typography>
-        <Typography component="div" color={'green'} fontStyle="italic" lineHeight={1}>
+        <Typography
+          component="div"
+          color={'green'}
+          fontStyle="italic"
+          lineHeight={1}
+        >
           {environmentText}
         </Typography>
       </Box>
