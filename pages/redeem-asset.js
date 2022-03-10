@@ -63,7 +63,7 @@ export function RedeemAssetPage() {
         message: responseData.statusMsg,
         success: true,
       })
-      getBalance(assetId, receiverAddress, senderAddress)
+      getBalance()
     } else {
       setActionStatus({
         message:
@@ -76,7 +76,7 @@ export function RedeemAssetPage() {
     }
   }
 
-  const getBalance = async (assetId, receiverAddress, senderAddress) => {
+  const getBalance = async () => {
     const res = await RedeemAssetsHelper.getEscrowBalance(
       parseInt(assetId),
       receiverAddress,
@@ -88,7 +88,7 @@ export function RedeemAssetPage() {
   useEffect(() => {
     if (assetId && receiverAddress && senderAddress) {
       console.log('here', assetId, receiverAddress, senderAddress)
-      getBalance(assetId, receiverAddress, senderAddress)
+      getBalance()
     }
   }, [assetId, receiverAddress, senderAddress])
   return (
