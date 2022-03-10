@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const SendAssetForm = ({
   formattedAddresses,
@@ -15,6 +16,7 @@ const SendAssetForm = ({
   isLoading,
   setWallet,
   setAssetId,
+  setCsvTransactions,
 }) => {
   const CustomSelectComponent = (props) => {
     return (
@@ -59,6 +61,28 @@ const SendAssetForm = ({
       </Box>
     )
   }
+
+  const CustomTextAreaComponent = (props) => {
+    return (
+      <Box>
+        <FormControl fullWidth>
+          <TextareaAutosize
+            minRows={9}
+            maxRows={14}
+            placeholder="Enter CSV transactions"
+            // value={props.value}
+            required={props.required}
+            style={{ padding: '0.9rem' }}
+            // onChange={(event) => props.onChange(event.target.value)}
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setCsvTransactions(value)
+            }}
+          />
+        </FormControl>
+      </Box>
+    )
+  }
   const schema = {
     required: ['assetId', 'csvTransactions', 'wallet'],
     properties: {
@@ -77,7 +101,7 @@ const SendAssetForm = ({
       'ui:widget': 'CustomInput',
     },
     csvTransactions: {
-      'ui:widget': 'textarea',
+      'ui:widget': 'CustomTextarea',
       'ui:placeholder': 'Enter CSV Transactions',
       'ui:options': {
         rows: 9,
@@ -91,6 +115,7 @@ const SendAssetForm = ({
   const widgets = {
     CustomSelect: CustomSelectComponent,
     CustomInput: CustomInputComponent,
+    CustomTextarea: CustomTextAreaComponent,
   }
 
   return (
