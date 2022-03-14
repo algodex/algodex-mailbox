@@ -5,11 +5,11 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 const ReturnAssetForm = ({ onSubmit, isLoading }) => {
   const schema = {
-    required: ['assetId', 'csvRecipients', 'senderAddress'],
+    required: ['assetId', 'csvTransactions', 'senderAddress'],
     properties: {
       assetId: { type: 'string', title: 'Asset Id', default: '' },
       senderAddress: { type: 'string', title: 'Sender Address', default: '' },
-      csvRecipients: {
+      csvTransactions: {
         type: 'string',
         title: 'CSV Recipients',
         default: '',
@@ -18,7 +18,7 @@ const ReturnAssetForm = ({ onSubmit, isLoading }) => {
   }
 
   const uiSchema = {
-    csvRecipients: {
+    csvTransactions: {
       'ui:widget': 'textarea',
       'ui:placeholder': 'Enter CSV Transactions',
       'ui:options': {
@@ -42,7 +42,7 @@ const ReturnAssetForm = ({ onSubmit, isLoading }) => {
 }
 
 ReturnAssetForm.propTypes = {
-  formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
 }
 export default ReturnAssetForm
