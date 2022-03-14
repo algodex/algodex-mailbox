@@ -15,6 +15,7 @@ import Link from '@/components/Nav/Link'
 import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
+import Helper from '@/lib/helper'
 
 /**
  * Generate Static Properties
@@ -35,6 +36,13 @@ export async function getStaticProps({ locale }) {
  */
 export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
+  const [assetId, setAssetId] = useState()
+  const [wallet, setWallet] = useState()
+  const [csvTransactions, setCsvTransactions] = useState()
+  const [assetBalance, setAssetBalance] = useState({
+    success: false,
+    message: '',
+  })
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -47,7 +55,7 @@ export function SendAssetPage() {
       if (addresses == null) {
         return
       }
-      console.log({ addresses })
+      // console.log({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -55,32 +63,66 @@ export function SendAssetPage() {
 
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
-    const { wallet, assetId, csvTransactions } = formData
-    console.log({ formData })
+    console.log(formData)
+    console.log(assetId, wallet, csvTransactions)
     setLoading(true)
+    setActionStatus({
+      message: '',
+      success: false,
+    })
     const responseData = await SendAssetsHelper.send(
       assetId,
       wallet,
       csvTransactions
     )
-    console.log('responseData', responseData)
+    // console.log('responseData', responseData)
     setLoading(false)
-    if (responseData.error == false) {
+    if (responseData?.error == false) {
       const totalAssets = responseData.confirmedTransactions.length
       const sentAssets = responseData.confirmedTransactions.filter(
         (asset) => asset.value.status == 'confirmed'
       ).length
       setActionStatus({
-        message: `${sentAssets}/${totalAssets} asset(s) sent successfully`,
+        message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
         success: true,
       })
+      getAssetBalance()
     } else {
       setActionStatus({
-        message: responseData.body?.message || 'Sorry an error occured',
+        message: responseData.body?.message || 'Sorry, an error occurred',
         success: false,
       })
     }
   }
+
+  // This shouldn't be called on every render!
+  //setTimeout(() => {
+  //  getAssetBalance()
+  //}, 3000)
+
+  const getAssetBalance = async () => {
+    if (wallet && assetId) {
+      const responseData = await Helper.getFormattedAssetBalance(
+        wallet,
+        parseInt(assetId),
+        true
+      )
+
+      // console.log('responseData', responseData)
+      if (responseData && responseData.error == false) {
+        setAssetBalance({ success: true, message: responseData.balance })
+      } else {
+        setAssetBalance({
+          success: false,
+          message:
+            responseData?.data?.message ||
+            // eslint-disable-next-line max-len
+            'An error occurred while getting your asset balance, please ensure you enter a valid asset id',
+        })
+      }
+    }
+  }
+
   return (
     <>
       <Head>
@@ -95,10 +137,23 @@ export function SendAssetPage() {
             <Button variant="contained" onClick={connect}>
               {t('connect-wallet')}
             </Button>
+            {assetBalance.message != '' && (
+              <Typography
+                variant="error-message"
+                display="block"
+                marginTop="1rem"
+                color={assetBalance.success ? 'green' : 'error'}
+              >
+                {assetBalance.message} {assetBalance.success ? 'available' : ''}
+              </Typography>
+            )}
             <SendAssetForm
               formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
+              setWallet={setWallet}
+              setAssetId={setAssetId}
+              setCsvTransactions={setCsvTransactions}
             />
             {actionStatus.message != '' && (
               <Typography
@@ -109,14 +164,14 @@ export function SendAssetPage() {
                 {actionStatus.message}
               </Typography>
             )}
-            <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+            <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
               <Grid item xs={6} lg={5} className="mr-2">
-                <Link href={'/instructions'}>
+                <Link href={'/instructions'} color="primary.dark">
                   {t('view-instructions-link')}
                 </Link>
               </Grid>
               <Grid item xs={6} lg={5}>
-                <Link href={'/downloadlink'}>
+                <Link href={'/downloadlink'} color="primary.dark">
                   {t('download-csv-example-link')}
                 </Link>
               </Grid>
