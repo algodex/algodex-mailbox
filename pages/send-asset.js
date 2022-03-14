@@ -114,7 +114,7 @@ export function SendAssetPage() {
       )
       setTimeout(() => {
         setGettingBalance(false)
-      }, 5000)
+      }, 2000)
       // console.log('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
