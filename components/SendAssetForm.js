@@ -51,6 +51,7 @@ const SendAssetForm = ({
           <TextField
             required
             id="outlined-required"
+            disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
               props.onChange(value)
@@ -69,6 +70,7 @@ const SendAssetForm = ({
           <TextareaAutosize
             minRows={9}
             maxRows={14}
+            disabled={formattedAddresses.length < 1}
             placeholder="Enter CSV transactions"
             // value={props.value}
             required={props.required}
