@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -49,6 +49,8 @@ export function SendAssetPage() {
   })
   const { t } = useTranslation('common')
   const [formattedAddresses, setFormattedAddresses] = useState([])
+  const [gettingBalance, setGettingBalance] = useState(false)
+  // const [gettingAsset, setGettingAsset] = useState(1)
 
   const updateAddresses = useCallback(
     (addresses) => {
@@ -95,19 +97,21 @@ export function SendAssetPage() {
     }
   }
 
-  // This shouldn't be called on every render!
-  //setTimeout(() => {
-  //  getAssetBalance()
-  //}, 3000)
+  useEffect(() => {
+    if (!gettingBalance) {
+      getAssetBalance()
+    }
+  }, [assetId, csvTransactions, wallet, gettingBalance])
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {
+      setGettingBalance(true)
       const responseData = await Helper.getFormattedAssetBalance(
         wallet,
         parseInt(assetId),
         true
       )
-
+      setGettingBalance(false)
       // console.log('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
