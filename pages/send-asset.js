@@ -99,6 +99,7 @@ export function SendAssetPage() {
 
   useEffect(() => {
     if (!gettingBalance) {
+      console.log('getting again')
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
@@ -111,7 +112,9 @@ export function SendAssetPage() {
         parseInt(assetId),
         true
       )
-      setGettingBalance(false)
+      setTimeout(() => {
+        setGettingBalance(false)
+      }, 5000)
       // console.log('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
