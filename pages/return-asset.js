@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -7,12 +7,14 @@ import Head from 'next/head'
 // MUI Components
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 
 // Custom Components
 import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
+import useMyAlgo from '@/hooks/use-my-algo'
 
 /**
  * Generate Static Properties
@@ -33,42 +35,59 @@ export async function getStaticProps({ locale }) {
  */
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
+  const [senderAddress, setSenderAddress] = useState('')
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
   })
-  
+
+  const [formattedAddresses, setFormattedAddresses] = useState([])
+
+  const updateAddresses = useCallback(
+    (addresses) => {
+      if (addresses == null) {
+        return
+      }
+      // console.log({ addresses })
+      setFormattedAddresses(addresses)
+    },
+    [setFormattedAddresses]
+  )
+
+  const { connect } = useMyAlgo(updateAddresses)
+
   const { t } = useTranslation('common')
 
   const submitForm = async ({ formData }) => {
-    const {assetId, senderAddress, csvTransactions} = formData
-    console.log(assetId, senderAddress, csvTransactions)
+    const { assetId, csvTransactions } = formData
     setLoading(true)
     setActionStatus({
       message: '',
       success: false,
     })
-    const responseData = await ReturnAssetHelper.returnAssetsToSender(
-      assetId,
-      senderAddress,
-      csvTransactions
-    )
-    console.log('responseData', responseData)
-    setLoading(false)
-    if (responseData?.error == false) {
-      const totalAssets = responseData.confirmedTransactions.length
-      const sentAssets = responseData.confirmedTransactions.filter(
-        (asset) => asset.value.status == 'confirmed'
-      ).length
-      setActionStatus({
-        message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
-        success: true,
-      })
-    } else {
-      setActionStatus({
-        message: responseData.body?.message || 'Sorry, an error occurred',
-        success: false,
-      })
+    if (senderAddress != '' && assetId != '' && csvTransactions != '') {
+      const responseData = await ReturnAssetHelper.returnAssetsToSender(
+        assetId,
+        senderAddress,
+        csvTransactions
+      )
+      // console.log('responseData', responseData)
+      setLoading(false)
+      if (responseData?.error == false) {
+        const totalAssets = responseData.confirmedTransactions.length
+        const sentAssets = responseData.confirmedTransactions.filter(
+          (asset) => asset.value.status == 'confirmed'
+        ).length
+        setActionStatus({
+          message: `${sentAssets}/${totalAssets} transaction(s) returned successfully`,
+          success: true,
+        })
+      } else {
+        setActionStatus({
+          message: responseData.body?.message || 'Sorry, an error occurred',
+          success: false,
+        })
+      }
     }
   }
   return (
@@ -82,10 +101,14 @@ export function ReturnAssetPage() {
             <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
               {t('/return-asset')}
             </Typography>
-            
+            <Button variant="contained" onClick={connect}>
+              {t('connect-wallet')}
+            </Button>
             <ReturnAssetForm
+              formattedAddresses={formattedAddresses}
               onSubmit={submitForm}
               isLoading={loading}
+              setSenderAddress={setSenderAddress}
             />
             {actionStatus.message != '' && (
               <Typography
