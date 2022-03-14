@@ -52,6 +52,8 @@ function Toolbar({ title, height, isMobile, onClick, ...rest }) {
           component="div"
           color={'green'}
           fontStyle="italic"
+          fontSize='0.8rem'
+          fontWeight='bold'
           lineHeight={1}
         >
           {environmentText}
