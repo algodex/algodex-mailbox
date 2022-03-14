@@ -8,6 +8,7 @@ module.exports = {
     'pages': {
       '*': defaults,
       '/redeem-asset': [...defaults],
+      '/return-asset': [...defaults],
       '/send-asset-page': [...defaults],
       '/send-history-page': [...defaults]
     }

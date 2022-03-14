@@ -7,8 +7,17 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
+import TextField from '@mui/material/TextField'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
+const SendAssetForm = ({
+  formattedAddresses,
+  onSubmit,
+  isLoading,
+  setWallet,
+  setAssetId,
+  setCsvTransactions,
+}) => {
   const CustomSelectComponent = (props) => {
     return (
       <Box sx={{ marginBottom: '1rem' }}>
@@ -16,7 +25,10 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
           <RadioGroup
             aria-labelledby="wallet"
             name="wallet"
-            onChange={(event, value) => props.onChange(value)}
+            onChange={(event, value) => {
+              props.onChange(value)
+              setWallet(value)
+            }}
           >
             {formattedAddresses.map((address) => (
               <FormControlLabel
@@ -32,6 +44,47 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
     )
   }
 
+  const CustomInputComponent = (props) => {
+    return (
+      <Box>
+        <FormControl fullWidth>
+          <TextField
+            required
+            id="outlined-required"
+            disabled={formattedAddresses.length < 1}
+            label="Asset Id"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setAssetId(value)
+            }}
+          />
+        </FormControl>
+      </Box>
+    )
+  }
+
+  const CustomTextAreaComponent = (props) => {
+    return (
+      <Box>
+        <FormControl fullWidth>
+          <TextareaAutosize
+            minRows={9}
+            maxRows={14}
+            disabled={formattedAddresses.length < 1}
+            placeholder="Enter CSV transactions"
+            // value={props.value}
+            required={props.required}
+            style={{ padding: '0.9rem' }}
+            // onChange={(event) => props.onChange(event.target.value)}
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setCsvTransactions(value)
+            }}
+          />
+        </FormControl>
+      </Box>
+    )
+  }
   const schema = {
     required: ['assetId', 'csvTransactions', 'wallet'],
     properties: {
@@ -46,8 +99,11 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
   }
 
   const uiSchema = {
+    assetId: {
+      'ui:widget': 'CustomInput',
+    },
     csvTransactions: {
-      'ui:widget': 'textarea',
+      'ui:widget': 'CustomTextarea',
       'ui:placeholder': 'Enter CSV Transactions',
       'ui:options': {
         rows: 9,
@@ -60,6 +116,8 @@ const SendAssetForm = ({ formattedAddresses, onSubmit, isLoading }) => {
 
   const widgets = {
     CustomSelect: CustomSelectComponent,
+    CustomInput: CustomInputComponent,
+    CustomTextarea: CustomTextAreaComponent,
   }
 
   return (
