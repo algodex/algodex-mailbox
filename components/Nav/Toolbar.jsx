@@ -51,6 +51,7 @@ function Toolbar({ title, height, isMobile, onClick, ...rest }) {
         <Typography
           component="div"
           color={'green'}
+          paddingTop='0.25rem'
           fontStyle="italic"
           fontSize='0.8rem'
           fontWeight='bold'
