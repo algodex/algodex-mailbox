@@ -34,7 +34,10 @@ export async function getStaticProps({ locale }) {
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
   const [loading, setLoading] = useState(false)
-  const [escrowBalance, setEscrowBalance] = useState('')
+  const [escrowBalance, setEscrowBalance] = useState({
+    success: false,
+    message: '',
+  })
   const [assetId, setAssetId] = useState()
   const [receiverAddress, setReceiverAddress] = useState()
   const [senderAddress, setSenderAddress] = useState()
@@ -48,7 +51,6 @@ export function RedeemAssetPage() {
       message: '',
       success: '',
     })
-    console.log('submit', assetId, receiverAddress, senderAddress)
     setLoading(true)
     const responseData = await RedeemAssetsHelper.redeem(
       assetId,
@@ -57,7 +59,6 @@ export function RedeemAssetPage() {
     )
     setLoading(false)
     // console.log('responseData', responseData)
-    // console.log('responseData', responseData?.response)
     if (responseData.status == 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
@@ -82,15 +83,26 @@ export function RedeemAssetPage() {
       receiverAddress,
       senderAddress
     )
-    setEscrowBalance(res)
+    // console.log(res)
+    if (res.error == false) {
+      setEscrowBalance({ success: true, message: res.balance })
+    } else {
+      setEscrowBalance({
+        success: false,
+        message:
+          res?.data?.message ||
+          // eslint-disable-next-line max-len
+          'An error occurred while getting your asset balance, please ensure you enter valid inputs',
+      })
+    }
   }
 
   useEffect(() => {
     if (assetId && receiverAddress && senderAddress) {
-      console.log('here', assetId, receiverAddress, senderAddress)
       getBalance()
     }
   }, [assetId, receiverAddress, senderAddress])
+
   return (
     <>
       <Head>
@@ -116,9 +128,16 @@ export function RedeemAssetPage() {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="p" component="p">
-                    {escrowBalance}
-                  </Typography>
+                  {escrowBalance.message != '' && (
+                    <Typography
+                      variant="error-message"
+                      marginTop="1rem"
+                      color={escrowBalance.success ? 'green' : 'error'}
+                    >
+                      {escrowBalance.message}{' '}
+                      {escrowBalance.success ? 'available' : ''}
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             )}

@@ -19,9 +19,9 @@ const RedeemAssetForm = ({
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
-      assetId: { type: 'string', title: 'Asset Id' },
-      senderAddress: { type: 'string', title: 'Sender Address' },
-      receiverAddress: { type: 'string', title: 'Receiver Address' },
+      assetId: { type: 'string', title: 'Asset Id', default: '' },
+      senderAddress: { type: 'string', title: 'Sender Address', default: '' },
+      receiverAddress: { type: 'string', title: 'Receiver Address', default: '' },
     },
   }
 
@@ -30,7 +30,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            required
+            required={props.required}
             id="outlined-required"
             label="Asset Id"
             onChange={({ target: { value } }) => {
@@ -48,7 +48,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            required
+            required={props.required}
             id="outlined-required"
             label="Sender Address"
             onChange={({ target: { value } }) => {
@@ -66,7 +66,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            required
+            required={props.required}
             id="outlined-required"
             label="Receiver Address"
             onChange={({ target: { value } }) => {
@@ -85,15 +85,15 @@ const RedeemAssetForm = ({
     senderAddress: {
       'ui:widget': 'SenderInput',
     },
-    // receiverAddress: {
-    //   'ui:widget': 'ReceiverInput',
-    // },
+    receiverAddress: {
+      'ui:widget': 'ReceiverInput',
+    },
   }
 
   const widgets = {
     AssetIdInput: AssetIdInputComponent,
     SenderInput: SenderInputComponent,
-    // ReceiverInput: ReceiverInputComponent,
+    ReceiverInput: ReceiverInputComponent,
   }
   return (
     <Form
