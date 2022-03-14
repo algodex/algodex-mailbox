@@ -1,5 +1,5 @@
 import React from 'react'
-import {useTranslation} from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 
 // MUI Components
@@ -13,10 +13,10 @@ import ListSubheader from '@mui/material/ListSubheader'
 import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 
 // Custom MUI Components
 import ListItemLink from '@/components/Nav/ListItemLink'
-
 
 /**
  * Drawer
@@ -27,7 +27,7 @@ import ListItemLink from '@/components/Nav/ListItemLink'
  * @returns {JSX.Element}
  * @constructor
  */
-function Drawer({width, offset, ...props}){
+function Drawer({ width, offset, ...props }) {
   const { t } = useTranslation('common')
   return (
     <MUIDrawer
@@ -40,17 +40,35 @@ function Drawer({width, offset, ...props}){
       {...props}
     >
       {/* Add Toolbar for spacing */}
-      <Toolbar sx={{height: offset}}/>
+      <Toolbar sx={{ height: offset }} />
       <Box sx={{ overflow: 'auto' }}>
         <List
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
               {t('actions')}
             </ListSubheader>
-          }>
-          <ListItemLink to="/send-asset" icon={<SendIcon/>} primary={t('/send-asset')}/>
-          <ListItemLink to="/send-history" icon={<HistoryIcon/>} primary={t('/send-history')}/>
-          <ListItemLink to="/redeem-asset" icon={<RedeemIcon/>} primary={t('/redeem-asset')}/>
+          }
+        >
+          <ListItemLink
+            to="/send-asset"
+            icon={<SendIcon />}
+            primary={t('/send-asset')}
+          />
+          <ListItemLink
+            to="/send-history"
+            icon={<HistoryIcon />}
+            primary={t('/send-history')}
+          />
+          <ListItemLink
+            to="/redeem-asset"
+            icon={<RedeemIcon />}
+            primary={t('/redeem-asset')}
+          />
+          <ListItemLink
+            to="/return-asset"
+            icon={<KeyboardReturnIcon />}
+            primary={t('/return-asset')}
+          />
         </List>
       </Box>
     </MUIDrawer>
@@ -65,10 +83,10 @@ Drawer.propTypes = {
   /**
    * offset
    */
-  offset: PropTypes.number
+  offset: PropTypes.number,
 }
 
 Drawer.defaultProps = {
-  width: 250
+  width: 250,
 }
 export default Drawer
