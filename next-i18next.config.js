@@ -7,7 +7,8 @@ module.exports = {
     'defaultLocale': 'en',
     'pages': {
       '*': defaults,
-      '/redeem-asset': [...defaults],
+      '/redeem-assets': [...defaults],
+      '/return-assets': [...defaults],
       '/send-asset-page': [...defaults],
       '/send-history-page': [...defaults]
     }

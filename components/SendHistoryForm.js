@@ -3,6 +3,7 @@ import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import Box from '@mui/material/Box'
 
 const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
   const schema = {
@@ -28,7 +29,7 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
         readOnly
         value={props.value}
         required={props.required}
-        style={{padding:'0.9rem'}}
+        style={{ padding: '0.9rem' }}
         onChange={(event) => props.onChange(event.target.value)}
       />
     )
@@ -56,14 +57,11 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
         csvTransactions: formData.csvTransactions,
       }}
     >
-      <LoadingButton
-        loading={isLoading}
-        variant="contained"
-        sx={{ marginTop: '2rem' }}
-        type="submit"
-      >
-        Refresh
-      </LoadingButton>
+      <Box marginTop="2rem">
+        <LoadingButton loading={isLoading} variant="contained" type="submit">
+          Refresh
+        </LoadingButton>
+      </Box>
     </Form>
   )
 }

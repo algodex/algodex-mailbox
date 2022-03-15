@@ -43,7 +43,7 @@ export function SendHistoryPage() {
 
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
-    // console.log({ formData })
+    // console.debug({ formData })
     setLoading(true)
     setActionStatus({
       message: '',
@@ -53,7 +53,7 @@ export function SendHistoryPage() {
       assetId,
       senderAddress
     )
-    // console.log('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData.error == true) {
       setActionStatus({
@@ -87,6 +87,7 @@ export function SendHistoryPage() {
             {actionStatus.message != '' && (
               <Typography
                 variant="error-message"
+                marginTop="-1.6rem"
                 sx={{ display: 'flex', justifyContent: 'end' }}
                 color={actionStatus.success ? 'green' : 'error'}
               >

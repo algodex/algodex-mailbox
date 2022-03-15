@@ -51,6 +51,7 @@ const SendAssetForm = ({
           <TextField
             required
             id="outlined-required"
+            disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
               props.onChange(value)
@@ -69,6 +70,7 @@ const SendAssetForm = ({
           <TextareaAutosize
             minRows={9}
             maxRows={14}
+            disabled={formattedAddresses.length < 1}
             placeholder="Enter CSV transactions"
             // value={props.value}
             required={props.required}
@@ -126,15 +128,16 @@ const SendAssetForm = ({
       widgets={widgets}
       onSubmit={onSubmit}
     >
-      <LoadingButton
-        loading={isLoading}
-        variant="contained"
-        xs={{ marginBottom: '2rem' }}
-        disabled={formattedAddresses.length < 1}
-        type="submit"
-      >
-        Send Assets
-      </LoadingButton>
+      <Box marginTop='2rem'>
+        <LoadingButton 
+          loading={isLoading}
+          variant="contained"
+          disabled={formattedAddresses.length < 1}
+          type="submit"
+        >
+          Send Assets
+        </LoadingButton>
+      </Box>
     </Form>
   )
 }

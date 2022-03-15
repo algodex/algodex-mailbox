@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -49,13 +49,15 @@ export function SendAssetPage() {
   })
   const { t } = useTranslation('common')
   const [formattedAddresses, setFormattedAddresses] = useState([])
+  const [gettingBalance, setGettingBalance] = useState(false)
+  // const [gettingAsset, setGettingAsset] = useState(1)
 
   const updateAddresses = useCallback(
     (addresses) => {
       if (addresses == null) {
         return
       }
-      // console.log({ addresses })
+      // console.debug({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -63,8 +65,8 @@ export function SendAssetPage() {
 
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
-    console.log(formData)
-    console.log(assetId, wallet, csvTransactions)
+    console.debug(formData)
+    console.debug(assetId, wallet, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
@@ -75,7 +77,7 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    // console.log('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
       const totalAssets = responseData.confirmedTransactions.length
@@ -95,20 +97,25 @@ export function SendAssetPage() {
     }
   }
 
-  // This shouldn't be called on every render!
-  //setTimeout(() => {
-  //  getAssetBalance()
-  //}, 3000)
+  useEffect(() => {
+    if (!gettingBalance) {
+      console.debug('getting again')
+      getAssetBalance()
+    }
+  }, [assetId, csvTransactions, wallet, gettingBalance])
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {
+      setGettingBalance(true)
       const responseData = await Helper.getFormattedAssetBalance(
         wallet,
         parseInt(assetId),
         true
       )
-
-      // console.log('responseData', responseData)
+      setTimeout(() => {
+        setGettingBalance(false)
+      }, 2000)
+      // console.debug('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
       } else {
@@ -126,13 +133,13 @@ export function SendAssetPage() {
   return (
     <>
       <Head>
-        <title>{`${t('/send-asset')} | ${t('app-title')}`}</title>
+        <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
       <Container sx={{ my: 4 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} lg={6} xl={5}>
             <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-              {t('/send-asset')}
+              {t('/send-assets')}
             </Typography>
             <Button variant="contained" onClick={connect}>
               {t('connect-wallet')}
@@ -158,6 +165,7 @@ export function SendAssetPage() {
             {actionStatus.message != '' && (
               <Typography
                 variant="error-message"
+                marginTop="-1.6rem"
                 sx={{ display: 'flex', justifyContent: 'end' }}
                 color={actionStatus.success ? 'green' : 'error'}
               >
