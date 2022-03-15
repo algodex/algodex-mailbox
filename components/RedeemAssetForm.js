@@ -15,13 +15,18 @@ const RedeemAssetForm = ({
   setSenderAddress,
   setReceiverAddress,
   setAssetId,
+  optInStatus,
 }) => {
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
       assetId: { type: 'string', title: 'Asset Id', default: '' },
       senderAddress: { type: 'string', title: 'Sender Address', default: '' },
-      receiverAddress: { type: 'string', title: 'Receiver Address', default: '' },
+      receiverAddress: {
+        type: 'string',
+        title: 'Receiver Address',
+        default: '',
+      },
     },
   }
 
@@ -102,6 +107,14 @@ const RedeemAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
     >
+      {optInStatus == false && (
+        <Box marginTop="2rem">
+          <Typography variant="error-message" color="error">
+            Warning: You have not opted into the asset, please do so in another
+            app.
+          </Typography>
+        </Box>
+      )}
       <Grid container spacing={2} marginTop={'2rem'} marginBottom={'2rem'}>
         <Grid item xs={6} lg={4}>
           <LoadingButton loading={loading} variant="contained" type="submit">
@@ -125,5 +138,6 @@ const RedeemAssetForm = ({
 
 RedeemAssetForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  optInStatus: PropTypes.any.isRequired,
 }
 export default RedeemAssetForm
