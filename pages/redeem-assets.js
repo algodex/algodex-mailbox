@@ -101,8 +101,8 @@ export function RedeemAssetPage() {
 
   const checkOptIn = async () => {
     try {
-      const res = await Helper.checkOptIn(parseInt(assetId), receiverAddress)
-      console.debug(res)
+      const res = await Helper.checkOptIn(receiverAddress, parseInt(assetId))
+      // console.debug(res)
       setOptInStatus(res)
     } catch (error) {
       console.debug(error)
