@@ -50,9 +50,9 @@ function Drawer({ width, offset, ...props }) {
           }
         >
           <ListItemLink
-            to="/send-asset"
+            to="/send-assets"
             icon={<SendIcon />}
-            primary={t('/send-asset')}
+            primary={t('/send-assets')}
           />
           <ListItemLink
             to="/send-history"
@@ -60,14 +60,14 @@ function Drawer({ width, offset, ...props }) {
             primary={t('/send-history')}
           />
           <ListItemLink
-            to="/redeem-asset"
+            to="/redeem-assets"
             icon={<RedeemIcon />}
-            primary={t('/redeem-asset')}
+            primary={t('/redeem-assets')}
           />
           <ListItemLink
-            to="/return-asset"
+            to="/return-assets"
             icon={<KeyboardReturnIcon />}
-            primary={t('/return-asset')}
+            primary={t('/return-assets')}
           />
         </List>
       </Box>
