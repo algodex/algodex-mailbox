@@ -110,7 +110,7 @@ const RedeemAssetForm = ({
       {optInStatus == false && (
         <Box marginTop="2rem">
           <Typography variant="error-message" color="error">
-            Warning: You have not yet opted into the asset. Please do so in another
+            Warning: You have not yet opted into the asset. Please do so in another wallet
             app.
           </Typography>
         </Box>
