@@ -93,13 +93,13 @@ export function ReturnAssetPage() {
   return (
     <>
       <Head>
-        <title>{`${t('/return-asset')} | ${t('app-title')}`}</title>
+        <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
       <Container sx={{ my: 4 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} lg={6} xl={5}>
             <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-              {t('/return-asset')}
+              {t('/return-assets')}
             </Typography>
             <Button variant="contained" onClick={connect}>
               {t('connect-wallet')}
