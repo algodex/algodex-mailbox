@@ -42,6 +42,7 @@ export function RedeemAssetPage() {
   const [assetId, setAssetId] = useState()
   const [receiverAddress, setReceiverAddress] = useState()
   const [senderAddress, setSenderAddress] = useState()
+  const [optInStatus, setOptInStatus] = useState()
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -99,21 +100,13 @@ export function RedeemAssetPage() {
   }
 
   const checkOptIn = async () => {
-    const res = await Helper.checkOptIn(
-      parseInt(assetId),
-      receiverAddress,
-    )
-    console.debug(res)
-    // if (res.error == false) {
-    //   setEscrowBalance({ success: true, message: res.balance })
-    // } else {
-    //   setEscrowBalance({
-    //     success: false,
-    //     message:
-    //       res?.data?.message ||
-    //       'An error occurred, please ensure you enter valid inputs',
-    //   })
-    // }
+    try {
+      const res = await Helper.checkOptIn(receiverAddress, parseInt(assetId))
+      // console.debug(res)
+      setOptInStatus(res)
+    } catch (error) {
+      console.debug(error)
+    }
   }
 
   useEffect(() => {
@@ -142,6 +135,7 @@ export function RedeemAssetPage() {
               setSenderAddress={setSenderAddress}
               setReceiverAddress={setReceiverAddress}
               setAssetId={setAssetId}
+              optInStatus={optInStatus}
             />
             {escrowBalance && (
               <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
