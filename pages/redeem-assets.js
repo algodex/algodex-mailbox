@@ -59,7 +59,7 @@ export function RedeemAssetPage() {
       senderAddress
     )
     setLoading(false)
-    // console.log('responseData', responseData)
+    // console.debug('responseData', responseData)
     if (responseData.status == 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
@@ -84,7 +84,7 @@ export function RedeemAssetPage() {
       receiverAddress,
       senderAddress
     )
-    // console.log(res)
+    // console.debug(res)
     if (res.error == false) {
       setEscrowBalance({ success: true, message: res.balance })
     } else {
@@ -103,7 +103,7 @@ export function RedeemAssetPage() {
       parseInt(assetId),
       receiverAddress,
     )
-    console.log(res)
+    console.debug(res)
     // if (res.error == false) {
     //   setEscrowBalance({ success: true, message: res.balance })
     // } else {

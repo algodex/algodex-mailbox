@@ -48,7 +48,7 @@ export function ReturnAssetPage() {
       if (addresses == null) {
         return
       }
-      // console.log({ addresses })
+      // console.debug({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -71,7 +71,7 @@ export function ReturnAssetPage() {
         senderAddress,
         csvTransactions
       )
-      // console.log('responseData', responseData)
+      // console.debug('responseData', responseData)
       setLoading(false)
       if (responseData?.error == false) {
         const totalAssets = responseData.confirmedTransactions.length

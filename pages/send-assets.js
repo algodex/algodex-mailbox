@@ -57,7 +57,7 @@ export function SendAssetPage() {
       if (addresses == null) {
         return
       }
-      // console.log({ addresses })
+      // console.debug({ addresses })
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -65,8 +65,8 @@ export function SendAssetPage() {
 
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
-    console.log(formData)
-    console.log(assetId, wallet, csvTransactions)
+    console.debug(formData)
+    console.debug(assetId, wallet, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
@@ -77,7 +77,7 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    // console.log('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
       const totalAssets = responseData.confirmedTransactions.length
@@ -99,7 +99,7 @@ export function SendAssetPage() {
 
   useEffect(() => {
     if (!gettingBalance) {
-      console.log('getting again')
+      console.debug('getting again')
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
@@ -115,7 +115,7 @@ export function SendAssetPage() {
       setTimeout(() => {
         setGettingBalance(false)
       }, 2000)
-      // console.log('responseData', responseData)
+      // console.debug('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
       } else {
