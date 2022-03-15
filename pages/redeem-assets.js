@@ -12,7 +12,8 @@ import Container from '@mui/material/Container'
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
 import Link from '@/components/Nav/Link'
-const RedeemAssetsHelper = require('../lib/redeem_assets.js')
+import Helper from '@/lib/helper.js'
+import RedeemAssetsHelper from '@/lib/redeem_assets.js'
 
 /**
  * Generate Static Properties
@@ -97,9 +98,31 @@ export function RedeemAssetPage() {
     }
   }
 
+  const checkOptIn = async () => {
+    const res = await Helper.checkOptIn(
+      parseInt(assetId),
+      receiverAddress,
+    )
+    console.log(res)
+    // if (res.error == false) {
+    //   setEscrowBalance({ success: true, message: res.balance })
+    // } else {
+    //   setEscrowBalance({
+    //     success: false,
+    //     message:
+    //       res?.data?.message ||
+    //       'An error occurred, please ensure you enter valid inputs',
+    //   })
+    // }
+  }
+
   useEffect(() => {
     if (assetId && receiverAddress && senderAddress) {
       getBalance()
+    }
+
+    if (assetId && receiverAddress) {
+      checkOptIn()
     }
   }, [assetId, receiverAddress, senderAddress])
 
