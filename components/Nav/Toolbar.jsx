@@ -60,6 +60,6 @@ Toolbar.propTypes = {
 }
 
 Toolbar.defaultProps = {
-  onClick: console.log
+  onClick: console.debug
 }
 export default Toolbar

@@ -16,11 +16,11 @@ const config = {
 }
 
 
-console.log('sender account: ' + config.senderAccount.addr)
-console.log('receiver account: ' + config.receiverAccount.addr)
-console.log('receiver account2: ' + config.receiverAccount2.addr)
-console.log('open account: ' + config.openAccount.addr)
-console.log('malicious account: ' + config.maliciousAccount.addr)
+console.debug('sender account: ' + config.senderAccount.addr)
+console.debug('receiver account: ' + config.receiverAccount.addr)
+console.debug('receiver account2: ' + config.receiverAccount2.addr)
+console.debug('open account: ' + config.openAccount.addr)
+console.debug('malicious account: ' + config.maliciousAccount.addr)
 
 const negativeFundEscrowTests = [
   {txnNum: 0, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1}, //set to from escrow
@@ -179,8 +179,8 @@ describe('Test Mailbox Funding And Withdrawal', () => {
       client,
       assetId
     } = config
-    console.log('destructuring')
-    console.log(client)
+    console.debug('destructuring')
+    console.debug(client)
 
     let txns = await generateTxns.getFundEscrowTxns(
       client,
