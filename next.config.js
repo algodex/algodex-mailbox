@@ -12,7 +12,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/send-asset',
+        destination: '/send-assets',
         permanent: true
       }
     ]
