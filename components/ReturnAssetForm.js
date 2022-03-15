@@ -9,12 +9,17 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 
-const ReturnAssetForm = ({ formattedAddresses, onSubmit, isLoading, setSenderAddress }) => {
+const ReturnAssetForm = ({
+  formattedAddresses,
+  onSubmit,
+  isLoading,
+  setSenderAddress,
+}) => {
   const schema = {
     required: ['senderAddress', 'assetId', 'csvTransactions'],
     properties: {
-      assetId: { type: 'string', title: 'Asset Id', default: '' },
       senderAddress: { type: 'string', title: 'Sender Address', default: '' },
+      assetId: { type: 'string', title: 'Asset Id', default: '' },
       csvTransactions: {
         type: 'string',
         title: 'CSV Recipients',
@@ -66,8 +71,6 @@ const ReturnAssetForm = ({ formattedAddresses, onSubmit, isLoading, setSenderAdd
     CustomSelect: CustomSelectComponent,
   }
 
-
-
   return (
     <Form
       schema={schema}
@@ -76,15 +79,16 @@ const ReturnAssetForm = ({ formattedAddresses, onSubmit, isLoading, setSenderAdd
       widgets={widgets}
       disabled={formattedAddresses.length < 1}
     >
-      <LoadingButton
-        loading={isLoading}
-        variant="contained"
-        xs={{ marginBottom: '2rem' }}
-        disabled={formattedAddresses.length < 1}
-        type="submit"
-      >
-        Return Assets
-      </LoadingButton>
+      <Box marginTop="2rem">
+        <LoadingButton
+          loading={isLoading}
+          variant="contained"
+          disabled={formattedAddresses.length < 1}
+          type="submit"
+        >
+          Return Assets
+        </LoadingButton>
+      </Box>
     </Form>
   )
 }
