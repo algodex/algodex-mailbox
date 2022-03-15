@@ -128,15 +128,16 @@ const SendAssetForm = ({
       widgets={widgets}
       onSubmit={onSubmit}
     >
-      <LoadingButton
-        loading={isLoading}
-        variant="contained"
-        xs={{ marginBottom: '2rem' }}
-        disabled={formattedAddresses.length < 1}
-        type="submit"
-      >
-        Send Assets
-      </LoadingButton>
+      <Box marginTop='2rem'>
+        <LoadingButton 
+          loading={isLoading}
+          variant="contained"
+          disabled={formattedAddresses.length < 1}
+          type="submit"
+        >
+          Send Assets
+        </LoadingButton>
+      </Box>
     </Form>
   )
 }

@@ -87,6 +87,7 @@ export function SendHistoryPage() {
             {actionStatus.message != '' && (
               <Typography
                 variant="error-message"
+                marginTop="-1.6rem"
                 sx={{ display: 'flex', justifyContent: 'end' }}
                 color={actionStatus.success ? 'green' : 'error'}
               >
