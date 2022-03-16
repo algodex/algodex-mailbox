@@ -6,6 +6,9 @@ import Head from 'next/head'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 // Custom Components
 import * as SendAssetsHelper from '@/lib/send_assets.js'
@@ -49,7 +52,12 @@ export function SendAssetPage() {
   const { t } = useTranslation('common')
   const [formattedAddresses, setFormattedAddresses] = useState([])
   const [gettingBalance, setGettingBalance] = useState(false)
-  // const [gettingAsset, setGettingAsset] = useState(1)
+  const [shareableLink, setShareableLink] = useState('')
+  const [tooltiptext, setTooltiptext] = useState('Click to Copy')
+  let webURL = ''
+  if (typeof window !== 'undefined') {
+    webURL = `${window.location.protocol}//${window.location.host}`
+  }
 
   const updateAddresses = useCallback(
     (addresses) => {
@@ -65,7 +73,6 @@ export function SendAssetPage() {
   const { connect } = useMyAlgo(updateAddresses)
   const submitForm = async ({ formData }) => {
     console.debug(formData)
-    console.debug(assetId, wallet, csvTransactions)
     setLoading(true)
     setActionStatus({
       message: '',
@@ -87,6 +94,9 @@ export function SendAssetPage() {
         message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
         success: true,
       })
+      setShareableLink(
+        `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
+      )
       getAssetBalance()
     } else {
       setActionStatus({
@@ -98,7 +108,6 @@ export function SendAssetPage() {
 
   useEffect(() => {
     if (!gettingBalance) {
-      console.debug('getting again')
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
@@ -127,6 +136,15 @@ export function SendAssetPage() {
         })
       }
     }
+  }
+
+  const copyLink = () => {
+    document.querySelector('.copyToClipboard')
+    navigator.clipboard.writeText(shareableLink)
+    setTooltiptext(`Copied: ${shareableLink}`)
+    setTimeout(() => {
+      setTooltiptext('Click to Copy')
+    }, 500)
   }
 
   return (
@@ -170,6 +188,40 @@ export function SendAssetPage() {
               {actionStatus.message}
             </Typography>
           )}
+          {actionStatus.success == true && (
+            <Box
+              variant="error-message"
+              marginTop="1rem"
+              sx={{ display: 'flex' }}
+            >
+              Click
+              <Link
+                sx={{ marginInline: '0.3rem' }}
+                href={shareableLink}
+                target="_blanc"
+                color="primary.dark"
+              >
+                here
+              </Link>
+              to redeem asset(s)
+              <Tooltip
+                title={tooltiptext}
+                placement="top"
+                arrow
+                sx={{
+                  marginTop: '0.3rem',
+                  cursor: 'pointer',
+                  marginLeft: '0.3rem',
+                }}
+              >
+                <ContentCopyIcon
+                  onClick={copyLink}
+                  className="copyToClipboard"
+                  fontSize="0.9rem"
+                />
+              </Tooltip>
+            </Box>
+          )}
           <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
               <Link href={'/instructions'} color="primary.dark">
@@ -177,7 +229,7 @@ export function SendAssetPage() {
               </Link>
             </Grid>
             <Grid item xs={6} lg={5}>
-              <Link href={'/downloadlink'} color="primary.dark">
+              <Link href={'/sample.csv'} download color="primary.dark">
                 {t('download-csv-example-link')}
               </Link>
             </Grid>

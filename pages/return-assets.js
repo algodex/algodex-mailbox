@@ -125,7 +125,7 @@ export function ReturnAssetPage() {
               </Link>
             </Grid>
             <Grid item xs={6} lg={5}>
-              <Link href={'/downloadlink'} color="primary.dark">
+              <Link href={'/sample.csv'} download color="primary.dark">
                 {t('download-csv-example-link')}
               </Link>
             </Grid>
