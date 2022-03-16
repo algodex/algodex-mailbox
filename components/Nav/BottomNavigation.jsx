@@ -42,25 +42,25 @@ function BottomNavigation({onChange, ...rest}) {
       <BottomNavigationAction
         to="/send-assets"
         value="/send-assets"
-        label={t('/send-assets')}
+        label={t('/send')}
         icon={<SendIcon />}
       />
       <BottomNavigationAction
         to="/send-history"
         value="/send-history"
-        label={t('/send-history')}
+        label={t('/history')}
         icon={<HistoryIcon />}
       />
       <BottomNavigationAction
         to="/redeem-assets"
         value="/redeem-assets"
-        label={t('/redeem-assets')}
+        label={t('/redeem')}
         icon={<RedeemIcon />}
       />
       <BottomNavigationAction
         to="/return-assets"
         value="/return-assets"
-        label={t('/return-assets')}
+        label={t('/return')}
         icon={<KeyboardReturnIcon />}
       />
     </MUIBottomNavigation>
