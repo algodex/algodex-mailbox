@@ -79,6 +79,8 @@ Toolbar.propTypes = {
    * isMobile
    */
   isMobile: PropTypes.bool,
+
+  toggleDrawer: PropTypes.func.isRequired
 }
 
 Toolbar.defaultProps = {

@@ -3,7 +3,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 // MUI Components
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
@@ -135,58 +134,56 @@ export function SendAssetPage() {
       <Head>
         <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8} lg={6} xl={5}>
-            <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-              {t('/send-assets')}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+            {t('/send-assets')}
+          </Typography>
+          <Button variant="contained" onClick={connect}>
+            {t('connect-wallet')}
+          </Button>
+          {assetBalance.message != '' && (
+            <Typography
+              variant="error-message"
+              display="block"
+              marginTop="1rem"
+              color={assetBalance.success ? 'green' : 'error'}
+            >
+              {assetBalance.message} {assetBalance.success ? 'available' : ''}
             </Typography>
-            <Button variant="contained" onClick={connect}>
-              {t('connect-wallet')}
-            </Button>
-            {assetBalance.message != '' && (
-              <Typography
-                variant="error-message"
-                display="block"
-                marginTop="1rem"
-                color={assetBalance.success ? 'green' : 'error'}
-              >
-                {assetBalance.message} {assetBalance.success ? 'available' : ''}
-              </Typography>
-            )}
-            <SendAssetForm
-              formattedAddresses={formattedAddresses}
-              onSubmit={submitForm}
-              isLoading={loading}
-              setWallet={setWallet}
-              setAssetId={setAssetId}
-              setCsvTransactions={setCsvTransactions}
-            />
-            {actionStatus.message != '' && (
-              <Typography
-                variant="error-message"
-                marginTop="-1.6rem"
-                sx={{ display: 'flex', justifyContent: 'end' }}
-                color={actionStatus.success ? 'green' : 'error'}
-              >
-                {actionStatus.message}
-              </Typography>
-            )}
-            <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
-              <Grid item xs={6} lg={5} className="mr-2">
-                <Link href={'/instructions'} color="primary.dark">
-                  {t('view-instructions-link')}
-                </Link>
-              </Grid>
-              <Grid item xs={6} lg={5}>
-                <Link href={'/downloadlink'} color="primary.dark">
-                  {t('download-csv-example-link')}
-                </Link>
-              </Grid>
+          )}
+          <SendAssetForm
+            formattedAddresses={formattedAddresses}
+            onSubmit={submitForm}
+            isLoading={loading}
+            setWallet={setWallet}
+            setAssetId={setAssetId}
+            setCsvTransactions={setCsvTransactions}
+          />
+          {actionStatus.message != '' && (
+            <Typography
+              variant="error-message"
+              marginTop="-1.6rem"
+              sx={{ display: 'flex', justifyContent: 'end' }}
+              color={actionStatus.success ? 'green' : 'error'}
+            >
+              {actionStatus.message}
+            </Typography>
+          )}
+          <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
+            <Grid item xs={6} lg={5} className="mr-2">
+              <Link href={'/instructions'} color="primary.dark">
+                {t('view-instructions-link')}
+              </Link>
+            </Grid>
+            <Grid item xs={6} lg={5}>
+              <Link href={'/downloadlink'} color="primary.dark">
+                {t('download-csv-example-link')}
+              </Link>
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     </>
   )
 }

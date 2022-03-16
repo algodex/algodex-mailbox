@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 // Defaults
 import DefaultToolbar from '@/components/Nav/Toolbar'
@@ -79,7 +80,8 @@ export function Layout({ children, components, componentsProps }) {
           )
         }
         {/* Display the Page Component */}
-        {children}
+
+        <Container sx={{ my: 4 }}>{children}</Container>
       </Box>
       {
         // Show the Mobile Navigation
