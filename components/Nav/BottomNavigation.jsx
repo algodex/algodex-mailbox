@@ -11,6 +11,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 
 /**
  * Bottom Navigation
@@ -39,9 +40,9 @@ function BottomNavigation({onChange, ...rest}) {
       {...rest}
     >
       <BottomNavigationAction
-        to="/send-asset"
-        value="/send-asset"
-        label={t('/send-asset')}
+        to="/send-assets"
+        value="/send-assets"
+        label={t('/send-assets')}
         icon={<SendIcon />}
       />
       <BottomNavigationAction
@@ -51,10 +52,16 @@ function BottomNavigation({onChange, ...rest}) {
         icon={<HistoryIcon />}
       />
       <BottomNavigationAction
-        to="/redeem-asset"
-        value="/redeem-asset"
-        label={t('/redeem-asset')}
+        to="/redeem-assets"
+        value="/redeem-assets"
+        label={t('/redeem-assets')}
         icon={<RedeemIcon />}
+      />
+      <BottomNavigationAction
+        to="/return-assets"
+        value="/return-assets"
+        label={t('/return-assets')}
+        icon={<KeyboardReturnIcon />}
       />
     </MUIBottomNavigation>
   )

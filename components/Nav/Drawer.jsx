@@ -31,7 +31,8 @@ function Drawer({ width, offset, ...props }) {
   const { t } = useTranslation('common')
   return (
     <MUIDrawer
-      variant="permanent"
+      variant="persistent"
+      anchor="left"
       sx={{
         width,
         flexShrink: 0,

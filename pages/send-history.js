@@ -5,7 +5,6 @@ import Head from 'next/head'
 import { defaults } from '@/next-i18next.config'
 
 // MUI Components
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 
@@ -77,30 +76,28 @@ export function SendHistoryPage() {
       <Head>
         <title>{`${t('/send-history')} | ${t('app-title')}`}</title>
       </Head>
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8} lg={6} xl={5}>
-            <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-              {t('/send-history')}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+            {t('/send-history')}
+          </Typography>
+          <SendHistoryForm
+            onSubmit={submitForm}
+            isLoading={loading}
+            formData={formData}
+          />
+          {actionStatus.message != '' && (
+            <Typography
+              variant="error-message"
+              marginTop="-1.6rem"
+              sx={{ display: 'flex', justifyContent: 'end' }}
+              color={actionStatus.success ? 'green' : 'error'}
+            >
+              {actionStatus.message}
             </Typography>
-            <SendHistoryForm
-              onSubmit={submitForm}
-              isLoading={loading}
-              formData={formData}
-            />
-            {actionStatus.message != '' && (
-              <Typography
-                variant="error-message"
-                marginTop="-1.6rem"
-                sx={{ display: 'flex', justifyContent: 'end' }}
-                color={actionStatus.success ? 'green' : 'error'}
-              >
-                {actionStatus.message}
-              </Typography>
-            )}
-          </Grid>
+          )}
         </Grid>
-      </Container>
+      </Grid>
     </>
   )
 }
