@@ -43,11 +43,15 @@ export function SendHistoryPage() {
 
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
-    // console.debug({ formData })
     setLoading(true)
     setActionStatus({
       message: '',
       success: true,
+    })
+    setFormData({
+      assetId,
+      senderAddress,
+      csvTransactions: '',
     })
     const responseData = await SendHistoryHelper.getSendHistory(
       assetId,
