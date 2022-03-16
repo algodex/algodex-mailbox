@@ -191,27 +191,19 @@ export function SendAssetPage() {
           {actionStatus.success == true && (
             <Box
               variant="error-message"
-              marginTop="1rem"
-              sx={{ display: 'flex' }}
+              marginTop="3rem"
+              sx={{ display: 'flex', alignItems: 'center' }}
             >
-              Click
-              <Link
-                sx={{ marginInline: '0.3rem' }}
-                href={shareableLink}
-                target="_blanc"
-                color="primary.dark"
-              >
-                here
+              <Link href={shareableLink} target="_blanc" sx={{ color: 'blue' }}>
+                Copy and share this link to redeem asset(s)
               </Link>
-              to redeem asset(s)
               <Tooltip
                 title={tooltiptext}
                 placement="top"
                 arrow
                 sx={{
-                  marginTop: '0.3rem',
                   cursor: 'pointer',
-                  marginLeft: '0.3rem',
+                  marginLeft: '0.5rem',
                 }}
               >
                 <ContentCopyIcon
