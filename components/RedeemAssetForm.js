@@ -16,6 +16,7 @@ const RedeemAssetForm = ({
   setReceiverAddress,
   setAssetId,
   optInStatus,
+  formData
 }) => {
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
@@ -38,6 +39,7 @@ const RedeemAssetForm = ({
             required={props.required}
             id="outlined-required"
             label="Asset Id"
+            defaultValue={formData.assetId}
             onChange={({ target: { value } }) => {
               props.onChange(value)
               setAssetId(value)
@@ -55,6 +57,7 @@ const RedeemAssetForm = ({
           <TextField
             required={props.required}
             id="outlined-required"
+            defaultValue={formData.senderAddress}
             label="Sender Address"
             onChange={({ target: { value } }) => {
               props.onChange(value)
@@ -106,6 +109,7 @@ const RedeemAssetForm = ({
       onSubmit={onSubmit}
       uiSchema={uiSchema}
       widgets={widgets}
+      formData={formData}
     >
       {optInStatus == false && (
         <Box marginTop="2rem">
@@ -138,6 +142,12 @@ const RedeemAssetForm = ({
 
 RedeemAssetForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  optInStatus: PropTypes.any.isRequired,
+  optInStatus: PropTypes.bool,
+  actionStatus: PropTypes.object,
+  loading: PropTypes.bool,
+  setSenderAddress: PropTypes.any,
+  setReceiverAddress: PropTypes.any,
+  setAssetId: PropTypes.any,
+  formData: PropTypes.object,
 }
 export default RedeemAssetForm
