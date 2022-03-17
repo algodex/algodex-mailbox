@@ -9,6 +9,14 @@ import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import Button from '@mui/material/Button'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
+
+const labelStyles = {
+  marginTop: '1rem',
+  display: 'flex',
+  justifyContent: 'end',
+}
 
 const SendAssetForm = ({
   formattedAddresses,
@@ -16,7 +24,8 @@ const SendAssetForm = ({
   isLoading,
   setWallet,
   setAssetId,
-  setCsvTransactions,
+  csvTransactions,
+  getFileUpload,
 }) => {
   const CustomSelectComponent = (props) => {
     return (
@@ -71,17 +80,29 @@ const SendAssetForm = ({
             minRows={9}
             maxRows={14}
             disabled={formattedAddresses.length < 1}
-            placeholder="Enter CSV transactions"
-            // value={props.value}
+            placeholder="Click button below to upload your CSV transactions"
+            value={props.value}
+            readOnly
             required={props.required}
             style={{ padding: '0.9rem' }}
-            // onChange={(event) => props.onChange(event.target.value)}
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setCsvTransactions(value)
-            }}
+            // onChange={({ target: { value } }) => {
+            //   props.onChange(value)
+            //   setCsvTransactions(value)
+            // }}
           />
         </FormControl>
+        <label htmlFor="contained-button-file" style={labelStyles}>
+          <input
+            accept="text/csv"
+            id="contained-button-file"
+            type="file"
+            hidden
+            onChange={getFileUpload}
+          />
+          <Button variant="contained" component="span" startIcon={<UploadFileIcon/>}>
+            Upload CSV 
+          </Button>
+        </label>
       </Box>
     )
   }
@@ -119,7 +140,6 @@ const SendAssetForm = ({
     CustomInput: CustomInputComponent,
     CustomTextarea: CustomTextAreaComponent,
   }
-
   return (
     <Form
       schema={schema}
@@ -127,9 +147,10 @@ const SendAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
       onSubmit={onSubmit}
+      formData={{csvTransactions}}
     >
-      <Box marginTop='2rem'>
-        <LoadingButton 
+      <Box marginTop="2rem">
+        <LoadingButton
           loading={isLoading}
           variant="contained"
           disabled={formattedAddresses.length < 1}
