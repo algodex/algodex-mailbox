@@ -3,6 +3,7 @@ import { defaults } from '@/next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
 
 // MUI Components
 import Typography from '@mui/material/Typography'
@@ -38,6 +39,7 @@ export function RedeemAssetPage() {
     success: false,
     message: '',
   })
+  const { query } = useRouter()
   const [assetId, setAssetId] = useState()
   const [receiverAddress, setReceiverAddress] = useState()
   const [senderAddress, setSenderAddress] = useState()
@@ -46,6 +48,16 @@ export function RedeemAssetPage() {
     message: '',
     success: false,
   })
+  const formData = {
+    assetId: query.assetId || '',
+    senderAddress: query.senderAddress || '',
+    receiverAddress: '',
+  }
+
+  useEffect(() => {
+    setAssetId(query.assetId)
+    setSenderAddress(query.senderAddress)
+  }, [query])
 
   const submitForm = async () => {
     setActionStatus({
@@ -53,13 +65,13 @@ export function RedeemAssetPage() {
       success: '',
     })
     setLoading(true)
+    // console.debug(assetId, receiverAddress, senderAddress)
     const responseData = await RedeemAssetsHelper.redeem(
       assetId,
       receiverAddress,
       senderAddress
     )
     setLoading(false)
-    // console.debug('responseData', responseData)
     if (responseData.status == 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
@@ -134,6 +146,7 @@ export function RedeemAssetPage() {
             setReceiverAddress={setReceiverAddress}
             setAssetId={setAssetId}
             optInStatus={optInStatus}
+            formData={formData}
           />
           {escrowBalance && (
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
