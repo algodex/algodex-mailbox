@@ -110,7 +110,7 @@ const SendAssetForm = ({
     >
       <Box>
         <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
-          <Typography variant="p">Click to upload CSV transactions</Typography>
+          <Typography variant="p" marginBottom='1rem'>Click to upload CSV transactions</Typography>
           <input
             accept="text/csv"
             id="contained-button-file"
