@@ -85,10 +85,6 @@ const SendAssetForm = ({
             readOnly
             required={props.required}
             style={{ padding: '0.9rem' }}
-            // onChange={({ target: { value } }) => {
-            //   props.onChange(value)
-            //   setCsvTransactions(value)
-            // }}
           />
         </FormControl>
         <label htmlFor="contained-button-file" style={labelStyles}>

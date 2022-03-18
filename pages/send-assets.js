@@ -83,6 +83,7 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
+    console.log('payload', assetId, wallet, csvTransactions)
     console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
