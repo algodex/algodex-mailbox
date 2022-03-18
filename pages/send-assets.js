@@ -54,6 +54,7 @@ export function SendAssetPage() {
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
+  const [fileName, setFileName] = useState()
   let webURL = ''
   if (typeof window !== 'undefined') {
     webURL = `${window.location.protocol}//${window.location.host}`
@@ -84,7 +85,7 @@ export function SendAssetPage() {
       csvTransactions
     )
     // console.log('payload', assetId, wallet, csvTransactions)
-    console.debug('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
@@ -161,6 +162,7 @@ export function SendAssetPage() {
       success: false,
     })
     const csvFiles = e.target.files[0]
+    setFileName(csvFiles.name)
     const reader = new FileReader()
     reader.onloadend = ({ target }) => {
       const text = target.result
@@ -200,6 +202,7 @@ export function SendAssetPage() {
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
             getFileUpload={getFileUpload}
+            fileName={fileName}
           />
           {actionStatus.message != '' && (
             <Typography

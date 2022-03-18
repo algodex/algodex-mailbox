@@ -8,14 +8,21 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
+import Typography from '@mui/material/Typography'
 
-const labelStyles = {
-  marginTop: '1rem',
-  display: 'flex',
-  justifyContent: 'end',
+const styles = {
+  uploadWrapper: {
+    background: '#fffcff',
+    height: '10rem',
+    borderRadius: '0.4rem',
+    border: '0.1rem dashed #a698b5',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
 }
 
 const SendAssetForm = ({
@@ -24,8 +31,8 @@ const SendAssetForm = ({
   isLoading,
   setWallet,
   setAssetId,
-  csvTransactions,
   getFileUpload,
+  fileName
 }) => {
   const CustomSelectComponent = (props) => {
     return (
@@ -72,59 +79,17 @@ const SendAssetForm = ({
     )
   }
 
-  const CustomTextAreaComponent = (props) => {
-    return (
-      <Box>
-        <FormControl fullWidth>
-          <TextareaAutosize
-            minRows={9}
-            maxRows={14}
-            disabled={formattedAddresses.length < 1}
-            placeholder="Click button below to upload your CSV transactions"
-            value={props.value}
-            readOnly
-            required={props.required}
-            style={{ padding: '0.9rem' }}
-          />
-        </FormControl>
-        <label htmlFor="contained-button-file" style={labelStyles}>
-          <input
-            accept="text/csv"
-            id="contained-button-file"
-            type="file"
-            hidden
-            onChange={getFileUpload}
-          />
-          <Button variant="contained" component="span" startIcon={<UploadFileIcon/>}>
-            Upload CSV 
-          </Button>
-        </label>
-      </Box>
-    )
-  }
   const schema = {
-    required: ['assetId', 'csvTransactions', 'wallet'],
+    required: ['assetId', 'wallet'],
     properties: {
       wallet: { type: 'string', title: 'wallet', default: '' },
       assetId: { type: 'string', title: 'Asset Id', default: '' },
-      csvTransactions: {
-        type: 'string',
-        title: 'CSV Transactions',
-        default: '',
-      },
     },
   }
 
   const uiSchema = {
     assetId: {
       'ui:widget': 'CustomInput',
-    },
-    csvTransactions: {
-      'ui:widget': 'CustomTextarea',
-      'ui:placeholder': 'Enter CSV Transactions',
-      'ui:options': {
-        rows: 9,
-      },
     },
     wallet: {
       'ui:widget': 'CustomSelect',
@@ -134,7 +99,6 @@ const SendAssetForm = ({
   const widgets = {
     CustomSelect: CustomSelectComponent,
     CustomInput: CustomInputComponent,
-    CustomTextarea: CustomTextAreaComponent,
   }
   return (
     <Form
@@ -143,8 +107,27 @@ const SendAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
       onSubmit={onSubmit}
-      formData={{csvTransactions}}
     >
+      <Box>
+        <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
+          <Typography variant="p">Click to upload CSV transactions</Typography>
+          <input
+            accept="text/csv"
+            id="contained-button-file"
+            type="file"
+            hidden
+            onChange={getFileUpload}
+          />
+          <Button
+            variant="contained"
+            component="span"
+            startIcon={<UploadFileIcon />}
+          >
+            {fileName || 'Upload CSV'}
+          </Button>
+        </label>
+      </Box>
+
       <Box marginTop="2rem">
         <LoadingButton
           loading={isLoading}
@@ -162,5 +145,10 @@ const SendAssetForm = ({
 SendAssetForm.propTypes = {
   formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isLoading:PropTypes.bool,
+  setWallet:PropTypes.any,
+  setAssetId:PropTypes.any,
+  getFileUpload:PropTypes.func,
+  fileName:PropTypes.any,
 }
 export default SendAssetForm
