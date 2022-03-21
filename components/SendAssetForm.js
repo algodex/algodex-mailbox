@@ -114,6 +114,7 @@ const SendAssetForm = ({
             variant="contained"
             component="span"
             startIcon={<UploadFileIcon />}
+            style={{ marginTop: '1rem' }}
           >
             {fileName}
           </Button>
