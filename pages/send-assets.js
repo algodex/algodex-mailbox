@@ -84,7 +84,6 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    // console.log('payload', assetId, wallet, csvTransactions)
     // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
@@ -166,7 +165,7 @@ export function SendAssetPage() {
     const reader = new FileReader()
     reader.onloadend = ({ target }) => {
       const text = target.result
-      setCsvTransactions(text)
+      setCsvTransactions(text.replace(/\r?\r/g, ''))
     }
     reader.readAsText(csvFiles)
   }
