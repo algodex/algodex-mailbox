@@ -54,6 +54,7 @@ export function SendAssetPage() {
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
+  const [fileName, setFileName] = useState()
   let webURL = ''
   if (typeof window !== 'undefined') {
     webURL = `${window.location.protocol}//${window.location.host}`
@@ -86,18 +87,25 @@ export function SendAssetPage() {
     // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
-      const totalAssets = responseData.confirmedTransactions.length
-      const sentAssets = responseData.confirmedTransactions.filter(
-        (asset) => asset.value.status == 'confirmed'
-      ).length
-      setActionStatus({
-        message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
-        success: true,
-      })
-      setShareableLink(
-        `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
-      )
-      getAssetBalance()
+      if (responseData.confirmedTransactions.accepted == false) {
+        setActionStatus({
+          message: 'Please, ensure you enter a valid wallet address',
+          success: false,
+        })
+      } else {
+        const totalAssets = responseData.confirmedTransactions.length
+        const sentAssets = responseData.confirmedTransactions.filter(
+          (asset) => asset.value.status == 'confirmed'
+        ).length
+        setActionStatus({
+          message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
+          success: true,
+        })
+        setShareableLink(
+          `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
+        )
+        getAssetBalance()
+      }
     } else {
       setActionStatus({
         message: responseData.body?.message || 'Sorry, an error occurred',
@@ -147,6 +155,21 @@ export function SendAssetPage() {
     }, 500)
   }
 
+  const getFileUpload = async (e) => {
+    setActionStatus({
+      message: '',
+      success: false,
+    })
+    const csvFiles = e.target.files[0]
+    setFileName(csvFiles.name)
+    const reader = new FileReader()
+    reader.onloadend = ({ target }) => {
+      const text = target.result
+      setCsvTransactions(text.replace(/\r?\r/g, ''))
+    }
+    reader.readAsText(csvFiles)
+  }
+
   return (
     <>
       <Head>
@@ -176,7 +199,9 @@ export function SendAssetPage() {
             isLoading={loading}
             setWallet={setWallet}
             setAssetId={setAssetId}
-            setCsvTransactions={setCsvTransactions}
+            csvTransactions={csvTransactions}
+            getFileUpload={getFileUpload}
+            fileName={fileName}
           />
           {actionStatus.message != '' && (
             <Typography
