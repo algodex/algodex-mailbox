@@ -32,7 +32,7 @@ const SendAssetForm = ({
   setWallet,
   setAssetId,
   getFileUpload,
-  fileName
+  fileName,
 }) => {
   const CustomSelectComponent = (props) => {
     return (
@@ -109,23 +109,35 @@ const SendAssetForm = ({
       onSubmit={onSubmit}
     >
       <Box>
-        <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
-          <Typography variant="p" marginBottom='1rem'>Click to upload CSV transactions</Typography>
-          <input
-            accept="text/csv"
-            id="contained-button-file"
-            type="file"
-            hidden
-            onChange={getFileUpload}
-          />
+        {fileName ? (
           <Button
             variant="contained"
             component="span"
             startIcon={<UploadFileIcon />}
           >
-            {fileName || 'Upload CSV'}
+            {fileName}
           </Button>
-        </label>
+        ) : (
+          <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
+            <Typography variant="p" marginBottom="1rem">
+              Click to upload CSV transactions
+            </Typography>
+            <input
+              accept="text/csv"
+              id="contained-button-file"
+              type="file"
+              hidden
+              onChange={getFileUpload}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<UploadFileIcon />}
+            >
+              Upload CSV
+            </Button>
+          </label>
+        )}
       </Box>
 
       <Box marginTop="2rem">
@@ -145,10 +157,10 @@ const SendAssetForm = ({
 SendAssetForm.propTypes = {
   formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
-  isLoading:PropTypes.bool,
-  setWallet:PropTypes.any,
-  setAssetId:PropTypes.any,
-  getFileUpload:PropTypes.func,
-  fileName:PropTypes.any,
+  isLoading: PropTypes.bool,
+  setWallet: PropTypes.any,
+  setAssetId: PropTypes.any,
+  getFileUpload: PropTypes.func,
+  fileName: PropTypes.any,
 }
 export default SendAssetForm
