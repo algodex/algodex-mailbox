@@ -33,10 +33,6 @@ export async function getStaticProps({ locale }) {
  * @constructor
  */
 export function ReturnAssetPage() {
-  const environmentText =
-    typeof window !== 'undefined'
-      ? localStorage.getItem('environmentText')?.toLowerCase()
-      : ''
   const [loading, setLoading] = useState(false)
   const [senderAddress, setSenderAddress] = useState('')
   const [actionStatus, setActionStatus] = useState({
@@ -124,15 +120,13 @@ export function ReturnAssetPage() {
           )}
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
-              {environmentText != '' && (
-                <Link
-                  href={`/instructions-${environmentText}.jpg`}
-                  target="blanc"
-                  color="primary.dark"
-                >
-                  {t('view-instructions-link')}
-                </Link>
-              )}
+              <Link
+                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                target="blanc"
+                color="primary.dark"
+              >
+                {t('view-instructions-link')}
+              </Link>
             </Grid>
             <Grid item xs={6} lg={5}>
               <Link href={'/sample.csv'} download color="primary.dark">
