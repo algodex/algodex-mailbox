@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -29,10 +29,6 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
   const environmentText = environment.toUpperCase()
-
-  useEffect(() => {
-    localStorage.setItem('environmentText', environmentText)
-  }, [environmentText])
 
   return (
     <MUIToolbar sx={{ height }} {...rest}>

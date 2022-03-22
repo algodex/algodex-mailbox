@@ -37,7 +37,6 @@ export async function getStaticProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
- 
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -57,10 +56,8 @@ export function SendAssetPage() {
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
   const [fileName, setFileName] = useState()
   let webURL = ''
-  let environmentText = ''
   if (typeof window !== 'undefined') {
     webURL = `${window.location.protocol}//${window.location.host}`
-    environmentText = localStorage.getItem('environmentText')?.toLowerCase()
   }
 
   const updateAddresses = useCallback(
@@ -244,15 +241,13 @@ export function SendAssetPage() {
           )}
           <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
-              {environmentText != '' && (
-                <Link
-                  href={`/instructions-${environmentText}.jpg`}
-                  target="blanc"
-                  color="primary.dark"
-                >
-                  {t('view-instructions-link')}
-                </Link>
-              )}
+              <Link
+                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                target="blanc"
+                color="primary.dark"
+              >
+                {t('view-instructions-link')}
+              </Link>
             </Grid>
             <Grid item xs={6} lg={5}>
               <Link href={'/sample.csv'} download color="primary.dark">
