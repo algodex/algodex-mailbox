@@ -245,7 +245,7 @@ export function SendAssetPage() {
           <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
               {environmentText != '' && (
-                <Link 
+                <Link
                   href={`/instructions-${environmentText}.jpg`}
                   target="blanc"
                   color="primary.dark"
