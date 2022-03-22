@@ -29,6 +29,7 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
   const environmentText = environment.toUpperCase()
+
   return (
     <MUIToolbar sx={{ height }} {...rest}>
       {!isMobile && (
@@ -80,7 +81,7 @@ Toolbar.propTypes = {
    */
   isMobile: PropTypes.bool,
 
-  toggleDrawer: PropTypes.func.isRequired
+  toggleDrawer: PropTypes.func.isRequired,
 }
 
 Toolbar.defaultProps = {

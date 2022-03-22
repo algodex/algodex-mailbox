@@ -172,7 +172,11 @@ export function RedeemAssetPage() {
 
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5}>
-              <Link href={'/instructions'} color="primary.dark">
+              <Link
+                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                target="blanc"
+                color="primary.dark"
+              >
                 {t('view-instructions-link')}
               </Link>
             </Grid>
