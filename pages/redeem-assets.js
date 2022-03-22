@@ -33,6 +33,10 @@ export async function getStaticProps({ locale }) {
  * @constructor
  */
 export function RedeemAssetPage() {
+  const environmentText =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('environmentText')?.toLowerCase()
+      : ''
   const { t } = useTranslation('common')
   const [loading, setLoading] = useState(false)
   const [escrowBalance, setEscrowBalance] = useState({
@@ -172,9 +176,15 @@ export function RedeemAssetPage() {
 
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5}>
-              <Link href={'/instructions'} color="primary.dark">
-                {t('view-instructions-link')}
-              </Link>
+              {environmentText != '' && (
+                <Link
+                  href={`/instructions-${environmentText}.jpg`}
+                  target="blanc"
+                  color="primary.dark"
+                >
+                  {t('view-instructions-link')}
+                </Link>
+              )}
             </Grid>
             <Grid item xs={6} lg={5}>
               <Link href={'/'} color="primary.dark">
