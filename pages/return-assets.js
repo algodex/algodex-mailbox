@@ -35,6 +35,7 @@ export async function getStaticProps({ locale }) {
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
   const [senderAddress, setSenderAddress] = useState('')
+  const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
   const [fileName, setFileName] = useState()
   const [actionStatus, setActionStatus] = useState({
@@ -60,7 +61,7 @@ export function ReturnAssetPage() {
   const { t } = useTranslation('common')
 
   const submitForm = async ({ formData }) => {
-    const { assetId } = formData
+    console.debug(formData)
     if (senderAddress != '' && assetId != '' && csvTransactions != '') {
       setLoading(true)
       setActionStatus({
@@ -72,7 +73,7 @@ export function ReturnAssetPage() {
         senderAddress,
         csvTransactions
       )
-      console.debug('responseData', responseData)
+      // console.debug('responseData', responseData)
       setLoading(false)
       if (responseData?.error == false) {
         const totalAssets = responseData.confirmedTransactions.length
@@ -126,6 +127,7 @@ export function ReturnAssetPage() {
             onSubmit={submitForm}
             isLoading={loading}
             setSenderAddress={setSenderAddress}
+            setAssetId={setAssetId}
             csvTransactions={csvTransactions}
             getFileUpload={getFileUpload}
             fileName={fileName}

@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl'
 import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
 
 const styles = {
   uploadWrapper: {
@@ -30,6 +31,7 @@ const ReturnAssetForm = ({
   onSubmit,
   isLoading,
   setSenderAddress,
+  setAssetId,
   getFileUpload,
   fileName,
 }) => {
@@ -47,6 +49,9 @@ const ReturnAssetForm = ({
   }
 
   const uiSchema = {
+    assetId: {
+      'ui:widget': 'CustomInput',
+    },
     csvTransactions: {
       'ui:widget': 'hidden',
     },
@@ -81,8 +86,27 @@ const ReturnAssetForm = ({
     )
   }
 
+  const CustomInputComponent = (props) => {
+    return (
+      <Box>
+        <FormControl fullWidth>
+          <TextField
+            required
+            id="outlined-required"
+            disabled={formattedAddresses.length < 1}
+            label="Asset Id"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setAssetId(value)
+            }}
+          />
+        </FormControl>
+      </Box>
+    )
+  }
   const widgets = {
     CustomSelect: CustomSelectComponent,
+    CustomInput: CustomInputComponent,
   }
 
   return (
@@ -143,5 +167,9 @@ ReturnAssetForm.propTypes = {
   formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
   isLoading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  setSenderAddress: PropTypes.func,
+  setAssetId: PropTypes.func,
+  getFileUpload: PropTypes.func.isRequired,
+  fileName: PropTypes.string,
 }
 export default ReturnAssetForm
