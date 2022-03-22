@@ -35,7 +35,7 @@ export async function getStaticProps({ locale }) {
 export function ReturnAssetPage() {
   const environmentText =
     typeof window !== 'undefined'
-      ? localStorage.getItem('environmentText').toLowerCase()
+      ? localStorage.getItem('environmentText')?.toLowerCase()
       : ''
   const [loading, setLoading] = useState(false)
   const [senderAddress, setSenderAddress] = useState('')

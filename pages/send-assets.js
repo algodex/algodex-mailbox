@@ -60,7 +60,7 @@ export function SendAssetPage() {
   let environmentText = ''
   if (typeof window !== 'undefined') {
     webURL = `${window.location.protocol}//${window.location.host}`
-    environmentText = localStorage.getItem('environmentText').toLowerCase()
+    environmentText = localStorage.getItem('environmentText')?.toLowerCase()
   }
 
   const updateAddresses = useCallback(
