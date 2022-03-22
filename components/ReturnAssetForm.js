@@ -8,12 +8,30 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
+import Button from '@mui/material/Button'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
+import Typography from '@mui/material/Typography'
+
+const styles = {
+  uploadWrapper: {
+    background: '#fffcff',
+    height: '10rem',
+    borderRadius: '0.4rem',
+    border: '0.1rem dashed #a698b5',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+}
 
 const ReturnAssetForm = ({
   formattedAddresses,
   onSubmit,
   isLoading,
   setSenderAddress,
+  getFileUpload,
+  fileName,
 }) => {
   const schema = {
     required: ['senderAddress', 'assetId', 'csvTransactions'],
@@ -30,11 +48,7 @@ const ReturnAssetForm = ({
 
   const uiSchema = {
     csvTransactions: {
-      'ui:widget': 'textarea',
-      'ui:placeholder': 'Enter CSV Transactions',
-      'ui:options': {
-        rows: 9,
-      },
+      'ui:widget': 'hidden',
     },
     senderAddress: {
       'ui:widget': 'CustomSelect',
@@ -79,6 +93,38 @@ const ReturnAssetForm = ({
       widgets={widgets}
       disabled={formattedAddresses.length < 1}
     >
+      <Box>
+        {fileName ? (
+          <Button
+            variant="contained"
+            component="span"
+            startIcon={<UploadFileIcon />}
+            style={{ marginTop: '1rem' }}
+          >
+            {fileName}
+          </Button>
+        ) : (
+          <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
+            <Typography variant="p" marginBottom="1rem">
+              Click to upload CSV transactions
+            </Typography>
+            <input
+              accept="text/csv"
+              id="contained-button-file"
+              type="file"
+              hidden
+              onChange={getFileUpload}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<UploadFileIcon />}
+            >
+              Upload CSV
+            </Button>
+          </label>
+        )}
+      </Box>
       <Box marginTop="2rem">
         <LoadingButton
           loading={isLoading}
