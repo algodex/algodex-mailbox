@@ -35,6 +35,9 @@ export async function getStaticProps({ locale }) {
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
   const [senderAddress, setSenderAddress] = useState('')
+  const [assetId, setAssetId] = useState('')
+  const [csvTransactions, setCsvTransactions] = useState()
+  const [fileName, setFileName] = useState()
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -58,13 +61,13 @@ export function ReturnAssetPage() {
   const { t } = useTranslation('common')
 
   const submitForm = async ({ formData }) => {
-    const { assetId, csvTransactions } = formData
-    setLoading(true)
-    setActionStatus({
-      message: '',
-      success: false,
-    })
+    console.debug(formData)
     if (senderAddress != '' && assetId != '' && csvTransactions != '') {
+      setLoading(true)
+      setActionStatus({
+        message: '',
+        success: false,
+      })
       const responseData = await ReturnAssetHelper.returnAssetsToSender(
         assetId,
         senderAddress,
@@ -89,6 +92,23 @@ export function ReturnAssetPage() {
       }
     }
   }
+
+
+  const getFileUpload = async (e) => {
+    setActionStatus({
+      message: '',
+      success: false,
+    })
+    const csvFiles = e.target.files[0]
+    setFileName(csvFiles.name)
+    const reader = new FileReader()
+    reader.onloadend = ({ target }) => {
+      const text = target.result
+      setCsvTransactions(text.replace(/\r?\r/g, ''))
+    }
+    reader.readAsText(csvFiles)
+  }
+
   return (
     <>
       <Head>
@@ -107,6 +127,10 @@ export function ReturnAssetPage() {
             onSubmit={submitForm}
             isLoading={loading}
             setSenderAddress={setSenderAddress}
+            setAssetId={setAssetId}
+            csvTransactions={csvTransactions}
+            getFileUpload={getFileUpload}
+            fileName={fileName}
           />
           {actionStatus.message != '' && (
             <Typography
