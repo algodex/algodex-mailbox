@@ -5,7 +5,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 // MUI Components
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
@@ -95,46 +94,48 @@ export function ReturnAssetPage() {
       <Head>
         <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8} lg={6} xl={5}>
-            <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-              {t('/return-assets')}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+            {t('/return-assets')}
+          </Typography>
+          <Button variant="contained" onClick={connect}>
+            {t('connect-wallet')}
+          </Button>
+          <ReturnAssetForm
+            formattedAddresses={formattedAddresses}
+            onSubmit={submitForm}
+            isLoading={loading}
+            setSenderAddress={setSenderAddress}
+          />
+          {actionStatus.message != '' && (
+            <Typography
+              variant="error-message"
+              marginTop="-1.6rem"
+              sx={{ display: 'flex', justifyContent: 'end' }}
+              color={actionStatus.success ? 'green' : 'error'}
+            >
+              {actionStatus.message}
             </Typography>
-            <Button variant="contained" onClick={connect}>
-              {t('connect-wallet')}
-            </Button>
-            <ReturnAssetForm
-              formattedAddresses={formattedAddresses}
-              onSubmit={submitForm}
-              isLoading={loading}
-              setSenderAddress={setSenderAddress}
-            />
-            {actionStatus.message != '' && (
-              <Typography
-                variant="error-message"
-                marginTop="-1.6rem"
-                sx={{ display: 'flex', justifyContent: 'end' }}
-                color={actionStatus.success ? 'green' : 'error'}
+          )}
+          <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+            <Grid item xs={6} lg={5} className="mr-2">
+              <Link
+                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                target="blanc"
+                color="primary.dark"
               >
-                {actionStatus.message}
-              </Typography>
-            )}
-            <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
-              <Grid item xs={6} lg={5} className="mr-2">
-                <Link href={'/instructions'} color="primary.dark">
-                  {t('view-instructions-link')}
-                </Link>
-              </Grid>
-              <Grid item xs={6} lg={5}>
-                <Link href={'/downloadlink'} color="primary.dark">
-                  {t('download-csv-example-link')}
-                </Link>
-              </Grid>
+                {t('view-instructions-link')}
+              </Link>
+            </Grid>
+            <Grid item xs={6} lg={5}>
+              <Link href={'/sample.csv'} download color="primary.dark">
+                {t('download-csv-example-link')}
+              </Link>
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     </>
   )
 }

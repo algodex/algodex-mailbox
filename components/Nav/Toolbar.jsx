@@ -25,25 +25,27 @@ import Helper from '@/lib/helper'
  * @returns {JSX.Element}
  * @constructor
  */
-function Toolbar({ title, height, isMobile, onClick, ...rest }) {
+function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
   const environmentText = environment.toUpperCase()
+
   return (
     <MUIToolbar sx={{ height }} {...rest}>
-      {/* TODO: Make Menu Collapsable*/}
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-        onClick={() => {
-          alert('TODO: Make Menu Collapse')
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
+      {!isMobile && (
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={() => {
+            toggleDrawer()
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+      )}
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="h6" component="div">
           {title || t('app-title')}
@@ -51,10 +53,10 @@ function Toolbar({ title, height, isMobile, onClick, ...rest }) {
         <Typography
           component="div"
           color={'green'}
-          paddingTop='0.25rem'
+          paddingTop="0.25rem"
           fontStyle="italic"
-          fontSize='0.8rem'
-          fontWeight='bold'
+          fontSize="0.8rem"
+          fontWeight="bold"
           lineHeight={1}
         >
           {environmentText}
@@ -78,9 +80,11 @@ Toolbar.propTypes = {
    * isMobile
    */
   isMobile: PropTypes.bool,
+
+  toggleDrawer: PropTypes.func.isRequired,
 }
 
 Toolbar.defaultProps = {
-  onClick: console.debug
+  onClick: console.debug,
 }
 export default Toolbar

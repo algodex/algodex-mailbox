@@ -3,11 +3,11 @@ import { defaults } from '@/next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
 
 // MUI Components
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
-import Container from '@mui/material/Container'
 
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
@@ -39,6 +39,7 @@ export function RedeemAssetPage() {
     success: false,
     message: '',
   })
+  const { query } = useRouter()
   const [assetId, setAssetId] = useState()
   const [receiverAddress, setReceiverAddress] = useState()
   const [senderAddress, setSenderAddress] = useState()
@@ -47,6 +48,16 @@ export function RedeemAssetPage() {
     message: '',
     success: false,
   })
+  const formData = {
+    assetId: query.assetId || '',
+    senderAddress: query.senderAddress || '',
+    receiverAddress: '',
+  }
+
+  useEffect(() => {
+    setAssetId(query.assetId)
+    setSenderAddress(query.senderAddress)
+  }, [query])
 
   const submitForm = async () => {
     setActionStatus({
@@ -54,13 +65,13 @@ export function RedeemAssetPage() {
       success: '',
     })
     setLoading(true)
+    // console.debug(assetId, receiverAddress, senderAddress)
     const responseData = await RedeemAssetsHelper.redeem(
       assetId,
       receiverAddress,
       senderAddress
     )
     setLoading(false)
-    // console.debug('responseData', responseData)
     if (responseData.status == 'confirmed') {
       setActionStatus({
         message: responseData.statusMsg,
@@ -124,56 +135,59 @@ export function RedeemAssetPage() {
       <Head>
         <title>{`${t('/redeem-assets')} | ${t('app-title')}`}</title>
       </Head>
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8} lg={6} xl={5}>
-            <Typography variant="h5">{t('/redeem-assets')}</Typography>
-            <RedeemAssetForm
-              onSubmit={submitForm}
-              actionStatus={actionStatus}
-              loading={loading}
-              setSenderAddress={setSenderAddress}
-              setReceiverAddress={setReceiverAddress}
-              setAssetId={setAssetId}
-              optInStatus={optInStatus}
-            />
-            {escrowBalance && (
-              <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
-                <Grid item>
-                  <Typography variant="p" component="p">
-                    {t('balance')}:
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Typography variant="h5">{t('/redeem-assets')}</Typography>
+          <RedeemAssetForm
+            onSubmit={submitForm}
+            actionStatus={actionStatus}
+            loading={loading}
+            setSenderAddress={setSenderAddress}
+            setReceiverAddress={setReceiverAddress}
+            setAssetId={setAssetId}
+            optInStatus={optInStatus}
+            formData={formData}
+          />
+          {escrowBalance && (
+            <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
+              <Grid item>
+                <Typography variant="p" component="p">
+                  {t('balance')}:
+                </Typography>
+              </Grid>
+              <Grid item>
+                {escrowBalance.message != '' && (
+                  <Typography
+                    variant="error-message"
+                    marginTop="1rem"
+                    color={escrowBalance.success ? 'green' : 'error'}
+                  >
+                    {escrowBalance.message}{' '}
+                    {escrowBalance.success ? 'available' : ''}
                   </Typography>
-                </Grid>
-                <Grid item>
-                  {escrowBalance.message != '' && (
-                    <Typography
-                      variant="error-message"
-                      marginTop="1rem"
-                      color={escrowBalance.success ? 'green' : 'error'}
-                    >
-                      {escrowBalance.message}{' '}
-                      {escrowBalance.success ? 'available' : ''}
-                    </Typography>
-                  )}
-                </Grid>
+                )}
               </Grid>
-            )}
+            </Grid>
+          )}
 
-            <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
-              <Grid item xs={6} lg={5}>
-                <Link href={'/instructions'} color="primary.dark">
-                  {t('view-instructions-link')}
-                </Link>
-              </Grid>
-              <Grid item xs={6} lg={5}>
-                <Link href={'/'} color="primary.dark">
-                  {t('open-algoexplorer-link')}
-                </Link>
-              </Grid>
+          <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+            <Grid item xs={6} lg={5}>
+              <Link
+                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                target="blanc"
+                color="primary.dark"
+              >
+                {t('view-instructions-link')}
+              </Link>
+            </Grid>
+            <Grid item xs={6} lg={5}>
+              <Link href={'/'} color="primary.dark">
+                {t('open-algoexplorer-link')}
+              </Link>
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     </>
   )
 }
