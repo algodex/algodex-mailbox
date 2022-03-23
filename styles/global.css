@@ -10,7 +10,8 @@ body {
 }
 
 .environment-select-wrapper
-  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+.environment-select-wrapper .css-qiwgdb.MuiSelect-select {
   padding: 0.4rem 1.7rem;
   padding-left: 0.8rem;
 }
