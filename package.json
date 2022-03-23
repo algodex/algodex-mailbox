@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algodex/algodex-sdk": "^1.1.13",
+    "@algodex/algodex-sdk": "^1.1.14",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/server": "^11.4.0",
