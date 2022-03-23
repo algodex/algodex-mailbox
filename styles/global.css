@@ -1,8 +1,16 @@
 @tailwind components;
 @tailwind utilities;
 
-#__next, html, body {
-    overflow: hidden;
-    height: 100vh;
-    max-height: 100vh;
+#__next,
+html,
+body {
+  overflow: hidden;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.environment-select-wrapper
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  padding: 0.4rem 1.7rem;
+  padding-left: 0.8rem;
 }
