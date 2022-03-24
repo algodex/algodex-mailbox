@@ -33,11 +33,10 @@ const environmentLinks = ['TESTNET', 'MAINNET']
 
 const styles = {
   select: {
-    fontStyle: 'italic',
     fontSize: '0.8rem',
     fontWeight: 'bold',
-    color: 'green',
     marginBlock: '0.25rem',
+    border:'solid 1px'
   },
 }
 
@@ -92,7 +91,10 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
           onChange={handleChange}
           input={<OutlinedInput />}
           inputProps={{ 'aria-label': 'Without label' }}
-          style={styles.select}
+          style={{
+            ...styles.select,
+            color: environmentText == 'TESTNET' ? 'green' : 'blue',
+          }}
         >
           {environmentLinks.map((environment) => (
             <MenuItem key={environment} value={environment}>
