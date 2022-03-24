@@ -15,3 +15,7 @@ body {
   padding: 0.4rem 1.7rem;
   padding-left: 0.8rem;
 }
+
+.environment-select-wrapper .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: none;
+}

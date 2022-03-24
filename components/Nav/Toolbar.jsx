@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 
@@ -88,7 +87,6 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
           className="environment-select-wrapper"
           value={environmentText}
           onChange={handleChange}
-          input={<OutlinedInput />}
           inputProps={{ 'aria-label': 'Without label' }}
           style={{
             ...styles.select,
