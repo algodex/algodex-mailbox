@@ -82,8 +82,8 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
           <MenuIcon />
         </IconButton>
       )}
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" component="div">
+      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h6" component="div" marginRight={2}>
           {title || t('app-title')}
         </Typography>
         <Select

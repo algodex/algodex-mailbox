@@ -33,7 +33,7 @@ export function Layout({ children, components, componentsProps }) {
   const [drawerOpen, setDrawerOpen] = useState(true)
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
-  const toolbarHeight = 79
+  const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const toggleDrawer = () => {
