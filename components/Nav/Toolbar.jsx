@@ -34,7 +34,6 @@ const environmentLinks = ['TESTNET', 'MAINNET']
 const styles = {
   select: {
     fontSize: '0.8rem',
-    fontWeight: 'bold',
     marginBlock: '0.25rem',
     border:'solid 1px'
   },
