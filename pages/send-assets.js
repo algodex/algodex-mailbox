@@ -199,6 +199,7 @@ export function SendAssetPage() {
             isLoading={loading}
             setWallet={setWallet}
             setAssetId={setAssetId}
+            csvTransactions={csvTransactions}
             getFileUpload={getFileUpload}
             fileName={fileName}
           />

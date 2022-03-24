@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
 
 // Custom Language Selector
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
@@ -25,10 +27,41 @@ import Helper from '@/lib/helper'
  * @returns {JSX.Element}
  * @constructor
  */
+
+const environmentLinks = ['TESTNET', 'MAINNET']
+
+const styles = {
+  select: {
+    fontSize: '0.8rem',
+    marginBlock: '0.25rem',
+    border:'solid 1px'
+  },
+}
+
+const MAINNET_LINK = process.env.NEXT_PUBLIC_MAINNET_LINK
+const TESTNET_LINK = process.env.NEXT_PUBLIC_TESTNET_LINK
+const ENABLE_NETWORK_SELECTION = TESTNET_LINK && MAINNET_LINK
 function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
-  const environmentText = environment.toUpperCase()
+
+  const [environmentText, setEnvironmentText] = React.useState(
+    environment.toUpperCase()
+  )
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event
+    if (ENABLE_NETWORK_SELECTION) {
+      setEnvironmentText(value)
+      if (value === 'MAINNET') {
+        window.location = MAINNET_LINK
+      } else {
+        window.location = TESTNET_LINK
+      }
+    }
+  }
 
   return (
     <MUIToolbar sx={{ height }} {...rest}>
@@ -46,21 +79,26 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
           <MenuIcon />
         </IconButton>
       )}
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" component="div">
+      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h6" component="div" marginRight={2}>
           {title || t('app-title')}
         </Typography>
-        <Typography
-          component="div"
-          color={'green'}
-          paddingTop="0.25rem"
-          fontStyle="italic"
-          fontSize="0.8rem"
-          fontWeight="bold"
-          lineHeight={1}
+        <Select
+          className="environment-select-wrapper"
+          value={environmentText}
+          onChange={handleChange}
+          inputProps={{ 'aria-label': 'Without label' }}
+          style={{
+            ...styles.select,
+            color: environmentText == 'TESTNET' ? 'green' : 'blue',
+          }}
         >
-          {environmentText}
-        </Typography>
+          {environmentLinks.map((environment) => (
+            <MenuItem key={environment} value={environment}>
+              {environment}
+            </MenuItem>
+          ))}
+        </Select>
       </Box>
       <LocaleNavMenu isMobile={isMobile} onClick={onClick} />
     </MUIToolbar>
