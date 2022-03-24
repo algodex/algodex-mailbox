@@ -16,6 +16,7 @@ body {
   padding-left: 0.8rem;
 }
 
-.environment-select-wrapper .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+.environment-select-wrapper .css-1d3z3hw-MuiOutlinedInput-notchedOutline,
+.environment-select-wrapper .css-igs3ac {
   border: none;
 }
