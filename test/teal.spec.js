@@ -223,7 +223,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
       if (negTestTxnConfig.negTxn) {
         negTestTxnConfig.negTxn.unsignedTxn = await negTestTxnConfig.negTxn.unsignedTxnPromise
       }
-      const outerTxns = await generateTxns.getCloseEscrowTxns(client, assetId, 
+      const outerTxns = await generateTxns.getRedeemEscrowTxns(client, assetId, 
         receiverAccount.addr, senderAccount.addr)
       //const txn = outerTxns[1].unsignedTxn;
 
@@ -247,7 +247,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
       assetId
     } = config
 
-    const txns = await generateTxns.getCloseEscrowTxns(client, assetId, 
+    const txns = await generateTxns.getRedeemEscrowTxns(client, assetId, 
       receiverAccount.addr, senderAccount.addr)
     // const firstTxn = txns[0].unsignedTxn
     const signedTxns = await testHelper.groupAndSignTransactions(txns)
