@@ -34,32 +34,6 @@ const SendAssetForm = ({
   getFileUpload,
   fileName,
 }) => {
-  const CustomSelectComponent = (props) => {
-    return (
-      <Box sx={{ marginBottom: '1rem' }}>
-        <FormControl>
-          <RadioGroup
-            aria-labelledby="wallet"
-            name="wallet"
-            onChange={(event, value) => {
-              props.onChange(value)
-              setWallet(value)
-            }}
-          >
-            {formattedAddresses.map((address) => (
-              <FormControlLabel
-                key={address}
-                value={address}
-                control={<Radio color="secondary" />}
-                label={address}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      </Box>
-    )
-  }
-
   const CustomInputComponent = (props) => {
     return (
       <Box>
@@ -80,9 +54,8 @@ const SendAssetForm = ({
   }
 
   const schema = {
-    required: ['assetId', 'wallet'],
+    required: ['assetId'],
     properties: {
-      wallet: { type: 'string', title: 'wallet', default: '' },
       assetId: { type: 'string', title: 'Asset Id', default: '' },
     },
   }
@@ -91,67 +64,85 @@ const SendAssetForm = ({
     assetId: {
       'ui:widget': 'CustomInput',
     },
-    wallet: {
-      'ui:widget': 'CustomSelect',
-    },
   }
 
   const widgets = {
-    CustomSelect: CustomSelectComponent,
     CustomInput: CustomInputComponent,
   }
   return (
-    <Form
-      schema={schema}
-      disabled={formattedAddresses.length < 1}
-      uiSchema={uiSchema}
-      widgets={widgets}
-      onSubmit={onSubmit}
-    >
-      <Box>
-        {fileName ? (
-          <Button
-            variant="contained"
-            component="span"
-            startIcon={<UploadFileIcon />}
-            style={{ marginTop: '1rem' }}
+    <>
+      <Box sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem':'0rem' }}>
+        <FormControl>
+          <RadioGroup
+            aria-labelledby="wallet"
+            name="wallet"
+            onChange={(event, value) => {
+              setWallet(value)
+            }}
           >
-            {fileName}
-          </Button>
-        ) : (
-          <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
-            <Typography variant="p" marginBottom="1rem">
-              Click to upload CSV transactions
-            </Typography>
-            <input
-              accept="text/csv"
-              id="contained-button-file"
-              type="file"
-              hidden
-              onChange={getFileUpload}
-            />
+            {formattedAddresses.map((address) => (
+              <FormControlLabel
+                key={address}
+                value={address}
+                control={<Radio color="secondary" />}
+                label={address}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      </Box>
+      <Form
+        schema={schema}
+        disabled={formattedAddresses.length < 1}
+        uiSchema={uiSchema}
+        widgets={widgets}
+        onSubmit={onSubmit}
+      >
+        <Box>
+          {fileName ? (
             <Button
               variant="contained"
               component="span"
               startIcon={<UploadFileIcon />}
+              style={{ marginTop: '1rem' }}
             >
-              Upload CSV
+              {fileName}
             </Button>
-          </label>
-        )}
-      </Box>
+          ) : (
+            <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
+              <Typography variant="p" marginBottom="1rem">
+                Click to upload CSV transactions
+              </Typography>
+              <input
+                accept="text/csv"
+                id="contained-button-file"
+                type="file"
+                hidden
+                onChange={getFileUpload}
+              />
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<UploadFileIcon />}
+              >
+                Upload CSV
+              </Button>
+            </label>
+          )}
+        </Box>
 
-      <Box marginTop="2rem">
-        <LoadingButton
-          loading={isLoading}
-          variant="contained"
-          disabled={formattedAddresses.length < 1}
-          type="submit"
-        >
-          Send Assets
-        </LoadingButton>
-      </Box>
-    </Form>
+        <Box marginTop="2rem">
+          <LoadingButton
+            loading={isLoading}
+            variant="contained"
+            disabled={formattedAddresses.length < 1}
+            type="submit"
+          >
+            Send Assets
+          </LoadingButton>
+        </Box>
+      </Form>
+    </>
   )
 }
 
