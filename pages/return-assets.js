@@ -73,7 +73,7 @@ export function ReturnAssetPage() {
         senderAddress,
         csvTransactions
       )
-      // console.debug('responseData', responseData)
+      console.debug('responseData', responseData)
       setLoading(false)
       if (responseData?.error == false) {
         const totalAssets = responseData.confirmedTransactions.length
