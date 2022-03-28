@@ -36,9 +36,8 @@ const ReturnAssetForm = ({
   fileName,
 }) => {
   const schema = {
-    required: ['senderAddress', 'assetId', 'csvTransactions'],
+    required: ['assetId', 'csvTransactions'],
     properties: {
-      senderAddress: { type: 'string', title: 'Sender Address', default: '' },
       assetId: { type: 'string', title: 'Asset Id', default: '' },
       csvTransactions: {
         type: 'string',
@@ -55,35 +54,6 @@ const ReturnAssetForm = ({
     csvTransactions: {
       'ui:widget': 'hidden',
     },
-    senderAddress: {
-      'ui:widget': 'CustomSelect',
-    },
-  }
-
-  const CustomSelectComponent = (props) => {
-    return (
-      <Box sx={{ marginBottom: '1rem' }}>
-        <FormControl>
-          <RadioGroup
-            aria-labelledby="senderAddress"
-            name="senderAddress"
-            onChange={(event, value) => {
-              props.onChange(value)
-              setSenderAddress(value)
-            }}
-          >
-            {formattedAddresses.map((address) => (
-              <FormControlLabel
-                key={address}
-                value={address}
-                control={<Radio color="secondary" />}
-                label={address}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      </Box>
-    )
   }
 
   const CustomInputComponent = (props) => {
@@ -105,61 +75,82 @@ const ReturnAssetForm = ({
     )
   }
   const widgets = {
-    CustomSelect: CustomSelectComponent,
     CustomInput: CustomInputComponent,
   }
 
   return (
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      onSubmit={onSubmit}
-      widgets={widgets}
-      disabled={formattedAddresses.length < 1}
-    >
-      <Box>
-        {fileName ? (
-          <Button
-            variant="contained"
-            component="span"
-            startIcon={<UploadFileIcon />}
-            style={{ marginTop: '1rem' }}
+    <>
+      <Box sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem':'0rem' }}>
+        <FormControl>
+          <RadioGroup
+            aria-labelledby="senderAddress"
+            name="senderAddress"
+            onChange={(event, value) => {
+              setSenderAddress(value)
+            }}
           >
-            {fileName}
-          </Button>
-        ) : (
-          <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
-            <Typography variant="p" marginBottom="1rem">
-              Click to upload CSV transactions
-            </Typography>
-            <input
-              accept="text/csv"
-              id="contained-button-file"
-              type="file"
-              hidden
-              onChange={getFileUpload}
-            />
+            {formattedAddresses.map((address) => (
+              <FormControlLabel
+                key={address}
+                value={address}
+                control={<Radio color="secondary" />}
+                label={address}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      </Box>
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        onSubmit={onSubmit}
+        widgets={widgets}
+        disabled={formattedAddresses.length < 1}
+      >
+        <Box>
+          {fileName ? (
             <Button
               variant="contained"
               component="span"
               startIcon={<UploadFileIcon />}
+              style={{ marginTop: '1rem' }}
             >
-              Upload CSV
+              {fileName}
             </Button>
-          </label>
-        )}
-      </Box>
-      <Box marginTop="2rem">
-        <LoadingButton
-          loading={isLoading}
-          variant="contained"
-          disabled={formattedAddresses.length < 1}
-          type="submit"
-        >
-          Return Assets
-        </LoadingButton>
-      </Box>
-    </Form>
+          ) : (
+            <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
+              <Typography variant="p" marginBottom="1rem">
+                Click to upload CSV transactions
+              </Typography>
+              <input
+                accept="text/csv"
+                id="contained-button-file"
+                type="file"
+                hidden
+                onChange={getFileUpload}
+              />
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<UploadFileIcon />}
+              >
+                Upload CSV
+              </Button>
+            </label>
+          )}
+        </Box>
+        <Box marginTop="2rem">
+          <LoadingButton
+            loading={isLoading}
+            variant="contained"
+            disabled={formattedAddresses.length < 1}
+            type="submit"
+          >
+            Return Assets
+          </LoadingButton>
+        </Box>
+      </Form>
+    </>
   )
 }
 
