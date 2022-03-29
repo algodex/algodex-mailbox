@@ -93,7 +93,6 @@ export function ReturnAssetPage() {
     }
   }
 
-
   const getFileUpload = async (e) => {
     setActionStatus({
       message: '',
@@ -125,6 +124,7 @@ export function ReturnAssetPage() {
           <ReturnAssetForm
             formattedAddresses={formattedAddresses}
             onSubmit={submitForm}
+            actionStatus={actionStatus}
             isLoading={loading}
             setSenderAddress={setSenderAddress}
             setAssetId={setAssetId}
@@ -132,16 +132,7 @@ export function ReturnAssetPage() {
             getFileUpload={getFileUpload}
             fileName={fileName}
           />
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              marginTop="-1.6rem"
-              sx={{ display: 'flex', justifyContent: 'end' }}
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
+
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
               <Link

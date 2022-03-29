@@ -196,6 +196,7 @@ export function SendAssetPage() {
           <SendAssetForm
             formattedAddresses={formattedAddresses}
             onSubmit={submitForm}
+            actionStatus={actionStatus}
             isLoading={loading}
             setWallet={setWallet}
             setAssetId={setAssetId}
@@ -203,16 +204,7 @@ export function SendAssetPage() {
             getFileUpload={getFileUpload}
             fileName={fileName}
           />
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              marginTop="-1.6rem"
-              sx={{ display: 'flex', justifyContent: 'end' }}
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
+
           {actionStatus.success == true && (
             <Box
               variant="error-message"

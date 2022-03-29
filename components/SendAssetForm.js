@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 
 const styles = {
   uploadWrapper: {
@@ -33,6 +34,7 @@ const SendAssetForm = ({
   setAssetId,
   getFileUpload,
   fileName,
+  actionStatus,
 }) => {
   const CustomInputComponent = (props) => {
     return (
@@ -71,7 +73,9 @@ const SendAssetForm = ({
   }
   return (
     <>
-      <Box sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem':'0rem' }}>
+      <Box
+        sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
+      >
         <FormControl>
           <RadioGroup
             aria-labelledby="wallet"
@@ -131,16 +135,29 @@ const SendAssetForm = ({
           )}
         </Box>
 
-        <Box marginTop="2rem">
-          <LoadingButton
-            loading={isLoading}
-            variant="contained"
-            disabled={formattedAddresses.length < 1}
-            type="submit"
-          >
-            Send Assets
-          </LoadingButton>
-        </Box>
+        <Grid container spacing={2} marginTop={'2rem'}>
+          <Grid item xs={6} lg={4}>
+            <LoadingButton
+              loading={isLoading}
+              variant="contained"
+              disabled={formattedAddresses.length < 1}
+              type="submit"
+            >
+              Send Assets
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={6}>
+            {actionStatus.message != '' && (
+              <Typography
+                variant="error-message"
+                sx={{ display: 'flex', justifyContent: 'end' }}
+                color={actionStatus.success ? 'green' : 'error'}
+              >
+                {actionStatus.message}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
       </Form>
     </>
   )
@@ -154,5 +171,6 @@ SendAssetForm.propTypes = {
   setAssetId: PropTypes.any,
   getFileUpload: PropTypes.func,
   fileName: PropTypes.any,
+  actionStatus: PropTypes.object,
 }
 export default SendAssetForm

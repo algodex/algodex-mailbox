@@ -3,9 +3,10 @@ import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
-import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
+const SendHistoryForm = ({ onSubmit, isLoading, formData, actionStatus }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -57,16 +58,30 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData }) => {
         csvTransactions: formData.csvTransactions,
       }}
     >
-      <Box marginTop="2rem">
-        <LoadingButton loading={isLoading} variant="contained" type="submit">
-          Refresh
-        </LoadingButton>
-      </Box>
+      <Grid container spacing={2} marginTop={'2rem'}>
+        <Grid item xs={6} lg={4}>
+          <LoadingButton loading={isLoading} variant="contained" type="submit">
+            Refresh
+          </LoadingButton>
+        </Grid>
+        <Grid item xs={6}>
+          {actionStatus.message != '' && (
+            <Typography
+              variant="error-message"
+              sx={{ display: 'flex', justifyContent: 'end' }}
+              color={actionStatus.success ? 'green' : 'error'}
+            >
+              {actionStatus.message}
+            </Typography>
+          )}
+        </Grid>
+      </Grid>
     </Form>
   )
 }
 
 SendHistoryForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  actionStatus: PropTypes.object,
 }
 export default SendHistoryForm
