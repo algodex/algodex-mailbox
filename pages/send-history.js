@@ -42,33 +42,35 @@ export function SendHistoryPage() {
 
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
-    setLoading(true)
-    setActionStatus({
-      message: '',
-      success: true,
-    })
-    setFormData({
-      assetId,
-      senderAddress,
-      csvTransactions: '',
-    })
-    const responseData = await SendHistoryHelper.getSendHistory(
-      assetId,
-      senderAddress
-    )
-    // console.debug('responseData', responseData)
-    setLoading(false)
-    if (responseData.error == true) {
+    if (senderAddress != '' && assetId != '') {
+      setLoading(true)
       setActionStatus({
-        message: responseData.body?.message || 'Sorry an error occured',
-        success: false,
+        message: '',
+        success: true,
       })
-    } else {
       setFormData({
         assetId,
         senderAddress,
-        csvTransactions: responseData,
+        csvTransactions: '',
       })
+      const responseData = await SendHistoryHelper.getSendHistory(
+        assetId.trim(),
+        senderAddress.trim()
+      )
+      // console.debug('responseData', responseData)
+      setLoading(false)
+      if (responseData.error == true) {
+        setActionStatus({
+          message: responseData.body?.message || 'Sorry an error occured',
+          success: false,
+        })
+      } else {
+        setFormData({
+          assetId,
+          senderAddress,
+          csvTransactions: responseData,
+        })
+      }
     }
   }
   return (
