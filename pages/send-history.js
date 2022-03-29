@@ -85,17 +85,8 @@ export function SendHistoryPage() {
             onSubmit={submitForm}
             isLoading={loading}
             formData={formData}
+            actionStatus={actionStatus}
           />
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              marginTop="-1.6rem"
-              sx={{ display: 'flex', justifyContent: 'end' }}
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
         </Grid>
       </Grid>
     </>

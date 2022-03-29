@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
 
 const styles = {
   uploadWrapper: {
@@ -34,6 +35,7 @@ const ReturnAssetForm = ({
   setAssetId,
   getFileUpload,
   fileName,
+  actionStatus,
 }) => {
   const schema = {
     required: ['assetId', 'csvTransactions'],
@@ -80,7 +82,9 @@ const ReturnAssetForm = ({
 
   return (
     <>
-      <Box sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem':'0rem' }}>
+      <Box
+        sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
+      >
         <FormControl>
           <RadioGroup
             aria-labelledby="senderAddress"
@@ -139,16 +143,29 @@ const ReturnAssetForm = ({
             </label>
           )}
         </Box>
-        <Box marginTop="2rem">
-          <LoadingButton
-            loading={isLoading}
-            variant="contained"
-            disabled={formattedAddresses.length < 1}
-            type="submit"
-          >
-            Return Assets
-          </LoadingButton>
-        </Box>
+        <Grid container spacing={2} marginTop={'2rem'}>
+          <Grid item xs={6} lg={4}>
+            <LoadingButton
+              loading={isLoading}
+              variant="contained"
+              disabled={formattedAddresses.length < 1}
+              type="submit"
+            >
+              Return Assets
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={6}>
+            {actionStatus.message != '' && (
+              <Typography
+                variant="error-message"
+                sx={{ display: 'flex', justifyContent: 'end' }}
+                color={actionStatus.success ? 'green' : 'error'}
+              >
+                {actionStatus.message}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
       </Form>
     </>
   )
@@ -162,5 +179,6 @@ ReturnAssetForm.propTypes = {
   setAssetId: PropTypes.func,
   getFileUpload: PropTypes.func.isRequired,
   fileName: PropTypes.string,
+  actionStatus: PropTypes.object
 }
 export default ReturnAssetForm
