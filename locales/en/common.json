@@ -5,7 +5,7 @@
   "/send-assets": "Send Assets",
   "/redeem-assets": "Redeem Assets",
   "/return-assets": "Return Assets",
-  "/send-history": "Send History",
+  "/transaction-history": "Transaction History",
   "/send": "Send",
   "/redeem": "Redeem",
   "/return": "Return",
