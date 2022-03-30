@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid'
 
 // Custom Components
 import TransactionHistoryForm from '@/components/TransactionHistoryForm'
-import * as SendHistoryHelper from '@/lib/send_history'
+import * as TransactionHistoryHelper from '@/lib/transaction_history'
 
 /**
  * Generate Static Properties
@@ -32,7 +32,7 @@ export async function getStaticProps({ locale }) {
   }
 }
 
-export function SendHistoryPage() {
+export function TransactionHistoryPage() {
   const { t } = useTranslation('common')
   const [formData, setFormData] = useState({
     assetId: '',
@@ -60,7 +60,7 @@ export function SendHistoryPage() {
         senderAddress,
         csvTransactions: '',
       })
-      const responseData = await SendHistoryHelper.getSendHistory(
+      const responseData = await TransactionHistoryHelper.getTransactionHistory(
         assetId.trim(),
         senderAddress.trim()
       )
@@ -107,4 +107,4 @@ export function SendHistoryPage() {
   )
 }
 
-export default SendHistoryPage
+export default TransactionHistoryPage
