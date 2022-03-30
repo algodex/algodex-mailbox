@@ -10,8 +10,15 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import Link from '@/components/Nav/Link'
 
-const SendHistoryForm = ({ onSubmit, isLoading, formData, actionStatus }) => {
+const SendHistoryForm = ({
+  onSubmit,
+  isLoading,
+  formData,
+  actionStatus,
+  csvLink,
+}) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -58,7 +65,7 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData, actionStatus }) => {
       onSubmit={onSubmit}
       widgets={widgets}
       onChange={({ formData }) => {
-        onSubmit({formData})
+        onSubmit({ formData })
       }}
       formData={{
         assetId: formData.assetId,
@@ -66,6 +73,16 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData, actionStatus }) => {
         csvTransactions: formData.csvTransactions,
       }}
     >
+      {csvLink && (
+        <Link
+          href={csvLink}
+          target="_blanc"
+          download="Transaction History.csv"
+          sx={{ color: 'blue', textDecoration:'underline' }}
+        >
+          Click to download Transaction History
+        </Link>
+      )}
       <Grid container spacing={2} marginTop={'2rem'}>
         <Grid item xs={6} lg={4}>
           <LoadingButton loading={isLoading} variant="contained" type="submit">

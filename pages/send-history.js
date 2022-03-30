@@ -44,11 +44,13 @@ export function SendHistoryPage() {
     message: '',
     success: false,
   })
+  const [csvLink, setCsvLink] = useState()
 
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
     if (senderAddress != '' && assetId != '') {
       setLoading(true)
+      setCsvLink()
       setActionStatus({
         message: '',
         success: true,
@@ -75,9 +77,12 @@ export function SendHistoryPage() {
           senderAddress,
           csvTransactions: responseData,
         })
+        setCsvLink('data:text/csv;charset=utf-8,' + encodeURI(responseData))
       }
     }
   }
+
+
   return (
     <>
       <Head>
@@ -93,7 +98,9 @@ export function SendHistoryPage() {
             isLoading={loading}
             formData={formData}
             actionStatus={actionStatus}
+            csvLink={csvLink}
           />
+         
         </Grid>
       </Grid>
     </>
