@@ -61,9 +61,9 @@ function Drawer({ width, offset, ...props }) {
             primary={t('/send-assets')}
           />
           <ListItemLink
-            to="/send-history"
+            to="/transaction-history"
             icon={<HistoryIcon />}
-            primary={t('/send-history')}
+            primary={t('/transaction-history')}
           />
           <ListItemLink
             to="/redeem-assets"

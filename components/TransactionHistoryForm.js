@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Link from '@/components/Nav/Link'
 
-const SendHistoryForm = ({
+const TransactionHistoryForm = ({
   onSubmit,
   isLoading,
   formData,
@@ -105,8 +105,11 @@ const SendHistoryForm = ({
   )
 }
 
-SendHistoryForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+TransactionHistoryForm.propTypes = {
+  onSubmit: PropTypes.func,
   actionStatus: PropTypes.object,
+  isLoading:PropTypes.bool,
+  formData: PropTypes.object,
+  csvLink: PropTypes.string,
 }
-export default SendHistoryForm
+export default TransactionHistoryForm
