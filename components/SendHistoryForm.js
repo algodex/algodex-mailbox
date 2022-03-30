@@ -52,6 +52,9 @@ const SendHistoryForm = ({ onSubmit, isLoading, formData, actionStatus }) => {
       uiSchema={uiSchema}
       onSubmit={onSubmit}
       widgets={widgets}
+      onChange={({ formData }) => {
+        onSubmit({formData})
+      }}
       formData={{
         assetId: formData.assetId,
         senderAddress: formData.senderAddress,
