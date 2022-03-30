@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -86,13 +86,18 @@ export function SendAssetPage() {
   )
 
   const { connect } = useMyAlgo(updateAddresses)
+
+  const updateStatusMessage = (message, status) => {
+    setActionStatus({
+      message: message || '',
+      success: status || false,
+    })
+  }
+
   const submitForm = async ({ formData }) => {
     console.debug(formData)
     setLoading(true)
-    setActionStatus({
-      message: '',
-      success: false,
-    })
+    updateStatusMessage()
     const responseData = await SendAssetsHelper.send(
       assetId,
       wallet,
@@ -102,30 +107,29 @@ export function SendAssetPage() {
     setLoading(false)
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
-        setActionStatus({
-          message:
-            'Please, ensure you enter a valid wallet address with the asset id provided',
-          success: false,
-        })
+        updateStatusMessage(
+          'Please, ensure you enter a valid wallet address with the asset id provided',
+          false
+        )
       } else {
         const totalAssets = responseData.confirmedTransactions.length
         const sentAssets = responseData.confirmedTransactions.filter(
           (asset) => asset.value.status == 'confirmed'
         ).length
-        setActionStatus({
-          message: `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
-          success: true,
-        })
+        updateStatusMessage(
+          `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
+          true
+        )
         setShareableLink(
           `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
         )
         getAssetBalance()
       }
     } else {
-      setActionStatus({
-        message: responseData.body?.message || 'Sorry, an error occurred',
-        success: false,
-      })
+      updateStatusMessage(
+        responseData.body?.message || 'Sorry, an error occurred',
+        false
+      )
     }
   }
 
@@ -134,6 +138,13 @@ export function SendAssetPage() {
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
+
+
+  useEffect(() => {
+    if (actionStatus.message != '') {
+      updateStatusMessage()
+    }
+  }, [assetId, csvTransactions, wallet])
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {
@@ -171,10 +182,7 @@ export function SendAssetPage() {
   }
 
   const getFileUpload = async (e) => {
-    setActionStatus({
-      message: '',
-      success: false,
-    })
+    updateStatusMessage()
     const csvFiles = e.target.files[0]
     setFileName(csvFiles.name)
     const reader = new FileReader()

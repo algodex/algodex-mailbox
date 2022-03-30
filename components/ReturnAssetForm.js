@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -184,6 +184,6 @@ ReturnAssetForm.propTypes = {
   setAssetId: PropTypes.func,
   getFileUpload: PropTypes.func.isRequired,
   fileName: PropTypes.string,
-  actionStatus: PropTypes.object
+  actionStatus: PropTypes.object,
 }
 export default ReturnAssetForm
