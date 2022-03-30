@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'

@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'

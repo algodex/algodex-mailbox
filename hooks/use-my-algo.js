@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import { useState, useEffect, useRef } from 'react'
 
 const ERROR = {

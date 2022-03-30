@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import createCache from '@emotion/cache'
 
 // prepend: true moves MUI styles to the top of the <head> so they're loaded first.
