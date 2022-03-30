@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import React, {forwardRef, useMemo} from 'react'
 import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'

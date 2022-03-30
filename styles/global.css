@@ -1,4 +1,9 @@
-@tailwind components;
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
+ @tailwind components;
 @tailwind utilities;
 
 #__next,

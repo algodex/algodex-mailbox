@@ -1,3 +1,8 @@
+/* 
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import '@/styles/global.css'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
