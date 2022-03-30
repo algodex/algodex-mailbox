@@ -1,3 +1,8 @@
+/*
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import React, { useCallback, useEffect, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
