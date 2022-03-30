@@ -60,12 +60,21 @@ export function SendAssetPage() {
     webURL = `${window.location.protocol}//${window.location.host}`
   }
 
+  useEffect(() => {
+    setFormattedAddresses(
+      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
+    )
+  }, [])
   const updateAddresses = useCallback(
     (addresses) => {
       if (addresses == null) {
         return
       }
       // console.debug({ addresses })
+      localStorage.setItem(
+        'algodex_user_wallet_addresses',
+        JSON.stringify(addresses)
+      )
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
@@ -89,7 +98,8 @@ export function SendAssetPage() {
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
         setActionStatus({
-          message: 'Please, ensure you enter a valid wallet address with the asset id provided',
+          message:
+            'Please, ensure you enter a valid wallet address with the asset id provided',
           success: false,
         })
       } else {

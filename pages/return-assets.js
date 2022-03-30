@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -45,12 +45,22 @@ export function ReturnAssetPage() {
 
   const [formattedAddresses, setFormattedAddresses] = useState([])
 
+  useEffect(() => {
+    setFormattedAddresses(
+      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
+    )
+  }, [])
+
   const updateAddresses = useCallback(
     (addresses) => {
       if (addresses == null) {
         return
       }
       // console.debug({ addresses })
+      localStorage.setItem(
+        'algodex_user_wallet_addresses',
+        JSON.stringify(addresses)
+      )
       setFormattedAddresses(addresses)
     },
     [setFormattedAddresses]
