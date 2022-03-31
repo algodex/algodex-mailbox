@@ -70,7 +70,7 @@ const ReturnAssetForm = ({
           <TextField
             required
             id="outlined-required"
-            name="Asset Id"
+            name="AssetId"
             disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
@@ -94,7 +94,7 @@ const ReturnAssetForm = ({
         <FormControl>
           <RadioGroup
             aria-labelledby="senderAddress"
-            name="senderAddress"
+            name="SenderAddress"
             onChange={(event, value) => {
               setSenderAddress(value)
             }}

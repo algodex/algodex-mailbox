@@ -42,7 +42,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            name="Asset Id"
+            name="AssetId"
             required={props.required}
             id="outlined-required"
             label="Asset Id"
@@ -61,7 +61,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            name="Sender Address"
+            name="SenderAddress"
             required={props.required}
             id="outlined-required"
             label="Sender Address"
@@ -80,7 +80,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            name="Receiver Address"
+            name="ReceiverAddress"
             required={props.required}
             id="outlined-required"
             label="Receiver Address"

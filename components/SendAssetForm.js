@@ -48,7 +48,7 @@ const SendAssetForm = ({
           <TextField
             required
             id="outlined-required"
-            name="Asset Id"
+            name="AssetId"
             disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
