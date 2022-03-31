@@ -157,6 +157,7 @@ export function RedeemAssetPage() {
             setAssetId={setAssetId}
             optInStatus={optInStatus}
             formData={formData}
+            balance={parseInt(escrowBalance.message)}
           />
           {escrowBalance && (
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
