@@ -134,7 +134,7 @@ export function RedeemAssetPage() {
       checkOptIn()
     }
 
-    if (actionStatus.message != '') {
+    if (actionStatus.message != '' || optInStatus != undefined) {
       updateStatusMessage()
       setOptInStatus()
     }

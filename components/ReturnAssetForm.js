@@ -70,6 +70,7 @@ const ReturnAssetForm = ({
           <TextField
             required
             id="outlined-required"
+            name="AssetId"
             disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
@@ -93,7 +94,7 @@ const ReturnAssetForm = ({
         <FormControl>
           <RadioGroup
             aria-labelledby="senderAddress"
-            name="senderAddress"
+            name="SenderAddress"
             onChange={(event, value) => {
               setSenderAddress(value)
             }}
@@ -115,6 +116,7 @@ const ReturnAssetForm = ({
         onSubmit={onSubmit}
         widgets={widgets}
         disabled={formattedAddresses.length < 1}
+        autoComplete="on"
       >
         <Box>
           <label htmlFor="contained-button-file">
