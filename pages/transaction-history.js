@@ -96,7 +96,7 @@ export function TransactionHistoryPage() {
   const updateCSVTable = (csv) => {
     const titles = csv.slice(0, csv.indexOf('\n')).split(',')
     const rows = csv.slice(csv.indexOf('\n') + 1).split('\n')
-    // console.log({ rows })
+    // console.debug({ rows })
     if (rows[0] == '') {
       setActionStatus({
         message: 'No transaction history to display',
@@ -105,7 +105,7 @@ export function TransactionHistoryPage() {
     } else {
       setCsvLink('data:text/csv;charset=utf-8,' + encodeURI(csv))
       let formattedRows = rows.map((v) => {
-        if (v != '') {
+        if (v) {
           const values = v.split(',')
           const storeKeyValue = titles.reduce((obj, title, index) => {
             obj[title] = values[index]
@@ -114,7 +114,8 @@ export function TransactionHistoryPage() {
           return storeKeyValue
         }
       })
-      setTableRows(formattedRows)
+      const finalRows = formattedRows.filter((r) => r != undefined)
+      setTableRows(finalRows)
     }
   }
   return (
