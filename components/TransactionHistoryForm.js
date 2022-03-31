@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -7,10 +7,11 @@ import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Link from '@/components/Nav/Link'
+import Box from '@mui/material/Box'
+import { TransactionTable } from './TransactionTable'
 
 const TransactionHistoryForm = ({
   onSubmit,
@@ -18,6 +19,7 @@ const TransactionHistoryForm = ({
   formData,
   actionStatus,
   csvLink,
+  tableRows,
 }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
@@ -32,29 +34,9 @@ const TransactionHistoryForm = ({
     },
   }
 
-  const customTextArea = (props) => {
-    return (
-      <TextareaAutosize
-        minRows={9}
-        maxRows={14}
-        // eslint-disable-next-line max-len
-        placeholder="Enter your assetId and sender's address above, your CSV transactions will be listed here"
-        readOnly
-        value={props.value}
-        required={props.required}
-        style={{ padding: '0.9rem' }}
-        onChange={(event) => props.onChange(event.target.value)}
-      />
-    )
-  }
-
-  const widgets = {
-    customTextArea: customTextArea,
-  }
-
   const uiSchema = {
     csvTransactions: {
-      'ui:widget': customTextArea,
+      'ui:widget': 'hidden',
     },
   }
 
@@ -63,7 +45,6 @@ const TransactionHistoryForm = ({
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
-      widgets={widgets}
       onChange={({ formData }) => {
         onSubmit({ formData })
       }}
@@ -73,12 +54,17 @@ const TransactionHistoryForm = ({
         csvTransactions: formData.csvTransactions,
       }}
     >
+      {tableRows.length > 0 && (
+        <Box sx={{ marginBlock: '1rem' }}>
+          <TransactionTable rows={tableRows} />
+        </Box>
+      )}
       {csvLink && (
         <Link
           href={csvLink}
           target="_blanc"
           download="Transaction History.csv"
-          sx={{ color: 'blue', textDecoration:'underline' }}
+          sx={{ color: 'blue', textDecoration: 'underline' }}
         >
           Click to download Transaction History
         </Link>
@@ -108,8 +94,9 @@ const TransactionHistoryForm = ({
 TransactionHistoryForm.propTypes = {
   onSubmit: PropTypes.func,
   actionStatus: PropTypes.object,
-  isLoading:PropTypes.bool,
+  isLoading: PropTypes.bool,
   formData: PropTypes.object,
   csvLink: PropTypes.string,
+  tableRows: PropTypes.array,
 }
 export default TransactionHistoryForm

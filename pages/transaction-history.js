@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -45,6 +45,7 @@ export function TransactionHistoryPage() {
     success: false,
   })
   const [csvLink, setCsvLink] = useState()
+  const [tableRows, setTableRows] = useState([])
 
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
@@ -60,29 +61,57 @@ export function TransactionHistoryPage() {
         senderAddress,
         csvTransactions: '',
       })
-      const responseData = await TransactionHistoryHelper.getTransactionHistory(
-        assetId.trim(),
-        senderAddress.trim()
-      )
-      // console.debug('responseData', responseData)
-      setLoading(false)
-      if (responseData.error == true) {
-        setActionStatus({
-          message: responseData.body?.message || 'Sorry an error occured',
-          success: false,
-        })
-      } else {
-        setFormData({
-          assetId,
-          senderAddress,
-          csvTransactions: responseData,
-        })
-        setCsvLink('data:text/csv;charset=utf-8,' + encodeURI(responseData))
+      if (assetId && senderAddress) {
+        const responseData =
+          await TransactionHistoryHelper.getTransactionHistory(
+            assetId.trim(),
+            senderAddress.trim()
+          )
+        // console.debug('responseData', responseData)
+        setLoading(false)
+        if (responseData.error == true) {
+          setActionStatus({
+            message: responseData.body?.message || 'Sorry an error occured',
+            success: false,
+          })
+        } else {
+          setFormData({
+            assetId,
+            senderAddress,
+            csvTransactions: responseData,
+          })
+          updateCSVTable(responseData)
+        }
       }
     }
   }
 
-
+  const updateCSVTable = (csv) => {
+    const titles = csv.slice(0, csv.indexOf('\n')).split(',')
+    const rows = csv.slice(csv.indexOf('\n') + 1).split('\n')
+    console.log({ rows })
+    if (rows[0] == '') {
+      setActionStatus({
+        message: 'No transaction history to display',
+        success: false,
+      })
+    } else {
+      setCsvLink('data:text/csv;charset=utf-8,' + encodeURI(csv))
+      let formattedRows = rows.map((v) => {
+        console.log({ v })
+        if (v != '') {
+          const values = v.split(',')
+          const storeKeyValue = titles.reduce((obj, title, index) => {
+            obj[title] = values[index]
+            return obj
+          }, {})
+          return storeKeyValue
+        }
+      })
+      console.log({ formattedRows })
+      setTableRows(formattedRows)
+    }
+  }
   return (
     <>
       <Head>
@@ -99,8 +128,8 @@ export function TransactionHistoryPage() {
             formData={formData}
             actionStatus={actionStatus}
             csvLink={csvLink}
+            tableRows={tableRows}
           />
-         
         </Grid>
       </Grid>
     </>
