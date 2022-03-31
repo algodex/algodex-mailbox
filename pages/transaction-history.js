@@ -67,23 +67,27 @@ export function TransactionHistoryPage() {
         senderAddress,
         csvTransactions: '',
       })
-      const responseData = await TransactionHistoryHelper.getTransactionHistory(
-        assetId.trim(),
-        senderAddress.trim()
-      )
-      // console.debug('responseData', responseData)
-      setLoading(false)
-      if (responseData.error == true) {
-        updateStatusMessage(
-          responseData.body?.message || 'Sorry an error occured'
-        )
-      } else {
-        setFormData({
-          assetId,
-          senderAddress,
-          csvTransactions: responseData,
-        })
-        updateCSVTable(responseData)
+      if (assetId && senderAddress) {
+        setLoading(true)
+        const responseData =
+          await TransactionHistoryHelper.getTransactionHistory(
+            assetId.trim(),
+            senderAddress.trim()
+          )
+        // console.debug('responseData', responseData)
+        setLoading(false)
+        if (responseData.error == true) {
+          updateStatusMessage(
+            responseData.body?.message || 'Sorry an error occured'
+          )
+        } else {
+          setFormData({
+            assetId,
+            senderAddress,
+            csvTransactions: responseData,
+          })
+          updateCSVTable(responseData)
+        }
       }
     }
   }
@@ -129,7 +133,7 @@ export function TransactionHistoryPage() {
             actionStatus={actionStatus}
           />
         </Grid>
-        <Grid item xs={12} md={11} lg={11} xl={9} marginBottom='2rem'>
+        <Grid item xs={12} md={11} lg={11} xl={9} marginBottom="2rem">
           {tableRows.length > 0 && (
             <Box sx={{ marginBlock: '1rem' }}>
               <TransactionTable rows={tableRows} />
