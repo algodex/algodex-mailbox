@@ -50,18 +50,19 @@ export function TransactionHistoryPage() {
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
     if (senderAddress != '' && assetId != '') {
-      setLoading(true)
       setCsvLink()
       setActionStatus({
         message: '',
         success: true,
       })
+      setTableRows([])
       setFormData({
         assetId,
         senderAddress,
         csvTransactions: '',
       })
       if (assetId && senderAddress) {
+        setLoading(true)
         const responseData =
           await TransactionHistoryHelper.getTransactionHistory(
             assetId.trim(),

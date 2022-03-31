@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Link from '@/components/Nav/Link'
 import Box from '@mui/material/Box'
-import { TransactionTable } from './TransactionTable'
+import TransactionTable from './TransactionTable'
 
 const TransactionHistoryForm = ({
   onSubmit,

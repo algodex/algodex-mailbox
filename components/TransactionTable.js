@@ -1,4 +1,10 @@
+/*
+ * Copyright Algodex VASP (BVI) Corp., 2022
+ * All Rights Reserved.
+ */
+
 import React from 'react'
+import PropTypes from 'prop-types'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -19,7 +25,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const TransactionTable = ({ rows }) => {
+const TransactionTable = ({ rows }) => {
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -34,11 +40,19 @@ export const TransactionTable = ({ rows }) => {
   }
   const columns = [
     { id: 'Time', label: 'Time', minWidth: 170 },
-    { id: 'FromAddress', label: 'From Address', minWidth: 200 },
+    {
+      id: 'FromAddress',
+      label: 'From Address',
+      minWidth: 200,
+      maxWidth: 300,
+      wordBreak: 'break-word',
+    },
     {
       id: 'ToAddress',
       label: 'To Address',
       minWidth: 200,
+      maxWidth: 300,
+      wordBreak: 'break-word',
     },
     {
       id: 'Amount',
@@ -65,7 +79,10 @@ export const TransactionTable = ({ rows }) => {
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  style={{ minWidth: column.minWidth }}
+                  style={{
+                    minWidth: column.minWidth,
+                    maxWidth: column.maxWidth,
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -75,14 +92,21 @@ export const TransactionTable = ({ rows }) => {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                if(row != undefined){
+              .map((row, index) => {
+                if (row != undefined) {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.time}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id]
                         return (
-                          <TableCell key={column.id}>
+                          <TableCell
+                            key={column.id}
+                            style={{
+                              minWidth: column.minWidth,
+                              maxWidth: column.maxWidth,
+                              wordBreak: column.wordBreak,
+                            }}
+                          >
                             {value}
                           </TableCell>
                         )
@@ -106,3 +130,8 @@ export const TransactionTable = ({ rows }) => {
     </Paper>
   )
 }
+
+TransactionTable.propTypes = {
+  rows: PropTypes.array,
+}
+export default TransactionTable
