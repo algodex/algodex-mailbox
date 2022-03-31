@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -21,7 +21,8 @@ const RedeemAssetForm = ({
   setReceiverAddress,
   setAssetId,
   optInStatus,
-  formData
+  formData,
+  balance,
 }) => {
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
@@ -44,7 +45,6 @@ const RedeemAssetForm = ({
             required={props.required}
             id="outlined-required"
             label="Asset Id"
-            defaultValue={formData.assetId}
             onChange={({ target: { value } }) => {
               props.onChange(value)
               setAssetId(value)
@@ -62,7 +62,6 @@ const RedeemAssetForm = ({
           <TextField
             required={props.required}
             id="outlined-required"
-            defaultValue={formData.senderAddress}
             label="Sender Address"
             onChange={({ target: { value } }) => {
               props.onChange(value)
@@ -119,14 +118,19 @@ const RedeemAssetForm = ({
       {optInStatus == false && (
         <Box marginTop="2rem">
           <Typography variant="error-message" color="error">
-            Warning: You have not yet opted into the asset. Please do so in another wallet
-            app.
+            Warning: You have not yet opted into the asset. Please do so in
+            another wallet app.
           </Typography>
         </Box>
       )}
       <Grid container spacing={2} marginTop={'2rem'} marginBottom={'2rem'}>
         <Grid item xs={6} lg={4}>
-          <LoadingButton loading={loading} variant="contained" type="submit">
+          <LoadingButton
+            loading={loading}
+            variant="contained"
+            type="submit"
+            disabled={0 >= balance}
+          >
             Redeem
           </LoadingButton>
         </Grid>
@@ -146,7 +150,7 @@ const RedeemAssetForm = ({
 }
 
 RedeemAssetForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
   optInStatus: PropTypes.bool,
   actionStatus: PropTypes.object,
   loading: PropTypes.bool,
@@ -154,5 +158,6 @@ RedeemAssetForm.propTypes = {
   setReceiverAddress: PropTypes.any,
   setAssetId: PropTypes.any,
   formData: PropTypes.object,
+  balance: PropTypes.number
 }
 export default RedeemAssetForm
