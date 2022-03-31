@@ -1,5 +1,5 @@
 # Algodex Mailbox
-This is a decentralized application on the Algorand blockchain to send assets to multiple addresses at once, where they are held in escrow and can be redeemed later.
+This is a decentralized application on the Algorand blockchain to batch send assets to multiple addresses at once, where they are held in escrow and can be redeemed later.
 
 Try it here on Testnet: https://mailbox-testnet.algodex.com/
 
