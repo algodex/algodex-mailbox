@@ -1,4 +1,8 @@
 {
+  "name": "algodex-mailbox",
+  "version": "1.0.0",
+  "description": "Algodex Mailbox, a decentralized Algorand token distribution app",
+  "license": "SEE LICENSE IN LICENSE",
   "private": true,
   "scripts": {
     "dev": "next",
