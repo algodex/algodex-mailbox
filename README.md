@@ -5,8 +5,8 @@ Documentation can be found here: https://about.algodex.com/docs/algodex-mailbox-
 
 The FAQ is here: https://about.algodex.com/docs/algodex-mailbox-faq/
 
-Telegram: https://t.co/qfxz38ZPLd
+Telegram: https://t.me/algodex
 
-Discord: https://t.co/tArE9Hr1Qm
+Discord: https://discord.com/invite/8sDzWVDf
 
 Support: https://about.algodex.com/support
