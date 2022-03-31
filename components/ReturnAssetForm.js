@@ -70,6 +70,7 @@ const ReturnAssetForm = ({
           <TextField
             required
             id="outlined-required"
+            name="Asset Id"
             disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
@@ -115,6 +116,7 @@ const ReturnAssetForm = ({
         onSubmit={onSubmit}
         widgets={widgets}
         disabled={formattedAddresses.length < 1}
+        autoComplete="on"
       >
         <Box>
           <label htmlFor="contained-button-file">

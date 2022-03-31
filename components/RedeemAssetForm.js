@@ -42,6 +42,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            name="Asset Id"
             required={props.required}
             id="outlined-required"
             label="Asset Id"
@@ -60,6 +61,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            name="Sender Address"
             required={props.required}
             id="outlined-required"
             label="Sender Address"
@@ -78,6 +80,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            name="Receiver Address"
             required={props.required}
             id="outlined-required"
             label="Receiver Address"
@@ -114,6 +117,7 @@ const RedeemAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
       formData={formData}
+      autoComplete='on'
     >
       {optInStatus == false && (
         <Box marginTop="2rem">
@@ -158,6 +162,6 @@ RedeemAssetForm.propTypes = {
   setReceiverAddress: PropTypes.any,
   setAssetId: PropTypes.any,
   formData: PropTypes.object,
-  balance: PropTypes.number
+  balance: PropTypes.number,
 }
 export default RedeemAssetForm

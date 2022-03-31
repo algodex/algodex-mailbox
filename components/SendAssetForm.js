@@ -48,6 +48,7 @@ const SendAssetForm = ({
           <TextField
             required
             id="outlined-required"
+            name="Asset Id"
             disabled={formattedAddresses.length < 1}
             label="Asset Id"
             onChange={({ target: { value } }) => {
@@ -106,6 +107,7 @@ const SendAssetForm = ({
         uiSchema={uiSchema}
         widgets={widgets}
         onSubmit={onSubmit}
+        autoComplete="on"
       >
         <Box>
           <label htmlFor="contained-button-file">
