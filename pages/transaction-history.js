@@ -50,42 +50,40 @@ export function TransactionHistoryPage() {
   const [csvLink, setCsvLink] = useState()
   const [tableRows, setTableRows] = useState([])
 
+  const updateStatusMessage = (message, status) => {
+    setActionStatus({
+      message: message || '',
+      success: status || false,
+    })
+  }
+
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
     if (senderAddress != '' && assetId != '') {
       setCsvLink()
-      setActionStatus({
-        message: '',
-        success: true,
-      })
-      setTableRows([])
+      updateStatusMessage()
       setFormData({
         assetId,
         senderAddress,
         csvTransactions: '',
       })
-      if (assetId && senderAddress) {
-        setLoading(true)
-        const responseData =
-          await TransactionHistoryHelper.getTransactionHistory(
-            assetId.trim(),
-            senderAddress.trim()
-          )
-        // console.debug('responseData', responseData)
-        setLoading(false)
-        if (responseData.error == true) {
-          setActionStatus({
-            message: responseData.body?.message || 'Sorry an error occured',
-            success: false,
-          })
-        } else {
-          setFormData({
-            assetId,
-            senderAddress,
-            csvTransactions: responseData,
-          })
-          updateCSVTable(responseData)
-        }
+      const responseData = await TransactionHistoryHelper.getTransactionHistory(
+        assetId.trim(),
+        senderAddress.trim()
+      )
+      // console.debug('responseData', responseData)
+      setLoading(false)
+      if (responseData.error == true) {
+        updateStatusMessage(
+          responseData.body?.message || 'Sorry an error occured'
+        )
+      } else {
+        setFormData({
+          assetId,
+          senderAddress,
+          csvTransactions: responseData,
+        })
+        updateCSVTable(responseData)
       }
     }
   }

@@ -56,6 +56,12 @@ export function ReturnAssetPage() {
     )
   }, [])
 
+  useEffect(() => {
+    if (actionStatus.message != '') {
+      updateStatusMessage()
+    }
+  }, [assetId, senderAddress, csvTransactions])
+
   const updateAddresses = useCallback(
     (addresses) => {
       if (addresses == null) {
@@ -75,14 +81,17 @@ export function ReturnAssetPage() {
 
   const { t } = useTranslation('common')
 
+  const updateStatusMessage = (message, status) => {
+    setActionStatus({
+      message: message || '',
+      success: status || false,
+    })
+  }
   const submitForm = async ({ formData }) => {
     console.debug(formData)
     if (senderAddress != '' && assetId != '' && csvTransactions != '') {
       setLoading(true)
-      setActionStatus({
-        message: '',
-        success: false,
-      })
+      updateStatusMessage()
       const responseData = await ReturnAssetHelper.returnAssetsToSender(
         assetId,
         senderAddress,
@@ -95,24 +104,21 @@ export function ReturnAssetPage() {
         const sentAssets = responseData.confirmedTransactions.filter(
           (asset) => asset.value.status == 'confirmed'
         ).length
-        setActionStatus({
-          message: `${sentAssets}/${totalAssets} transaction(s) returned successfully`,
-          success: true,
-        })
+        updateStatusMessage(
+          `${sentAssets}/${totalAssets} transaction(s) returned successfully`,
+          true
+        )
       } else {
-        setActionStatus({
-          message: responseData.body?.message || 'Sorry, an error occurred',
-          success: false,
-        })
+        updateStatusMessage(
+          responseData.body?.message || 'Sorry, an error occurred',
+          false
+        )
       }
     }
   }
 
   const getFileUpload = async (e) => {
-    setActionStatus({
-      message: '',
-      success: false,
-    })
+    updateStatusMessage()
     const csvFiles = e.target.files[0]
     setFileName(csvFiles.name)
     const reader = new FileReader()
