@@ -12,3 +12,4 @@ Telegram: https://t.me/algodex
 Discord: https://discord.com/invite/8sDzWVDf
 
 Support: https://about.algodex.com/support
+
