@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -64,11 +64,15 @@ export function RedeemAssetPage() {
     setSenderAddress(query.senderAddress)
   }, [query])
 
-  const submitForm = async () => {
+  const updateStatusMessage = (message, status) => {
     setActionStatus({
-      message: '',
-      success: '',
+      message: message || '',
+      success: status || false,
     })
+  }
+
+  const submitForm = async () => {
+    updateStatusMessage()
     setLoading(true)
     // console.debug(assetId, receiverAddress, senderAddress)
     const responseData = await RedeemAssetsHelper.redeem(
@@ -78,20 +82,16 @@ export function RedeemAssetPage() {
     )
     setLoading(false)
     if (responseData.status == 'confirmed') {
-      setActionStatus({
-        message: responseData.statusMsg,
-        success: true,
-      })
+      updateStatusMessage(responseData.statusMsg, true)
+
       getBalance()
     } else {
-      setActionStatus({
-        message:
-          typeof responseData === 'string'
-            ? responseData
-            : responseData?.response?.body?.message ||
-              'Sorry, an error occurred',
-        success: false,
-      })
+      updateStatusMessage(
+        typeof responseData === 'string'
+          ? responseData
+          : responseData?.response?.body?.message || 'Sorry, an error occurred',
+        false
+      )
     }
   }
 
@@ -132,6 +132,11 @@ export function RedeemAssetPage() {
 
     if (assetId && receiverAddress) {
       checkOptIn()
+    }
+
+    if (actionStatus.message != '') {
+      updateStatusMessage()
+      setOptInStatus()
     }
   }, [assetId, receiverAddress, senderAddress])
 

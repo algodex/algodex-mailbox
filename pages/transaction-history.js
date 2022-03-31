@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -46,15 +46,19 @@ export function TransactionHistoryPage() {
   })
   const [csvLink, setCsvLink] = useState()
 
+  const updateStatusMessage = (message, status) => {
+    setActionStatus({
+      message: message || '',
+      success: status || false,
+    })
+  }
+
   const submitForm = async ({ formData }) => {
     const { senderAddress, assetId } = formData
     if (senderAddress != '' && assetId != '') {
       setLoading(true)
       setCsvLink()
-      setActionStatus({
-        message: '',
-        success: true,
-      })
+      updateStatusMessage()
       setFormData({
         assetId,
         senderAddress,
@@ -67,10 +71,9 @@ export function TransactionHistoryPage() {
       // console.debug('responseData', responseData)
       setLoading(false)
       if (responseData.error == true) {
-        setActionStatus({
-          message: responseData.body?.message || 'Sorry an error occured',
-          success: false,
-        })
+        updateStatusMessage(
+          responseData.body?.message || 'Sorry an error occured'
+        )
       } else {
         setFormData({
           assetId,
@@ -81,7 +84,6 @@ export function TransactionHistoryPage() {
       }
     }
   }
-
 
   return (
     <>
@@ -100,7 +102,6 @@ export function TransactionHistoryPage() {
             actionStatus={actionStatus}
             csvLink={csvLink}
           />
-         
         </Grid>
       </Grid>
     </>
