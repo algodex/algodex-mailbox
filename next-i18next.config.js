@@ -10,7 +10,7 @@ module.exports = {
       '/redeem-assets': [...defaults],
       '/return-assets': [...defaults],
       '/send-asset-page': [...defaults],
-      '/send-history-page': [...defaults]
+      '/transaction-history-page': [...defaults]
     }
   },
   localePath: path.resolve('./locales'),

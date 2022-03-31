@@ -51,8 +51,8 @@ function BottomNavigation({onChange, ...rest}) {
         icon={<SendIcon />}
       />
       <BottomNavigationAction
-        to="/send-history"
-        value="/send-history"
+        to="/transaction-history"
+        value="/transaction-history"
         label={t('/history')}
         icon={<HistoryIcon />}
       />

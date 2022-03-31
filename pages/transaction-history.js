@@ -14,8 +14,8 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 
 // Custom Components
-import SendHistoryForm from '@/components/SendHistoryForm'
-import * as SendHistoryHelper from '@/lib/send_history'
+import TransactionHistoryForm from '@/components/TransactionHistoryForm'
+import * as TransactionHistoryHelper from '@/lib/transaction_history'
 
 /**
  * Generate Static Properties
@@ -26,13 +26,13 @@ export async function getStaticProps({ locale }) {
     props: {
       ...(await serverSideTranslations(locale, [
         ...defaults,
-        'send-history-page',
+        'transaction-history-page',
       ])),
     },
   }
 }
 
-export function SendHistoryPage() {
+export function TransactionHistoryPage() {
   const { t } = useTranslation('common')
   const [formData, setFormData] = useState({
     assetId: '',
@@ -64,7 +64,7 @@ export function SendHistoryPage() {
         senderAddress,
         csvTransactions: '',
       })
-      const responseData = await SendHistoryHelper.getSendHistory(
+      const responseData = await TransactionHistoryHelper.getTransactionHistory(
         assetId.trim(),
         senderAddress.trim()
       )
@@ -88,14 +88,14 @@ export function SendHistoryPage() {
   return (
     <>
       <Head>
-        <title>{`${t('/send-history')} | ${t('app-title')}`}</title>
+        <title>{`${t('/transaction-history')} | ${t('app-title')}`}</title>
       </Head>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={6} xl={5}>
           <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-            {t('/send-history')}
+            {t('/transaction-history')}
           </Typography>
-          <SendHistoryForm
+          <TransactionHistoryForm
             onSubmit={submitForm}
             isLoading={loading}
             formData={formData}
@@ -108,4 +108,4 @@ export function SendHistoryPage() {
   )
 }
 
-export default SendHistoryPage
+export default TransactionHistoryPage
