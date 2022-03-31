@@ -126,6 +126,8 @@ export function RedeemAssetPage() {
   }
 
   useEffect(() => {
+    console.log({assetId})
+    console.log(actionStatus)
     if (assetId && receiverAddress && senderAddress) {
       getBalance()
     }
@@ -134,7 +136,7 @@ export function RedeemAssetPage() {
       checkOptIn()
     }
 
-    if (actionStatus.message != '') {
+    if (actionStatus.message != '' || optInStatus != undefined) {
       updateStatusMessage()
       setOptInStatus()
     }
