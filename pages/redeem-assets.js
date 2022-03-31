@@ -126,8 +126,6 @@ export function RedeemAssetPage() {
   }
 
   useEffect(() => {
-    console.log({assetId})
-    console.log(actionStatus)
     if (assetId && receiverAddress && senderAddress) {
       getBalance()
     }
