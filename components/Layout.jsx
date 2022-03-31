@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -86,7 +86,9 @@ export function Layout({ children, components, componentsProps }) {
         }
         {/* Display the Page Component */}
 
-        <Container sx={{ my: 4 }}>{children}</Container>
+        <Container sx={{ my: 4, width: `calc(100% - ${drawerWidth}px)` }}>
+          {children}
+        </Container>
       </Box>
       {
         // Show the Mobile Navigation

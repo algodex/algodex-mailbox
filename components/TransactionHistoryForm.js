@@ -9,17 +9,12 @@ import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import Link from '@/components/Nav/Link'
-import Box from '@mui/material/Box'
-import TransactionTable from './TransactionTable'
 
 const TransactionHistoryForm = ({
   onSubmit,
   isLoading,
   formData,
   actionStatus,
-  csvLink,
-  tableRows,
 }) => {
   const schema = {
     required: ['assetId', 'senderAddress'],
@@ -54,21 +49,7 @@ const TransactionHistoryForm = ({
         csvTransactions: formData.csvTransactions,
       }}
     >
-      {tableRows.length > 0 && (
-        <Box sx={{ marginBlock: '1rem' }}>
-          <TransactionTable rows={tableRows} />
-        </Box>
-      )}
-      {csvLink && (
-        <Link
-          href={csvLink}
-          target="_blanc"
-          download="Transaction History.csv"
-          sx={{ color: 'blue', textDecoration: 'underline' }}
-        >
-          Click to download Transaction History
-        </Link>
-      )}
+     
       <Grid container spacing={2} marginTop={'2rem'}>
         <Grid item xs={6} lg={4}>
           <LoadingButton loading={isLoading} variant="contained" type="submit">
@@ -96,7 +77,5 @@ TransactionHistoryForm.propTypes = {
   actionStatus: PropTypes.object,
   isLoading: PropTypes.bool,
   formData: PropTypes.object,
-  csvLink: PropTypes.string,
-  tableRows: PropTypes.array,
 }
 export default TransactionHistoryForm

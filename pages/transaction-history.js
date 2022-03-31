@@ -12,10 +12,13 @@ import { defaults } from '@/next-i18next.config'
 // MUI Components
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 
 // Custom Components
 import TransactionHistoryForm from '@/components/TransactionHistoryForm'
 import * as TransactionHistoryHelper from '@/lib/transaction_history'
+import Link from '@/components/Nav/Link'
+import TransactionTable from '@/components/TransactionTable'
 
 /**
  * Generate Static Properties
@@ -126,9 +129,24 @@ export function TransactionHistoryPage() {
             isLoading={loading}
             formData={formData}
             actionStatus={actionStatus}
-            csvLink={csvLink}
-            tableRows={tableRows}
           />
+        </Grid>
+        <Grid item xs={12} md={11} lg={11} xl={9} marginBottom='2rem'>
+          {tableRows.length > 0 && (
+            <Box sx={{ marginBlock: '1rem' }}>
+              <TransactionTable rows={tableRows} />
+            </Box>
+          )}
+          {csvLink && (
+            <Link
+              href={csvLink}
+              target="_blanc"
+              download="Transaction History.csv"
+              sx={{ color: 'blue', textDecoration: 'underline' }}
+            >
+              Click to download Transaction History
+            </Link>
+          )}
         </Grid>
       </Grid>
     </>
