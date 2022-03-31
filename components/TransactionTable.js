@@ -72,7 +72,7 @@ const TransactionTable = ({ rows }) => {
   ]
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead className={classes.root}>
             <TableRow>

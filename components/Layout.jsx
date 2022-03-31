@@ -86,7 +86,7 @@ export function Layout({ children, components, componentsProps }) {
         }
         {/* Display the Page Component */}
 
-        <Container sx={{ my: 4, width: `calc(100% - ${drawerWidth}px)` }}>
+        <Container sx={{ my: 4, width: `calc(100% - ${ !isMobile ? drawerWidth : 0}px)` }}>
           {children}
         </Container>
       </Box>

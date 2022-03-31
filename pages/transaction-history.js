@@ -69,6 +69,7 @@ export function TransactionHistoryPage() {
       })
       if (assetId && senderAddress) {
         setLoading(true)
+        setTableRows([])
         const responseData =
           await TransactionHistoryHelper.getTransactionHistory(
             assetId.trim(),
