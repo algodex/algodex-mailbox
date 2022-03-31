@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -117,36 +117,38 @@ const ReturnAssetForm = ({
         disabled={formattedAddresses.length < 1}
       >
         <Box>
-          {fileName ? (
-            <Button
-              variant="contained"
-              component="span"
-              startIcon={<UploadFileIcon />}
-              style={{ marginTop: '1rem' }}
-            >
-              {fileName}
-            </Button>
-          ) : (
-            <label htmlFor="contained-button-file" style={styles.uploadWrapper}>
-              <Typography variant="p" marginBottom="1rem">
-                Click to upload CSV transactions
-              </Typography>
-              <input
-                accept="text/csv"
-                id="contained-button-file"
-                type="file"
-                hidden
-                onChange={getFileUpload}
-              />
+          <label htmlFor="contained-button-file">
+            <input
+              accept="text/csv"
+              id="contained-button-file"
+              type="file"
+              hidden
+              onChange={getFileUpload}
+            />
+            {fileName ? (
               <Button
                 variant="contained"
                 component="span"
                 startIcon={<UploadFileIcon />}
+                style={{ marginTop: '1rem' }}
               >
-                Upload CSV
+                {fileName}
               </Button>
-            </label>
-          )}
+            ) : (
+              <Box style={styles.uploadWrapper}>
+                <Typography variant="p" marginBottom="1rem">
+                  Click to upload CSV transactions
+                </Typography>
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<UploadFileIcon />}
+                >
+                  Upload CSV
+                </Button>
+              </Box>
+            )}
+          </label>
         </Box>
         <Grid container spacing={2} marginTop={'2rem'}>
           <Grid item xs={6} lg={4}>
@@ -184,6 +186,6 @@ ReturnAssetForm.propTypes = {
   setAssetId: PropTypes.func,
   getFileUpload: PropTypes.func.isRequired,
   fileName: PropTypes.string,
-  actionStatus: PropTypes.object
+  actionStatus: PropTypes.object,
 }
 export default ReturnAssetForm
