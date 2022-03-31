@@ -94,8 +94,20 @@ export function SendAssetPage() {
     })
   }
 
+  const checkPopupBlocker = () => {
+    return ('' + window.open).indexOf('[native code]') === -1
+  }
+
   const submitForm = async ({ formData }) => {
     console.debug(formData)
+    if (checkPopupBlocker()) {
+      updateStatusMessage(
+        'Please disable your popup blocker (likely in the top-right of your browser window)',
+        false
+      )
+      return
+    }
+    // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
     const responseData = await SendAssetsHelper.send(
@@ -138,7 +150,6 @@ export function SendAssetPage() {
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
-
 
   useEffect(() => {
     if (actionStatus.message != '') {
