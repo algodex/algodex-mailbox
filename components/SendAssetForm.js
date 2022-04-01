@@ -40,6 +40,9 @@ const SendAssetForm = ({
   getFileUpload,
   fileName,
   actionStatus,
+  assetId,
+  wallet,
+  csvTransactions,
 }) => {
   const CustomInputComponent = (props) => {
     return (
@@ -150,7 +153,12 @@ const SendAssetForm = ({
             <LoadingButton
               loading={isLoading}
               variant="contained"
-              disabled={formattedAddresses.length < 1}
+              disabled={
+                formattedAddresses.length < 1 ||
+                !wallet ||
+                !assetId ||
+                !csvTransactions
+              }
               type="submit"
             >
               Send Assets
@@ -182,5 +190,8 @@ SendAssetForm.propTypes = {
   getFileUpload: PropTypes.func,
   fileName: PropTypes.any,
   actionStatus: PropTypes.object,
+  assetId: PropTypes.any,
+  wallet: PropTypes.any,
+  csvTransactions: PropTypes.any,
 }
 export default SendAssetForm

@@ -226,6 +226,8 @@ export function SendAssetPage() {
             csvTransactions={csvTransactions}
             getFileUpload={getFileUpload}
             fileName={fileName}
+            assetId={assetId}
+            wallet={wallet}
           />
 
           {actionStatus.success == true && (
