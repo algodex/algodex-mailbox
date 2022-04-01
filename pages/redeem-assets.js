@@ -24,7 +24,7 @@ import RedeemAssetsHelper from '@/lib/redeem_assets.js'
  * Generate Static Properties
  * @param locale
  */
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, [...defaults])),

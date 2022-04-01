@@ -7,10 +7,6 @@ module.exports = {
     'defaultLocale': 'en',
     'pages': {
       '*': defaults,
-      '/redeem-assets': [...defaults],
-      '/return-assets': [...defaults],
-      '/send-asset-page': [...defaults],
-      '/transaction-history-page': [...defaults]
     }
   },
   localePath: path.resolve('./locales'),
