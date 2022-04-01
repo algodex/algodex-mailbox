@@ -105,7 +105,7 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    console.debug('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
@@ -128,7 +128,7 @@ export function SendAssetPage() {
         getAssetBalance()
       }
     } else {
-      if (`${responseData}`.includes('Error: Can not open popup window - blocked')) {
+      if (/PopupOpenError|blocked|popup|/.test(responseData)) {
         updateStatusMessage(
           'Please disable your popup blocker (likely in the top-right of your browser window)',
           false
