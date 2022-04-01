@@ -20,6 +20,9 @@ const RedeemAssetForm = ({
   setSenderAddress,
   setReceiverAddress,
   setAssetId,
+  senderAddress,
+  receiverAddress,
+  assetId,
   optInStatus,
   formData,
   balance,
@@ -110,6 +113,21 @@ const RedeemAssetForm = ({
     SenderInput: SenderInputComponent,
     ReceiverInput: ReceiverInputComponent,
   }
+
+  const confirmDisabledState = () => {
+    if (
+      !assetId ||
+      !receiverAddress ||
+      !senderAddress ||
+      assetId == '' ||
+      receiverAddress == '' ||
+      senderAddress == '' ||
+      (!isNaN(balance) && 0 >= balance)
+    ) {
+      return true
+    }
+    return false
+  }
   return (
     <Form
       schema={schema}
@@ -117,7 +135,7 @@ const RedeemAssetForm = ({
       uiSchema={uiSchema}
       widgets={widgets}
       formData={formData}
-      autoComplete='on'
+      autoComplete="on"
     >
       {optInStatus == false && (
         <Box marginTop="2rem">
@@ -133,7 +151,7 @@ const RedeemAssetForm = ({
             loading={loading}
             variant="contained"
             type="submit"
-            disabled={0 >= balance}
+            disabled={confirmDisabledState()}
           >
             Redeem
           </LoadingButton>
@@ -163,5 +181,8 @@ RedeemAssetForm.propTypes = {
   setAssetId: PropTypes.any,
   formData: PropTypes.object,
   balance: PropTypes.number,
+  senderAddress: PropTypes.string,
+  receiverAddress: PropTypes.string,
+  assetId: PropTypes.string,
 }
 export default RedeemAssetForm
