@@ -1,7 +1,7 @@
 {
   "app-title": "Algodex Mailbox",
   "actions": "Actions",
-  "balance": "Balance",
+  "escrow-balance": "Escrow Balance",
   "/send-assets": "Send Assets",
   "/redeem-assets": "Redeem Assets",
   "/return-assets": "Return Assets",

@@ -101,7 +101,7 @@ export function RedeemAssetPage() {
       receiverAddress,
       senderAddress
     )
-    // console.debug(res)
+    // console.debug({ res })
     if (res.error == false) {
       setEscrowBalance({ success: true, message: res.balance })
     } else {
@@ -134,13 +134,20 @@ export function RedeemAssetPage() {
       checkOptIn()
     }
 
-    if (actionStatus.message != '' || optInStatus != undefined) {
+    if (
+      actionStatus.message != '' ||
+      optInStatus != undefined ||
+      escrowBalance.message != ''
+    ) {
       updateStatusMessage()
       setOptInStatus()
+      setEscrowBalance({
+        message: '',
+        success: true,
+      })
     }
   }, [assetId, receiverAddress, senderAddress])
 
-  console.log({ formData })
   return (
     <>
       <Head>
@@ -167,7 +174,7 @@ export function RedeemAssetPage() {
             <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
               <Grid item>
                 <Typography variant="p" component="p">
-                  {t('balance')}:
+                  {t('escrow-balance')}:
                 </Typography>
               </Grid>
               <Grid item>
