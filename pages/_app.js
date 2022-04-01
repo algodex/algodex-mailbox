@@ -34,16 +34,16 @@ const desktopSsrMatchMedia = query => ({
 
 const mobileMuiTheme = createTheme({
   ...theme,
-  props: {
+  components: {
     // Change the default options of useMediaQuery
-    MuiUseMediaQuery: { ssrMatchMedia: mobileSsrMatchMedia }
+    MuiUseMediaQuery: { defaultProps: { ssrMatchMedia: mobileSsrMatchMedia } }
   }
 })
 const desktopMuiTheme = createTheme({
   ...theme,
-  props: {
+  components: {
     // Change the default options of useMediaQuery
-    MuiUseMediaQuery: { ssrMatchMedia: desktopSsrMatchMedia }
+    MuiUseMediaQuery: { defaultProps: { ssrMatchMedia: desktopSsrMatchMedia } }
   }
 })
 
