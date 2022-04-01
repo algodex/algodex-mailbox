@@ -56,8 +56,8 @@ export function Layout({ children, components, componentsProps }) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        maxHeight: '100vh',
         height: '100vh',
+        maxHeight:'-webkit-fill-available',
       }}
     >
       <AppBar
