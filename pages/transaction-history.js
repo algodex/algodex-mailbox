@@ -24,7 +24,7 @@ import TransactionTable from '@/components/TransactionTable'
  * Generate Static Properties
  * @param locale
  */
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, [...defaults])),
