@@ -140,6 +140,7 @@ export function RedeemAssetPage() {
     }
   }, [assetId, receiverAddress, senderAddress])
 
+  console.log({ formData })
   return (
     <>
       <Head>
@@ -155,6 +156,9 @@ export function RedeemAssetPage() {
             setSenderAddress={setSenderAddress}
             setReceiverAddress={setReceiverAddress}
             setAssetId={setAssetId}
+            senderAddress={senderAddress}
+            receiverAddress={receiverAddress}
+            assetId={assetId}
             optInStatus={optInStatus}
             formData={formData}
             balance={parseInt(escrowBalance.message)}
