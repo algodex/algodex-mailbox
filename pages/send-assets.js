@@ -96,6 +96,8 @@ export function SendAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
+
+    // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
     const responseData = await SendAssetsHelper.send(
@@ -126,6 +128,13 @@ export function SendAssetPage() {
         getAssetBalance()
       }
     } else {
+      if (/PopupOpenError|blocked|Can not open popup window|/.test(responseData)) {
+        updateStatusMessage(
+          'Please disable your popup blocker (likely in the top-right of your browser window)',
+          false
+        )
+        return
+      }
       updateStatusMessage(
         responseData.body?.message || 'Sorry, an error occurred',
         false
@@ -138,7 +147,6 @@ export function SendAssetPage() {
       getAssetBalance()
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
-
 
   useEffect(() => {
     if (actionStatus.message != '') {
