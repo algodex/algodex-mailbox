@@ -9,7 +9,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 import getTheme from '@/themes/getTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
-import parser from 'ua-parser-js'
+
 const theme = getTheme('normal')
 export default class MyDocument extends Document {
   render() {
@@ -78,7 +78,6 @@ MyDocument.getInitialProps = async (ctx) => {
     })
 
   const initialProps = await Document.getInitialProps(ctx)
-  const deviceType = parser(ctx.req.headers['user-agent']).device.type || 'desktop'
   // This is important. It prevents emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html)
@@ -90,10 +89,9 @@ MyDocument.getInitialProps = async (ctx) => {
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
   ))
-  console.log(deviceType)
+
   return {
     ...initialProps,
     emotionStyleTags,
-    deviceType
   }
 }

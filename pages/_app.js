@@ -15,6 +15,8 @@ import { CacheProvider } from '@emotion/react'
 import getTheme from '@/themes/getTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
 import {Layout} from '@/components/Layout'
+import parser from 'ua-parser-js'
+import NextApp from 'next/app'
 const theme = getTheme('normal')
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -35,21 +37,20 @@ const desktopSsrMatchMedia = query => ({
 const mobileMuiTheme = createTheme({
   ...theme,
   components: {
-    // Change the default options of useMediaQuery
+    ...theme.components,
     MuiUseMediaQuery: { defaultProps: { ssrMatchMedia: mobileSsrMatchMedia } }
   }
 })
 const desktopMuiTheme = createTheme({
   ...theme,
   components: {
-    // Change the default options of useMediaQuery
+    ...theme.components,
     MuiUseMediaQuery: { defaultProps: { ssrMatchMedia: desktopSsrMatchMedia } }
   }
 })
 
 export function App(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -67,7 +68,11 @@ export function App(props) {
     </CacheProvider>
   )
 }
-
+App.getInitialProps = async (ctx) => {
+  const initialProps = await NextApp.getInitialProps(ctx)
+  const deviceType = parser(ctx.ctx.req.headers['user-agent']).device.type || 'desktop'
+  return { pageProps: { ...initialProps, deviceType } }
+}
 App.propTypes = {
   Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,
