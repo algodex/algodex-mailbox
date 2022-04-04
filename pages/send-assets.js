@@ -197,7 +197,7 @@ export function SendAssetPage() {
 
   const getFileUpload = async (e) => {
     const csvFiles = e.target.files[0]
-    if(csvFiles){
+    if (csvFiles) {
       updateStatusMessage()
       setDuplicateList([])
       setFileName(csvFiles.name)
@@ -289,16 +289,19 @@ export function SendAssetPage() {
                 variant="error-message"
                 display="block"
                 marginTop="1rem"
-                marginBottom='0'
+                marginBottom="0"
                 color={'error'}
               >
                 Find below the duplicate wallet address
-                {duplicateList.length > 1 && 'es'}
+                {duplicateList.length > 1 && 'es'}:
               </Typography>
               <List dense={false}>
                 {duplicateList.map((d) => (
-                  <ListItem key={d} sx={{paddingBlock:'0'}}>
-                    <ListItemText primary={d} sx={{ color: 'red', marginBlock:'0' }} />
+                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                    <ListItemText
+                      primary={d}
+                      sx={{ color: 'red', marginBlock: '0' }}
+                    />
                   </ListItem>
                 ))}
               </List>
