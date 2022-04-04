@@ -135,7 +135,7 @@ export function ReturnAssetPage() {
         <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+        <Grid item xs={12} md={8} lg={7} xl={6}>
           <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
             {t('/return-assets')}
           </Typography>
@@ -164,7 +164,7 @@ export function ReturnAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5}>
+            <Grid item xs={6} lg={5} marginLeft='auto' textAlign='end'>
               <Link href={'/sample.csv'} download color="primary.dark">
                 {t('download-csv-example-link')}
               </Link>
