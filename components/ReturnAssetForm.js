@@ -164,7 +164,7 @@ const ReturnAssetForm = ({
               Return Assets
             </LoadingButton>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} marginLeft='auto' textAlign='end'>
             <CollapseableErrorMessage actionStatus={actionStatus} />
           </Grid>
         </Grid>

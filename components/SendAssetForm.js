@@ -17,6 +17,7 @@ import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
+import CollapseableErrorMessage from './CollapseableErrorMessage'
 
 const styles = {
   uploadWrapper: {
@@ -164,16 +165,8 @@ const SendAssetForm = ({
               Send Assets
             </LoadingButton>
           </Grid>
-          <Grid item xs={6}>
-            {actionStatus.message != '' && (
-              <Typography
-                variant="error-message"
-                sx={{ display: 'flex', justifyContent: 'end' }}
-                color={actionStatus.success ? 'green' : 'error'}
-              >
-                {actionStatus.message}
-              </Typography>
-            )}
+          <Grid item xs={6} marginLeft='auto'>
+            <CollapseableErrorMessage actionStatus={actionStatus} />
           </Grid>
         </Grid>
       </Form>

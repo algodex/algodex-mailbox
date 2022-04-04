@@ -3,53 +3,65 @@ import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 
 const CollapseableErrorMessage = ({ actionStatus }) => {
+  const [readmore, setReadmore] = useState(true)
+  const [showContent, setShowContent] = useState(false)
   const [previewtext, setPreviewtext] = useState()
   const [extraContent, setExtraContent] = useState()
-  console.log(actionStatus)
-  const actionStatusF = {
-    message:
-      // eslint-disable-next-line max-len
-      'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.',
-    success: false,
-  }
 
   useEffect(() => {
-    checkContent(actionStatusF.message)
-  }, [actionStatusF.message])
+    checkContent(actionStatus.message)
+  }, [actionStatus.message])
 
   const checkContent = (message) => {
     if (message) {
       const list = message.split('')
       const listLength = list.length
-      if (listLength < 10) {
+      if (listLength < 40) {
         setPreviewtext(message)
         setExtraContent()
       } else {
-        const preview = list.slice(0, 10).join('')
-        console.log({ preview })
-        setPreviewtext(preview)
-        const extra = list.slice(11, listLength).join('')
-        console.log({ extra })
-        setExtraContent(extra)
+        setReadmore(true)
+        const preview = list.slice(0, 40).join('')
+        setPreviewtext(`${preview}...`)
+        setExtraContent(message)
       }
     }
   }
   return (
     <>
-      {actionStatusF.message != '' && (
+      {actionStatus.message != '' && (
         <Typography
           variant="error-message"
-          sx={{ display: 'flex', justifyContent: 'end' }}
-          color={actionStatusF.success ? 'green' : 'error'}
+          // sx={{ display: 'flex', justifyContent: 'end' }}
+          color={actionStatus.success ? 'green' : 'error'}
         >
-          {previewtext}
-          {extraContent && (
-            <>
-              <Typography sx={{ textDecoration: 'underline' }}>
-                {extraContent}
-              </Typography>
-            </>
-          )}
+          <>
+            {readmore ? previewtext : ''}
+            {extraContent && (
+              <>
+                {showContent && (
+                  <Typography fontWeight={700}>{extraContent}</Typography>
+                )}
+                <Typography
+                  variant="span"
+                  sx={{
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    fontSize: 11,
+                    paddingLeft: readmore ? '4px' : 0,
+                    lineHeight: 2.5,
+                    color: 'primary',
+                  }}
+                  onClick={() => {
+                    setShowContent(!showContent)
+                    setReadmore(!readmore)
+                  }}
+                >
+                  {readmore ? 'Read More' : 'Read Less'}
+                </Typography>
+              </>
+            )}
+          </>
         </Typography>
       )}
     </>
@@ -57,7 +69,7 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
 }
 
 CollapseableErrorMessage.propTypes = {
-  message: PropTypes.object.isRequired,
+  actionStatus: PropTypes.object.isRequired,
 }
 
 export default CollapseableErrorMessage

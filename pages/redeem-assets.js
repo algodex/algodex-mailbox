@@ -154,7 +154,7 @@ export function RedeemAssetPage() {
         <title>{`${t('/redeem-assets')} | ${t('app-title')}`}</title>
       </Head>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+        <Grid item xs={12} md={8} lg={7} xl={6}>
           <Typography variant="h5">{t('/redeem-assets')}</Typography>
           <RedeemAssetForm
             onSubmit={submitForm}

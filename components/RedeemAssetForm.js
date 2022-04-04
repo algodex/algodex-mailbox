@@ -12,6 +12,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+import CollapseableErrorMessage from './CollapseableErrorMessage'
 
 const RedeemAssetForm = ({
   onSubmit,
@@ -156,15 +157,8 @@ const RedeemAssetForm = ({
             Redeem
           </LoadingButton>
         </Grid>
-        <Grid item xs={6}>
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
+        <Grid item xs={6} marginLeft='auto' textAlign='end'>
+          <CollapseableErrorMessage actionStatus={actionStatus} />
         </Grid>
       </Grid>
     </Form>
