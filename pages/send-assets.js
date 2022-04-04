@@ -132,9 +132,7 @@ export function SendAssetPage() {
         getAssetBalance()
       }
     } else {
-      if (
-        /PopupOpenError|blocked|Can not open popup window|/.test(responseData)
-      ) {
+      if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
         updateStatusMessage(
           'Please disable your popup blocker (likely in the top-right of your browser window)',
           false
@@ -142,7 +140,7 @@ export function SendAssetPage() {
         return
       }
       updateStatusMessage(
-        responseData.body?.message || 'Sorry, an error occurred',
+        responseData.body?.message || responseData.message || 'Sorry, an error occurred',
         false
       )
     }
