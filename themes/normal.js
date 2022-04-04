@@ -73,6 +73,7 @@ const theme = {
       fontFamily: fontFamilies.body,
       fontWeight: 700,
       fontSize: fontSizes[3],
+      wordBreak:'break-word'
     },
     p: {
       display: 'block',

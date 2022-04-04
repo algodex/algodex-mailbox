@@ -42,58 +42,64 @@ const RedeemAssetForm = ({
 
   const AssetIdInputComponent = (props) => {
     return (
-      <Box>
-        <FormControl fullWidth>
-          <TextField
-            name="AssetId"
-            required={props.required}
-            id="outlined-required"
-            label="Asset Id"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setAssetId(value)
-            }}
-          />
-        </FormControl>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <FormControl fullWidth>
+            <TextField
+              name="AssetId"
+              required={props.required}
+              id="outlined-required"
+              label="Asset Id"
+              onChange={({ target: { value } }) => {
+                props.onChange(value)
+                setAssetId(value)
+              }}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
     )
   }
 
   const SenderInputComponent = (props) => {
     return (
-      <Box>
-        <FormControl fullWidth>
-          <TextField
-            name="SenderAddress"
-            required={props.required}
-            id="outlined-required"
-            label="Sender Address"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setSenderAddress(value)
-            }}
-          />
-        </FormControl>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <FormControl fullWidth>
+            <TextField
+              name="SenderAddress"
+              required={props.required}
+              id="outlined-required"
+              label="Sender Address"
+              onChange={({ target: { value } }) => {
+                props.onChange(value)
+                setSenderAddress(value)
+              }}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
     )
   }
 
   const ReceiverInputComponent = (props) => {
     return (
-      <Box>
-        <FormControl fullWidth>
-          <TextField
-            name="ReceiverAddress"
-            required={props.required}
-            id="outlined-required"
-            label="Receiver Address"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setReceiverAddress(value)
-            }}
-          />
-        </FormControl>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <FormControl fullWidth>
+            <TextField
+              name="ReceiverAddress"
+              required={props.required}
+              id="outlined-required"
+              label="Receiver Address"
+              onChange={({ target: { value } }) => {
+                props.onChange(value)
+                setReceiverAddress(value)
+              }}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
     )
   }
   const uiSchema = {
@@ -146,7 +152,7 @@ const RedeemAssetForm = ({
         </Box>
       )}
       <Grid container spacing={2} marginTop={'2rem'} marginBottom={'2rem'}>
-        <Grid item xs={6} lg={4}>
+        <Grid item xs={6} lg={3}>
           <LoadingButton
             loading={loading}
             variant="contained"
@@ -156,7 +162,7 @@ const RedeemAssetForm = ({
             Redeem
           </LoadingButton>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} lg={8}>
           {actionStatus.message != '' && (
             <Typography
               variant="error-message"
