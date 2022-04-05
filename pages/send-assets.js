@@ -60,10 +60,6 @@ export function SendAssetPage() {
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
   const [fileName, setFileName] = useState()
-  let webURL = ''
-  if (typeof window !== 'undefined') {
-    webURL = `${window.location.protocol}//${window.location.host}`
-  }
 
   useEffect(() => {
     setFormattedAddresses(
@@ -123,7 +119,7 @@ export function SendAssetPage() {
           true
         )
         setShareableLink(
-          `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
+          Helper.getShareableRedeemLink(wallet, assetId)
         )
         getAssetBalance()
       }
