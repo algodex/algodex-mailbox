@@ -28,7 +28,6 @@ const RedeemAssetForm = ({
   formData,
   balance,
 }) => {
-  console.log({formData})
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
