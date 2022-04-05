@@ -120,9 +120,6 @@ const RedeemAssetForm = ({
       !assetId ||
       !receiverAddress ||
       !senderAddress ||
-      assetId == '' ||
-      receiverAddress == '' ||
-      senderAddress == '' ||
       isNaN(balance) ||
       (!isNaN(balance) && 0 >= balance)
     ) {
