@@ -123,6 +123,7 @@ const RedeemAssetForm = ({
       assetId == '' ||
       receiverAddress == '' ||
       senderAddress == '' ||
+      isNaN(balance) ||
       (!isNaN(balance) && 0 >= balance)
     ) {
       return true
@@ -157,7 +158,7 @@ const RedeemAssetForm = ({
             Redeem
           </LoadingButton>
         </Grid>
-        <Grid item xs={6} marginLeft='auto' textAlign='end'>
+        <Grid item xs={6} marginLeft="auto" textAlign="end">
           <CollapseableErrorMessage actionStatus={actionStatus} />
         </Grid>
       </Grid>

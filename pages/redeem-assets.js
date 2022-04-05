@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 // MUI Components
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
@@ -53,6 +54,7 @@ export function RedeemAssetPage() {
     message: '',
     success: false,
   })
+  const [gettingBalance, setGettingBalance] = useState(false)
   const formData = {
     assetId: query.assetId || '',
     senderAddress: query.senderAddress || '',
@@ -96,12 +98,14 @@ export function RedeemAssetPage() {
   }
 
   const getBalance = async () => {
+    setGettingBalance(true)
     const res = await RedeemAssetsHelper.getEscrowBalance(
       parseInt(assetId),
       receiverAddress,
       senderAddress
     )
     // console.debug({ res })
+    setGettingBalance(false)
     if (res.error == false) {
       setEscrowBalance({ success: true, message: res.balance })
     } else {
@@ -170,27 +174,31 @@ export function RedeemAssetPage() {
             formData={formData}
             balance={parseInt(escrowBalance.message)}
           />
-          {escrowBalance && (
-            <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
-              <Grid item>
-                <Typography variant="p" component="p">
-                  {t('escrow-balance')}:
-                </Typography>
-              </Grid>
-              <Grid item>
-                {escrowBalance.message != '' && (
-                  <Typography
-                    variant="error-message"
-                    marginTop="1rem"
-                    color={escrowBalance.success ? 'green' : 'error'}
-                  >
-                    {escrowBalance.message}{' '}
-                    {escrowBalance.success ? 'available' : ''}
-                  </Typography>
-                )}
-              </Grid>
+          <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
+            <Grid item>
+              <Typography variant="p" component="p">
+                {t('escrow-balance')}:
+              </Typography>
             </Grid>
-          )}
+            <Grid item>
+              {gettingBalance ? (
+                <CircularProgress color="primary" size={15}/>
+              ) : (
+                <>
+                  {escrowBalance.message && escrowBalance.message != '' && (
+                    <Typography
+                      variant="error-message"
+                      marginTop="1rem"
+                      color={escrowBalance.success ? 'green' : 'error'}
+                    >
+                      {escrowBalance.message}{' '}
+                      {escrowBalance.success && 'available'}
+                    </Typography>
+                  )}
+                </>
+              )}
+            </Grid>
+          </Grid>
 
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5}>
