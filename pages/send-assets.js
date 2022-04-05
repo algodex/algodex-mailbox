@@ -48,6 +48,7 @@ export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
+  const [escrowPermission, setEscrowPermission] = useState(true)
   const [csvTransactions, setCsvTransactions] = useState()
   const [assetBalance, setAssetBalance] = useState({
     success: false,
@@ -100,14 +101,14 @@ export function SendAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
-
-    // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
+    // console.debug({escrowPermission})
     const responseData = await SendAssetsHelper.send(
       assetId,
       wallet,
-      csvTransactions
+      csvTransactions,
+      escrowPermission
     )
     // console.debug('responseData', responseData)
     setLoading(false)
@@ -132,7 +133,9 @@ export function SendAssetPage() {
         getAssetBalance()
       }
     } else {
-      if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
+      if (
+        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+      ) {
         updateStatusMessage(
           'Please disable your popup blocker (likely in the top-right of your browser window)',
           false
@@ -140,7 +143,9 @@ export function SendAssetPage() {
         return
       }
       updateStatusMessage(
-        responseData.body?.message || responseData.message || 'Sorry, an error occurred',
+        responseData.body?.message ||
+          responseData.message ||
+          'Sorry, an error occurred',
         false
       )
     }
@@ -280,6 +285,7 @@ export function SendAssetPage() {
             fileName={fileName}
             assetId={assetId}
             wallet={wallet}
+            setEscrowPermission={setEscrowPermission}
           />
           {duplicateList.length > 0 && (
             <>

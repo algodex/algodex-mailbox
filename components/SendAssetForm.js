@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
@@ -16,7 +17,9 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
+import Tooltip from '@mui/material/Tooltip'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 
 const styles = {
@@ -44,6 +47,7 @@ const SendAssetForm = ({
   assetId,
   wallet,
   csvTransactions,
+  setEscrowPermission,
 }) => {
   const CustomInputComponent = (props) => {
     return (
@@ -147,6 +151,17 @@ const SendAssetForm = ({
               </Box>
             )}
           </label>
+          <Tooltip title="If checked, this will send to wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  defaultChecked
+                  onChange={(e) => setEscrowPermission(e.target.checked)}
+                />
+              }
+              label="Send to escrow if recipient is not opted in"
+            />
+          </Tooltip>
         </Box>
 
         <Grid container spacing={2} marginTop={'2rem'}>
@@ -165,7 +180,7 @@ const SendAssetForm = ({
               Send Assets
             </LoadingButton>
           </Grid>
-          <Grid item xs={6} marginLeft='auto'>
+          <Grid item xs={6} marginLeft="auto">
             <CollapseableErrorMessage actionStatus={actionStatus} />
           </Grid>
         </Grid>
@@ -186,5 +201,6 @@ SendAssetForm.propTypes = {
   assetId: PropTypes.any,
   wallet: PropTypes.any,
   csvTransactions: PropTypes.any,
+  setEscrowPermission: PropTypes.any,
 }
 export default SendAssetForm
