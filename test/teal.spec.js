@@ -3,7 +3,6 @@ const testHelper = require('@algodex/algodex-sdk/test_helper.js')
 const transactionGenerator = require('@algodex/algodex-sdk/generate_transaction_types.js')
 const helper = require('../lib/helper.js')
 const algosdk = require('algosdk')
-const { ExpansionPanelActions } = require('@material-ui/core')
 
 const JEST_MINUTE_TIMEOUT = 60 * 1000
 const config = {
