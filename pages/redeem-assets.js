@@ -58,12 +58,13 @@ export function RedeemAssetPage() {
   const formData = {
     assetId: query.assetId || '',
     senderAddress: query.senderAddress || '',
-    receiverAddress: '',
+    receiverAddress: query.receiverAddress || ''
   }
 
   useEffect(() => {
     setAssetId(query.assetId)
     setSenderAddress(query.senderAddress)
+    setReceiverAddress(query.receiverAddress)
   }, [query])
 
   const updateStatusMessage = (message, status) => {

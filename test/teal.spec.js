@@ -42,7 +42,13 @@ const negativeFundEscrowTests = [
   {txnNum: 2, field: 'type', val: 'pay'},
   {txnNum: 2, field: 'assetIndex', val: 12400859},
   {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
-  {txnNum: 3, negTxn: {
+  {txnNum: 3, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 3, field: 'amount', val: 100000},
+  {txnNum: 3, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 3, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 3, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 3, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 4, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getAssetSendTxn(
               config.client,
