@@ -3,6 +3,7 @@ const testHelper = require('@algodex/algodex-sdk/test_helper.js')
 const transactionGenerator = require('@algodex/algodex-sdk/generate_transaction_types.js')
 const helper = require('../lib/helper.js')
 const algosdk = require('algosdk')
+const { ExpansionPanelActions } = require('@material-ui/core')
 
 const JEST_MINUTE_TIMEOUT = 60 * 1000
 const config = {
@@ -49,6 +50,35 @@ const negativeFundEscrowTests = [
   {txnNum: 3, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 3, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
   {txnNum: 4, negTxn: {
+    unsignedTxnPromise:
+            transactionGenerator.getAssetSendTxn(
+              config.client,
+              config.senderAccount.addr,
+              config.maliciousAccount.addr,
+              1000,
+              config.assetId,
+              false
+            ),
+    senderAcct: config.senderAccount
+  }
+  },
+]
+
+const negativeAddMoreFundsTests = [
+  {txnNum: 0, field: 'amount', val: 0},
+  {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 0, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1},
+  {txnNum: 0, field: 'to', val: algosdk.decodeAddress(config.senderAccount.addr)},
+  {txnNum: 0, field: 'type', val: 'pay'},
+  {txnNum: 0, field: 'assetIndex', val: 12400859},
+  {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'amount', val: 100000},
+  {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
+  {txnNum: 1, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 2, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getAssetSendTxn(
               config.client,
@@ -163,7 +193,7 @@ describe('Test Mailbox Funding And Withdrawal', () => {
         senderAccount,
         receiverAccount.addr
       )
-      //const txn = outerTxns[1].unsignedTxn;
+      expect(outerTxns.length).toBe(4)
 
       const result = await helper.runNegativeTest(
         config,
@@ -195,6 +225,81 @@ describe('Test Mailbox Funding And Withdrawal', () => {
       senderAccount,
       receiverAccount.addr
     )
+    expect(txns.length).toBe(4)
+
+    let signedTxns = await testHelper.groupAndSignTransactions(txns)
+
+    await testHelper.sendAndCheckConfirmed(client, signedTxns)
+
+    txns = await generateTxns.getFundEscrowTxns(
+      client,
+      assetId,
+      100000,
+      senderAccount,
+      receiverAccount2.addr
+    )
+
+    signedTxns = await testHelper.groupAndSignTransactions(txns)
+
+    await testHelper.sendAndCheckConfirmed(client, signedTxns)
+  }, JEST_MINUTE_TIMEOUT)
+
+  negativeAddMoreFundsTests.map( (negTestTxnConfig) => {
+    const {
+      senderAccount,
+      receiverAccount,
+      //openAccount,
+      //maliciousAccount,
+      client,
+      assetId,
+    } = config
+
+    // eslint-disable-next-line max-len
+    const testName = `Negative fund escrow test: txnNum: ${negTestTxnConfig.txnNum} field: ${negTestTxnConfig.field} val: ${negTestTxnConfig.val}`
+    test (testName, async () => {
+      if (negTestTxnConfig.negTxn) {
+        negTestTxnConfig.negTxn.unsignedTxn = await negTestTxnConfig.negTxn.unsignedTxnPromise
+      }
+      const outerTxns = await generateTxns.getFundEscrowTxns(
+        client,
+        assetId,
+        100000,
+        senderAccount,
+        receiverAccount.addr
+      )
+      expect(outerTxns.length).toBe(2) // Since we are adding more, there are only 2 txns
+
+      const result = await helper.runNegativeTest(
+        config,
+        config.client,
+        outerTxns,
+        negTestTxnConfig
+      )
+      expect (result).toBeTruthy()
+    }, JEST_MINUTE_TIMEOUT)
+  })
+
+  test('Add more funds to escrow', async () => {
+    const {
+      senderAccount,
+      receiverAccount,
+      receiverAccount2,
+      //openAccount,
+      //maliciousAccount,
+      client,
+      assetId
+    } = config
+    console.debug('destructuring')
+    console.debug(client)
+
+    let txns = await generateTxns.getFundEscrowTxns(
+      client,
+      assetId,
+      100000,
+      senderAccount,
+      receiverAccount.addr
+    )
+    expect(txns.length).toBe(2) // Since we are adding more, there are only 2 txns
 
     let signedTxns = await testHelper.groupAndSignTransactions(txns)
 
