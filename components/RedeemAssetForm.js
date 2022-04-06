@@ -47,6 +47,7 @@ const RedeemAssetForm = ({
         <FormControl fullWidth>
           <TextField
             name="AssetId"
+            defaultValue={formData.assetId}
             required={props.required}
             id="outlined-required"
             label="Asset Id"
@@ -67,6 +68,7 @@ const RedeemAssetForm = ({
           <TextField
             name="SenderAddress"
             required={props.required}
+            defaultValue={formData.senderAddress}
             id="outlined-required"
             label="Sender Address"
             onChange={({ target: { value } }) => {
@@ -87,6 +89,7 @@ const RedeemAssetForm = ({
             name="ReceiverAddress"
             required={props.required}
             id="outlined-required"
+            defaultValue={formData.receiverAddress}
             label="Receiver Address"
             onChange={({ target: { value } }) => {
               props.onChange(value)
@@ -120,9 +123,7 @@ const RedeemAssetForm = ({
       !assetId ||
       !receiverAddress ||
       !senderAddress ||
-      assetId == '' ||
-      receiverAddress == '' ||
-      senderAddress == '' ||
+      isNaN(balance) ||
       (!isNaN(balance) && 0 >= balance)
     ) {
       return true
@@ -157,7 +158,7 @@ const RedeemAssetForm = ({
             Redeem
           </LoadingButton>
         </Grid>
-        <Grid item xs={6} marginLeft='auto' textAlign='end'>
+        <Grid item xs={6} marginLeft="auto" textAlign="end">
           <CollapseableErrorMessage actionStatus={actionStatus} />
         </Grid>
       </Grid>
