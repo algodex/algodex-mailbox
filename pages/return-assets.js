@@ -19,6 +19,7 @@ import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
 import useMyAlgo from '@/hooks/use-my-algo'
+import Layout from '@/components/Layout'
 
 /**
  * Generate Static Properties
@@ -164,7 +165,7 @@ export function ReturnAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5} marginLeft='auto' textAlign='end'>
+            <Grid item xs={6} lg={5} marginLeft="auto" textAlign="end">
               <Link href={'/sample.csv'} download color="primary.dark">
                 {t('download-csv-example-link')}
               </Link>
@@ -177,3 +178,6 @@ export function ReturnAssetPage() {
 }
 
 export default ReturnAssetPage
+ReturnAssetPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}

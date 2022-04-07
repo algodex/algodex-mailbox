@@ -20,6 +20,7 @@ import RedeemAssetForm from '@/components/RedeemAssetForm'
 import Link from '@/components/Nav/Link'
 import Helper from '@/lib/helper.js'
 import RedeemAssetsHelper from '@/lib/redeem_assets.js'
+import Layout from '@/components/Layout'
 
 /**
  * Generate Static Properties
@@ -182,7 +183,7 @@ export function RedeemAssetPage() {
             </Grid>
             <Grid item>
               {gettingBalance ? (
-                <CircularProgress color="primary" size={15}/>
+                <CircularProgress color="primary" size={15} />
               ) : (
                 <>
                   {escrowBalance.message && escrowBalance.message != '' && (
@@ -223,3 +224,7 @@ export function RedeemAssetPage() {
 }
 
 export default RedeemAssetPage
+
+RedeemAssetPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
+}
