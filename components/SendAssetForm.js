@@ -151,7 +151,7 @@ const SendAssetForm = ({
               </Box>
             )}
           </label>
-          <Tooltip title="If checked, this will send to wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
+          <Tooltip title="If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
             <FormControlLabel
               control={
                 <Checkbox
