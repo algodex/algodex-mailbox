@@ -100,7 +100,7 @@ function Toolbar({
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
           <Image
-            src="/Algodex-logo.svg"
+            src="/algodex-logo.svg"
             alt="Algodex logo"
             height={28}
             width={170}

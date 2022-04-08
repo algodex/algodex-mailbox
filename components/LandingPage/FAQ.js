@@ -80,6 +80,56 @@ export const FAQ = () => {
                 <Accordion sx={styles.accordionStyles}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>How do I use Algodex Mailbox?</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Learn to use Algodex Mailbox using our{' '}
+                      <a
+                        href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        guide
+                      </a>
+                      .
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion sx={styles.accordionStyles}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>
+                      How many recipients can I send to at one time?
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      As many as you like! Algodex Mailbox allows you to
+                      configure a CSV file to specify the recipient(s) of an
+                      Algorand Standard Asset (ASA) and what quantity each
+                      recipient should receive. Learn how to send ASAs using a
+                      configurable CSV file using our{' '}
+                      <a
+                        href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        guide
+                      </a>
+                      .
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion sx={styles.accordionStyles}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                   >
