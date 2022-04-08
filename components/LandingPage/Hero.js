@@ -115,7 +115,7 @@ export const Hero = () => {
       </AppBar>
       {/* Display the other part of the hero component */}
       <Container>
-        <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
+        <Grid container spacing={2} sx={{ marginTop: '3rem', marginBottom:'2rem' }}>
           <Grid item xs={12} md={8} lg={7} xl={6}>
             <Box sx={styles.heroCard}>
               <Box sx={styles.border}>
