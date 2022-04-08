@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography'
 // Algodex
 import Drawer from '../Nav/Drawer'
 import DefaultToolbar from '@/components/Nav/Toolbar'
-
+import Helper from '@/lib/helper'
 
 const styles = {
   hero: {
@@ -71,6 +71,7 @@ const styles = {
 }
 export const Hero = () => {
   const { t } = useTranslation('common')
+  const { environment } = Helper.getAlgodex()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -115,7 +116,11 @@ export const Hero = () => {
       </AppBar>
       {/* Display the other part of the hero component */}
       <Container>
-        <Grid container spacing={2} sx={{ marginTop: '3rem', marginBottom:'2rem' }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ marginTop: '3rem', marginBottom: '2rem' }}
+        >
           <Grid item xs={12} md={8} lg={7} xl={6}>
             <Box sx={styles.heroCard}>
               <Box sx={styles.border}>
@@ -136,8 +141,8 @@ export const Hero = () => {
                   Algodex Mailbox is a decentralized web application that allows
                   users to send Algorand Standard Assets even if recipients
                   haven’t opted into the asset yet. <br /> <br />
-                  Useful when sending to one wallet or thousands. <br /> <br />
-                  <strong>Try on testnet Now:</strong>
+                  Useful when sending to one wallet or hundreds. <br /> <br />
+                  <strong>Try on {environment} Now:</strong>
                 </p>
                 <Link href="/send-assets">
                   <Button
@@ -146,9 +151,10 @@ export const Hero = () => {
                       color: (theme) => theme.palette.primary.contrastText,
                       borderColor: (theme) =>
                         theme.palette.primary.contrastText,
+                      textDecoration: 'uppercase',
                     }}
                   >
-                    LAUNCH ON TESTNET
+                    LAUNCH ON <span style={{marginLeft:'3px'}}>{environment}</span>
                   </Button>
                 </Link>
               </Box>

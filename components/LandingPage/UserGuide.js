@@ -165,7 +165,7 @@ export const UserGuide = () => {
             <Box sx={styles.guideContainer}>
               <Box sx={styles.illustration}>
                 <Image
-                  src="/Wallet-Add-Lite.png"
+                  src="/wallet-add-lite.png"
                   alt="wallet"
                   width={103}
                   height={103}

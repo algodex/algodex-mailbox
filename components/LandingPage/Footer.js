@@ -7,10 +7,10 @@ import Link from '../Nav/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import MailOutlineIcon from '@mui/icons-material/MailOutline'
+// import Button from '@mui/material/Button'
+// import MailOutlineIcon from '@mui/icons-material/MailOutline'
 
 const styles = {
   footerWrapper: {
@@ -27,7 +27,7 @@ const styles = {
       top: '0.5rem',
     },
     '& input': {
-      height: '2.4rem',
+      height: '2.3rem',
       marginRight: '1rem',
       flex: '1',
       paddingLeft: '2rem',
@@ -58,7 +58,7 @@ export const LandingPageFooter = () => {
   return (
     <Box sx={styles.footerWrapper}>
       <Container>
-        <Grid container spacing={4} sx={{paddingTop:'1.8rem'}}>
+        {/* <Grid container spacing={4} sx={{paddingTop:'1.8rem'}}>
           <Grid item md={6} lg={6} xl={5}>
             <Typography
               variant="p"
@@ -89,9 +89,9 @@ export const LandingPageFooter = () => {
               </Button>
             </Box>
           </Grid>
-        </Grid>
+        </Grid> */}
 
-        <Grid container spacing={4} sx={{ marginBlock: '2rem' }}>
+        <Grid container spacing={4} sx={{ marginBottom: '2rem' }}>
           <Grid item md={11} lg={10} xl={9} marginX="auto">
             <Divider
               sx={{

@@ -10,16 +10,17 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Divider from '@mui/material/Divider'
 import Box from '@mui/material/Box'
+import { FaqQuestions } from './faqQuestions'
 
 const styles = {
   faqWrapper: {
     paddingBlock: {
-      md: '2rem',
+      md: '3rem',
     },
     backgroundColor: {
       xs: 'primary.dark',
       sm: 'primary.dark',
-      md:'secondary.dark',
+      md: 'secondary.dark',
     },
   },
   titleLine: {
@@ -42,6 +43,7 @@ const styles = {
     },
   },
 }
+
 export const FAQ = () => {
   return (
     <Box id="faq" sx={styles.faqWrapper}>
@@ -61,25 +63,20 @@ export const FAQ = () => {
               <Typography variant="h3">FAQ</Typography>
               <Divider sx={styles.titleLine}></Divider>
               <Box sx={{ marginBlock: '2rem' }}>
-                <Accordion sx={styles.accordionStyles}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>How does Algodex Mailbox work?</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Algodex Mailbox uses Algorand smart contracts to create an
-                      escrow that holds sent Algorand Standard Assets before
-                      they are redeemed. The smart contract escrow exists
-                      entirely on the Algorand blockchain so nobody, including
-                      Algodex Mailbox, can access the escrow except for the
-                      sender and recipient.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
+                {FaqQuestions.map((faq) => (
+                  <Accordion sx={styles.accordionStyles} key={faq.q}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>{faq.q}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>{faq.a}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
                 <Accordion sx={styles.accordionStyles}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -87,42 +84,60 @@ export const FAQ = () => {
                     id="panel2a-header"
                   >
                     <Typography>
-                      What Algorand Standard Assets can be send using Algodex
-                      Mailbox?
+                      Where can I follow Algodex and keep up with announcements?
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Algodex Mailbox uses Algorand smart contracts to create an
-                      escrow that holds sent Algorand Standard Assets before
-                      they are redeemed. The smart contract escrow exists
-                      entirely on the Algorand blockchain so nobody, including
-                      Algodex Mailbox, can access the escrow except for the
-                      sender and recipient.
+                      You can follow Algodex on the following social media
+                      websites:
                     </Typography>
-                  </AccordionDetails>
-                </Accordion>
-
-                <Accordion sx={styles.accordionStyles}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header"
-                  >
-                    <Typography>
-                      What Algorand Standard Assets can be send using Algodex
-                      Mailbox?
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Algodex Mailbox uses Algorand smart contracts to create an
-                      escrow that holds sent Algorand Standard Assets before
-                      they are redeemed. The smart contract escrow exists
-                      entirely on the Algorand blockchain so nobody, including
-                      Algodex Mailbox, can access the escrow except for the
-                      sender and recipient.
-                    </Typography>
+                    <ul>
+                      <li>
+                        Twitter:{' '}
+                        <a
+                          href="https://twitter.com/AlgodexOfficial"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {' '}
+                          @AlgodexOfficial
+                        </a>
+                      </li>
+                      <li>
+                        Telegram:
+                        <ul>
+                          <li>
+                            <a
+                              href="http://t.me/AlgodexAnnouncements"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              t.me/AlgodexAnnouncements
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="http://t.me/algodex"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              t.me/algodex
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        Reddit:{' '}
+                        <a
+                          href="https://www.reddit.com/r/Algodex/"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          @AlgodexOfficial
+                        </a>
+                      </li>
+                    </ul>
                   </AccordionDetails>
                 </Accordion>
               </Box>
