@@ -44,6 +44,7 @@ const SendAssetForm = ({
   assetId,
   wallet,
   csvTransactions,
+  assetBalance,
 }) => {
   const CustomInputComponent = (props) => {
     return (
@@ -155,17 +156,18 @@ const SendAssetForm = ({
               loading={isLoading}
               variant="contained"
               disabled={
-                formattedAddresses.length < 1 ||
-                !wallet ||
-                !assetId ||
-                !csvTransactions
+                !assetBalance.success &&
+                (!wallet ||
+                  !assetId ||
+                  !csvTransactions ||
+                  0 > parseInt(assetBalance.message))
               }
               type="submit"
             >
               Send Assets
             </LoadingButton>
           </Grid>
-          <Grid item xs={6} marginLeft='auto'>
+          <Grid item xs={6} marginLeft="auto">
             <CollapseableErrorMessage actionStatus={actionStatus} />
           </Grid>
         </Grid>
@@ -186,5 +188,6 @@ SendAssetForm.propTypes = {
   assetId: PropTypes.any,
   wallet: PropTypes.any,
   csvTransactions: PropTypes.any,
+  assetBalance: PropTypes.object,
 }
 export default SendAssetForm

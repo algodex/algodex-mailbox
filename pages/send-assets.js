@@ -276,6 +276,7 @@ export function SendAssetPage() {
             fileName={fileName}
             assetId={assetId}
             wallet={wallet}
+            assetBalance={assetBalance}
           />
           {duplicateList.length > 0 && (
             <>
