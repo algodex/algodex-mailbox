@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -56,6 +56,7 @@ function Drawer({ width, offset, ...props }) {
           }
         >
           <ListItemLink
+            data-testid="nav-desktop-send-assets"
             to="/send-assets"
             icon={<SendIcon />}
             primary={t('/send-assets')}

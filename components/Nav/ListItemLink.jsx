@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -21,11 +21,12 @@ import CustomLink from '@/components/Nav/Link'
  * @param icon
  * @param primary
  * @param to
+ * @param rest
  * @returns {JSX.Element}
  * @see https://mui.com/guides/routing/#list
  * @constructor
  */
-function ListItemLink({ icon, primary, to }) {
+function ListItemLink({ icon, primary, to, ...rest }) {
   const router = useRouter()
   const activeNav = router.asPath
 
@@ -39,7 +40,7 @@ function ListItemLink({ icon, primary, to }) {
 
   return (
     <li>
-      <ListItem button component={renderLink} selected={activeNav === to}>
+      <ListItem button component={renderLink} selected={activeNav === to} {...rest}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
