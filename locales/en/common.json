@@ -1,5 +1,6 @@
 {
   "app-title": "Algodex Mailbox",
+  "mailbox": "Mailbox",
   "actions": "Actions",
   "escrow-balance": "Escrow Balance",
   "/send-assets": "Send Assets",
@@ -13,5 +14,8 @@
   "view-instructions-link": "View Instructions",
   "download-csv-example-link": "Download CSV Example",
   "open-algoexplorer-link": "Open AlgoExplorer",
-  "connect-wallet": "Connect Wallet"
+  "connect-wallet": "Connect Wallet",
+  "faq": "FAQ",
+  "user-guide": "User Guide",
+  "support": "Support"
 }

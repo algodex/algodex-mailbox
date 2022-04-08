@@ -1,5 +1,6 @@
 {
   "app-title": "Buzón de Algodex",
+  "mailbox": "Buzón",
   "actions": "Acciones",
   "escrow-balance": "Escrow Saldo",
   "/send-assets": "Enviar activo",
@@ -13,5 +14,8 @@
   "view-instructions-link": "Ver instrucciones",
   "download-csv-example-link": "Descargar ejemplo de CSV",
   "open-algoexplorer-link": "Abrir AlgoExplorer",
-  "connect-wallet": "Conectar billetera"
+  "connect-wallet": "Conectar billetera",
+  "faq": "FAQ",
+  "user-guide": "guía del usuario",
+  "support": "soporte"
 }

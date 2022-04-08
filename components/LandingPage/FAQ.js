@@ -16,7 +16,7 @@ const accordionStyles ={
 }
 export const FAQ = () => {
   return (
-    <section className="faq-wrapper">
+    <section className="faq-wrapper" id='faq'>
       <Container>
         <div className="inner-wrapper">
           <Grid
@@ -24,7 +24,7 @@ export const FAQ = () => {
             spacing={4}
             sx={{ marginBottom: '2rem', marginTop: '1rem' }}
           >
-            <Grid item md={11} lg={10} sx={{ marginInline: 'auto' }}>
+            <Grid item md={11} lg={10} sx={{ marginInline: 'auto', overflow:'hidden' }}>
               <h3>FAQ</h3>
               <div className="title-line"></div>
               <div style={{ marginBlock: '2rem' }}>

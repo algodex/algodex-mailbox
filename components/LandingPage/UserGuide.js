@@ -8,12 +8,16 @@ import Box from '@mui/material/Box'
 
 export const UserGuide = () => {
   return (
-    <section className="user-guide-wrapper">
+    <section className="user-guide-wrapper" id='user-guide'>
       <Container>
         <h3>How to Send</h3>
         <div className="title-line"></div>
-        <Grid container spacing={4} sx={{ marginBottom: '2rem', marginTop:'1rem' }}>
-          <Grid item md={4}>
+        <Grid
+          container
+          spacing={4}
+          sx={{ marginBottom: '2rem', marginTop: '1rem' }}
+        >
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -29,7 +33,7 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -45,7 +49,7 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -63,13 +67,15 @@ export const UserGuide = () => {
             </Box>
           </Grid>
         </Grid>
-        <div className="line1">
-          <Image src="/Line1.png" alt="line" width={103} height={103} />
-        </div>
+        <Box className="descriptive-line" width="70%"></Box>
         <h3>How to Redeem</h3>
-        <div className="title-line"></div>
-        <Grid container spacing={4} sx={{ marginBottom: '2rem', marginTop:'1rem' }}>
-          <Grid item md={4}>
+        <Box className="title-line"></Box>
+        <Grid
+          container
+          spacing={4}
+          sx={{ marginBottom: '2rem', marginTop: '1rem' }}
+        >
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -85,7 +91,7 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -105,7 +111,7 @@ export const UserGuide = () => {
               </ul>
             </Box>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} marginX='auto'>
             <Box className="guide-container">
               <Box className="illustration">
                 <Image
@@ -119,9 +125,10 @@ export const UserGuide = () => {
             </Box>
           </Grid>
         </Grid>
-        <div className="line1">
-          <Image src="/Line1.png" alt="line" width={103} height={103} />
-        </div>
+        <Box
+          className="descriptive-line line2"
+          width="40%"
+        ></Box>
         <Grid container spacing={4} sx={{ marginBlock: '2rem' }}>
           <Grid item md={11} lg={10} xl={10} sx={{ marginInline: 'auto' }}>
             <div className="note">

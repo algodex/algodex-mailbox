@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -15,12 +15,14 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import Image from 'next/image'
 
 // Custom Language Selector
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 
 //Algodex
 import Helper from '@/lib/helper'
+import Link from './Link'
 
 /**
  * Toolbar
@@ -39,14 +41,27 @@ const styles = {
   select: {
     fontSize: '0.8rem',
     marginBlock: '0.25rem',
-    border:'solid 1px'
+    border: 'solid 1px',
+  },
+  linkStyles: {
+    fontWeight: '700',
+    marginRight: '1.6rem',
+    color: (theme) => theme.palette.primary.contrastText,
   },
 }
 
 const MAINNET_LINK = process.env.NEXT_PUBLIC_MAINNET_LINK
 const TESTNET_LINK = process.env.NEXT_PUBLIC_TESTNET_LINK
 const ENABLE_NETWORK_SELECTION = TESTNET_LINK && MAINNET_LINK
-function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
+function Toolbar({
+  title,
+  height,
+  isMobile,
+  onClick,
+  toggleDrawer,
+  isDashboard,
+  ...rest
+}) {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -70,42 +85,80 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
 
   return (
     <MUIToolbar sx={{ height }} {...rest}>
-      {!isMobile && (
+      {!isMobile && isDashboard && (
         <IconButton
           size="large"
           edge="start"
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
-          onClick={() => {
-            toggleDrawer()
-          }}
+          onClick={toggleDrawer}
         >
           <MenuIcon />
         </IconButton>
       )}
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-        <Typography variant="h6" component="div" marginRight={2}>
-          {title || t('app-title')}
-        </Typography>
-        <Select
-          className="environment-select-wrapper"
-          value={environmentText}
-          onChange={handleChange}
-          inputProps={{ 'aria-label': 'Without label' }}
-          style={{
-            ...styles.select,
-            color: environmentText == 'TESTNET' ? 'green' : 'blue',
-          }}
-        >
-          {environmentLinks.map((environment) => (
-            <MenuItem key={environment} value={environment}>
-              {environment}
-            </MenuItem>
-          ))}
-        </Select>
+        <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+          <Image
+            src="/Algodex-logo.svg"
+            alt="Algodex logo"
+            height={28}
+            width={170}
+          />
+          <Typography
+            variant="h6"
+            component="div"
+            marginRight={2}
+            marginLeft="0.5rem"
+            lineHeight={0}
+          >
+            {title || t('mailbox')}
+          </Typography>
+        </Box>
+        {isDashboard && (
+          <Select
+            className="environment-select-wrapper"
+            value={environmentText}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'Without label' }}
+            style={{
+              ...styles.select,
+              color: environmentText == 'TESTNET' ? 'green' : 'blue',
+            }}
+          >
+            {environmentLinks.map((environment) => (
+              <MenuItem key={environment} value={environment}>
+                {environment}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
       </Box>
-      <LocaleNavMenu isMobile={isMobile} onClick={onClick} />
+      {!isMobile && (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Link href="/#user-guide" sx={styles.linkStyles}>
+            User Guide
+          </Link>
+          <Link href="/#faq" sx={styles.linkStyles}>
+            FAQ
+          </Link>
+          <Link
+            href="https://about.algodex.com/support/"
+            target="_blanc"
+            sx={styles.linkStyles}
+          >
+            Support
+          </Link>
+        </Box>
+      )}
+      {isMobile && !isDashboard && (
+        <IconButton onClick={toggleDrawer}>
+          <MenuIcon />
+        </IconButton>
+      )}
+      {((!isMobile && !isDashboard) || isDashboard) && (
+        <LocaleNavMenu isMobile={isMobile} onClick={onClick} />
+      )}
     </MUIToolbar>
   )
 }
