@@ -41,7 +41,6 @@
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
     "react-svg": "^14.0.16",
-    "sass": "^1.49.11",
     "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {

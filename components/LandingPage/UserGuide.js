@@ -5,21 +5,107 @@ import Image from 'next/image'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
+const styles = {
+  titleLine: {
+    width: '368px',
+    maxWidth: '100%',
+    border: '0.01rem solid',
+    borderColor: 'secondary.contrastText',
+  },
+  guideContainer: {
+    backgroundColor: 'primary.main',
+    border: '0.25rem solid',
+    borderColor: 'secondary.contrastText',
+    borderRadius: '0.3rem',
+    minHeight: '17rem',
+    padding: '0.8rem',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: 'auto',
+    '@media (min-width: 400px)': {
+      width: '21rem',
+      maxWidth: '100%',
+    },
+    '& ul': {
+      textAlign: 'left',
+      display: 'flex',
+      flexDirection: 'column',
+      width: 'fit-content',
+      margin: 'auto',
+      listStyle: 'auto',
+    },
+  },
+  illustration: {
+    marginBottom: '0.7rem',
+  },
+  descriptiveLine: {
+    borderBottom: '0.25rem solid',
+    borderColor: 'secondary.contrastText',
+    position: 'relative',
+    marginInline: 'auto',
+    marginBlock: '7rem',
+    '@media (max-width: 900px)': {
+      display: 'none',
+    },
+    '&::before': {
+      top: '0',
+      bottom: '0',
+      width: '1rem',
+      height: '5rem',
+      content: '""',
+      position: 'absolute',
+      borderLeft: '0.25rem solid',
+      borderColor: 'secondary.contrastText',
+      left: '0',
+    },
+    '&::after': {
+      bottom: '0',
+      width: '1rem',
+      height: '5rem',
+      content: '""',
+      position: 'absolute',
+      borderRight: '0.25rem solid',
+      borderColor: 'secondary.contrastText',
+      right: '0',
+      top: '-5rem',
+    },
+  },
+  note: {
+    backgroundColor: 'accent.light',
+    border: '0.25rem solid',
+    borderColor: 'secondary.contrastText',
+    borderRadius: '0.3rem',
+    padding: '1.5rem 2.5rem',
+  },
+}
 export const UserGuide = () => {
   return (
-    <section className="user-guide-wrapper" id='user-guide'>
+    <Box id="user-guide">
       <Container>
-        <h3>How to Send</h3>
-        <div className="title-line"></div>
+        <Typography
+          variant="h3"
+          sx={{
+            color: 'accent.contrastText',
+            marginBottom: 0,
+            marginTop: '2rem',
+          }}
+        >
+          How to Send
+        </Typography>
+        <Divider sx={styles.titleLine}></Divider>
         <Grid
           container
           spacing={4}
           sx={{ marginBottom: '2rem', marginTop: '1rem' }}
         >
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/wallet-icon.png"
                   alt="Wallet Icon"
@@ -33,9 +119,9 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/Spreadsheet.png"
                   alt="Spreadsheet"
@@ -49,9 +135,9 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/Airploneicon.png"
                   alt="Airploneicon"
@@ -67,17 +153,17 @@ export const UserGuide = () => {
             </Box>
           </Grid>
         </Grid>
-        <Box className="descriptive-line" width="70%"></Box>
-        <h3>How to Redeem</h3>
-        <Box className="title-line"></Box>
+        <Box sx={styles.descriptiveLine} width="70%"></Box>
+        <Typography variant="h3">How to Redeem</Typography>
+        <Divider sx={styles.titleLine}></Divider>
         <Grid
           container
           spacing={4}
           sx={{ marginBottom: '2rem', marginTop: '1rem' }}
         >
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/Wallet-Add-Lite.png"
                   alt="wallet"
@@ -91,9 +177,9 @@ export const UserGuide = () => {
               </p>
             </Box>
           </Grid>
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/Approve.png"
                   alt="Approve"
@@ -101,9 +187,9 @@ export const UserGuide = () => {
                   height={103}
                 />
               </Box>
-              <p className="mb-0">
+              <Typography variant="p" sx={{ marginBottom: 0 }}>
                 Go to “Redeem Assets” and enter information required:
-              </p>
+              </Typography>
               <ul>
                 <li>Asset ID </li>
                 <li>Sender Address</li>
@@ -111,9 +197,9 @@ export const UserGuide = () => {
               </ul>
             </Box>
           </Grid>
-          <Grid item md={4} marginX='auto'>
-            <Box className="guide-container">
-              <Box className="illustration">
+          <Grid item md={4} marginX="auto">
+            <Box sx={styles.guideContainer}>
+              <Box sx={styles.illustration}>
                 <Image
                   src="/Dark-Trail.png"
                   alt="Trail"
@@ -126,12 +212,15 @@ export const UserGuide = () => {
           </Grid>
         </Grid>
         <Box
-          className="descriptive-line line2"
+          sx={{
+            ...styles.descriptiveLine,
+            marginRight: '11rem',
+          }}
           width="40%"
         ></Box>
         <Grid container spacing={4} sx={{ marginBlock: '2rem' }}>
           <Grid item md={11} lg={10} xl={10} sx={{ marginInline: 'auto' }}>
-            <div className="note">
+            <Box sx={styles.note}>
               <p>
                 Senders are also able to reclaim assets that have not been
                 redeemed. Only the ASA sender can return assets to themselves.
@@ -143,10 +232,10 @@ export const UserGuide = () => {
                   <u>More detailed instructions here: Mailbox User Guide</u>
                 </b>
               </p>
-            </div>
+            </Box>
           </Grid>
         </Grid>
       </Container>
-    </section>
+    </Box>
   )
 }

@@ -40,6 +40,7 @@ const LandingPage = () => {
           overflow: 'auto',
           height: '100vh',
           maxHeight: '-webkit-fill-available',
+          backgroundColor:'accent.dark',
         }}
       >
         <Hero />

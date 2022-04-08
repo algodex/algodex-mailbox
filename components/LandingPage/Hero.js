@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import DefaultToolbar from '@/components/Nav/Toolbar'
 import Image from 'next/image'
 import Link from '../Nav/Link'
 import { useTranslation } from 'next-i18next'
@@ -9,6 +8,7 @@ import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 // Icons
 import LightbulbIcon from '@mui/icons-material/Lightbulb'
@@ -18,8 +18,57 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 // Hooks
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
-import Drawer from '../Nav/Drawer'
+import Typography from '@mui/material/Typography'
 
+// Algodex
+import Drawer from '../Nav/Drawer'
+import DefaultToolbar from '@/components/Nav/Toolbar'
+
+
+const styles = {
+  hero: {
+    minHeight: '100vh',
+    background: 'url("/Space-Background.png") no-repeat',
+    position: 'relative',
+    backgroundSize: 'cover',
+    overflow: 'hidden',
+    '&::after': {
+      position: 'absolute',
+      background: 'url("/Airwave.png") no-repeat',
+      pointerEvents: 'none',
+      backgroundSize: 'cover',
+      top: '60px',
+      bottom: '0',
+      width: '100%',
+      height: '100%',
+      content: '""',
+      '@media (min-width: 780px) and (max-width: 1000px)': {
+        top: '90px',
+      },
+      '@media (max-width: 350px)': {
+        display: 'none',
+      },
+    },
+    '@media (max-width: 780px)': {
+      background: 'none',
+      '&::after': {
+        background: 'url("/Airwave-sm.png") no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
+        top: '17%',
+      },
+    },
+  },
+  heroCard: {
+    backgroundColor: 'accent.main',
+    padding: '0.68rem',
+    marginTop: '7vh',
+  },
+  border: {
+    border: '0.3rem solid #1a202c',
+    padding: '1.5rem',
+  },
+}
 export const Hero = () => {
   const { t } = useTranslation('common')
   const theme = useTheme()
@@ -46,7 +95,7 @@ export const Hero = () => {
     },
   ]
   return (
-    <section className="hero">
+    <Box sx={styles.hero}>
       <AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -68,15 +117,15 @@ export const Hero = () => {
       <Container>
         <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
           <Grid item xs={12} md={8} lg={7} xl={6}>
-            <div className="hero-card">
-              <div className="border">
+            <Box sx={styles.heroCard}>
+              <Box sx={styles.border}>
                 <Image
                   src="/algodex-logo.svg"
                   alt="Algodex Logo"
                   width="300"
                   height="50"
                 />
-                <h3>Mailbox</h3>
+                <Typography variant="h3">Mailbox</Typography>
                 <Image
                   src="/Powered-by-Algorand.png"
                   alt="Powered by Algorand"
@@ -102,11 +151,11 @@ export const Hero = () => {
                     LAUNCH ON TESTNET
                   </Button>
                 </Link>
-              </div>
-            </div>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
       </Container>
-    </section>
+    </Box>
   )
 }

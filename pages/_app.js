@@ -4,7 +4,6 @@
  */
 
 import '@/styles/global.css'
-import '@/components/LandingPage/styles.scss'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import { appWithTranslation } from 'next-i18next'

@@ -8,27 +8,60 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
 
-const accordionStyles ={
-  marginBlock:'2rem',
-  border: '2px solid #2D3748',
-  borderRadius: '6px',
+const styles = {
+  faqWrapper: {
+    paddingBlock: {
+      md: '2rem',
+    },
+    backgroundColor: {
+      xs: 'primary.dark',
+      sm: 'primary.dark',
+      md:'secondary.dark',
+    },
+  },
+  titleLine: {
+    width: '368px',
+    maxWidth: '100%',
+    border: '0.01rem solid',
+    borderColor: 'accent.light',
+  },
+  accordionStyles: {
+    marginBlock: '2rem',
+    border: '2px solid',
+    borderColor: 'secondary.contrastText',
+    borderRadius: '6px',
+  },
+  innerWrapper: {
+    backgroundColor: 'primary.dark',
+    '& h3': {
+      color: 'accent.light',
+      margin: 0,
+    },
+  },
 }
 export const FAQ = () => {
   return (
-    <section className="faq-wrapper" id='faq'>
+    <Box id="faq" sx={styles.faqWrapper}>
       <Container>
-        <div className="inner-wrapper">
+        <Box sx={styles.innerWrapper}>
           <Grid
             container
             spacing={4}
             sx={{ marginBottom: '2rem', marginTop: '1rem' }}
           >
-            <Grid item md={11} lg={10} sx={{ marginInline: 'auto', overflow:'hidden' }}>
-              <h3>FAQ</h3>
-              <div className="title-line"></div>
-              <div style={{ marginBlock: '2rem' }}>
-                <Accordion sx={accordionStyles}>
+            <Grid
+              item
+              md={11}
+              lg={10}
+              sx={{ marginInline: 'auto', overflow: 'hidden' }}
+            >
+              <Typography variant="h3">FAQ</Typography>
+              <Divider sx={styles.titleLine}></Divider>
+              <Box sx={{ marginBlock: '2rem' }}>
+                <Accordion sx={styles.accordionStyles}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -47,7 +80,7 @@ export const FAQ = () => {
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
-                <Accordion sx={accordionStyles}>
+                <Accordion sx={styles.accordionStyles}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2a-content"
@@ -70,7 +103,7 @@ export const FAQ = () => {
                   </AccordionDetails>
                 </Accordion>
 
-                <Accordion sx={accordionStyles}>
+                <Accordion sx={styles.accordionStyles}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3a-content"
@@ -92,11 +125,11 @@ export const FAQ = () => {
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
-              </div>
+              </Box>
             </Grid>
           </Grid>
-        </div>
+        </Box>
       </Container>
-    </section>
+    </Box>
   )
 }
