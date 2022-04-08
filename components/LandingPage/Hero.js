@@ -37,7 +37,7 @@ const styles = {
       background: 'url("/Airwave.png") no-repeat',
       pointerEvents: 'none',
       backgroundSize: 'cover',
-      top: '60px',
+      top: '3vh',
       bottom: '0',
       width: '100%',
       height: '100%',
@@ -63,10 +63,18 @@ const styles = {
     backgroundColor: 'accent.main',
     padding: '0.68rem',
     marginTop: '7vh',
+    minHeight:'59vh',
   },
   border: {
     border: '0.3rem solid #1a202c',
     padding: '1.5rem',
+    minHeight:'59vh',
+    '@media(min-width:1200px)':{
+      padding:'3vw',
+    },
+    '@media(min-width:1500px)':{
+      padding:'4vw',
+    }
   },
 }
 export const Hero = () => {
@@ -121,7 +129,7 @@ export const Hero = () => {
           spacing={2}
           sx={{ marginTop: '3rem', marginBottom: '2rem' }}
         >
-          <Grid item xs={12} md={8} lg={7} xl={6}>
+          <Grid item xs={12} md={8} lg={7} xl={8}>
             <Box sx={styles.heroCard}>
               <Box sx={styles.border}>
                 <Image
