@@ -119,13 +119,7 @@ const RedeemAssetForm = ({
   }
 
   const confirmDisabledState = () => {
-    if (
-      !assetId ||
-      !receiverAddress ||
-      !senderAddress ||
-      isNaN(balance) ||
-      (!isNaN(balance) && 0 >= balance)
-    ) {
+    if (!assetId || !receiverAddress || !senderAddress || !(balance > 0)) {
       return true
     }
     return false

@@ -82,6 +82,17 @@ const SendAssetForm = ({
   const widgets = {
     CustomInput: CustomInputComponent,
   }
+
+  const checkDisabledState = () => {
+    const balance = parseFloat(assetBalance.message)
+    if (
+      !(balance > 0) &&
+      (!wallet || !assetId || !csvTransactions)
+    ) {
+      return true
+    }
+    return false
+  }
   return (
     <>
       <Box
@@ -155,13 +166,7 @@ const SendAssetForm = ({
             <LoadingButton
               loading={isLoading}
               variant="contained"
-              disabled={
-                !assetBalance.success &&
-                (!wallet ||
-                  !assetId ||
-                  !csvTransactions ||
-                  0 > parseInt(assetBalance.message))
-              }
+              disabled={checkDisabledState()}
               type="submit"
             >
               Send Assets
