@@ -30,7 +30,7 @@ const styles = {
     borderColor: 'accent.light',
   },
   accordionStyles: {
-    marginBlock: '2rem',
+    marginBlock: '1rem',
     border: '2px solid',
     borderColor: 'secondary.contrastText',
     borderRadius: '6px',
