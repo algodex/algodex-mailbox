@@ -20,7 +20,7 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.GH_PKG_READONLY }}
       - name: Lint Files
-        run: yarn test-lint
+        run: yarn lint
   jest:
     name: Jest
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
       #          token: ${{ secrets.GH_TOKEN }}
       #      - run: cd ./node_modules/@algodex/algodex-sdk && yarn
       - name: Run Unit Tests
-        run: yarn test-unit
+        run: yarn test
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: dc854e8893fe856fc6b3c7a467807e63cb96e239e9ad9a30ddd59c8c3f8b07f8
@@ -61,35 +61,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PKG_READONLY }}" >> ~/.npmrc
           echo "@algodex:registry=https://npm.pkg.github.com" >> ~/.npmrc
           yarn
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.GH_PKG_READONLY }}
       - name: Run Cypress
         run: yarn test-cypress
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/main' &&  github.event_name != 'pull_request')
-    needs: [ jest ]
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Install dependencies
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" >> ~/.npmrc
-          echo "@algodex:registry=https://npm.pkg.github.com" >> ~/.npmrc
-          yarn
-          yarn build
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Run Release
-        run: npx semantic-release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
