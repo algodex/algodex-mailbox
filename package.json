@@ -12,7 +12,7 @@
     "lint": "next lint",
     "test": "jest",
     "coverage": "jest --coverage",
-    "test-cypres": "cross-env NODE_ENV=test start-server-and-test build-start http://localhost:3000 cypress-run",
+    "test-cypress": "cross-env NODE_ENV=test start-server-and-test build-start http://localhost:3000 cypress-run",
     "cypress-run": "cypress run"
   },
   "dependencies": {
