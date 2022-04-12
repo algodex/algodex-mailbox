@@ -21,12 +21,12 @@ import UploadContainer from './UploadContainer'
 
 const ReturnAssetForm = ({
   formattedAddresses,
-  onSubmit,
   isLoading,
-  setSenderAddress,
   setAssetId,
   actionStatus,
+  setSenderAddress,
   setCsvTransactions,
+  onSubmit,
   setDuplicateList,
   updateStatusMessage,
 }) => {
