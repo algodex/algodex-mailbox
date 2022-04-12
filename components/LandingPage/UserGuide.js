@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React from 'react'
-import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
 // MUI Components
@@ -10,6 +9,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import Link from '@mui/material/Link'
+import { GuideContainer } from './GuideContainer'
 
 const styles = {
   titleLine: {
@@ -17,34 +17,6 @@ const styles = {
     maxWidth: '100%',
     border: '0.01rem solid',
     borderColor: 'secondary.contrastText',
-  },
-  guideContainer: {
-    backgroundColor: 'primary.main',
-    border: '0.25rem solid',
-    borderColor: 'secondary.contrastText',
-    borderRadius: '0.3rem',
-    minHeight: '17rem',
-    padding: '0.8rem',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    margin: 'auto',
-    '@media (min-width: 400px)': {
-      width: '21rem',
-      maxWidth: '100%',
-    },
-    '& ul': {
-      textAlign: 'left',
-      display: 'flex',
-      flexDirection: 'column',
-      width: 'fit-content',
-      margin: 'auto',
-      listStyle: 'auto',
-    },
-  },
-  illustration: {
-    marginBottom: '0.7rem',
   },
   descriptiveLine: {
     borderBottom: '0.25rem solid',
@@ -55,27 +27,23 @@ const styles = {
     '@media (max-width: 900px)': {
       display: 'none',
     },
+    '&::before, &::after': {
+      bottom: '0',
+      width: '1rem',
+      height: '5rem',
+      content: '""',
+      position: 'absolute',
+      borderColor: 'secondary.contrastText',
+    },
     '&::before': {
       top: '0',
-      bottom: '0',
-      width: '1rem',
-      height: '5rem',
-      content: '""',
-      position: 'absolute',
-      borderLeft: '0.25rem solid',
-      borderColor: 'secondary.contrastText',
       left: '0',
+      borderLeft: '0.25rem solid',
     },
     '&::after': {
-      bottom: '0',
-      width: '1rem',
-      height: '5rem',
-      content: '""',
-      position: 'absolute',
-      borderRight: '0.25rem solid',
-      borderColor: 'secondary.contrastText',
       right: '0',
       top: '-5rem',
+      borderRight: '0.25rem solid',
     },
   },
   note: {
@@ -86,6 +54,7 @@ const styles = {
     padding: '1.5rem 2.5rem',
   },
 }
+
 export const UserGuide = () => {
   const { t } = useTranslation('common')
   return (
@@ -107,60 +76,20 @@ export const UserGuide = () => {
           spacing={4}
           sx={{ marginBottom: '2rem', marginTop: '1rem' }}
         >
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/wallet-icon.png"
-                  alt="Wallet Icon"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <p>
-                {t(
-                  'Connect sending wallet to application and enter ASA Asset ID you  wish to send'
-                )}
-                .
-              </p>
-            </Box>
-          </Grid>
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/Spreadsheet.png"
-                  alt="Spreadsheet"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <p>
-                {t(
-                  'Create and upload CSV file with wallet addresses and amounts to be sent'
-                )}
-                .
-              </p>
-            </Box>
-          </Grid>
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/Airploneicon.png"
-                  alt="Airploneicon"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <Typography variant="p">
-                {t(
-                  'Send assets and inform recipients to redeem them on Algodex Mailbox. You need to provide the sending wallet address which users will need to claim the ASAs'
-                )}
-                .
-              </Typography>
-            </Box>
-          </Grid>
+          <GuideContainer
+            icon={'wallet-icon'}
+            content="Connect sending wallet to application and enter ASA Asset ID you  wish to send"
+          />
+
+          <GuideContainer
+            icon={'Spreadsheet'}
+            content="Create and upload CSV file with wallet addresses and amounts to be sent"
+          />
+
+          <GuideContainer
+            icon={'Airploneicon'}
+            content="Send assets and inform recipients to redeem them on Algodex Mailbox. You need to provide the sending wallet address which users will need to claim the ASAs"
+          />
         </Grid>
         <Box sx={styles.descriptiveLine} width="70%"></Box>
         <Typography variant="h3">{t('how-to-redeem')}</Typography>
@@ -170,59 +99,22 @@ export const UserGuide = () => {
           spacing={4}
           sx={{ marginBottom: '2rem', marginTop: '1rem' }}
         >
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/wallet-add-lite.png"
-                  alt="wallet"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <p>
-                {t(
-                  'Opt-in to the ASA you wish to redeem in your Algorand wallet. You will need the sender’s Wallet address as well'
-                )}
-                .
-              </p>
-            </Box>
-          </Grid>
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/Approve.png"
-                  alt="Approve"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <Typography variant="p" sx={{ marginBottom: 0 }}>
-                {t('Go to “Redeem Assets” and enter information required')}:
-              </Typography>
-              <ul>
-                <li>{t('Asset ID')} </li>
-                <li>{t('Sender Address')}</li>
-                <li>{t('Recieving Address')}</li>
-              </ul>
-            </Box>
-          </Grid>
-          <Grid item md={4} marginX="auto">
-            <Box sx={styles.guideContainer}>
-              <Box sx={styles.illustration}>
-                <Image
-                  src="/Dark-Trail.png"
-                  alt="Trail"
-                  width={103}
-                  height={103}
-                />
-              </Box>
-              <p>
-                {t('Click “Redeem” and assets will be sent to your wallet')}.
-              </p>
-            </Box>
-          </Grid>
+          <GuideContainer
+            icon={'wallet-add-lite'}
+            content="Opt-in to the ASA you wish to redeem in your Algorand wallet. You will need the sender’s Wallet address as well"
+          />
+
+          <GuideContainer
+            icon={'Approve'}
+            content="Go to “Redeem Assets” and enter information required"
+          />
+
+          <GuideContainer
+            icon={'Dark-Trail'}
+            content="Click “Redeem” and assets will be sent to your wallet"
+            contentStyle={{ marginBottom: 0 }}
+            list={['Asset ID', 'Sender Address', 'Recieving Address']}
+          />
         </Grid>
         <Box
           sx={{

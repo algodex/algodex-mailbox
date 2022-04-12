@@ -55,6 +55,16 @@ const styles = {
     },
   },
 }
+
+const FooterLinks = ({ link, linkName }) => {
+  return (
+    <Typography variant="p" sx={styles.subtitle}>
+      <Link href={link} target="_blanc">
+        {linkName}
+      </Link>
+    </Typography>
+  )
+}
 export const LandingPageFooter = () => {
   const { t } = useTranslation('common')
   return (
@@ -119,89 +129,62 @@ export const LandingPageFooter = () => {
             <Typography variant="p" sx={styles.title}>
               {t('RESOURCES')}
             </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link
-                href="https://about.algodex.com/disclaimers/"
-                target="_blanc"
-              >
-                {t('disclaimers')}
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://about.algodex.com/docs/" target="_blanc">
-                {t('docs')}
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://about.algodex.com/support/" target="_blanc">
-                {t('support')}
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link
-                href="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Whitepaper%201.0.pdf"
-                target="_blanc"
-              >
-                {t('white-paper')}
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link
-                href="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Tokenomics.pdf"
-                target="_blanc"
-              >
-                {t('tokenomics')}
-              </Link>
-            </Typography>
+
+            <FooterLinks
+              link="https://about.algodex.com/disclaimers/"
+              linkName={t('disclaimers')}
+            />
+
+            <FooterLinks
+              link="https://about.algodex.com/docs/"
+              linkName={t('docs')}
+            />
+
+            <FooterLinks
+              link="https://about.algodex.com/support/"
+              linkName={t('support')}
+            />
+
+            <FooterLinks
+              link="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Whitepaper%201.0.pdf"
+              linkName={t('white-paper')}
+            />
+            <FooterLinks
+              link="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Tokenomics.pdf"
+              linkName={t('tokenomics')}
+            />
           </Grid>
           <Grid item sm={4} md={4} lg={2} xl={2}>
             <Typography variant="p" sx={styles.title}>
               {t('COMPANY')}
             </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://about.algodex.com/" target="_blanc">
-                {t('about')}
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://about.algodex.com/blog/" target="_blanc">
-                {t('blog')}
-              </Link>
-            </Typography>
-            {/* <Typography variant="p" sx={styles.subtitle}>
-              Careers
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              Partnerships
-            </Typography> */}
+            <FooterLinks
+              link="https://about.algodex.com/"
+              linkName={t('about')}
+            />
+            <FooterLinks
+              link="https://about.algodex.com/blog/"
+              linkName={t('blog')}
+            />
           </Grid>
           <Grid item sm={4} md={4} lg={2} xl={2}>
             <Typography variant="p" sx={styles.title}>
               {t('COMMUNITY')}
             </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link
-                href="https://twitter.com/AlgodexOfficial?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
-                target="_blanc"
-              >
-                Twitter
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://discord.gg/qS3Q7AqwF6" target="_blanc">
-                Discord
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://www.reddit.com/r/algodex" target="_blanc">
-                Reddit
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://t.me/algodex" target="_blanc">
-                Telegram
-              </Link>
-            </Typography>
+
+            <FooterLinks
+              link="https://twitter.com/AlgodexOfficial?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+              linkName={'Twitter'}
+            />
+            <FooterLinks
+              link="https://discord.gg/qS3Q7AqwF6"
+              linkName={'Discord'}
+            />
+            <FooterLinks
+              link="https://www.reddit.com/r/algodex"
+              linkName={'Reddit'}
+            />
+            <FooterLinks link="https://t.me/algodex" linkName={'Telegram'} />
           </Grid>
         </Grid>
       </Container>
