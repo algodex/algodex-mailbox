@@ -53,7 +53,7 @@ export const GuideContainer = ({ icon, content, contentStyle, list }) => {
         {list && (
           <ul>
             {list.map((l) => (
-              <li key={t}>{t(`${l}`)}</li>
+              <li key={l}>{t(`${l}`)}</li>
             ))}
           </ul>
         )}

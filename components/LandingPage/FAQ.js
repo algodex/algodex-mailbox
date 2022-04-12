@@ -88,55 +88,55 @@ export const FAQ = () => {
                           </a>
                         )}
                         .
-                        {faq.socialLink && (
-                          <ul>
-                            <li>
-                              Twitter:{' '}
-                              <a
-                                href="https://twitter.com/AlgodexOfficial"
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                {' '}
-                                @AlgodexOfficial
-                              </a>
-                            </li>
-                            <li>
-                              Telegram:
-                              <ul>
-                                <li>
-                                  <a
-                                    href="http://t.me/AlgodexAnnouncements"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                  >
-                                    t.me/AlgodexAnnouncements
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="http://t.me/algodex"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                  >
-                                    t.me/algodex
-                                  </a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li>
-                              Reddit:{' '}
-                              <a
-                                href="https://www.reddit.com/r/Algodex/"
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                @AlgodexOfficial
-                              </a>
-                            </li>
-                          </ul>
-                        )}
                       </Typography>
+                      {faq.socialLink && (
+                        <ul>
+                          <li>
+                            Twitter:{' '}
+                            <a
+                              href="https://twitter.com/AlgodexOfficial"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {' '}
+                              @AlgodexOfficial
+                            </a>
+                          </li>
+                          <li>
+                            Telegram:
+                            <ul>
+                              <li>
+                                <a
+                                  href="http://t.me/AlgodexAnnouncements"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  t.me/AlgodexAnnouncements
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="http://t.me/algodex"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  t.me/algodex
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Reddit:{' '}
+                            <a
+                              href="https://www.reddit.com/r/Algodex/"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              @AlgodexOfficial
+                            </a>
+                          </li>
+                        </ul>
+                      )}
                     </AccordionDetails>
                   </Accordion>
                 ))}

@@ -26,7 +26,6 @@ import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
-import Layout from '@/components/Layout'
 
 /**
  * Generate Static Properties
@@ -355,7 +354,3 @@ export function SendAssetPage() {
 }
 
 export default SendAssetPage
-
-SendAssetPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>
-}

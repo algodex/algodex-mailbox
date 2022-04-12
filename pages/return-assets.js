@@ -19,7 +19,6 @@ import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
 import useMyAlgo from '@/hooks/use-my-algo'
-import Layout from '@/components/Layout'
 
 /**
  * Generate Static Properties
@@ -178,6 +177,4 @@ export function ReturnAssetPage() {
 }
 
 export default ReturnAssetPage
-ReturnAssetPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>
-}
+

@@ -19,7 +19,6 @@ import TransactionHistoryForm from '@/components/TransactionHistoryForm'
 import * as TransactionHistoryHelper from '@/lib/transaction_history'
 import Link from '@/components/Nav/Link'
 import TransactionTable from '@/components/TransactionTable'
-import Layout from '@/components/Layout'
 
 /**
  * Generate Static Properties
@@ -156,6 +155,3 @@ export function TransactionHistoryPage() {
 }
 
 export default TransactionHistoryPage
-TransactionHistoryPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>
-}

@@ -27,6 +27,7 @@ import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
+import { useRouter } from 'next/router'
 
 /**
  * Layout Component
@@ -49,6 +50,8 @@ export function Layout({ children, components, componentsProps }) {
   const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const router = useRouter().asPath
+  const isHomePage = router === '/' ? true : router === '/#faq' ? true : false
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
@@ -80,6 +83,10 @@ export function Layout({ children, components, componentsProps }) {
       primary: t('/return-assets'),
     },
   ]
+
+  if (isHomePage) {
+    return <> {children}</>
+  }
 
   // Example of a Responsive Layout with Fixed Viewport
   return (

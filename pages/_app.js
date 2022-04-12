@@ -16,6 +16,7 @@ import getTheme from '@/themes/getTheme'
 import createEmotionCache from '@/utils/createEmotionCache'
 import parser from 'ua-parser-js'
 import NextApp from 'next/app'
+import Layout from '@/components/Layout'
 const theme = getTheme('normal')
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -50,7 +51,6 @@ const desktopMuiTheme = createTheme({
 
 export function App(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-  const getLayout = Component.getLayout || ((page) => page)
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -63,7 +63,9 @@ export function App(props) {
       >
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {getLayout(<Component {...pageProps} />)}
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </CacheProvider>
   )
