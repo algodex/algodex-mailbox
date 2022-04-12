@@ -24,7 +24,7 @@ export const FaqQuestions = [
     q: 'What if the recipient of a transaction never redeems the Algorand Standard Assets?',
     a: 'The sender of Algorand Standard Assets (ASA) can reclaim any unredeemed ASAs using Algodex Mailbox’s Return Assets feature. Only the ASA sender can return assets to themselves. ASAs that have been redeemed by the recipient cannot be reclaimed by the sender.',
   },
- 
+
   {
     q: 'Is Algodex Mailbox safe to use?',
     a: 'Using Algodex Mailbox is secure. Using Algorand smart contracts, all order placements and executions are handled entirely on the Algorand blockchain. Funds or Algorand Standard Assets (ASA) are never directly held or processed by Algodex. Once a recipient redeems any ASAs sent to them via Algodex Mailbox, it is not possible for the sender to reverse the transaction.',
@@ -40,5 +40,20 @@ export const FaqQuestions = [
   {
     q: 'What if I have an issue or suggestion?',
     a: 'You can submit issues or suggestions to our support page.',
+  },
+  {
+    q: 'How do I use Algodex Mailbox?',
+    a: 'Learn to use Algodex Mailbox using our',
+    guideLink: true,
+  },
+  {
+    q: 'How many recipients can I send to at one time?',
+    a: 'As many as you like! Algodex Mailbox allows you to configure a CSV file to specify the recipient(s) of an Algorand Standard Asset (ASA) and what quantity each recipient should receive. Learn how to send ASAs using a configurable CSV file using our',
+    guideLink: true,
+  },
+  {
+    q: 'Where can I follow Algodex and keep up with announcements?',
+    a: ' You can follow Algodex on the following social media websites:',
+    socialLink: true,
   },
 ]

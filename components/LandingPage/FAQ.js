@@ -75,123 +75,71 @@ export const FAQ = () => {
                       <Typography fontWeight={700}>{faq.q}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>{faq.a}</Typography>
+                      <Typography>
+                        {faq.a}
+                        {faq.guideLink && (
+                          <a
+                            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ marginLeft: '3px' }}
+                          >
+                            guide
+                          </a>
+                        )}
+                        .
+                        {faq.socialLink && (
+                          <ul>
+                            <li>
+                              Twitter:{' '}
+                              <a
+                                href="https://twitter.com/AlgodexOfficial"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {' '}
+                                @AlgodexOfficial
+                              </a>
+                            </li>
+                            <li>
+                              Telegram:
+                              <ul>
+                                <li>
+                                  <a
+                                    href="http://t.me/AlgodexAnnouncements"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    t.me/AlgodexAnnouncements
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="http://t.me/algodex"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    t.me/algodex
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              Reddit:{' '}
+                              <a
+                                href="https://www.reddit.com/r/Algodex/"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                @AlgodexOfficial
+                              </a>
+                            </li>
+                          </ul>
+                        )}
+                      </Typography>
                     </AccordionDetails>
                   </Accordion>
                 ))}
-                <Accordion sx={styles.accordionStyles}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography fontWeight={700}>How do I use Algodex Mailbox?</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Learn to use Algodex Mailbox using our{' '}
-                      <a
-                        href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        guide
-                      </a>
-                      .
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion sx={styles.accordionStyles}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography fontWeight={700}>
-                      How many recipients can I send to at one time?
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      As many as you like! Algodex Mailbox allows you to
-                      configure a CSV file to specify the recipient(s) of an
-                      Algorand Standard Asset (ASA) and what quantity each
-                      recipient should receive. Learn how to send ASAs using a
-                      configurable CSV file using our{' '}
-                      <a
-                        href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        guide
-                      </a>
-                      .
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion sx={styles.accordionStyles}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography fontWeight={700}>
-                      Where can I follow Algodex and keep up with announcements?
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      You can follow Algodex on the following social media
-                      websites:
-                    </Typography>
-                    <ul>
-                      <li>
-                        Twitter:{' '}
-                        <a
-                          href="https://twitter.com/AlgodexOfficial"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {' '}
-                          @AlgodexOfficial
-                        </a>
-                      </li>
-                      <li>
-                        Telegram:
-                        <ul>
-                          <li>
-                            <a
-                              href="http://t.me/AlgodexAnnouncements"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              t.me/AlgodexAnnouncements
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="http://t.me/algodex"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              t.me/algodex
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        Reddit:{' '}
-                        <a
-                          href="https://www.reddit.com/r/Algodex/"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          @AlgodexOfficial
-                        </a>
-                      </li>
-                    </ul>
-                  </AccordionDetails>
-                </Accordion>
               </Box>
             </Grid>
           </Grid>
