@@ -136,18 +136,22 @@ function Toolbar({
       </Box>
       {!isMobile && (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link href="/#user-guide" sx={styles.linkStyles}>
-            User Guide
+          <Link
+            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            target="_blanc"
+            sx={styles.linkStyles}
+          >
+            {t('user-guide')}
           </Link>
           <Link href="/#faq" sx={styles.linkStyles}>
-            FAQ
+            {t('faq')}
           </Link>
           <Link
             href="https://about.algodex.com/support/"
             target="_blanc"
             sx={styles.linkStyles}
           >
-            Support
+            {t('support')}
           </Link>
         </Box>
       )}

@@ -2,6 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from '../Nav/Link'
+import { useTranslation } from 'next-i18next'
 
 // MUI Components
 import Grid from '@mui/material/Grid'
@@ -55,6 +56,7 @@ const styles = {
   },
 }
 export const LandingPageFooter = () => {
+  const { t } = useTranslation('common')
   return (
     <Box sx={styles.footerWrapper}>
       <Container>
@@ -68,8 +70,8 @@ export const LandingPageFooter = () => {
                 color: (theme) => theme.palette.accent.light,
               }}
             >
-              Stay up to date with info on Algodex updates, new features, and
-              releases by joining our mailing list.
+              {t('Stay up to date with info on Algodex updates, new features, and
+              releases by joining our mailing list.')}
             </Typography>
             <Box sx={styles.inputContainer}>
               <span className="icon">
@@ -110,34 +112,29 @@ export const LandingPageFooter = () => {
               width={300}
             />
             <Typography variant="p" marginTop="1rem" sx={styles.title}>
-              Decentralized marketplace on Algorand
+              {t('decentralized-marketplace-on-Algorand')}
             </Typography>
           </Grid>
           <Grid item sm={4} md={4} lg={2} xl={2}>
             <Typography variant="p" sx={styles.title}>
-              RESOURCES
+              {t('RESOURCES')}
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               <Link
                 href="https://about.algodex.com/disclaimers/"
                 target="_blanc"
               >
-                Disclaimers
-              </Link>
-            </Typography>
-            <Typography variant="p" sx={styles.subtitle}>
-              <Link href="https://about.algodex.com/blog/" target="_blanc">
-                Blog
+                {t('disclaimers')}
               </Link>
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               <Link href="https://about.algodex.com/docs/" target="_blanc">
-                Docs
+                {t('docs')}
               </Link>
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               <Link href="https://about.algodex.com/support/" target="_blanc">
-                Support
+                {t('support')}
               </Link>
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
@@ -145,7 +142,7 @@ export const LandingPageFooter = () => {
                 href="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Whitepaper%201.0.pdf"
                 target="_blanc"
               >
-                White Paper
+                {t('white-paper')}
               </Link>
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
@@ -153,29 +150,34 @@ export const LandingPageFooter = () => {
                 href="https://github.com/algodex/algodex-public-documents/blob/master/Algodex%20Tokenomics.pdf"
                 target="_blanc"
               >
-                Tokenomics
+                {t('tokenomics')}
               </Link>
             </Typography>
           </Grid>
           <Grid item sm={4} md={4} lg={2} xl={2}>
             <Typography variant="p" sx={styles.title}>
-              COMPANY
+              {t('COMPANY')}
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               <Link href="https://about.algodex.com/" target="_blanc">
-                About
+                {t('about')}
               </Link>
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
+              <Link href="https://about.algodex.com/blog/" target="_blanc">
+                {t('blog')}
+              </Link>
+            </Typography>
+            {/* <Typography variant="p" sx={styles.subtitle}>
               Careers
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               Partnerships
-            </Typography>
+            </Typography> */}
           </Grid>
           <Grid item sm={4} md={4} lg={2} xl={2}>
             <Typography variant="p" sx={styles.title}>
-              COMMUNITY
+              {t('COMMUNITY')}
             </Typography>
             <Typography variant="p" sx={styles.subtitle}>
               <Link

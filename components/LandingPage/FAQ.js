@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 
 // MUI Components
 import Grid from '@mui/material/Grid'
@@ -45,6 +46,7 @@ const styles = {
 }
 
 export const FAQ = () => {
+  const { t } = useTranslation('common')
   return (
     <Box id="faq" sx={styles.faqWrapper}>
       <Container>
@@ -60,7 +62,7 @@ export const FAQ = () => {
               lg={10}
               sx={{ marginInline: 'auto', overflow: 'hidden' }}
             >
-              <Typography variant="h3">FAQ</Typography>
+              <Typography variant="h3">{t('faq')}</Typography>
               <Divider sx={styles.titleLine}></Divider>
               <Box sx={{ marginBlock: '2rem' }}>
                 {FaqQuestions.map((faq) => (
@@ -70,7 +72,7 @@ export const FAQ = () => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography>{faq.q}</Typography>
+                      <Typography fontWeight={700}>{faq.q}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>{faq.a}</Typography>
@@ -83,7 +85,7 @@ export const FAQ = () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>How do I use Algodex Mailbox?</Typography>
+                    <Typography fontWeight={700}>How do I use Algodex Mailbox?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
@@ -105,7 +107,7 @@ export const FAQ = () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>
+                    <Typography fontWeight={700}>
                       How many recipients can I send to at one time?
                     </Typography>
                   </AccordionSummary>
@@ -133,7 +135,7 @@ export const FAQ = () => {
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                   >
-                    <Typography>
+                    <Typography fontWeight={700}>
                       Where can I follow Algodex and keep up with announcements?
                     </Typography>
                   </AccordionSummary>
