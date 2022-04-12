@@ -74,5 +74,9 @@
   "How many recipients can I send to at one time?": "¿A cuántos destinatarios puedo enviar a la vez?",
   "As many as you like! Algodex Mailbox allows you to configure a CSV file to specify the recipient(s) of an Algorand Standard Asset (ASA) and what quantity each recipient should receive. Learn how to send ASAs using a configurable CSV file using our": "¡Tantos como quieras! El buzón de Algodex le permite configurar un archivo CSV para especificar los destinatarios de un activo estándar de Algorand (ASA) y qué cantidad debe recibir cada destinatario. Aprenda a enviar ASA usando un archivo CSV configurable usando nuestro",
   "Where can I follow Algodex and keep up with announcements?": "¿Dónde puedo seguir a Algodex y estar al tanto de los anuncios?",
-  "You can follow Algodex on the following social media websites:": "Puede seguir a Algodex en los siguientes sitios web de redes sociales:"
+  "You can follow Algodex on the following social media websites:": "Puede seguir a Algodex en los siguientes sitios web de redes sociales:",
+  "How does Algodex Mailbox Work?": "¿Cómo funciona el buzón de Algodex?",
+  "Algodex Mailbox uses Algorand smart contracts to create an escrow that holds sent Algorand Standard Assets before they are redeemed. The smart contract escrow exists entirely on the Algorand blockchain so nobody, including Algodex Mailbox, can access the escrow except for the sender and recipient.": "Algodex Mailbox utiliza contratos inteligentes de Algorand para crear un depósito en garantía que retiene los activos estándar de Algorand enviados antes de que se canjeen. El depósito en garantía del contrato inteligente existe completamente en la cadena de bloques de Algorand, por lo que nadie, incluido el buzón de Algodex, puede acceder al depósito en garantía, excepto el remitente y el destinatario.",
+  "Learn to use Algodex Mailbox using our": "Aprende a usar el Buzón de Algodex usando nuestro",
+  "guide": "guía"
 }

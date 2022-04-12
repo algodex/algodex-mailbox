@@ -74,5 +74,10 @@
   "How many recipients can I send to at one time?": "How many recipients can I send to at one time?",
   "As many as you like! Algodex Mailbox allows you to configure a CSV file to specify the recipient(s) of an Algorand Standard Asset (ASA) and what quantity each recipient should receive. Learn how to send ASAs using a configurable CSV file using our": "As many as you like! Algodex Mailbox allows you to configure a CSV file to specify the recipient(s) of an Algorand Standard Asset (ASA) and what quantity each recipient should receive. Learn how to send ASAs using a configurable CSV file using our",
   "Where can I follow Algodex and keep up with announcements?": "Where can I follow Algodex and keep up with announcements?",
-  "You can follow Algodex on the following social media websites:": "You can follow Algodex on the following social media websites:"
+  "You can follow Algodex on the following social media websites:": "You can follow Algodex on the following social media websites:",
+  "How does Algodex Mailbox Work?": "How does Algodex Mailbox Work?",
+  "Algodex Mailbox uses Algorand smart contracts to create an escrow that holds sent Algorand Standard Assets before they are redeemed. The smart contract escrow exists entirely on the Algorand blockchain so nobody, including Algodex Mailbox, can access the escrow except for the sender and recipient.": "Algodex Mailbox uses Algorand smart contracts to create an escrow that holds sent Algorand Standard Assets before they are redeemed. The smart contract escrow exists entirely on the Algorand blockchain so nobody, including Algodex Mailbox, can access the escrow except for the sender and recipient.",
+  "You can follow Algodex on the following social media websites:": "You can follow Algodex on the following social media websites:",
+  "Learn to use Algodex Mailbox using our": "Learn to use Algodex Mailbox using our",
+  "guide": "guide"
 }

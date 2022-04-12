@@ -84,7 +84,7 @@ export const FAQ = () => {
                             rel="noreferrer"
                             style={{ marginLeft: '3px' }}
                           >
-                            guide
+                            {t('guide')}
                           </a>
                         )}
                         .
