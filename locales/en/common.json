@@ -47,5 +47,9 @@
   "Asset ID":"Asset ID",
   "Sender Address":"Sender Address",
   "Recieving Address":"Recieving Address",
-  "Click “Redeem” and assets will be sent to your wallet":"Click “Redeem” and assets will be sent to your wallet"
+  "Click “Redeem” and assets will be sent to your wallet":"Click “Redeem” and assets will be sent to your wallet",
+  "Click to upload CSV transactions":"Click to upload CSV transactions",
+  "Upload CSV":"Upload CSV",
+  "Warning: You have not yet opted into the asset. Please do so in another wallet app":"Warning: You have not yet opted into the asset. Please do so in another wallet app",
+  "Refresh":"Refresh"
 }
