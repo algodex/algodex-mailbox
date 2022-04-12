@@ -13,6 +13,9 @@ import Head from 'next/head'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
 // Custom Components
 import Link from '@/components/Nav/Link'
@@ -42,7 +45,7 @@ export function ReturnAssetPage() {
   const [senderAddress, setSenderAddress] = useState('')
   const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
-  const [fileName, setFileName] = useState()
+  const [duplicateList, setDuplicateList] = useState([])
   const [actionStatus, setActionStatus] = useState({
     message: '',
     success: false,
@@ -124,17 +127,6 @@ export function ReturnAssetPage() {
     }
   }
 
-  const getFileUpload = async (e) => {
-    updateStatusMessage()
-    const csvFiles = e.target.files[0]
-    setFileName(csvFiles.name)
-    const reader = new FileReader()
-    reader.onloadend = ({ target }) => {
-      const text = target.result
-      setCsvTransactions(text.replace(/\r?\r/g, ''))
-    }
-    reader.readAsText(csvFiles)
-  }
 
   return (
     <>
@@ -157,10 +149,34 @@ export function ReturnAssetPage() {
             setSenderAddress={setSenderAddress}
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
-            getFileUpload={getFileUpload}
-            fileName={fileName}
+            setCsvTransactions={setCsvTransactions}
+            setDuplicateList={setDuplicateList}
+            updateStatusMessage={updateStatusMessage}
           />
-
+          {duplicateList.length > 0 && (
+            <>
+              <Typography
+                variant="error-message"
+                display="block"
+                marginTop="1rem"
+                marginBottom="0"
+                color={'error'}
+              >
+                Find below the duplicate wallet address
+                {duplicateList.length > 1 && 'es'}:
+              </Typography>
+              <List dense={false}>
+                {duplicateList.map((d) => (
+                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                    <ListItemText
+                      primary={d}
+                      sx={{ color: 'red', marginBlock: '0' }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
           <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
             <Grid item xs={6} lg={5} className="mr-2">
               <Link
