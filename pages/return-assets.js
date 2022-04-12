@@ -109,6 +109,13 @@ export function ReturnAssetPage() {
           true
         )
       } else {
+        if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
+          updateStatusMessage(
+            'Please disable your popup blocker (likely in the top-right of your browser window)',
+            false
+          )
+          return
+        }
         updateStatusMessage(
           responseData.body?.message || 'Sorry, an error occurred',
           false
