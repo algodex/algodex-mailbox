@@ -51,7 +51,6 @@ const UploadContainer = ({
 
   const checkForDuplicate = (csv) => {
     const rows = csv.slice(csv.indexOf('\n') + 1).split('\n')
-    // console.debug({ rows })
     const count = {}
     if (rows[0] == '') {
       updateStatusMessage('Oops, empty CSV file', false)
@@ -64,9 +63,7 @@ const UploadContainer = ({
       })
       const duplicate = []
       Object.entries(count).forEach((c) => {
-        if (c[1] > 1) {
-          duplicate.push(c[0])
-        }
+        c[1] > 1 && duplicate.push(c[0])
       })
       if (duplicate.length > 0) {
         setCsvTransactions()
