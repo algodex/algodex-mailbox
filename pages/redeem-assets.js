@@ -173,7 +173,7 @@ export function RedeemAssetPage() {
             assetId={assetId}
             optInStatus={optInStatus}
             formData={formData}
-            balance={parseInt(escrowBalance.message)}
+            balance={parseFloat(escrowBalance.message)}
           />
           <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
             <Grid item>
