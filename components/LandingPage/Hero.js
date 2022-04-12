@@ -54,7 +54,7 @@ const styles = {
       background: 'none',
       '&::after': {
         background: 'url("/Airwave-sm.png") no-repeat',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'bottom',
         top: '17%',
       },
