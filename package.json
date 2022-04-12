@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "translate": "node ./bin/translate true"
   },
   "dependencies": {
     "@algodex/algodex-sdk": "^1.1.14",
@@ -51,6 +52,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-storybook": "^0.5.7",
     "eslint-plugin-testing-library": "^5.0.5",
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "translate": "^1.4.1"
   }
 }
