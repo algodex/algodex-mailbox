@@ -164,7 +164,7 @@ export function ReturnAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5} marginLeft='auto' textAlign='end'>
+            <Grid item xs={6} lg={5} marginLeft="auto" textAlign="end">
               <Link href={'/sample.csv'} download color="primary.dark">
                 {t('download-csv-example-link')}
               </Link>
@@ -177,3 +177,4 @@ export function ReturnAssetPage() {
 }
 
 export default ReturnAssetPage
+

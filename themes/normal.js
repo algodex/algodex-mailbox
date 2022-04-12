@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -73,10 +73,15 @@ const theme = {
       fontFamily: fontFamilies.body,
       fontWeight: 700,
       fontSize: fontSizes[3],
-      wordBreak:'break-word'
+      wordBreak: 'break-word',
     },
     p: {
       display: 'block',
+    },
+    h3: {
+      fontSize: '2rem',
+      margin: 0,
+      fontWeight: 500,
     },
   },
   // Color System
@@ -84,21 +89,21 @@ const theme = {
     ...muiTheme.palette,
     primary: {
       light: '#fcfcff',
-      main: '#c9c9e7',
-      dark: '#9898b5',
+      main: '#c9c9e5',
+      dark: '#A698B5',
       contrastText: '#000000',
     },
     secondary: {
       light: '#fffcff',
-      main: '#d8c9e7',
-      dark: '#a698b5',
-      contrastText: '#000000',
+      main: '#9898b5',
+      dark: '#4A5568',
+      contrastText: '#2D3748',
     },
     accent: {
-      light: '#fffffc',
-      main: '#E7E7C9',
-      dark: '#b5b598',
-      contrastText: '#000000',
+      light: '#F2F2F2',
+      main: '#e3e3e4',
+      dark: '#dedede',
+      contrastText: '#2D3748',
     },
   },
 }

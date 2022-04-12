@@ -183,7 +183,7 @@ export function RedeemAssetPage() {
             </Grid>
             <Grid item>
               {gettingBalance ? (
-                <CircularProgress color="primary" size={15}/>
+                <CircularProgress color="primary" size={15} />
               ) : (
                 <>
                   {escrowBalance.message && escrowBalance.message != '' && (
@@ -224,3 +224,4 @@ export function RedeemAssetPage() {
 }
 
 export default RedeemAssetPage
+
