@@ -6,6 +6,7 @@
 import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next'
 
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
@@ -15,23 +16,10 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import Button from '@mui/material/Button'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
-
-const styles = {
-  uploadWrapper: {
-    background: '#fffcff',
-    height: '10rem',
-    borderRadius: '0.4rem',
-    border: '0.1rem dashed #a698b5',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-}
+import UploadContainer from './UploadContainer'
 
 const ReturnAssetForm = ({
   formattedAddresses,
@@ -43,6 +31,7 @@ const ReturnAssetForm = ({
   fileName,
   actionStatus,
 }) => {
+  const { t } = useTranslation('common')
   const schema = {
     required: ['assetId', 'csvTransactions'],
     properties: {
@@ -138,18 +127,7 @@ const ReturnAssetForm = ({
                 {fileName}
               </Button>
             ) : (
-              <Box style={styles.uploadWrapper}>
-                <Typography variant="p" marginBottom="1rem">
-                  Click to upload CSV transactions
-                </Typography>
-                <Button
-                  variant="contained"
-                  component="span"
-                  startIcon={<UploadFileIcon />}
-                >
-                  Upload CSV
-                </Button>
-              </Box>
+              <UploadContainer />
             )}
           </label>
         </Box>
@@ -160,11 +138,12 @@ const ReturnAssetForm = ({
               variant="contained"
               disabled={formattedAddresses.length < 1}
               type="submit"
+              sx={{textDecoration:'capitalize'}}
             >
-              Return Assets
+              {t('/return-assets')}
             </LoadingButton>
           </Grid>
-          <Grid item xs={6} marginLeft='auto' textAlign='end'>
+          <Grid item xs={6} marginLeft="auto" textAlign="end">
             <CollapseableErrorMessage actionStatus={actionStatus} />
           </Grid>
         </Grid>

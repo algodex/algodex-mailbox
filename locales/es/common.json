@@ -3,9 +3,9 @@
   "mailbox": "Buzón",
   "actions": "Acciones",
   "escrow-balance": "Escrow Saldo",
-  "/send-assets": "Enviar activo",
-  "/redeem-assets": "Canjear activo",
-  "/return-assets": "Regreso activo",
+  "/send-assets": "Enviar Activo",
+  "/redeem-assets": "Canjear Activo",
+  "/return-assets": "Regreso Activo",
   "/transaction-history": "Enviar historial",
   "/send": "Enviar",
   "/redeem": "Canjear",
@@ -44,8 +44,12 @@
   "Send assets and inform recipients to redeem them on Algodex Mailbox. You need to provide the sending wallet address which users will need to claim the ASAs":"Envíe activos e informe a los destinatarios para canjearlos en Algodex Mailbox. Debe proporcionar la dirección de la billetera de envío que los usuarios necesitarán para reclamar los ASA",
   "Opt-in to the ASA you wish to redeem in your Algorand wallet. You will need the sender’s Wallet address as well":"Inscríbase en el ASA que desea canjear en su billetera Algorand. También necesitará la dirección de Wallet del remitente",
   "Go to “Redeem Assets” and enter information required":"Vaya a “Canjear activos” e ingrese la información requerida",
-  "Asset ID":"ID de activo",
+  "Asset ID":"ID de Activo",
   "Sender Address":"Dirección del remitente",
   "Recieving Address":"Dirección de recepción",
-  "Click “Redeem” and assets will be sent to your wallet":"Haga clic en “Canjear” y los activos se enviarán a su billetera"
+  "Click “Redeem” and assets will be sent to your wallet":"Haga clic en “Canjear” y los activos se enviarán a su billetera",
+  "Click to upload CSV transactions":"Haga clic para cargar transacciones CSV",
+  "Upload CSV":"Subir CSV",
+  "Warning: You have not yet opted into the asset. Please do so in another wallet app":"WAdvertencia: aún no ha optado por el activo. Hágalo en otra aplicación de billetera",
+  "Refresh":"Actualizar"
 }
