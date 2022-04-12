@@ -14,8 +14,6 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import Button from '@mui/material/Button'
-import UploadFileIcon from '@mui/icons-material/UploadFile'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
@@ -27,9 +25,10 @@ const ReturnAssetForm = ({
   isLoading,
   setSenderAddress,
   setAssetId,
-  getFileUpload,
-  fileName,
   actionStatus,
+  setCsvTransactions,
+  setDuplicateList,
+  updateStatusMessage,
 }) => {
   const { t } = useTranslation('common')
   const schema = {
@@ -108,29 +107,11 @@ const ReturnAssetForm = ({
         disabled={formattedAddresses.length < 1}
         autoComplete="on"
       >
-        <Box>
-          <label htmlFor="contained-button-file">
-            <input
-              accept="text/csv"
-              id="contained-button-file"
-              type="file"
-              hidden
-              onChange={getFileUpload}
-            />
-            {fileName ? (
-              <Button
-                variant="contained"
-                component="span"
-                startIcon={<UploadFileIcon />}
-                style={{ marginTop: '1rem' }}
-              >
-                {fileName}
-              </Button>
-            ) : (
-              <UploadContainer />
-            )}
-          </label>
-        </Box>
+        <UploadContainer
+          setCsvTransactions={setCsvTransactions}
+          updateStatusMessage={updateStatusMessage}
+          setDuplicateList={setDuplicateList}
+        />
         <Grid container spacing={2} marginTop={'2rem'}>
           <Grid item xs={6} lg={4}>
             <LoadingButton
@@ -138,7 +119,7 @@ const ReturnAssetForm = ({
               variant="contained"
               disabled={formattedAddresses.length < 1}
               type="submit"
-              sx={{textDecoration:'capitalize'}}
+              sx={{ textDecoration: 'capitalize' }}
             >
               {t('/return-assets')}
             </LoadingButton>
@@ -158,8 +139,9 @@ ReturnAssetForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   setSenderAddress: PropTypes.func,
   setAssetId: PropTypes.func,
-  getFileUpload: PropTypes.func.isRequired,
-  fileName: PropTypes.string,
   actionStatus: PropTypes.object,
+  setDuplicateList: PropTypes.any,
+  updateStatusMessage: PropTypes.func,
+  setCsvTransactions: PropTypes.any,
 }
 export default ReturnAssetForm

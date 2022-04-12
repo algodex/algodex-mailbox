@@ -62,7 +62,6 @@ export function SendAssetPage() {
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
-  const [fileName, setFileName] = useState()
   const [duplicateList, setDuplicateList] = useState([])
 
   useEffect(() => {
@@ -189,57 +188,7 @@ export function SendAssetPage() {
     }, 500)
   }
 
-  const getFileUpload = async (e) => {
-    const csvFiles = e.target.files[0]
-    if (csvFiles) {
-      updateStatusMessage()
-      setDuplicateList([])
-      setFileName(csvFiles.name)
-      const reader = new FileReader()
-      reader.onloadend = ({ target }) => {
-        const text = target.result
-        checkForDuplicate(text)
-      }
-      reader.readAsText(csvFiles)
-    }
-  }
-
-  const checkForDuplicate = (csv) => {
-    const rows = csv.slice(csv.indexOf('\n') + 1).split('\n')
-    // console.debug({ rows })
-    const count = {}
-    if (rows[0] == '') {
-      setActionStatus({
-        message: 'Oops, empty CSV file',
-        success: false,
-      })
-    } else {
-      rows.forEach((v) => {
-        if (v) {
-          const value = v.split(',')[0]
-          count[value] = count[value] + 1 || 1
-        }
-      })
-      const duplicate = []
-      Object.entries(count).forEach((c) => {
-        if (c[1] > 1) {
-          duplicate.push(c[0])
-        }
-      })
-      if (duplicate.length > 0) {
-        setCsvTransactions()
-        setDuplicateList(duplicate)
-        setActionStatus({
-          message:
-            // eslint-disable-next-line max-len
-            'Same wallet address on multiple rows of your CSV file is not allowed. This causes race conditions and we can\'t support it',
-          success: false,
-        })
-      } else {
-        setCsvTransactions(csv.replace(/\r?\r/g, ''))
-      }
-    }
-  }
+ 
 
   return (
     <>
@@ -272,11 +221,12 @@ export function SendAssetPage() {
             setWallet={setWallet}
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
-            getFileUpload={getFileUpload}
-            fileName={fileName}
             assetId={assetId}
             wallet={wallet}
             assetBalance={assetBalance}
+            setCsvTransactions={setCsvTransactions}
+            setDuplicateList={setDuplicateList}
+            updateStatusMessage={updateStatusMessage}
           />
           {duplicateList.length > 0 && (
             <>
