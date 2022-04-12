@@ -72,11 +72,11 @@ export const FAQ = () => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography fontWeight={700}>{faq.q}</Typography>
+                      <Typography fontWeight={700}>{t(faq.q)}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        {faq.a}
+                        {t(faq.a)}
                         {faq.guideLink && (
                           <a
                             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
