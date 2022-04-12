@@ -282,6 +282,7 @@ export function SendAssetPage() {
             assetId={assetId}
             wallet={wallet}
             setEscrowPermission={setEscrowPermission}
+            assetBalance={assetBalance}
           />
           {duplicateList.length > 0 && (
             <>

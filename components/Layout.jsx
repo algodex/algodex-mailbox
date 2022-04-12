@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next'
 
 // Hooks
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -21,6 +22,13 @@ import DefaultToolbar from '@/components/Nav/Toolbar'
 import DefaultBottomNavigation from '@/components/Nav/BottomNavigation'
 import DefaultDrawer from '@/components/Nav/Drawer'
 
+// Icons
+import SendIcon from '@mui/icons-material/Send'
+import HistoryIcon from '@mui/icons-material/History'
+import RedeemIcon from '@mui/icons-material/Redeem'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
+import { useRouter } from 'next/router'
+
 /**
  * Layout Component
  *
@@ -36,11 +44,14 @@ export function Layout({ children, components, componentsProps }) {
   const { Toolbar, BottomNavigation, Drawer } = components
   const [drawerWidth, setDrawerWidth] = useState(240)
   const [drawerOpen, setDrawerOpen] = useState(true)
+  const { t } = useTranslation('common')
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
   const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const router = useRouter().asPath
+  const isHomePage = router === '/' ? true : router === '/#faq' ? true : false
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
@@ -50,6 +61,33 @@ export function Layout({ children, components, componentsProps }) {
     }
   }
 
+  const sideLinks = [
+    {
+      to: '/send-assets',
+      icon: <SendIcon />,
+      primary: t('/send-assets'),
+    },
+    {
+      to: '/transaction-history',
+      icon: <HistoryIcon />,
+      primary: t('/transaction-history'),
+    },
+    {
+      to: '/redeem-assets',
+      icon: <RedeemIcon />,
+      primary: t('/redeem-assets'),
+    },
+    {
+      to: '/return-assets',
+      icon: <KeyboardReturnIcon />,
+      primary: t('/return-assets'),
+    },
+  ]
+
+  if (isHomePage) {
+    return <> {children}</>
+  }
+
   // Example of a Responsive Layout with Fixed Viewport
   return (
     <Box
@@ -57,7 +95,7 @@ export function Layout({ children, components, componentsProps }) {
         display: 'flex',
         flexDirection: 'column',
         height: '100vh',
-        maxHeight:'-webkit-fill-available',
+        maxHeight: '-webkit-fill-available',
       }}
     >
       <AppBar
@@ -68,6 +106,7 @@ export function Layout({ children, components, componentsProps }) {
           isMobile={isMobile}
           height={toolbarHeight}
           toggleDrawer={toggleDrawer}
+          isDashboard={true}
           {...componentsProps.Toolbar}
         />
       </AppBar>
@@ -80,13 +119,16 @@ export function Layout({ children, components, componentsProps }) {
               width={drawerWidth}
               open={drawerOpen}
               offset={toolbarHeight}
+              links={sideLinks}
               {...componentsProps.Drawer}
             />
           )
         }
         {/* Display the Page Component */}
 
-        <Container sx={{ my: 4, width: `calc(100% - ${ !isMobile ? drawerWidth : 0}px)` }}>
+        <Container
+          sx={{ my: 4, width: `calc(100% - ${!isMobile ? drawerWidth : 0}px)` }}
+        >
           {children}
         </Container>
       </Box>

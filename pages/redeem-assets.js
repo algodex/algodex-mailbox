@@ -173,7 +173,7 @@ export function RedeemAssetPage() {
             assetId={assetId}
             optInStatus={optInStatus}
             formData={formData}
-            balance={parseInt(escrowBalance.message)}
+            balance={parseFloat(escrowBalance.message)}
           />
           <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
             <Grid item>
@@ -183,7 +183,7 @@ export function RedeemAssetPage() {
             </Grid>
             <Grid item>
               {gettingBalance ? (
-                <CircularProgress color="primary" size={15}/>
+                <CircularProgress color="primary" size={15} />
               ) : (
                 <>
                   {escrowBalance.message && escrowBalance.message != '' && (
@@ -224,3 +224,4 @@ export function RedeemAssetPage() {
 }
 
 export default RedeemAssetPage
+

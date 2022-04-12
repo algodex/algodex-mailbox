@@ -48,6 +48,7 @@ const SendAssetForm = ({
   wallet,
   csvTransactions,
   setEscrowPermission,
+  assetBalance,
 }) => {
   const CustomInputComponent = (props) => {
     return (
@@ -84,6 +85,17 @@ const SendAssetForm = ({
 
   const widgets = {
     CustomInput: CustomInputComponent,
+  }
+
+  const checkDisabledState = () => {
+    const balance = parseFloat(assetBalance.message)
+    if (
+      !(balance > 0) &&
+      (!wallet || !assetId || !csvTransactions)
+    ) {
+      return true
+    }
+    return false
   }
   return (
     <>
@@ -169,12 +181,7 @@ const SendAssetForm = ({
             <LoadingButton
               loading={isLoading}
               variant="contained"
-              disabled={
-                formattedAddresses.length < 1 ||
-                !wallet ||
-                !assetId ||
-                !csvTransactions
-              }
+              disabled={checkDisabledState()}
               type="submit"
             >
               Send Assets
@@ -202,5 +209,6 @@ SendAssetForm.propTypes = {
   wallet: PropTypes.any,
   csvTransactions: PropTypes.any,
   setEscrowPermission: PropTypes.any,
+  assetBalance: PropTypes.object,
 }
 export default SendAssetForm
