@@ -19,13 +19,16 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 
 // Custom Components
-import * as SendAssetsHelper from '@/lib/send_assets.js'
 import SendAssetForm from '@/components/SendAssetForm'
 import Link from '@/components/Nav/Link'
 import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
+import useMailbox from '@/hooks/useMailbox'
+
+// Library Files
+import SendAssets from '../lib/send_assets'
 
 /**
  * Generate Static Properties
@@ -45,6 +48,8 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
+  const {status} = useMailbox()
+  console.log(status)
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -99,7 +104,7 @@ export function SendAssetPage() {
     // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
-    const responseData = await SendAssetsHelper.send(
+    const responseData = await SendAssets.send(
       assetId,
       wallet,
       csvTransactions
@@ -188,7 +193,7 @@ export function SendAssetPage() {
     }, 500)
   }
 
- 
+
 
   return (
     <>
@@ -197,6 +202,9 @@ export function SendAssetPage() {
       </Head>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={6} xl={5}>
+          {/*<Typography variant="h1" sx={{color: 'purple'}}>
+          Example Event Status: {status}
+          </Typography>*/}
           <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
             {t('/send-assets')}
           </Typography>
