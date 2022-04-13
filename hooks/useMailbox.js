@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useState} from 'react'
 import events from '../lib/events'
-import SendAssets from '../lib/send_assets'
 function useMailbox(){
   const [status, setStatus] = useState('uninitialized')
 
@@ -17,7 +16,7 @@ function useMailbox(){
     return ()=> events.off('sign-with-my-algo')
   }, [onSignWithMyAlgo])
 
-  return {status, send: SendAssets.send}
+  return {status}
 }
 
 export default useMailbox
