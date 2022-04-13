@@ -26,6 +26,7 @@ import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 /**
  * Generate Static Properties
@@ -121,13 +122,13 @@ export function SendAssetPage() {
           `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
           true
         )
-        setShareableLink(
-          Helper.getShareableRedeemLink(wallet, assetId)
-        )
+        setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
         getAssetBalance()
       }
     } else {
-      if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
+      if (
+        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+      ) {
         updateStatusMessage(
           'Please disable your popup blocker (likely in the top-right of your browser window)',
           false
@@ -135,7 +136,9 @@ export function SendAssetPage() {
         return
       }
       updateStatusMessage(
-        responseData.body?.message || responseData.message || 'Sorry, an error occurred',
+        responseData.body?.message ||
+          responseData.message ||
+          'Sorry, an error occurred',
         false
       )
     }
@@ -188,8 +191,6 @@ export function SendAssetPage() {
     }, 500)
   }
 
- 
-
   return (
     <>
       <Head>
@@ -227,6 +228,12 @@ export function SendAssetPage() {
             setCsvTransactions={setCsvTransactions}
             setDuplicateList={setDuplicateList}
             updateStatusMessage={updateStatusMessage}
+          />
+          <LinearProgressWithLabel
+            value={20}
+            report={
+              'Looking up wallet balances & signing logical signatures...'
+            }
           />
           {duplicateList.length > 0 && (
             <>
