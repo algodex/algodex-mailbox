@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 
 export const LinearProgressWithLabel = (props) => {
   const { status, progress, total, hideProgress } = props
-  console.log({ status, progress, total, hideProgress })
   return (
     <>
       {!hideProgress && (
