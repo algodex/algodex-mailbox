@@ -26,10 +26,10 @@ import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
 import useSendAsset from '@/hooks/useSendAsset'
 import useFormattedAddress from '@/hooks/useFormattedAddress'
-import SendAssetProgress from '@/components/SendAssetProgress'
 
 // Library Files
 import SendAssets from '@/lib/send_assets'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 /**
  * Generate Static Properties
@@ -49,8 +49,8 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
-  const {formattedAddresses, connect} = useFormattedAddress()
-  const {progress} = useSendAsset()
+  const { formattedAddresses, connect } = useFormattedAddress()
+  const { progress, status, total, hideProgress } = useSendAsset()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -68,7 +68,6 @@ export function SendAssetPage() {
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
   const [duplicateList, setDuplicateList] = useState([])
-
 
   const updateStatusMessage = (message, status) => {
     setActionStatus({
@@ -88,7 +87,7 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    // console.debug('responseData', responseData)
+    console.debug('responseData', responseData)
     setLoading(false)
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
@@ -215,7 +214,12 @@ export function SendAssetPage() {
             setDuplicateList={setDuplicateList}
             updateStatusMessage={updateStatusMessage}
           />
-          <SendAssetProgress progress={progress} actionStatus={actionStatus}/>
+          <LinearProgressWithLabel
+            status={status}
+            progress={progress}
+            total={total}
+            hideProgress={hideProgress}
+          />
           {duplicateList.length > 0 && (
             <>
               <Typography
