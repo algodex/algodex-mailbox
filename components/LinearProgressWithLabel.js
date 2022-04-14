@@ -8,17 +8,27 @@ export const LinearProgressWithLabel = (props) => {
   const { value, report } = props
   return (
     <>
-      <Typography variant='p' fontWeight={500} marginTop="1rem">{report}</Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} color={'progress'} />
+      {report && (
+        <Typography variant="p" fontWeight={500} marginTop="1rem">
+          {report}
+        </Typography>
+      )}
+      {value && (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ width: '100%', mr: 1 }}>
+            <LinearProgress
+              variant="determinate"
+              {...props}
+              color={'progress'}
+            />
+          </Box>
+          <Box sx={{ minWidth: 35 }}>
+            <Typography variant="body2" color="text.secondary">{`${Math.round(
+              value
+            )}/100`}</Typography>
+          </Box>
         </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            value
-          )}/100`}</Typography>
-        </Box>
-      </Box>
+      )}
     </>
   )
 }

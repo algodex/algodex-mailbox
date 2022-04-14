@@ -1,22 +1,19 @@
 import {useCallback, useEffect, useState} from 'react'
 import events from '../lib/events'
 function useSendAsset(){
-  const [status, setStatus] = useState('uninitialized')
+  const [progress, setProgress] = useState('uninitialized')
 
-  const onSignWithMyAlgo = useCallback(({status: _status})=>{
-    setStatus(_status)
-  },[setStatus])
-
-  // Example for testing without running framework
-  //setTimeout(()=>{events.emit('sign-with-my-algo', {status: "Wow"})}, 1000)
+  const onSendAsset = useCallback(({status: _status})=>{
+    setProgress(_status)
+  },[setProgress])
 
   useEffect(()=>{
-    events.on('sign-with-my-algo', onSignWithMyAlgo)
+    events.on('sending-assets-event', onSendAsset)
 
-    return ()=> events.off('sign-with-my-algo')
-  }, [onSignWithMyAlgo])
+    return ()=> events.off('sending-assets-event')
+  }, [onSendAsset])
 
-  return {status}
+  return {progress}
 }
 
 export default useSendAsset
