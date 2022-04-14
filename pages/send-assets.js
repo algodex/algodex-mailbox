@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -21,15 +21,15 @@ import ListItemText from '@mui/material/ListItemText'
 // Custom Components
 import SendAssetForm from '@/components/SendAssetForm'
 import Link from '@/components/Nav/Link'
-import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
 import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
-import useMailbox from '@/hooks/useMailbox'
+import useSendAsset from '@/hooks/useSendAsset'
+import useFormattedAddress from '@/hooks/useFormattedAddress'
 
 // Library Files
-import SendAssets from '../lib/send_assets'
+import SendAssets from '@/lib/send_assets'
 
 /**
  * Generate Static Properties
@@ -49,8 +49,9 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
-  const {status} = useMailbox()
+  const {status} = useSendAsset()
   console.log(status)
+  const {formattedAddresses, connect} = useFormattedAddress()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -64,33 +65,11 @@ export function SendAssetPage() {
     success: false,
   })
   const { t } = useTranslation('common')
-  const [formattedAddresses, setFormattedAddresses] = useState([])
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
   const [duplicateList, setDuplicateList] = useState([])
 
-  useEffect(() => {
-    setFormattedAddresses(
-      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
-    )
-  }, [])
-  const updateAddresses = useCallback(
-    (addresses) => {
-      if (addresses == null) {
-        return
-      }
-      // console.debug({ addresses })
-      localStorage.setItem(
-        'algodex_user_wallet_addresses',
-        JSON.stringify(addresses)
-      )
-      setFormattedAddresses(addresses)
-    },
-    [setFormattedAddresses]
-  )
-
-  const { connect } = useMyAlgo(updateAddresses)
 
   const updateStatusMessage = (message, status) => {
     setActionStatus({
