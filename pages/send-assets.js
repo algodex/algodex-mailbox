@@ -150,7 +150,7 @@ export function SendAssetPage() {
       setTimeout(() => {
         setGettingBalance(false)
       }, 2000)
-      console.debug('responseData', responseData)
+      // console.debug('responseData', responseData)
       if (responseData && responseData.error == false) {
         setAssetBalance({ success: true, message: responseData.balance })
       } else {
