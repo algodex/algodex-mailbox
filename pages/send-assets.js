@@ -205,6 +205,7 @@ export function SendAssetPage() {
             onSubmit={submitForm}
             isLoading={loading}
             setWallet={setWallet}
+            actionStatus={actionStatus}
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
             assetId={assetId}

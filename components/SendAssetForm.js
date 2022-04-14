@@ -14,6 +14,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
+import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 
 const SendAssetForm = ({
@@ -22,6 +24,7 @@ const SendAssetForm = ({
   isLoading,
   setWallet,
   setAssetId,
+  actionStatus,
   assetId,
   wallet,
   csvTransactions,
@@ -113,15 +116,22 @@ const SendAssetForm = ({
           setDuplicateList={setDuplicateList}
         />
 
-        <LoadingButton
-          loading={isLoading}
-          variant="contained"
-          disabled={checkDisabledState()}
-          type="submit"
-          sx={{ textDecoration: 'capitalize', marginY:'2rem' }}
-        >
-          {t('/send-assets')}
-        </LoadingButton>
+        <Grid container spacing={2} marginTop={'2rem'}>
+          <Grid item xs={6} lg={4}>
+            <LoadingButton
+              loading={isLoading}
+              variant="contained"
+              disabled={checkDisabledState()}
+              type="submit"
+              sx={{ textDecoration: 'capitalize' }}
+            >
+              {t('/send-assets')}
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={6} marginLeft="auto">
+            <CollapseableErrorMessage actionStatus={actionStatus} />
+          </Grid>
+        </Grid>
       </Form>
     </>
   )
@@ -133,6 +143,7 @@ SendAssetForm.propTypes = {
   isLoading: PropTypes.bool,
   setWallet: PropTypes.any,
   setAssetId: PropTypes.any,
+  actionStatus: PropTypes.object,
   assetId: PropTypes.any,
   wallet: PropTypes.any,
   csvTransactions: PropTypes.any,

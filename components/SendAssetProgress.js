@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { LinearProgressWithLabel } from './LinearProgressWithLabel'
-import CollapseableErrorMessage from './CollapseableErrorMessage'
 
-const SendAssetProgress = ({ progress, actionStatus }) => {
+const SendAssetProgress = ({ progress }) => {
   const [message, setMessage] = useState()
   const [value, setValue] = useState()
   useEffect(() => {
@@ -29,15 +28,11 @@ const SendAssetProgress = ({ progress, actionStatus }) => {
     }
   }, [progress])
 
-  if (progress == 'complete' || progress == 'stop') {
-    return <CollapseableErrorMessage actionStatus={actionStatus} />
-  }
   return <LinearProgressWithLabel value={value} report={message} />
 }
 
 SendAssetProgress.propTypes = {
   progress: PropTypes.string.isRequired,
-  actionStatus: PropTypes.object.isRequired,
 }
 
 export default SendAssetProgress
