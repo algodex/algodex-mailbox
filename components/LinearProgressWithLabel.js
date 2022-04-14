@@ -5,15 +5,13 @@ import Box from '@mui/material/Box'
 import PropTypes from 'prop-types'
 
 export const LinearProgressWithLabel = (props) => {
-  const { value, report } = props
+  const { status, progress, total, hideProgress } = props
   return (
     <>
-      {report && (
-        <Typography variant="p" fontWeight={500} marginTop="1rem">
-          {report}
-        </Typography>
-      )}
-      {value && (
+      <Typography variant="p" fontWeight={500} marginTop="1rem">
+        {status}
+      </Typography>
+      {hideProgress && (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ width: '100%', mr: 1 }}>
             <LinearProgress
@@ -24,7 +22,7 @@ export const LinearProgressWithLabel = (props) => {
           </Box>
           <Box sx={{ minWidth: 35 }}>
             <Typography variant="body2" color="text.secondary">{`${Math.round(
-              value
+              ((progress - 0) * 100) / (total === 0 ? 1 : total )
             )}/100`}</Typography>
           </Box>
         </Box>
