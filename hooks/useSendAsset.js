@@ -23,10 +23,10 @@ function useSendAsset() {
       if (typeof _total !== 'undefined' && _total !== total) {
         setTotal(_total)
       }
-      if (_status == 'Transactions Sent!') {
+      if (_status == 'Transactions Sent!' || _status == 'error') {
         setTimeout(() => {
           setHideProgress(true)
-        }, 2000)
+        }, 1000)
       }
     },
     [status, setStatus, progress, setProgress, total, setTotal]
@@ -36,6 +36,7 @@ function useSendAsset() {
     events.on('getting-balance', onEvents)
     events.on('sign-with-my-algo', onEvents)
     events.on('send-all-transactions', onEvents)
+    events.on('Error', onEvents)
     return () => {
       events.off('getting-balance')
       events.off('sign-with-my-algo')
