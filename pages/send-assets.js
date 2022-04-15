@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -50,7 +50,8 @@ export async function getServerSideProps({ locale }) {
  */
 export function SendAssetPage() {
   const { formattedAddresses, connect } = useFormattedAddress()
-  const { progress, status, total, hideProgress } = useSendAsset()
+  const { progress, status, total, hideProgress, setHideProgress, setStatus } =
+    useSendAsset()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -87,8 +88,27 @@ export function SendAssetPage() {
       wallet,
       csvTransactions
     )
-    console.debug('responseData', responseData)
+    // console.debug('responseData', responseData)
     setLoading(false)
+    if(responseData instanceof Error){
+      setStatus()
+      setHideProgress(true)
+      if (
+        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+      ) {
+        updateStatusMessage(
+          'Please disable your popup blocker (likely in the top-right of your browser window)',
+          false
+        )
+        return
+      }
+      updateStatusMessage(
+        responseData.body?.message ||
+          responseData.message ||
+          'Sorry, an error has occurred',
+        false
+      )
+    }
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
         updateStatusMessage(
@@ -107,24 +127,12 @@ export function SendAssetPage() {
         setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
         getAssetBalance()
       }
-    } else {
-      if (
-        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
-      ) {
-        updateStatusMessage(
-          'Please disable your popup blocker (likely in the top-right of your browser window)',
-          false
-        )
-        return
-      }
-      updateStatusMessage(
-        responseData.body?.message ||
-          responseData.message ||
-          'Sorry, an error occurred',
-        false
-      )
     }
   }
+
+  const hasStatusBar = useMemo(() => {
+    return typeof status !== 'undefined' 
+  }, [status])
 
   useEffect(() => {
     if (!gettingBalance) {
@@ -214,12 +222,14 @@ export function SendAssetPage() {
             setDuplicateList={setDuplicateList}
             updateStatusMessage={updateStatusMessage}
           />
-          <LinearProgressWithLabel
-            status={status}
-            progress={progress}
-            total={total}
-            hideProgress={hideProgress}
-          />
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
           {duplicateList.length > 0 && (
             <>
               <Typography
