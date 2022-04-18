@@ -20,10 +20,12 @@ export const LinearProgressWithLabel = (props) => {
               value={(progress * 100) / (total === 0 ? 1 : total)}
             />
           </Box>
-          <Box sx={{ minWidth: 35 }}>
-            <Typography variant="body2" color="text.secondary">{`${Math.round(
-              (progress * 100) / (total === 0 ? 1 : total)
-            )}/100`}</Typography>
+          <Box sx={{ minWidth: 40 }}>
+            <Typography variant="body2" color="text.secondary">
+              {`${Math.round(
+                (progress * 100) / (total === 0 ? 1 : total)
+              )}/100`}
+            </Typography>
           </Box>
         </Box>
       )}
