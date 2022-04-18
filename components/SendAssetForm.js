@@ -73,10 +73,10 @@ const SendAssetForm = ({
 
   const checkDisabledState = () => {
     const balance = parseFloat(assetBalance.message)
-    if (!(balance > 0) && (!wallet || !assetId || !csvTransactions)) {
-      return true
+    if (balance > 0 && wallet && assetId && csvTransactions) {
+      return false
     }
-    return false
+    return true
   }
   return (
     <>

@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -21,14 +21,15 @@ import ListItemText from '@mui/material/ListItemText'
 // Custom Components
 import SendAssetForm from '@/components/SendAssetForm'
 import Link from '@/components/Nav/Link'
-import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
-import useMailbox from '@/hooks/useMailbox'
+import useSendAsset from '@/hooks/useSendAsset'
+import useFormattedAddress from '@/hooks/useFormattedAddress'
 
 // Library Files
-import SendAssets from '../lib/send_assets'
+import SendAssets from '@/lib/send_assets'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 /**
  * Generate Static Properties
@@ -48,8 +49,9 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
-  const {status} = useMailbox()
-  console.log(status)
+  const { formattedAddresses, connect } = useFormattedAddress()
+  const { progress, status, total, hideProgress, setHideProgress, setStatus } =
+    useSendAsset()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -63,33 +65,10 @@ export function SendAssetPage() {
     success: false,
   })
   const { t } = useTranslation('common')
-  const [formattedAddresses, setFormattedAddresses] = useState([])
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
   const [duplicateList, setDuplicateList] = useState([])
-
-  useEffect(() => {
-    setFormattedAddresses(
-      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
-    )
-  }, [])
-  const updateAddresses = useCallback(
-    (addresses) => {
-      if (addresses == null) {
-        return
-      }
-      // console.debug({ addresses })
-      localStorage.setItem(
-        'algodex_user_wallet_addresses',
-        JSON.stringify(addresses)
-      )
-      setFormattedAddresses(addresses)
-    },
-    [setFormattedAddresses]
-  )
-
-  const { connect } = useMyAlgo(updateAddresses)
 
   const updateStatusMessage = (message, status) => {
     setActionStatus({
@@ -111,6 +90,25 @@ export function SendAssetPage() {
     )
     // console.debug('responseData', responseData)
     setLoading(false)
+    if(responseData instanceof Error){
+      setStatus()
+      setHideProgress(true)
+      if (
+        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+      ) {
+        updateStatusMessage(
+          'Please disable your popup blocker (likely in the top-right of your browser window)',
+          false
+        )
+        return
+      }
+      updateStatusMessage(
+        responseData.body?.message ||
+          responseData.message ||
+          'Sorry, an error has occurred',
+        false
+      )
+    }
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
         updateStatusMessage(
@@ -126,25 +124,15 @@ export function SendAssetPage() {
           `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
           true
         )
-        setShareableLink(
-          Helper.getShareableRedeemLink(wallet, assetId)
-        )
+        setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
         getAssetBalance()
       }
-    } else {
-      if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
-        updateStatusMessage(
-          'Please disable your popup blocker (likely in the top-right of your browser window)',
-          false
-        )
-        return
-      }
-      updateStatusMessage(
-        responseData.body?.message || responseData.message || 'Sorry, an error occurred',
-        false
-      )
     }
   }
+
+  const hasStatusBar = useMemo(() => {
+    return typeof status !== 'undefined' 
+  }, [status])
 
   useEffect(() => {
     if (!gettingBalance) {
@@ -193,8 +181,6 @@ export function SendAssetPage() {
     }, 500)
   }
 
-
-
   return (
     <>
       <Head>
@@ -224,9 +210,9 @@ export function SendAssetPage() {
           <SendAssetForm
             formattedAddresses={formattedAddresses}
             onSubmit={submitForm}
-            actionStatus={actionStatus}
             isLoading={loading}
             setWallet={setWallet}
+            actionStatus={actionStatus}
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
             assetId={assetId}
@@ -236,6 +222,14 @@ export function SendAssetPage() {
             setDuplicateList={setDuplicateList}
             updateStatusMessage={updateStatusMessage}
           />
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
           {duplicateList.length > 0 && (
             <>
               <Typography

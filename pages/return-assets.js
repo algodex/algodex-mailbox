@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -21,7 +21,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
-import useMyAlgo from '@/hooks/use-my-algo'
+import useFormattedAddress from '@/hooks/useFormattedAddress'
 
 /**
  * Generate Static Properties
@@ -43,6 +43,7 @@ export async function getServerSideProps({ locale }) {
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
   const [senderAddress, setSenderAddress] = useState('')
+  const {formattedAddresses, connect} = useFormattedAddress()
   const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
   const [duplicateList, setDuplicateList] = useState([])
@@ -51,36 +52,11 @@ export function ReturnAssetPage() {
     success: false,
   })
 
-  const [formattedAddresses, setFormattedAddresses] = useState([])
-
-  useEffect(() => {
-    setFormattedAddresses(
-      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
-    )
-  }, [])
-
   useEffect(() => {
     if (actionStatus.message != '') {
       updateStatusMessage()
     }
   }, [assetId, senderAddress, csvTransactions])
-
-  const updateAddresses = useCallback(
-    (addresses) => {
-      if (addresses == null) {
-        return
-      }
-      // console.debug({ addresses })
-      localStorage.setItem(
-        'algodex_user_wallet_addresses',
-        JSON.stringify(addresses)
-      )
-      setFormattedAddresses(addresses)
-    },
-    [setFormattedAddresses]
-  )
-
-  const { connect } = useMyAlgo(updateAddresses)
 
   const { t } = useTranslation('common')
 
