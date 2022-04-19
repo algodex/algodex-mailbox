@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -22,6 +22,8 @@ import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
 import useFormattedAddress from '@/hooks/useFormattedAddress'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
+import useSendAsset from '@/hooks/useSendAsset'
 
 /**
  * Generate Static Properties
@@ -42,8 +44,10 @@ export async function getServerSideProps({ locale }) {
  */
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
+  const { progress, status, total, hideProgress, setHideProgress, setStatus } =
+    useSendAsset()
   const [senderAddress, setSenderAddress] = useState('')
-  const {formattedAddresses, connect} = useFormattedAddress()
+  const { formattedAddresses, connect } = useFormattedAddress()
   const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
   const [duplicateList, setDuplicateList] = useState([])
@@ -66,6 +70,11 @@ export function ReturnAssetPage() {
       success: status || false,
     })
   }
+
+  const hasStatusBar = useMemo(() => {
+    return typeof status !== 'undefined'
+  }, [status])
+
   const submitForm = async ({ formData }) => {
     console.debug(formData)
     if (senderAddress != '' && assetId != '' && csvTransactions != '') {
@@ -78,6 +87,7 @@ export function ReturnAssetPage() {
       )
       // console.debug('responseData', responseData)
       setLoading(false)
+
       if (responseData?.error == false) {
         const totalAssets = responseData.confirmedTransactions.length
         const sentAssets = responseData.confirmedTransactions.filter(
@@ -88,7 +98,11 @@ export function ReturnAssetPage() {
           true
         )
       } else {
-        if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
+        setStatus()
+        setHideProgress(true)
+        if (
+          /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+        ) {
           updateStatusMessage(
             'Please disable your popup blocker (likely in the top-right of your browser window)',
             false
@@ -96,13 +110,14 @@ export function ReturnAssetPage() {
           return
         }
         updateStatusMessage(
-          responseData.body?.message || 'Sorry, an error occurred',
+          responseData.body?.message ||
+            responseData.message ||
+            'Sorry, an error occurred',
           false
         )
       }
     }
   }
-
 
   return (
     <>
@@ -129,6 +144,14 @@ export function ReturnAssetPage() {
             setDuplicateList={setDuplicateList}
             updateStatusMessage={updateStatusMessage}
           />
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
           {duplicateList.length > 0 && (
             <>
               <Typography
@@ -176,4 +199,3 @@ export function ReturnAssetPage() {
 }
 
 export default ReturnAssetPage
-
