@@ -90,7 +90,7 @@ export function SendAssetPage() {
     )
     // console.debug('responseData', responseData)
     setLoading(false)
-    if(responseData instanceof Error){
+    if (responseData instanceof Error) {
       setStatus()
       setHideProgress(true)
       if (
@@ -131,7 +131,7 @@ export function SendAssetPage() {
   }
 
   const hasStatusBar = useMemo(() => {
-    return typeof status !== 'undefined' 
+    return typeof status !== 'undefined'
   }, [status])
 
   useEffect(() => {
@@ -256,28 +256,55 @@ export function SendAssetPage() {
           )}
           {actionStatus.success == true && (
             <Box
-              variant="error-message"
               marginTop="3rem"
-              sx={{ display: 'flex', alignItems: 'center' }}
+              sx={{
+                border: 'solid 2px',
+                borderColor: 'secondary.main',
+                padding: '1rem',
+                borderRadius: '0.2rem',
+              }}
             >
-              <Link href={shareableLink} target="_blanc" sx={{ color: 'blue' }}>
-                Copy and share this link to redeem asset(s)
-              </Link>
-              <Tooltip
-                title={tooltiptext}
-                placement="top"
-                arrow
-                sx={{
-                  cursor: 'pointer',
-                  marginLeft: '0.5rem',
-                }}
+              <Box
+                variant="error-message"
+                sx={{ display: 'flex', alignItems: 'center' }}
               >
-                <ContentCopyIcon
-                  onClick={copyLink}
-                  className="copyToClipboard"
-                  fontSize="0.9rem"
-                />
-              </Tooltip>
+                <Link
+                  href={shareableLink}
+                  target="_blanc"
+                  sx={{ color: 'blue' }}
+                >
+                  Share this link with receiver(s) to redeem asset(s):
+                </Link>
+                <Tooltip
+                  title={tooltiptext}
+                  placement="top"
+                  arrow
+                  sx={{
+                    cursor: 'pointer',
+                    marginLeft: '0.5rem',
+                  }}
+                >
+                  <ContentCopyIcon
+                    onClick={copyLink}
+                    className="copyToClipboard"
+                    fontSize="0.9rem"
+                  />
+                </Tooltip>
+              </Box>
+              <Typography variant="p" marginY={'1rem'}>
+                Link above takes users to the redeem page of this site and
+                autofills sender address. Receivers will need to opt into the
+                asset before claiming.
+              </Typography>
+              <Typography
+                variant="p"
+                fontStyle="italic"
+                marginLeft="1rem"
+                color={(theme) => theme.palette.grey.main}
+              >
+                *Receivers already opted in to the sent ASA before it was sent
+                will automatically receive assets with no additional steps.
+              </Typography>
             </Box>
           )}
           <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
