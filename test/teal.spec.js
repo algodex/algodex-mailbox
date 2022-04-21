@@ -32,12 +32,14 @@ const negativeFundEscrowTests = [
   {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 0, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 0, field: 'fee', val: 2000},
   {txnNum: 1, field: 'amount', val: 100000},
   {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.senderAccount.addr)},
   {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.senderAccount.addr)},
   {txnNum: 1, field: 'type', val: 'pay'},
   {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'fee', val: 2000},
   {txnNum: 2, field: 'amount', val: 0},
   {txnNum: 2, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 2, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1},
@@ -45,12 +47,14 @@ const negativeFundEscrowTests = [
   {txnNum: 2, field: 'type', val: 'pay'},
   {txnNum: 2, field: 'assetIndex', val: 12400859},
   {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 2, field: 'fee', val: 3000},
   {txnNum: 3, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 3, field: 'amount', val: 100000},
   {txnNum: 3, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 3, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 3, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 3, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 3, field: 'fee', val: 1000},
   {txnNum: 4, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getAssetSendTxn(
@@ -73,12 +77,14 @@ const negativeFundEscrowWithoutNoteTests = [
   {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 0, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 0, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 0, field: 'fee', val: 2000},
   {txnNum: 1, field: 'amount', val: 100000},
   {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.senderAccount.addr)},
   {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.senderAccount.addr)},
   {txnNum: 1, field: 'type', val: 'pay'},
   {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'fee', val: 2000},
   {txnNum: 2, field: 'amount', val: 0},
   {txnNum: 2, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 2, field: 'from', txnKeyForVal: 'from', txnNumForVal: 1},
@@ -86,6 +92,7 @@ const negativeFundEscrowWithoutNoteTests = [
   {txnNum: 2, field: 'type', val: 'pay'},
   {txnNum: 2, field: 'assetIndex', val: 12400859},
   {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 2, field: 'fee', val: 2000},
   {txnNum: 3, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getAssetSendTxn(
@@ -110,12 +117,14 @@ const negativeAddMoreFundsTests = [
   {txnNum: 0, field: 'type', val: 'pay'},
   {txnNum: 0, field: 'assetIndex', val: 12400859},
   {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 0, field: 'fee', val: 3000},
   {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 1, field: 'amount', val: 100000},
   {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
   {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'type', val: 'axfer', field2: 'assetIndex', val2: config.assetId},
+  {txnNum: 1, field: 'fee', val: 1000},
   {txnNum: 2, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getAssetSendTxn(
@@ -139,12 +148,14 @@ const negativeWithdrawTests = [
   {txnNum: 0, field: 'type', val: 'pay'},
   {txnNum: 0, field: 'assetIndex', val: 12400859},
   {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 0, field: 'fee', val: 2000},
   {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.receiverAccount.addr)},
   {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'amount', val: 1000},
   {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'type', val: 'axfer'},
   {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'fee', val: 2000},
   {txnNum: 2, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getPayTxn(
@@ -168,18 +179,21 @@ const negativeReturnToSenderTests = [
   {txnNum: 0, field: 'type', val: 'pay'},
   {txnNum: 0, field: 'assetIndex', val: 12400859},
   {txnNum: 0, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 0, field: 'fee', val: 2000},
   {txnNum: 1, field: 'from', val: algosdk.decodeAddress(config.receiverAccount2.addr)},
   {txnNum: 1, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'amount', val: 1000},
   {txnNum: 1, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 1, field: 'type', val: 'axfer'},
   {txnNum: 1, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 1, field: 'fee', val: 2000},
   {txnNum: 2, field: 'from', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 2, field: 'to', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 2, field: 'amount', val: 1000},
   {txnNum: 2, field: 'closeRemainderTo', val: algosdk.decodeAddress(config.maliciousAccount.addr)},
   {txnNum: 2, field: 'type', val: 'axfer'},
   {txnNum: 2, field: 'reKeyTo', val: algosdk.decodeAddress(config.maliciousAccount.addr) },
+  {txnNum: 2, field: 'fee', val: 2000},
   {txnNum: 3, negTxn: {
     unsignedTxnPromise:
             transactionGenerator.getPayTxn(
