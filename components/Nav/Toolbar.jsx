@@ -102,14 +102,20 @@ function Toolbar({
           <Image
             src="/algodex-logo.svg"
             alt="Algodex logo"
-            height={28}
-            width={170}
+            height={25}
+            width={165}
           />
           <Typography
             variant="h6"
             component="div"
+            sx={{
+              fontSize: '24px',
+              '@media (max-width: 780px)': {
+                fontSize: '18px',
+              },
+            }}
             marginRight={2}
-            marginLeft="0.5rem"
+            marginLeft="0.2rem"
             lineHeight={0}
           >
             {title || t('mailbox')}
