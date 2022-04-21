@@ -302,8 +302,9 @@ export function SendAssetPage() {
                 marginLeft="1rem"
                 color={(theme) => theme.palette.grey.main}
               >
-                * Receivers already opted into the ASA before it was sent
-                will automatically receive assets with no additional steps.
+                * Receivers already opted into the asset before it was sent
+                will automatically receive them without needing to redeem via Algodex Mailbox 
+                or other steps.
               </Typography>
             </Box>
           )}
