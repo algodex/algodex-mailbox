@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
@@ -292,9 +293,10 @@ export function SendAssetPage() {
                 </Tooltip>
               </Box>
               <Typography variant="p" marginY={'1rem'}>
-                Link above takes users to the redeem page of this site and
-                autofills sender address. Receivers will need to opt into the
-                asset before claiming.
+                {t(
+                  'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
+                )}
+                .
               </Typography>
               <Typography
                 variant="p"
@@ -302,9 +304,11 @@ export function SendAssetPage() {
                 marginLeft="1rem"
                 color={(theme) => theme.palette.grey.main}
               >
-                * Receivers already opted into the asset before it was sent
-                will automatically receive them without needing to redeem via Algodex Mailbox 
-                or other steps.
+                *{' '}
+                {t(
+                  'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
+                )}
+                .
               </Typography>
             </Box>
           )}
