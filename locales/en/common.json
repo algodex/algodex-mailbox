@@ -80,5 +80,11 @@
   "Learn to use Algodex Mailbox using our": "Learn to use Algodex Mailbox using our",
   "guide": "guide",
   "Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming":"Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming",
-  "Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps":"Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps"
+  "Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps":"Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps",
+  "Sorry, an error occurred":"Sorry, an error occurred",
+  "Please disable your popup blocker (likely in the top-right of your browser window)":"Please disable your popup blocker (likely in the top-right of your browser window)",
+  "Share this link with receiver(s) to redeem asset(s)":"Share this link with receiver(s) to redeem asset(s)",
+  "Find below the duplicate wallet address":"Find below the duplicate wallet address",
+  "transaction(s) sent successfully":"transaction(s) sent successfully",
+  "transaction(s) returned successfully":"transaction(s) returned successfully"
 }

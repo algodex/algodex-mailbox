@@ -93,7 +93,7 @@ export function RedeemAssetPage() {
       updateStatusMessage(
         typeof responseData === 'string'
           ? responseData
-          : responseData?.response?.body?.message || 'Sorry, an error occurred',
+          : responseData?.response?.body?.message || t('Sorry, an error occurred'),
         false
       )
     }

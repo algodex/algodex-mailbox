@@ -98,7 +98,7 @@ export function SendAssetPage() {
         /PopupOpenError|blocked|Can not open popup window/.test(responseData)
       ) {
         updateStatusMessage(
-          'Please disable your popup blocker (likely in the top-right of your browser window)',
+          t('Please disable your popup blocker (likely in the top-right of your browser window)'),
           false
         )
         return
@@ -106,7 +106,7 @@ export function SendAssetPage() {
       updateStatusMessage(
         responseData.body?.message ||
           responseData.message ||
-          'Sorry, an error has occurred',
+          t('Sorry, an error occurred'),
         false
       )
     }
@@ -122,7 +122,7 @@ export function SendAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
+          `${sentAssets}/${totalAssets} ${t('transaction(s) sent successfully')}`,
           true
         )
         setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
@@ -240,7 +240,7 @@ export function SendAssetPage() {
                 marginBottom="0"
                 color={'error'}
               >
-                Find below the duplicate wallet address
+                {t('Find below the duplicate wallet address')}
                 {duplicateList.length > 1 && 'es'}:
               </Typography>
               <List dense={false}>
@@ -274,7 +274,7 @@ export function SendAssetPage() {
                   target="_blanc"
                   sx={{ color: 'blue' }}
                 >
-                  Share this link with receiver(s) to redeem asset(s):
+                  {t('Share this link with receiver(s) to redeem asset(s)')}:
                 </Link>
                 <Tooltip
                   title={tooltiptext}
