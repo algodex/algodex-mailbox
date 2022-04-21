@@ -105,6 +105,9 @@ const theme = {
       dark: '#dedede',
       contrastText: '#2D3748',
     },
+    grey:{
+      main:'#6C6C6C'
+    },
     progress:{
       main:'#7B61FF'
     }
