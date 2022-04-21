@@ -218,11 +218,17 @@ export function RedeemAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5}>
-              <Link href={escrowBalance.algoExplorerLink} color="primary.dark" target='_blanc'>
-                {t('open-algoexplorer-link')}
-              </Link>
-            </Grid>
+            {escrowBalance.algoExplorerLink != '' && (
+              <Grid item xs={6} lg={5}>
+                <Link
+                  href={escrowBalance.algoExplorerLink}
+                  color="primary.dark"
+                  target="_blanc"
+                >
+                  {t('open-algoexplorer-link')}
+                </Link>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>
