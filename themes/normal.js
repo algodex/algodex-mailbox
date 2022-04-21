@@ -103,7 +103,7 @@ const theme = {
       light: '#F2F2F2',
       main: '#e3e3e4',
       dark: '#dedede',
-      contrastText: '#2D3748',
+      contrastText: '#2F3746',
     },
     grey:{
       main:'#6C6C6C'

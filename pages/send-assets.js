@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
@@ -97,7 +98,7 @@ export function SendAssetPage() {
         /PopupOpenError|blocked|Can not open popup window/.test(responseData)
       ) {
         updateStatusMessage(
-          'Please disable your popup blocker (likely in the top-right of your browser window)',
+          t('Please disable your popup blocker (likely in the top-right of your browser window)'),
           false
         )
         return
@@ -105,7 +106,7 @@ export function SendAssetPage() {
       updateStatusMessage(
         responseData.body?.message ||
           responseData.message ||
-          'Sorry, an error has occurred',
+          t('Sorry, an error occurred'),
         false
       )
     }
@@ -121,7 +122,7 @@ export function SendAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
+          `${sentAssets}/${totalAssets} ${t('transaction(s) sent successfully')}`,
           true
         )
         setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
@@ -239,7 +240,7 @@ export function SendAssetPage() {
                 marginBottom="0"
                 color={'error'}
               >
-                Find below the duplicate wallet address
+                {t('Find below the duplicate wallet address')}
                 {duplicateList.length > 1 && 'es'}:
               </Typography>
               <List dense={false}>
@@ -273,7 +274,7 @@ export function SendAssetPage() {
                   target="_blanc"
                   sx={{ color: 'blue' }}
                 >
-                  Share this link with receiver(s) to redeem asset(s):
+                  {t('Share this link with receiver(s) to redeem asset(s)')}:
                 </Link>
                 <Tooltip
                   title={tooltiptext}
@@ -292,9 +293,10 @@ export function SendAssetPage() {
                 </Tooltip>
               </Box>
               <Typography variant="p" marginY={'1rem'}>
-                Link above takes users to the redeem page of this site and
-                autofills sender address. Receivers will need to opt into the
-                asset before claiming.
+                {t(
+                  'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
+                )}
+                .
               </Typography>
               <Typography
                 variant="p"
@@ -302,9 +304,11 @@ export function SendAssetPage() {
                 marginLeft="1rem"
                 color={(theme) => theme.palette.grey.main}
               >
-                * Receivers already opted into the asset before it was sent
-                will automatically receive them without needing to redeem via Algodex Mailbox 
-                or other steps.
+                *{' '}
+                {t(
+                  'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
+                )}
+                .
               </Typography>
             </Box>
           )}

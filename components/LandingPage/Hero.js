@@ -139,9 +139,9 @@ export const Hero = () => {
                   width="300"
                   height="50"
                 />
-                <Typography variant="h3">{t('mailbox')}</Typography>
+                <Typography variant="h3" color='accent.contrastText'>{t('mailbox')}</Typography>
                 <Image
-                  src="/Powered-by-Algorand.png"
+                  src="/Powered-by-Algorand.svg"
                   alt="Powered by Algorand"
                   width="150"
                   height="20"

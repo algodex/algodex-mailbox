@@ -94,7 +94,7 @@ export function ReturnAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} transaction(s) returned successfully`,
+          `${sentAssets}/${totalAssets} ${t('transaction(s) returned successfully')}`,
           true
         )
       } else {
@@ -104,7 +104,7 @@ export function ReturnAssetPage() {
           /PopupOpenError|blocked|Can not open popup window/.test(responseData)
         ) {
           updateStatusMessage(
-            'Please disable your popup blocker (likely in the top-right of your browser window)',
+            t('Please disable your popup blocker (likely in the top-right of your browser window)'),
             false
           )
           return
@@ -112,7 +112,7 @@ export function ReturnAssetPage() {
         updateStatusMessage(
           responseData.body?.message ||
             responseData.message ||
-            'Sorry, an error occurred',
+            t('Sorry, an error occurred'),
           false
         )
       }

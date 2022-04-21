@@ -23,6 +23,7 @@ import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 //Algodex
 import Helper from '@/lib/helper'
 import Link from './Link'
+import { useRouter } from 'next/router'
 
 /**
  * Toolbar
@@ -46,7 +47,7 @@ const styles = {
   linkStyles: {
     fontWeight: '700',
     marginRight: '1.6rem',
-    color: (theme) => theme.palette.primary.contrastText,
+    color: (theme) => theme.palette.accent.contrastText,
   },
 }
 
@@ -62,6 +63,7 @@ function Toolbar({
   isDashboard,
   ...rest
 }) {
+  const CURRENT_PAGE = useRouter().pathname
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -76,9 +78,9 @@ function Toolbar({
     if (ENABLE_NETWORK_SELECTION) {
       setEnvironmentText(value)
       if (value === 'MAINNET') {
-        window.location = MAINNET_LINK
+        window.location = `${MAINNET_LINK}${CURRENT_PAGE}`
       } else {
-        window.location = TESTNET_LINK
+        window.location = `${TESTNET_LINK}${CURRENT_PAGE}`
       }
     }
   }
@@ -113,6 +115,7 @@ function Toolbar({
               '@media (max-width: 780px)': {
                 fontSize: '18px',
               },
+              color: 'accent.contrastText',
             }}
             marginRight={2}
             marginLeft="0.2rem"

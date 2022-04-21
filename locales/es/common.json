@@ -78,5 +78,13 @@
   "How does Algodex Mailbox Work?": "¿Cómo funciona el buzón de Algodex?",
   "Algodex Mailbox uses Algorand smart contracts to create an escrow that holds sent Algorand Standard Assets before they are redeemed. The smart contract escrow exists entirely on the Algorand blockchain so nobody, including Algodex Mailbox, can access the escrow except for the sender and recipient.": "Algodex Mailbox utiliza contratos inteligentes de Algorand para crear un depósito en garantía que retiene los activos estándar de Algorand enviados antes de que se canjeen. El depósito en garantía del contrato inteligente existe completamente en la cadena de bloques de Algorand, por lo que nadie, incluido el buzón de Algodex, puede acceder al depósito en garantía, excepto el remitente y el destinatario.",
   "Learn to use Algodex Mailbox using our": "Aprende a usar el Buzón de Algodex usando nuestro",
-  "guide": "guía"
+  "guide": "guía",
+  "Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming":"El enlace anterior lleva a los usuarios a la página de canje de este sitio y autocompleta la dirección del remitente. Los receptores deberán optar por el activo antes de reclamar",
+  "Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps":"Los destinatarios que ya optaron por el activo antes de que se enviara lo recibirán automáticamente sin necesidad de canjearlo a través del buzón de Algodex u otros pasos",
+  "Sorry, an error occurred":"Disculpe, ocurrió un error",
+  "Please disable your popup blocker (likely in the top-right of your browser window)":"Deshabilite su bloqueador de ventanas emergentes (probablemente en la parte superior derecha de la ventana de su navegador)",
+  "Share this link with receiver(s) to redeem asset(s)":"Comparta este enlace con los destinatarios para canjear activos",
+  "Find below the duplicate wallet address":"Encuentre debajo la dirección de la billetera duplicada",
+  "transaction(s) sent successfully":"transacciones enviadas con éxito",
+  "transaction(s) returned successfully":"transacciones devueltas con éxito"
 }
