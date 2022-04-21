@@ -302,7 +302,7 @@ export function SendAssetPage() {
                 marginLeft="1rem"
                 color={(theme) => theme.palette.grey.main}
               >
-                *Receivers already opted in to the sent ASA before it was sent
+                * Receivers already opted into the ASA before it was sent
                 will automatically receive assets with no additional steps.
               </Typography>
             </Box>
