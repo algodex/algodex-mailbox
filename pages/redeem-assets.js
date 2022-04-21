@@ -44,6 +44,7 @@ export function RedeemAssetPage() {
   const [escrowBalance, setEscrowBalance] = useState({
     success: false,
     message: '',
+    algoExplorerLink: '',
   })
   const { query } = useRouter()
   const [assetId, setAssetId] = useState()
@@ -58,7 +59,7 @@ export function RedeemAssetPage() {
   const formData = {
     assetId: query.assetId || '',
     senderAddress: query.senderAddress || '',
-    receiverAddress: query.receiverAddress || ''
+    receiverAddress: query.receiverAddress || '',
   }
 
   useEffect(() => {
@@ -105,10 +106,14 @@ export function RedeemAssetPage() {
       receiverAddress,
       senderAddress
     )
-    // console.debug({ res })
+    console.debug({ res })
     setGettingBalance(false)
     if (res.error == false) {
-      setEscrowBalance({ success: true, message: res.balance })
+      setEscrowBalance({
+        success: true,
+        message: res.balance,
+        algoExplorerLink: res.algoExplorerLink,
+      })
     } else {
       setEscrowBalance({
         success: false,
@@ -116,6 +121,7 @@ export function RedeemAssetPage() {
           res?.data?.message ||
           // eslint-disable-next-line max-len
           'An error occurred while getting your asset balance, please ensure you enter valid inputs',
+        algoExplorerLink: '',
       })
     }
   }
@@ -149,6 +155,7 @@ export function RedeemAssetPage() {
       setEscrowBalance({
         message: '',
         success: true,
+        algoExplorerLink: '',
       })
     }
   }, [assetId, receiverAddress, senderAddress])
@@ -211,11 +218,17 @@ export function RedeemAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5}>
-              <Link href={'/'} color="primary.dark">
-                {t('open-algoexplorer-link')}
-              </Link>
-            </Grid>
+            {escrowBalance.algoExplorerLink != '' && (
+              <Grid item xs={6} lg={5}>
+                <Link
+                  href={escrowBalance.algoExplorerLink}
+                  color="primary.dark"
+                  target="_blanc"
+                >
+                  {t('open-algoexplorer-link')}
+                </Link>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>
@@ -224,4 +237,3 @@ export function RedeemAssetPage() {
 }
 
 export default RedeemAssetPage
-
