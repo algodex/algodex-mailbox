@@ -74,7 +74,7 @@ export function TransactionHistoryPage() {
           )
         // console.debug('responseData', responseData)
         setLoading(false)
-        if (responseData.error == true) {
+        if (responseData instanceof Error || responseData.error == true) {
           updateStatusMessage(
             responseData.body?.message || 'Sorry an error occured'
           )
