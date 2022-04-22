@@ -65,7 +65,7 @@ const UploadContainer = ({
       Object.entries(count).forEach((c) => {
         c[1] > 1 && duplicate.push(c[0])
       })
-      if (duplicate.length > 0) {
+      if (!process.env.NEXT_PUBLIC_IGNORE_DUPLICATES && duplicate.length > 0) {
         setCsvTransactions()
         setDuplicateList(duplicate)
         updateStatusMessage(
