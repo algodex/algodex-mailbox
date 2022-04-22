@@ -78,7 +78,7 @@ const ReturnAssetForm = ({
   return (
     <>
       <Box
-        sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
+        sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
       >
         <FormControl>
           <RadioGroup
