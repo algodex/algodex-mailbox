@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -27,7 +27,6 @@ import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
-import { useRouter } from 'next/router'
 
 /**
  * Layout Component
@@ -40,23 +39,16 @@ import { useRouter } from 'next/router'
  * @returns {JSX.Element}
  * @component
  */
-export function Layout({ children, components, componentsProps }) {
+export function Layout({ children, components, componentsProps, isHomePage }) {
   const { Toolbar, BottomNavigation, Drawer } = components
   const [drawerWidth, setDrawerWidth] = useState(240)
   const [drawerOpen, setDrawerOpen] = useState(true)
-  const [isHomePage, setIsHomePage] = useState(false)
   const { t } = useTranslation('common')
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
   const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const routePath = useRouter().asPath
-  useEffect(() => {
-    setIsHomePage(
-      routePath === '/' ? true : routePath === '/#faq' ? true : false
-    )
-  }, [routePath])
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {

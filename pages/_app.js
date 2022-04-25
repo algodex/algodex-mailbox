@@ -17,10 +17,10 @@ import createEmotionCache from '@/utils/createEmotionCache'
 import parser from 'ua-parser-js'
 import NextApp from 'next/app'
 import Layout from '@/components/Layout'
+import { useRouter } from 'next/router'
 const theme = getTheme('normal')
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
-
 const mobileSsrMatchMedia = (query) => ({
   matches: mediaQuery.match(query, {
     // The estimated CSS width of the browser.
@@ -50,6 +50,8 @@ const desktopMuiTheme = createTheme({
 })
 
 export function App(props) {
+  const routePath = useRouter().asPath
+  const isHomePage = routePath === '/' ? true : routePath === '/#faq' ? true : false
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   return (
     <CacheProvider value={emotionCache}>
@@ -63,7 +65,7 @@ export function App(props) {
       >
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Layout>
+        <Layout isHomePage={isHomePage}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
