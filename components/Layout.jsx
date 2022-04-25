@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -27,6 +27,7 @@ import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
+import { useRouter } from 'next/router'
 
 /**
  * Layout Component
@@ -39,11 +40,20 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
  * @returns {JSX.Element}
  * @component
  */
-export function Layout({ children, components, componentsProps, isHomePage }) {
+export function Layout({ children, components, componentsProps }) {
   const { Toolbar, BottomNavigation, Drawer } = components
   const [drawerWidth, setDrawerWidth] = useState(240)
   const [drawerOpen, setDrawerOpen] = useState(true)
+  const routePath = useRouter().asPath
+  const [isHomePage, setIsHomePage] = useState(
+    routePath === '/' ? true : routePath === '/#faq' ? true : false
+  )
   const { t } = useTranslation('common')
+  useEffect(() => {
+    setIsHomePage(
+      routePath === '/' ? true : routePath === '/#faq' ? true : false
+    )
+  }, [routePath])
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
   const toolbarHeight = undefined
