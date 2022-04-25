@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 /*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
@@ -14,15 +15,22 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
 // Custom Components
-import * as SendAssetsHelper from '@/lib/send_assets.js'
 import SendAssetForm from '@/components/SendAssetForm'
 import Link from '@/components/Nav/Link'
-import useMyAlgo from '@/hooks/use-my-algo'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
+import useSendAsset from '@/hooks/useSendAsset'
+import useFormattedAddress from '@/hooks/useFormattedAddress'
+
+// Library Files
+import SendAssets from '@/lib/send_assets'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 /**
  * Generate Static Properties
@@ -42,6 +50,9 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
+  const { formattedAddresses, connect } = useFormattedAddress()
+  const { progress, status, total, hideProgress, setHideProgress, setStatus } =
+    useSendAsset()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
@@ -55,37 +66,10 @@ export function SendAssetPage() {
     success: false,
   })
   const { t } = useTranslation('common')
-  const [formattedAddresses, setFormattedAddresses] = useState([])
   const [gettingBalance, setGettingBalance] = useState(false)
   const [shareableLink, setShareableLink] = useState('')
   const [tooltiptext, setTooltiptext] = useState('Click to Copy')
-  const [fileName, setFileName] = useState()
-  let webURL = ''
-  if (typeof window !== 'undefined') {
-    webURL = `${window.location.protocol}//${window.location.host}`
-  }
-
-  useEffect(() => {
-    setFormattedAddresses(
-      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
-    )
-  }, [])
-  const updateAddresses = useCallback(
-    (addresses) => {
-      if (addresses == null) {
-        return
-      }
-      // console.debug({ addresses })
-      localStorage.setItem(
-        'algodex_user_wallet_addresses',
-        JSON.stringify(addresses)
-      )
-      setFormattedAddresses(addresses)
-    },
-    [setFormattedAddresses]
-  )
-
-  const { connect } = useMyAlgo(updateAddresses)
+  const [duplicateList, setDuplicateList] = useState([])
 
   const updateStatusMessage = (message, status) => {
     setActionStatus({
@@ -100,13 +84,32 @@ export function SendAssetPage() {
     // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
-    const responseData = await SendAssetsHelper.send(
+    const responseData = await SendAssets.send(
       assetId,
       wallet,
       csvTransactions
     )
     // console.debug('responseData', responseData)
     setLoading(false)
+    if (responseData instanceof Error) {
+      setStatus()
+      setHideProgress(true)
+      if (
+        /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+      ) {
+        updateStatusMessage(
+          t('Please disable your popup blocker (likely in the top-right of your browser window)'),
+          false
+        )
+        return
+      }
+      updateStatusMessage(
+        responseData.body?.message ||
+          responseData.message ||
+          t('Sorry, an error occurred'),
+        false
+      )
+    }
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
         updateStatusMessage(
@@ -119,28 +122,18 @@ export function SendAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} transaction(s) sent successfully`,
+          `${sentAssets}/${totalAssets} ${t('transaction(s) sent successfully')}`,
           true
         )
-        setShareableLink(
-          `${webURL}/redeem-assets/?senderAddress=${wallet}&assetId=${assetId}`
-        )
+        setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
         getAssetBalance()
       }
-    } else {
-      if (/PopupOpenError|blocked|Can not open popup window|/.test(responseData)) {
-        updateStatusMessage(
-          'Please disable your popup blocker (likely in the top-right of your browser window)',
-          false
-        )
-        return
-      }
-      updateStatusMessage(
-        responseData.body?.message || 'Sorry, an error occurred',
-        false
-      )
     }
   }
+
+  const hasStatusBar = useMemo(() => {
+    return typeof status !== 'undefined'
+  }, [status])
 
   useEffect(() => {
     if (!gettingBalance) {
@@ -189,18 +182,6 @@ export function SendAssetPage() {
     }, 500)
   }
 
-  const getFileUpload = async (e) => {
-    updateStatusMessage()
-    const csvFiles = e.target.files[0]
-    setFileName(csvFiles.name)
-    const reader = new FileReader()
-    reader.onloadend = ({ target }) => {
-      const text = target.result
-      setCsvTransactions(text.replace(/\r?\r/g, ''))
-    }
-    reader.readAsText(csvFiles)
-  }
-
   return (
     <>
       <Head>
@@ -208,6 +189,9 @@ export function SendAssetPage() {
       </Head>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={6} xl={5}>
+          {/*<Typography variant="h1" sx={{color: 'purple'}}>
+          Example Event Status: {status}
+          </Typography>*/}
           <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
             {t('/send-assets')}
           </Typography>
@@ -227,41 +211,105 @@ export function SendAssetPage() {
           <SendAssetForm
             formattedAddresses={formattedAddresses}
             onSubmit={submitForm}
-            actionStatus={actionStatus}
             isLoading={loading}
             setWallet={setWallet}
+            actionStatus={actionStatus}
             setAssetId={setAssetId}
             csvTransactions={csvTransactions}
-            getFileUpload={getFileUpload}
-            fileName={fileName}
             assetId={assetId}
             wallet={wallet}
+            assetBalance={assetBalance}
+            setCsvTransactions={setCsvTransactions}
+            setDuplicateList={setDuplicateList}
+            updateStatusMessage={updateStatusMessage}
           />
-
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
+          {duplicateList.length > 0 && (
+            <>
+              <Typography
+                variant="error-message"
+                display="block"
+                marginTop="1rem"
+                marginBottom="0"
+                color={'error'}
+              >
+                {t('Find below the duplicate wallet address')}
+                {duplicateList.length > 1 && 'es'}:
+              </Typography>
+              <List dense={false}>
+                {duplicateList.map((d) => (
+                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                    <ListItemText
+                      primary={d}
+                      sx={{ color: 'red', marginBlock: '0' }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
           {actionStatus.success == true && (
             <Box
-              variant="error-message"
               marginTop="3rem"
-              sx={{ display: 'flex', alignItems: 'center' }}
+              sx={{
+                border: 'solid 2px',
+                borderColor: 'secondary.main',
+                padding: '1rem',
+                borderRadius: '0.2rem',
+              }}
             >
-              <Link href={shareableLink} target="_blanc" sx={{ color: 'blue' }}>
-                Copy and share this link to redeem asset(s)
-              </Link>
-              <Tooltip
-                title={tooltiptext}
-                placement="top"
-                arrow
-                sx={{
-                  cursor: 'pointer',
-                  marginLeft: '0.5rem',
-                }}
+              <Box
+                variant="error-message"
+                sx={{ display: 'flex', alignItems: 'center' }}
               >
-                <ContentCopyIcon
-                  onClick={copyLink}
-                  className="copyToClipboard"
-                  fontSize="0.9rem"
-                />
-              </Tooltip>
+                <Link
+                  href={shareableLink}
+                  target="_blanc"
+                  sx={{ color: 'blue' }}
+                >
+                  {t('Share this link with receiver(s) to redeem asset(s)')}:
+                </Link>
+                <Tooltip
+                  title={tooltiptext}
+                  placement="top"
+                  arrow
+                  sx={{
+                    cursor: 'pointer',
+                    marginLeft: '0.5rem',
+                  }}
+                >
+                  <ContentCopyIcon
+                    onClick={copyLink}
+                    className="copyToClipboard"
+                    fontSize="0.9rem"
+                  />
+                </Tooltip>
+              </Box>
+              <Typography variant="p" marginY={'1rem'}>
+                {t(
+                  'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
+                )}
+                .
+              </Typography>
+              <Typography
+                variant="p"
+                fontStyle="italic"
+                marginLeft="1rem"
+                color={(theme) => theme.palette.grey.main}
+              >
+                *{' '}
+                {t(
+                  'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
+                )}
+                .
+              </Typography>
             </Box>
           )}
           <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>

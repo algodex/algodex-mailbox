@@ -4,11 +4,12 @@
  */
 
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import CollapseableErrorMessage from './CollapseableErrorMessage'
 
 const TransactionHistoryForm = ({
   onSubmit,
@@ -16,6 +17,7 @@ const TransactionHistoryForm = ({
   formData,
   actionStatus,
 }) => {
+  const { t } = useTranslation('common')
   const schema = {
     required: ['assetId', 'senderAddress'],
     properties: {
@@ -50,23 +52,19 @@ const TransactionHistoryForm = ({
       }}
       autoComplete="on"
     >
-     
       <Grid container spacing={2} marginTop={'2rem'}>
         <Grid item xs={6} lg={4}>
-          <LoadingButton loading={isLoading} variant="contained" type="submit">
-            Refresh
+          <LoadingButton
+            loading={isLoading}
+            variant="contained"
+            type="submit"
+            sx={{ textDecoration: 'capitalize' }}
+          >
+            {t('Refresh')}
           </LoadingButton>
         </Grid>
-        <Grid item xs={6}>
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              sx={{ display: 'flex', justifyContent: 'end' }}
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
+        <Grid item xs={6} marginLeft="auto" textAlign="end">
+          <CollapseableErrorMessage actionStatus={actionStatus} />
         </Grid>
       </Grid>
     </Form>

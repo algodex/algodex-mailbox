@@ -4,6 +4,7 @@
  */
 
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -12,6 +13,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+import CollapseableErrorMessage from './CollapseableErrorMessage'
 
 const RedeemAssetForm = ({
   onSubmit,
@@ -27,6 +29,7 @@ const RedeemAssetForm = ({
   formData,
   balance,
 }) => {
+  const { t } = useTranslation('common')
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
@@ -42,64 +45,61 @@ const RedeemAssetForm = ({
 
   const AssetIdInputComponent = (props) => {
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          <FormControl fullWidth>
-            <TextField
-              name="AssetId"
-              required={props.required}
-              id="outlined-required"
-              label="Asset Id"
-              onChange={({ target: { value } }) => {
-                props.onChange(value)
-                setAssetId(value)
-              }}
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
+      <Box>
+        <FormControl fullWidth>
+          <TextField
+            name="AssetId"
+            defaultValue={formData.assetId}
+            required={props.required}
+            id="outlined-required"
+            label="Asset Id"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setAssetId(value)
+            }}
+          />
+        </FormControl>
+      </Box>
     )
   }
 
   const SenderInputComponent = (props) => {
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          <FormControl fullWidth>
-            <TextField
-              name="SenderAddress"
-              required={props.required}
-              id="outlined-required"
-              label="Sender Address"
-              onChange={({ target: { value } }) => {
-                props.onChange(value)
-                setSenderAddress(value)
-              }}
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
+      <Box>
+        <FormControl fullWidth>
+          <TextField
+            name="SenderAddress"
+            required={props.required}
+            defaultValue={formData.senderAddress}
+            id="outlined-required"
+            label="Sender Address"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setSenderAddress(value)
+            }}
+          />
+        </FormControl>
+      </Box>
     )
   }
 
   const ReceiverInputComponent = (props) => {
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          <FormControl fullWidth>
-            <TextField
-              name="ReceiverAddress"
-              required={props.required}
-              id="outlined-required"
-              label="Receiver Address"
-              onChange={({ target: { value } }) => {
-                props.onChange(value)
-                setReceiverAddress(value)
-              }}
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
+      <Box>
+        <FormControl fullWidth>
+          <TextField
+            name="ReceiverAddress"
+            required={props.required}
+            id="outlined-required"
+            defaultValue={formData.receiverAddress}
+            label="Receiver Address"
+            onChange={({ target: { value } }) => {
+              props.onChange(value)
+              setReceiverAddress(value)
+            }}
+          />
+        </FormControl>
+      </Box>
     )
   }
   const uiSchema = {
@@ -121,15 +121,7 @@ const RedeemAssetForm = ({
   }
 
   const confirmDisabledState = () => {
-    if (
-      !assetId ||
-      !receiverAddress ||
-      !senderAddress ||
-      assetId == '' ||
-      receiverAddress == '' ||
-      senderAddress == '' ||
-      (!isNaN(balance) && 0 >= balance)
-    ) {
+    if (!assetId || !receiverAddress || !senderAddress || !(balance > 0)) {
       return true
     }
     return false
@@ -146,8 +138,9 @@ const RedeemAssetForm = ({
       {optInStatus == false && (
         <Box marginTop="2rem">
           <Typography variant="error-message" color="error">
-            Warning: You have not yet opted into the asset. Please do so in
-            another wallet app.
+            {t(
+              'Warning: You have not yet opted into the asset. Please do so in another wallet app.'
+            )}
           </Typography>
         </Box>
       )}
@@ -158,19 +151,13 @@ const RedeemAssetForm = ({
             variant="contained"
             type="submit"
             disabled={confirmDisabledState()}
+            sx={{textDecoration:'capitalize'}}
           >
-            Redeem
+            {t('Redeem')}
           </LoadingButton>
         </Grid>
-        <Grid item xs={6} lg={8}>
-          {actionStatus.message != '' && (
-            <Typography
-              variant="error-message"
-              color={actionStatus.success ? 'green' : 'error'}
-            >
-              {actionStatus.message}
-            </Typography>
-          )}
+        <Grid item xs={6} marginLeft="auto" textAlign="end">
+          <CollapseableErrorMessage actionStatus={actionStatus} />
         </Grid>
       </Grid>
     </Form>

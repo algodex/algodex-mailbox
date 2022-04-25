@@ -14,18 +14,18 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import { makeStyles } from '@mui/styles'
-import getTheme from '@/themes/getTheme'
-const theme = getTheme('normal')
-
-const useStyles = makeStyles({
-  root: {
-    '& .MuiTableCell-head': {
-      backgroundColor: `${theme.palette.primary.main}`,
-    },
-  },
-})
+import { useTheme } from '@mui/material'
 
 const TransactionTable = ({ rows }) => {
+  const theme = useTheme()
+  
+  const useStyles = makeStyles({
+    root: {
+      '& .MuiTableCell-head': {
+        backgroundColor: `${theme.palette.primary.main}`,
+      },
+    },
+  })
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -14,12 +14,6 @@ import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
 import ListSubheader from '@mui/material/ListSubheader'
 
-// Icons
-import SendIcon from '@mui/icons-material/Send'
-import HistoryIcon from '@mui/icons-material/History'
-import RedeemIcon from '@mui/icons-material/Redeem'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
-
 // Custom MUI Components
 import ListItemLink from '@/components/Nav/ListItemLink'
 
@@ -32,7 +26,7 @@ import ListItemLink from '@/components/Nav/ListItemLink'
  * @returns {JSX.Element}
  * @constructor
  */
-function Drawer({ width, offset, ...props }) {
+function Drawer({ width, offset, links, toggleDrawer, ...props }) {
   const { t } = useTranslation('common')
   return (
     <MUIDrawer
@@ -55,26 +49,19 @@ function Drawer({ width, offset, ...props }) {
             </ListSubheader>
           }
         >
-          <ListItemLink
-            to="/send-assets"
-            icon={<SendIcon />}
-            primary={t('/send-assets')}
-          />
-          <ListItemLink
-            to="/transaction-history"
-            icon={<HistoryIcon />}
-            primary={t('/transaction-history')}
-          />
-          <ListItemLink
-            to="/redeem-assets"
-            icon={<RedeemIcon />}
-            primary={t('/redeem-assets')}
-          />
-          <ListItemLink
-            to="/return-assets"
-            icon={<KeyboardReturnIcon />}
-            primary={t('/return-assets')}
-          />
+          {links.map((link) => (
+            <ListItemLink
+              key={link.to}
+              to={link.to}
+              icon={link.icon}
+              primary={link.primary}
+              onClick={() => {
+                if (toggleDrawer) {
+                  toggleDrawer()
+                }
+              }}
+            />
+          ))}
         </List>
       </Box>
     </MUIDrawer>
@@ -85,11 +72,15 @@ Drawer.propTypes = {
   /**
    * width
    */
-  width: PropTypes.number.isRequired,
+  width: PropTypes.any,
   /**
    * offset
    */
   offset: PropTypes.number,
+  /**
+   * toggleDrawer to close drawer on mobile
+   */
+  toggleDrawer: PropTypes.func,
 }
 
 Drawer.defaultProps = {

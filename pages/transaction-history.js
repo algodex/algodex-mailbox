@@ -74,7 +74,7 @@ export function TransactionHistoryPage() {
           )
         // console.debug('responseData', responseData)
         setLoading(false)
-        if (responseData.error == true) {
+        if (responseData instanceof Error || responseData.error == true) {
           updateStatusMessage(
             responseData.body?.message || 'Sorry an error occured'
           )
@@ -121,7 +121,7 @@ export function TransactionHistoryPage() {
         <title>{`${t('/transaction-history')} | ${t('app-title')}`}</title>
       </Head>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+        <Grid item xs={12} md={8} lg={7} xl={6}>
           <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
             {t('/transaction-history')}
           </Typography>

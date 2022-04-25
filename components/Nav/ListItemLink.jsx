@@ -25,7 +25,7 @@ import CustomLink from '@/components/Nav/Link'
  * @see https://mui.com/guides/routing/#list
  * @constructor
  */
-function ListItemLink({ icon, primary, to }) {
+function ListItemLink({ icon, primary, to, ...rest }) {
   const router = useRouter()
   const activeNav = router.asPath
 
@@ -39,7 +39,7 @@ function ListItemLink({ icon, primary, to }) {
 
   return (
     <li>
-      <ListItem button component={renderLink} selected={activeNav === to}>
+      <ListItem button component={renderLink} selected={activeNav === to} {...rest}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
