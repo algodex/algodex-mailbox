@@ -136,6 +136,16 @@ export const FAQ = () => {
                               @AlgodexOfficial
                             </a>
                           </li>
+                          <li>
+                            Discord:{' '}
+                            <a
+                              href="https://discord.gg/b6gTsNrPB8"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Algodex Discussion
+                            </a>
+                          </li>
                         </ul>
                       )}
                     </AccordionDetails>
