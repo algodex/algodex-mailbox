@@ -78,16 +78,17 @@ export const FAQ = () => {
                       <Typography>
                         {t(faq.a)}
                         {faq.guideLink && (
-                          <a
-                            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ marginLeft: '3px' }}
-                          >
-                            {t('guide')}
-                          </a>
+                          <span>
+                            <a
+                              href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ marginLeft: '3px' }}
+                            >
+                              {t('guide')}
+                            </a>.
+                          </span>
                         )}
-                        .
                       </Typography>
                       {faq.socialLink && (
                         <ul>
