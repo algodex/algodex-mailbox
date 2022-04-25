@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -52,7 +52,7 @@ export function Layout({ children, components, componentsProps }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const routePath = useRouter().asPath
-  useCallback(() => {
+  useEffect(() => {
     setIsHomePage(
       routePath === '/' ? true : routePath === '/#faq' ? true : false
     )
