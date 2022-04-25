@@ -61,7 +61,7 @@ export function Layout({ children, components, componentsProps }) {
     !isMobile && !isHomePage ? 240 : 0
   )
   const [drawerOpen, setDrawerOpen] = useState(isHomePage ? false : true)
-  
+
   useEffect(() => {
     setDrawerOpen(isHomePage ? false : true)
     setDrawerWidth(!isMobile && !isHomePage ? 240 : 0)
@@ -75,10 +75,6 @@ export function Layout({ children, components, componentsProps }) {
       setDrawerWidth(0)
     }
   }
-
-  console.log({ drawerOpen })
-  console.log({ drawerWidth })
-  console.log({ isHomePage })
 
   const sideLinks = [
     {
