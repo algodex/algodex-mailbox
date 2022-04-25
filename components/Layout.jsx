@@ -54,7 +54,7 @@ export function Layout({ children, components, componentsProps }) {
   const routePath = router.asPath 
   console.log({routePath})
   console.log({router})
-  const isHomePage = true
+  const isHomePage = routePath === '/' ? true : routePath === '/#faq' ? true : false
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
