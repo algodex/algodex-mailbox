@@ -1,29 +1,19 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from '../Nav/Link'
 import { useTranslation } from 'next-i18next'
 
 // MUI Components
-import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
-// Icons
-import LightbulbIcon from '@mui/icons-material/Lightbulb'
-import LiveHelpIcon from '@mui/icons-material/LiveHelp'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-
 // Hooks
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // Algodex
-import Drawer from '../Nav/Drawer'
-import DefaultToolbar from '@/components/Nav/Toolbar'
 import Helper from '@/lib/helper'
 
 const styles = {
@@ -81,49 +71,9 @@ const styles = {
 export const Hero = () => {
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [openDrawer, setOpenDrawer] = useState(false)
-  const toggleDrawer = () => {
-    setOpenDrawer(!openDrawer)
-  }
-  const links = [
-    {
-      to: '/#user-guide',
-      icon: <LightbulbIcon />,
-      primary: t('user-guide'),
-    },
-    {
-      to: '/#faq',
-      icon: <LiveHelpIcon />,
-      primary: t('faq'),
-    },
-    {
-      to: 'https://about.algodex.com/support/',
-      icon: <HelpOutlineIcon />,
-      primary: t('support'),
-    },
-  ]
+
   return (
     <Box sx={styles.hero}>
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <DefaultToolbar
-          isMobile={isMobile}
-          isDashboard={false}
-          toggleDrawer={toggleDrawer}
-        />
-        {/* Mobile side Drawer */}
-        <Drawer
-          open={openDrawer}
-          width={'80%'}
-          links={links}
-          toggleDrawer={toggleDrawer}
-        />
-      </AppBar>
-      {/* Display the other part of the hero component */}
       <Container>
         <Grid
           container
@@ -139,7 +89,9 @@ export const Hero = () => {
                   width="300"
                   height="50"
                 />
-                <Typography variant="h3" color='accent.contrastText'>{t('mailbox')}</Typography>
+                <Typography variant="h3" color="accent.contrastText">
+                  {t('mailbox')}
+                </Typography>
                 <Image
                   src="/Powered-by-Algorand.svg"
                   alt="Powered by Algorand"

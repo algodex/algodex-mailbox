@@ -35,12 +35,11 @@ const LandingPage = () => {
         <title>{`${t('app-title')}`}</title>
       </Head>
       <Box
-        className="landing-page-wrapper"
         sx={{
           overflow: 'auto',
           height: '100vh',
           maxHeight: '-webkit-fill-available',
-          backgroundColor:'accent.dark',
+          backgroundColor: 'accent.dark',
         }}
       >
         <Hero />
