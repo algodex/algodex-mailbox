@@ -6,7 +6,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
 
 // Hooks
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -43,17 +42,16 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
  * @returns {JSX.Element}
  * @component
  */
-export function Layout({ children, components, componentsProps }) {
+export function Layout({ children, components, componentsProps, router }) {
   const { t } = useTranslation('common')
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const toolbarHeight = undefined
 
-  const routePath = useRouter().asPath
 
   const isHomePage = useMemo(() => {
-    return routePath == '/' || routePath === '/#faq'
-  }, [routePath])
+    return router.asPath === '/' || router.asPath === '/#faq'
+  }, [router])
 
   const { Toolbar, BottomNavigation, Drawer } = components
 
