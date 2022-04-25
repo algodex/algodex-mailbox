@@ -51,6 +51,7 @@ export function Layout({ children, components, componentsProps }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const router = useRouter().asPath
+  console.log({router})
   const isHomePage = router === '/' ? true : router === '/#faq' ? true : false
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
