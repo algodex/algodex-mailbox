@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -44,6 +44,7 @@ export function Layout({ children, components, componentsProps }) {
   const { Toolbar, BottomNavigation, Drawer } = components
   const [drawerWidth, setDrawerWidth] = useState(240)
   const [drawerOpen, setDrawerOpen] = useState(true)
+  const [isHomePage, setIsHomePage] = useState(true)
   const { t } = useTranslation('common')
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
@@ -51,10 +52,16 @@ export function Layout({ children, components, componentsProps }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const router = useRouter()
-  const routePath = router.asPath 
-  console.log({routePath})
-  console.log({router})
-  const isHomePage = routePath === '/' ? true : routePath === '/#faq' ? true : false
+  const routePath = router.asPath
+  console.log({ routePath })
+  console.log({ router })
+  useCallback(() => {
+    setIsHomePage(
+      routePath === '/' ? true : routePath === '/#faq' ? true : false
+    )
+  }, [routePath])
+
+  console.log({ isHomePage })
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
