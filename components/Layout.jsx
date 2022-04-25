@@ -57,8 +57,6 @@ export function Layout({ children, components, componentsProps }) {
       routePath === '/' ? true : routePath === '/#faq' ? true : false
     )
   }, [routePath])
-
-  console.log({ isHomePage })
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
