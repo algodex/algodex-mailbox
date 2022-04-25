@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -44,16 +44,11 @@ export function Layout({ children, components, componentsProps }) {
   const { Toolbar, BottomNavigation, Drawer } = components
   const [drawerWidth, setDrawerWidth] = useState(240)
   const [drawerOpen, setDrawerOpen] = useState(true)
-  const routePath = useRouter().asPath
-  const [isHomePage, setIsHomePage] = useState(
-    routePath === '/' ? true : routePath === '/#faq' ? true : false
-  )
   const { t } = useTranslation('common')
-  useEffect(() => {
-    setIsHomePage(
-      routePath === '/' ? true : routePath === '/#faq' ? true : false
-    )
-  }, [routePath])
+  const routePath = useRouter().asPath
+  const isHomePage =
+    routePath === '/' ? true : routePath === '/#faq' ? true : false
+
   // Example for Changing Toolbar Height
   // const toolbarHeight = 200
   const toolbarHeight = undefined
