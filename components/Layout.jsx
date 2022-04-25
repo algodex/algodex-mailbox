@@ -51,10 +51,7 @@ export function Layout({ children, components, componentsProps }) {
   const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const router = useRouter()
-  const routePath = router.asPath
-  console.log({ routePath })
-  console.log({ router })
+  const routePath = useRouter().asPath
   useCallback(() => {
     setIsHomePage(
       routePath === '/' ? true : routePath === '/#faq' ? true : false
