@@ -50,9 +50,11 @@ export function Layout({ children, components, componentsProps }) {
   const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const router = useRouter().asPath
+  const router = useRouter()
+  const routePath = router.asPath 
+  console.log({routePath})
   console.log({router})
-  const isHomePage = router === '/' ? true : router === '/#faq' ? true : false
+  const isHomePage = true
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
     if (drawerWidth == 0) {
