@@ -18,6 +18,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import SendAssetForm from '@/components/SendAssetForm'
@@ -98,7 +99,9 @@ export function SendAssetPage() {
         /PopupOpenError|blocked|Can not open popup window/.test(responseData)
       ) {
         updateStatusMessage(
-          t('Please disable your popup blocker (likely in the top-right of your browser window)'),
+          t(
+            'Please disable your popup blocker (likely in the top-right of your browser window)'
+          ),
           false
         )
         return
@@ -122,7 +125,9 @@ export function SendAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} ${t('transaction(s) sent successfully')}`,
+          `${sentAssets}/${totalAssets} ${t(
+            'transaction(s) sent successfully'
+          )}`,
           true
         )
         setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
@@ -183,13 +188,7 @@ export function SendAssetPage() {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flex: 1,
-        my: 4
-      }}
-    >
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -336,7 +335,7 @@ export function SendAssetPage() {
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   )
 }
 

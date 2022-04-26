@@ -16,6 +16,7 @@ import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import Link from '@/components/Nav/Link'
@@ -120,7 +121,7 @@ export function ReturnAssetPage() {
   }
 
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -194,7 +195,7 @@ export function ReturnAssetPage() {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

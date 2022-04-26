@@ -96,6 +96,9 @@ export function Layout({ children, components, componentsProps, router }) {
     },
   ]
   // Example of a Responsive Layout with Fixed Viewport
+  console.log({drawerOpen})
+  console.log({isMobile})
+  console.log({isHomepage})
   return (
     <Box
       sx={{
