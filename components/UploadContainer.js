@@ -98,7 +98,7 @@ const UploadContainer = ({
           </Button>
         ) : (
           <Box style={styles.uploadWrapper}>
-            <Typography variant="p" marginBottom="1rem">
+            <Typography variant="p" marginBottom="1rem" textAlign={'center'}>
               {t('Click to upload CSV transactions')}
             </Typography>
 

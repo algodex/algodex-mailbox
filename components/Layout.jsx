@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -15,7 +15,6 @@ import { useTheme } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 
 // Defaults
 import DefaultToolbar from '@/components/Nav/Toolbar'
@@ -23,11 +22,13 @@ import DefaultBottomNavigation from '@/components/Nav/BottomNavigation'
 import DefaultDrawer from '@/components/Nav/Drawer'
 
 // Icons
+import LightbulbIcon from '@mui/icons-material/Lightbulb'
+import LiveHelpIcon from '@mui/icons-material/LiveHelp'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import SendIcon from '@mui/icons-material/Send'
 import HistoryIcon from '@mui/icons-material/History'
 import RedeemIcon from '@mui/icons-material/Redeem'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
-import { useRouter } from 'next/router'
 
 /**
  * Layout Component
@@ -40,60 +41,64 @@ import { useRouter } from 'next/router'
  * @returns {JSX.Element}
  * @component
  */
-export function Layout({ children, components, componentsProps }) {
-  const { Toolbar, BottomNavigation, Drawer } = components
-  const [drawerWidth, setDrawerWidth] = useState(240)
-  const [drawerOpen, setDrawerOpen] = useState(true)
-  const [isHomePage, setIsHomePage] = useState(true)
+export function Layout({ children, components, componentsProps, router }) {
+  const isHomepage = router.pathname === '/'
   const { t } = useTranslation('common')
-  // Example for Changing Toolbar Height
-  // const toolbarHeight = 200
-  const toolbarHeight = undefined
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const routePath = useRouter().asPath
-  useEffect(() => {
-    setIsHomePage(
-      routePath === '/' ? true : routePath === '/#faq' ? true : false
-    )
-  }, [routePath])
+
+  const { Toolbar, BottomNavigation, Drawer } = components
+
+  const [drawerOpen, setDrawerOpen] = useState(!isHomepage)
+
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
-    if (drawerWidth == 0) {
-      setDrawerWidth(240)
-    } else {
-      setDrawerWidth(0)
-    }
   }
 
   const sideLinks = [
     {
-      to: '/send-assets',
+      to: `/${router.locale}/send-assets`,
       icon: <SendIcon />,
       primary: t('/send-assets'),
     },
     {
-      to: '/transaction-history',
+      to: `/${router.locale}/transaction-history`,
       icon: <HistoryIcon />,
       primary: t('/transaction-history'),
     },
     {
-      to: '/redeem-assets',
+      to: `/${router.locale}/redeem-assets`,
       icon: <RedeemIcon />,
       primary: t('/redeem-assets'),
     },
     {
-      to: '/return-assets',
+      to: `/${router.locale}/return-assets`,
       icon: <KeyboardReturnIcon />,
       primary: t('/return-assets'),
     },
   ]
 
-  if (isHomePage) {
-    return <> {children}</>
-  }
-
+  const homeLinks = [
+    {
+      to: '/#user-guide',
+      icon: <LightbulbIcon />,
+      primary: t('user-guide'),
+    },
+    {
+      to: '/#faq',
+      icon: <LiveHelpIcon />,
+      primary: t('faq'),
+    },
+    {
+      to: 'https://about.algodex.com/support/',
+      icon: <HelpOutlineIcon />,
+      primary: t('support'),
+    },
+  ]
   // Example of a Responsive Layout with Fixed Viewport
+  console.log({drawerOpen})
+  console.log({isMobile})
+  console.log({isHomepage})
   return (
     <Box
       sx={{
@@ -109,37 +114,29 @@ export function Layout({ children, components, componentsProps }) {
       >
         <Toolbar
           isMobile={isMobile}
-          height={toolbarHeight}
           toggleDrawer={toggleDrawer}
-          isDashboard={true}
+          router={router}
           {...componentsProps.Toolbar}
         />
       </AppBar>
-      {/* Flex row for when the Drawer is visible */}
-      <Box sx={{ display: 'flex', flex: 1, overflow: 'auto' }}>
-        {
-          // Show the Desktop Drawer
-          !isMobile && (
-            <Drawer
-              width={drawerWidth}
-              open={drawerOpen}
-              offset={toolbarHeight}
-              links={sideLinks}
-              {...componentsProps.Drawer}
-            />
-          )
-        }
-        {/* Display the Page Component */}
-
-        <Container
-          sx={{ my: 4, width: `calc(100% - ${!isMobile ? drawerWidth : 0}px)` }}
-        >
-          {children}
-        </Container>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          overflowY: 'auto'
+        }}
+      >
+        <Drawer
+          open={drawerOpen && !(!isHomepage && isMobile)}
+          links={isHomepage ? homeLinks : sideLinks}
+          router={router}
+          {...componentsProps.Drawer}
+        />
+        {children}
       </Box>
       {
         // Show the Mobile Navigation
-        isMobile && (
+        isMobile && !isHomepage && (
           <Paper
             sx={{
               position: 'static',
