@@ -16,6 +16,8 @@ import ListSubheader from '@mui/material/ListSubheader'
 
 // Custom MUI Components
 import ListItemLink from '@/components/Nav/ListItemLink'
+import {useTheme} from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 /**
  * Drawer
@@ -29,10 +31,12 @@ import ListItemLink from '@/components/Nav/ListItemLink'
 function Drawer({ width, offset, links, toggleDrawer, router, ...props }) {
   const { t } = useTranslation('common')
   const isHomepage = router.pathname === '/'
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <MUIDrawer
-      variant={ isHomepage ? 'temporary' : 'persistent'}
+      variant={ isHomepage || isMobile ? 'temporary' : 'persistent'}
       anchor="left"
       sx={{
         width,

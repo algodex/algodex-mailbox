@@ -124,7 +124,7 @@ export function Layout({ children, components, componentsProps, router }) {
         }}
       >
         <Drawer
-          open={drawerOpen}
+          open={drawerOpen && !(!isHomepage && isMobile)}
           links={isHomepage ? homeLinks : sideLinks}
           router={router}
           {...componentsProps.Drawer}
