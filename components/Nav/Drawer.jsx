@@ -34,9 +34,6 @@ function Drawer({ width, offset, links, toggleDrawer, router,open, ...props }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  // console.log({ width })
-  // console.log({ open })
-  // console.log({ isHomepage  })
   return (
     <MUIDrawer
       variant={ isHomepage || isMobile ? 'temporary' : 'persistent'}
