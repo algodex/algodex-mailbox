@@ -183,7 +183,13 @@ export function SendAssetPage() {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flex: 1,
+        my: 4
+      }}
+    >
       <Head>
         <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -330,7 +336,7 @@ export function SendAssetPage() {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Box>
   )
 }
 

@@ -23,7 +23,6 @@ import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 //Algodex
 import Helper from '@/lib/helper'
 import Link from './Link'
-import { useRouter } from 'next/router'
 
 /**
  * Toolbar
@@ -60,10 +59,13 @@ function Toolbar({
   isMobile,
   onClick,
   toggleDrawer,
-  isDashboard,
+  router,
   ...rest
 }) {
-  const CURRENT_PAGE = useRouter().pathname
+  const CURRENT_PAGE = router.pathname
+
+  const isDashboard = router.pathname !== '/'
+
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -132,7 +134,7 @@ function Toolbar({
             inputProps={{ 'aria-label': 'Without label' }}
             style={{
               ...styles.select,
-              color: environmentText == 'TESTNET' ? 'green' : 'blue',
+              color: environmentText === 'TESTNET' ? 'green' : 'blue',
             }}
           >
             {environmentLinks.map((environment) => (

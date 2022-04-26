@@ -36,9 +36,7 @@ const LandingPage = () => {
       </Head>
       <Box
         sx={{
-          overflow: 'auto',
-          height: '100vh',
-          maxHeight: '-webkit-fill-available',
+          width: '100%',
           backgroundColor: 'accent.dark',
         }}
       >

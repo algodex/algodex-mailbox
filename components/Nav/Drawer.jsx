@@ -26,11 +26,13 @@ import ListItemLink from '@/components/Nav/ListItemLink'
  * @returns {JSX.Element}
  * @constructor
  */
-function Drawer({ width, offset, links, toggleDrawer, ...props }) {
+function Drawer({ width, offset, links, toggleDrawer, router, ...props }) {
   const { t } = useTranslation('common')
+  const isHomepage = router.pathname === '/'
+
   return (
     <MUIDrawer
-      variant="persistent"
+      variant={ isHomepage ? 'temporary' : 'persistent'}
       anchor="left"
       sx={{
         width,
@@ -55,6 +57,7 @@ function Drawer({ width, offset, links, toggleDrawer, ...props }) {
               to={link.to}
               icon={link.icon}
               primary={link.primary}
+              router={router}
               onClick={() => {
                 if (toggleDrawer) {
                   toggleDrawer()

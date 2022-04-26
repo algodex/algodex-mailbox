@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -15,7 +15,6 @@ import { useTheme } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 
 // Defaults
 import DefaultToolbar from '@/components/Nav/Toolbar'
@@ -43,61 +42,43 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
  * @component
  */
 export function Layout({ children, components, componentsProps, router }) {
+  const isHomepage = router.pathname === '/'
   const { t } = useTranslation('common')
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const toolbarHeight = undefined
-
-
-  const isHomePage = useMemo(() => {
-    return router.asPath === '/' || router.asPath === '/#faq'
-  }, [router])
 
   const { Toolbar, BottomNavigation, Drawer } = components
 
-  const [drawerWidth, setDrawerWidth] = useState(
-    !isMobile && !isHomePage ? 240 : 0
-  )
-  const [drawerOpen, setDrawerOpen] = useState(isHomePage ? false : true)
-
-  useEffect(() => {
-    setDrawerOpen(isHomePage ? false : true)
-    setDrawerWidth(!isMobile && !isHomePage ? 240 : 0)
-  }, [isHomePage, isMobile])
+  const [drawerOpen, setDrawerOpen] = useState(!isHomepage)
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
-    if (drawerWidth == 0) {
-      setDrawerWidth(isHomePage ? '80%' : 240)
-    } else {
-      setDrawerWidth(0)
-    }
   }
 
   const sideLinks = [
     {
-      to: '/send-assets',
+      to: `/${router.locale}/send-assets`,
       icon: <SendIcon />,
       primary: t('/send-assets'),
     },
     {
-      to: '/transaction-history',
+      to: `/${router.locale}/transaction-history`,
       icon: <HistoryIcon />,
       primary: t('/transaction-history'),
     },
     {
-      to: '/redeem-assets',
+      to: `/${router.locale}/redeem-assets`,
       icon: <RedeemIcon />,
       primary: t('/redeem-assets'),
     },
     {
-      to: '/return-assets',
+      to: `/${router.locale}/return-assets`,
       icon: <KeyboardReturnIcon />,
       primary: t('/return-assets'),
     },
   ]
 
-  const HomeLinks = [
+  const homeLinks = [
     {
       to: '/#user-guide',
       icon: <LightbulbIcon />,
@@ -130,49 +111,29 @@ export function Layout({ children, components, componentsProps, router }) {
       >
         <Toolbar
           isMobile={isMobile}
-          height={toolbarHeight}
           toggleDrawer={toggleDrawer}
-          isDashboard={isHomePage ? false : true}
+          router={router}
           {...componentsProps.Toolbar}
         />
       </AppBar>
-      {/* Flex row for when the Drawer is visible */}
       <Box
         sx={{
-          display: isHomePage ? 'block' : 'flex',
+          display: 'flex',
           flex: 1,
-          overflow: 'auto',
+          overflowY: 'auto'
         }}
       >
-        {
-          // Show the desktop and home page mobile Drawer
-          <Drawer
-            open={drawerOpen}
-            width={drawerWidth}
-            offset={toolbarHeight}
-            links={isHomePage ? HomeLinks : sideLinks}
-            {...componentsProps.Drawer}
-          />
-        }
-        {/* Display the Page Component */}
-        {isHomePage ? (
-          <>{children}</>
-        ) : (
-          <>
-            <Container
-              sx={{
-                my: 4,
-                width: `calc(100% - ${!isMobile ? drawerWidth : 0}px)`,
-              }}
-            >
-              {children}
-            </Container>
-          </>
-        )}
+        <Drawer
+          open={drawerOpen}
+          links={isHomepage ? homeLinks : sideLinks}
+          router={router}
+          {...componentsProps.Drawer}
+        />
+        {children}
       </Box>
       {
         // Show the Mobile Navigation
-        isMobile && !isHomePage && (
+        isMobile && !isHomepage && (
           <Paper
             sx={{
               position: 'static',
