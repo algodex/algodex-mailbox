@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
 import Image from 'next/image'
-import Link from '../Nav/Link'
 import { useTranslation } from 'next-i18next'
 
 // MUI Components
@@ -9,6 +8,7 @@ import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
 
 // Hooks
 import Typography from '@mui/material/Typography'
