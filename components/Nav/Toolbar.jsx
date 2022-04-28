@@ -16,7 +16,6 @@ import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Image from 'next/image'
-import MuiLink from '@mui/material/Link'
 
 // Custom Language Selector
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
@@ -155,9 +154,9 @@ function Toolbar({
           >
             {t('user-guide')}
           </Link>
-          <MuiLink href="/#faq" sx={styles.linkStyles}>
+          <Link href="/#faq" sx={styles.linkStyles}>
             {t('faq')}
-          </MuiLink>
+          </Link>
           <Link
             href="https://about.algodex.com/support/"
             target="_blanc"

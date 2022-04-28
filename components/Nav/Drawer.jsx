@@ -33,7 +33,7 @@ function Drawer({ width, offset, links, toggleDrawer, router,open, ...props }) {
   const isHomepage = router.pathname === '/'
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  
+
   return (
     <MUIDrawer
       variant={ isHomepage || isMobile ? 'temporary' : 'persistent'}

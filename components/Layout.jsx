@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
@@ -54,6 +54,9 @@ export function Layout({ children, components, componentsProps, router }) {
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
   }
+  useEffect(() => {
+    setDrawerOpen(!isHomepage)
+  }, [isHomepage])
 
   const sideLinks = [
     {
@@ -96,7 +99,6 @@ export function Layout({ children, components, componentsProps, router }) {
     },
   ]
   // Example of a Responsive Layout with Fixed Viewport
-  
   return (
     <Box
       sx={{
@@ -121,7 +123,7 @@ export function Layout({ children, components, componentsProps, router }) {
         sx={{
           display: 'flex',
           flex: 1,
-          overflowY: 'auto'
+          overflowY: 'auto',
         }}
       >
         <Drawer
