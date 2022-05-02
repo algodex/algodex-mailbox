@@ -12,15 +12,9 @@ const nextConfig = {
     dest: 'public',
     disable: process.env.NODE_ENV === 'development'
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/send-assets',
-        permanent: true
-      }
-    ]
-  }
+  compiler: {
+    styledComponents: true,
+  },
 }
 
 module.exports = withPWA(nextConfig)

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -15,12 +15,14 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import Image from 'next/image'
 
 // Custom Language Selector
 import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 
 //Algodex
 import Helper from '@/lib/helper'
+import Link from './Link'
 
 /**
  * Toolbar
@@ -39,14 +41,31 @@ const styles = {
   select: {
     fontSize: '0.8rem',
     marginBlock: '0.25rem',
-    border:'solid 1px'
+    border: 'solid 1px',
+  },
+  linkStyles: {
+    fontWeight: '700',
+    marginRight: '1.6rem',
+    color: (theme) => theme.palette.accent.contrastText,
   },
 }
 
 const MAINNET_LINK = process.env.NEXT_PUBLIC_MAINNET_LINK
 const TESTNET_LINK = process.env.NEXT_PUBLIC_TESTNET_LINK
 const ENABLE_NETWORK_SELECTION = TESTNET_LINK && MAINNET_LINK
-function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
+function Toolbar({
+  title,
+  height,
+  isMobile,
+  onClick,
+  toggleDrawer,
+  router,
+  ...rest
+}) {
+  const CURRENT_PAGE = router.pathname
+
+  const isDashboard = router.pathname !== '/'
+
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -61,51 +80,100 @@ function Toolbar({ title, height, isMobile, onClick, toggleDrawer, ...rest }) {
     if (ENABLE_NETWORK_SELECTION) {
       setEnvironmentText(value)
       if (value === 'MAINNET') {
-        window.location = MAINNET_LINK
+        window.location = `${MAINNET_LINK}${CURRENT_PAGE}`
       } else {
-        window.location = TESTNET_LINK
+        window.location = `${TESTNET_LINK}${CURRENT_PAGE}`
       }
     }
   }
 
   return (
     <MUIToolbar sx={{ height }} {...rest}>
-      {!isMobile && (
+      {!isMobile && isDashboard && (
         <IconButton
           size="large"
           edge="start"
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
-          onClick={() => {
-            toggleDrawer()
-          }}
+          onClick={toggleDrawer}
         >
           <MenuIcon />
         </IconButton>
       )}
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-        <Typography variant="h6" component="div" marginRight={2}>
-          {title || t('app-title')}
-        </Typography>
-        <Select
-          className="environment-select-wrapper"
-          value={environmentText}
-          onChange={handleChange}
-          inputProps={{ 'aria-label': 'Without label' }}
-          style={{
-            ...styles.select,
-            color: environmentText == 'TESTNET' ? 'green' : 'blue',
-          }}
-        >
-          {environmentLinks.map((environment) => (
-            <MenuItem key={environment} value={environment}>
-              {environment}
-            </MenuItem>
-          ))}
-        </Select>
+        <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+          <Image
+            src="/algodex-logo.svg"
+            alt="Algodex logo"
+            height={25}
+            width={165}
+          />
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontSize: '24px',
+              '@media (max-width: 780px)': {
+                fontSize: '18px',
+              },
+              color: 'accent.contrastText',
+            }}
+            marginRight={2}
+            marginLeft="0.2rem"
+            lineHeight={0}
+          >
+            {title || t('mailbox')}
+          </Typography>
+        </Box>
+        {isDashboard && (
+          <Select
+            className="environment-select-wrapper"
+            value={environmentText}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'Without label' }}
+            style={{
+              ...styles.select,
+              color: environmentText === 'TESTNET' ? 'green' : 'blue',
+            }}
+          >
+            {environmentLinks.map((environment) => (
+              <MenuItem key={environment} value={environment}>
+                {environment}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
       </Box>
-      <LocaleNavMenu isMobile={isMobile} onClick={onClick} />
+      {!isMobile && (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Link
+            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            target="_blanc"
+            sx={styles.linkStyles}
+          >
+            {t('user-guide')}
+          </Link>
+          <Link href="/#faq" sx={styles.linkStyles}>
+            {t('faq')}
+          </Link>
+          <Link
+            href="https://about.algodex.com/support/"
+            target="_blanc"
+            sx={styles.linkStyles}
+          >
+            {t('support')}
+          </Link>
+        </Box>
+      )}
+      {isMobile && !isDashboard && (
+        <IconButton onClick={toggleDrawer}>
+          <MenuIcon />
+        </IconButton>
+      )}
+      {((!isMobile && !isDashboard) || isDashboard) && (
+        <LocaleNavMenu isMobile={isMobile} onClick={onClick} />
+      )}
     </MUIToolbar>
   )
 }

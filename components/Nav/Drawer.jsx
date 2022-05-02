@@ -14,14 +14,10 @@ import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
 import ListSubheader from '@mui/material/ListSubheader'
 
-// Icons
-import SendIcon from '@mui/icons-material/Send'
-import HistoryIcon from '@mui/icons-material/History'
-import RedeemIcon from '@mui/icons-material/Redeem'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
-
 // Custom MUI Components
 import ListItemLink from '@/components/Nav/ListItemLink'
+import {useTheme} from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 /**
  * Drawer
@@ -32,14 +28,19 @@ import ListItemLink from '@/components/Nav/ListItemLink'
  * @returns {JSX.Element}
  * @constructor
  */
-function Drawer({ width, offset, ...props }) {
+function Drawer({ width, offset, links, toggleDrawer, router,open, ...props }) {
   const { t } = useTranslation('common')
+  const isHomepage = router.pathname === '/'
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <MUIDrawer
-      variant="persistent"
+      variant={ isHomepage || isMobile ? 'temporary' : 'persistent'}
       anchor="left"
+      open={open}
       sx={{
-        width,
+        width:isHomepage ? width : (!isHomepage && open) ? width : 0,
         flexShrink: 0,
         ['& .MuiDrawer-paper']: { width, boxSizing: 'border-box' },
       }}
@@ -55,27 +56,20 @@ function Drawer({ width, offset, ...props }) {
             </ListSubheader>
           }
         >
-          <ListItemLink
-            data-testid="nav-desktop-send-assets"
-            to="/send-assets"
-            icon={<SendIcon />}
-            primary={t('/send-assets')}
-          />
-          <ListItemLink
-            to="/transaction-history"
-            icon={<HistoryIcon />}
-            primary={t('/transaction-history')}
-          />
-          <ListItemLink
-            to="/redeem-assets"
-            icon={<RedeemIcon />}
-            primary={t('/redeem-assets')}
-          />
-          <ListItemLink
-            to="/return-assets"
-            icon={<KeyboardReturnIcon />}
-            primary={t('/return-assets')}
-          />
+          {links.map((link) => (
+            <ListItemLink
+              key={link.to}
+              to={link.to}
+              icon={link.icon}
+              primary={link.primary}
+              router={router}
+              onClick={() => {
+                if (toggleDrawer) {
+                  toggleDrawer()
+                }
+              }}
+            />
+          ))}
         </List>
       </Box>
     </MUIDrawer>
@@ -86,11 +80,15 @@ Drawer.propTypes = {
   /**
    * width
    */
-  width: PropTypes.number.isRequired,
+  width: PropTypes.any,
   /**
    * offset
    */
   offset: PropTypes.number,
+  /**
+   * toggleDrawer to close drawer on mobile
+   */
+  toggleDrawer: PropTypes.func,
 }
 
 Drawer.defaultProps = {

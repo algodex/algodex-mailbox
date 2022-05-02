@@ -4,6 +4,7 @@
  */
 
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -28,6 +29,7 @@ const RedeemAssetForm = ({
   formData,
   balance,
 }) => {
+  const { t } = useTranslation('common')
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
@@ -119,13 +121,7 @@ const RedeemAssetForm = ({
   }
 
   const confirmDisabledState = () => {
-    if (
-      !assetId ||
-      !receiverAddress ||
-      !senderAddress ||
-      isNaN(balance) ||
-      (!isNaN(balance) && 0 >= balance)
-    ) {
+    if (!assetId || !receiverAddress || !senderAddress || !(balance > 0)) {
       return true
     }
     return false
@@ -142,8 +138,9 @@ const RedeemAssetForm = ({
       {optInStatus == false && (
         <Box marginTop="2rem">
           <Typography variant="error-message" color="error">
-            Warning: You have not yet opted into the asset. Please do so in
-            another wallet app.
+            {t(
+              'Warning: You have not yet opted into the asset. Please do so in another wallet app.'
+            )}
           </Typography>
         </Box>
       )}
@@ -154,8 +151,9 @@ const RedeemAssetForm = ({
             variant="contained"
             type="submit"
             disabled={confirmDisabledState()}
+            sx={{textDecoration:'capitalize'}}
           >
-            Redeem
+            {t('Redeem')}
           </LoadingButton>
         </Grid>
         <Grid item xs={6} marginLeft="auto" textAlign="end">

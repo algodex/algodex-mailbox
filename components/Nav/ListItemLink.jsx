@@ -4,7 +4,6 @@
  */
 
 import React, {forwardRef, useMemo} from 'react'
-import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
 
 // MUI Components
@@ -26,10 +25,8 @@ import CustomLink from '@/components/Nav/Link'
  * @see https://mui.com/guides/routing/#list
  * @constructor
  */
-function ListItemLink({ icon, primary, to, ...rest }) {
-  const router = useRouter()
+function ListItemLink({ icon, primary, to, router, ...rest }) {
   const activeNav = router.asPath
-
   const renderLink = useMemo(
     () =>
       forwardRef(function Link(itemProps, ref) {
@@ -40,7 +37,12 @@ function ListItemLink({ icon, primary, to, ...rest }) {
 
   return (
     <li>
-      <ListItem button component={renderLink} selected={activeNav === to} {...rest}>
+      <ListItem
+        button
+        component={renderLink}
+        selected={`/${router.locale}${activeNav}` === to}
+        {...rest}
+      >
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>

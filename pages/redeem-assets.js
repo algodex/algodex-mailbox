@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
@@ -44,6 +45,7 @@ export function RedeemAssetPage() {
   const [escrowBalance, setEscrowBalance] = useState({
     success: false,
     message: '',
+    algoExplorerLink: '',
   })
   const { query } = useRouter()
   const [assetId, setAssetId] = useState()
@@ -58,7 +60,7 @@ export function RedeemAssetPage() {
   const formData = {
     assetId: query.assetId || '',
     senderAddress: query.senderAddress || '',
-    receiverAddress: query.receiverAddress || ''
+    receiverAddress: query.receiverAddress || '',
   }
 
   useEffect(() => {
@@ -92,7 +94,8 @@ export function RedeemAssetPage() {
       updateStatusMessage(
         typeof responseData === 'string'
           ? responseData
-          : responseData?.response?.body?.message || 'Sorry, an error occurred',
+          : responseData?.response?.body?.message ||
+              t('Sorry, an error occurred'),
         false
       )
     }
@@ -105,10 +108,14 @@ export function RedeemAssetPage() {
       receiverAddress,
       senderAddress
     )
-    // console.debug({ res })
+    console.debug({ res })
     setGettingBalance(false)
     if (res.error == false) {
-      setEscrowBalance({ success: true, message: res.balance })
+      setEscrowBalance({
+        success: true,
+        message: res.balance,
+        algoExplorerLink: res.algoExplorerLink,
+      })
     } else {
       setEscrowBalance({
         success: false,
@@ -116,6 +123,7 @@ export function RedeemAssetPage() {
           res?.data?.message ||
           // eslint-disable-next-line max-len
           'An error occurred while getting your asset balance, please ensure you enter valid inputs',
+        algoExplorerLink: '',
       })
     }
   }
@@ -149,12 +157,13 @@ export function RedeemAssetPage() {
       setEscrowBalance({
         message: '',
         success: true,
+        algoExplorerLink: '',
       })
     }
   }, [assetId, receiverAddress, senderAddress])
 
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/redeem-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -173,7 +182,7 @@ export function RedeemAssetPage() {
             assetId={assetId}
             optInStatus={optInStatus}
             formData={formData}
-            balance={parseInt(escrowBalance.message)}
+            balance={parseFloat(escrowBalance.message)}
           />
           <Grid container spacing={7} sx={{ marginBottom: '2rem' }}>
             <Grid item>
@@ -183,7 +192,7 @@ export function RedeemAssetPage() {
             </Grid>
             <Grid item>
               {gettingBalance ? (
-                <CircularProgress color="primary" size={15}/>
+                <CircularProgress color="primary" size={15} />
               ) : (
                 <>
                   {escrowBalance.message && escrowBalance.message != '' && (
@@ -211,15 +220,21 @@ export function RedeemAssetPage() {
                 {t('view-instructions-link')}
               </Link>
             </Grid>
-            <Grid item xs={6} lg={5}>
-              <Link href={'/'} color="primary.dark">
-                {t('open-algoexplorer-link')}
-              </Link>
-            </Grid>
+            {escrowBalance.algoExplorerLink != '' && (
+              <Grid item xs={6} lg={5}>
+                <Link
+                  href={escrowBalance.algoExplorerLink}
+                  color="primary.dark"
+                  target="_blanc"
+                >
+                  {t('open-algoexplorer-link')}
+                </Link>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 
