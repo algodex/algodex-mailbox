@@ -197,7 +197,11 @@ export function SendAssetPage() {
           {/*<Typography variant="h1" sx={{color: 'purple'}}>
           Example Event Status: {status}
           </Typography>*/}
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+          <Typography
+            variant="h5"
+            sx={{ marginBottom: '1rem' }}
+            data-testid="page-title"
+          >
             {t('/send-assets')}
           </Typography>
           <Button variant="contained" onClick={connect}>

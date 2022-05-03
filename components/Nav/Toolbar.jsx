@@ -127,7 +127,7 @@ function Toolbar({
           </Typography>
         </Box>
         {isDashboard && (
-          <Select
+          <Select data-testId='environment-selection'
             className="environment-select-wrapper"
             value={environmentText}
             onChange={handleChange}
@@ -146,7 +146,7 @@ function Toolbar({
         )}
       </Box>
       {!isMobile && (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }} data-testId='toolbar-links'>
           <Link
             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
             target="_blanc"
@@ -167,7 +167,7 @@ function Toolbar({
         </Box>
       )}
       {isMobile && !isDashboard && (
-        <IconButton onClick={toggleDrawer}>
+        <IconButton onClick={toggleDrawer} data-testId='menu-btn'>
           <MenuIcon />
         </IconButton>
       )}

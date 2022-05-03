@@ -109,6 +109,7 @@ export function Layout({ children, components, componentsProps, router }) {
       }}
     >
       <AppBar
+        data-testid="app-bar"
         position="static"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
@@ -127,6 +128,7 @@ export function Layout({ children, components, componentsProps, router }) {
         }}
       >
         <Drawer
+          data-testid="drawer"
           open={drawerOpen && !(!isHomepage && isMobile)}
           links={isHomepage ? homeLinks : sideLinks}
           router={router}
@@ -138,6 +140,7 @@ export function Layout({ children, components, componentsProps, router }) {
         // Show the Mobile Navigation
         isMobile && !isHomepage && (
           <Paper
+            data-testid="bottom-nav"
             sx={{
               position: 'static',
               bottom: 0,

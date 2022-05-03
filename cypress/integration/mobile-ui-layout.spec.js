@@ -1,9 +1,4 @@
-const sizes = [
-  'iphone-6',
-  'iphone-x',
-  'samsung-s10',
-  'samsung-note9',
-]
+const sizes = ['iphone-6', 'iphone-x', 'samsung-s10', 'samsung-note9']
 function clear() {
   cy.clearLocalStorage()
 }
@@ -11,10 +6,19 @@ describe('Mailbox Mobile Layout', () => {
   beforeEach(clear)
   afterEach(clear)
   sizes.forEach((size) => {
-    it(`Should render send asset on ${size} screen`, () => {
+    it(`Should render home and send asset on ${size} screen`, () => {
       cy.viewport(size)
-      cy.visit('/en/send-assets')
-      cy.get('[data-testid=nav-mobile-send-assets]').should('be.visible')
+      cy.visit('/')
+      cy.get('[data-testid=app-bar]').should('be.visible')
+      cy.get('[data-testid=menu-btn]').should('be.visible')
+      cy.get('[data-testid=toolbar-links]').should('not.exist')
+      cy.get('[data-testid=launch-btn]').click()
+      cy.url().should('include', '/send-assets')
+      cy.location('pathname').should('eq', '/send-assets')
+      cy.get('[data-testid=app-bar]').should('be.visible')
+      cy.get('[data-testid=environment-selection]').should('be.visible')
+      cy.get('[data-testid=page-title]').should('be.visible')
+      cy.get('[data-testid=bottom-nav]').should('be.visible')
     })
   })
 })
