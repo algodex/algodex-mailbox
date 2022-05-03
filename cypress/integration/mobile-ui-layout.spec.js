@@ -6,7 +6,7 @@ describe('Mailbox Mobile Layout', () => {
   beforeEach(clear)
   afterEach(clear)
   sizes.forEach((size) => {
-    it(`Should render home and send asset on ${size} screen`, () => {
+    it(`Should render landing and send assets page on ${size} screen`, () => {
       cy.viewport(size)
       cy.visit('/')
       cy.get('[data-testid=app-bar]').should('be.visible')
