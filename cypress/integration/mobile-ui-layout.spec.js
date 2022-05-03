@@ -17,7 +17,6 @@ describe('Mailbox Mobile Layout', () => {
       cy.location('pathname').should('eq', '/send-assets')
       cy.get('[data-testid=app-bar]').should('be.visible')
       cy.get('[data-testid=environment-selection]').should('be.visible')
-      cy.get('[data-testid=page-title]').should('be.visible')
       cy.get('[data-testid=bottom-nav]').should('be.visible')
     })
   })
