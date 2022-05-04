@@ -32,6 +32,7 @@
     "@randlabs/myalgo-connect": "^1.1.1",
     "@rjsf/core": "^4.0.1",
     "@rjsf/material-ui": "^4.0.1",
+    "algosdk": "^1.16.0",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",
     "convert-csv-to-array": "^1.0.3",
