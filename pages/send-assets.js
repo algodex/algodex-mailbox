@@ -278,13 +278,6 @@ export function SendAssetPage() {
                 variant="error-message"
                 sx={{ display: 'flex', alignItems: 'center' }}
               >
-                <Link
-                  href={shareableLink}
-                  target="_blanc"
-                  sx={{ color: 'blue' }}
-                >
-                  {t('Share this link with receiver(s) to redeem asset(s)')}:
-                </Link>
                 <Tooltip
                   title={tooltiptext}
                   placement="top"
