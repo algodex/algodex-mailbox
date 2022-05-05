@@ -4,13 +4,13 @@ const formattedAddresses = [
 ]
 const assetId = '33698417'
 
-describe('Send assets Page', () => {
+describe('Return assets Page', () => {
   beforeEach(() => {
-    cy.visit('/send-assets')
+    cy.visit('/return-assets')
   })
 
   
-  it('should send assets successfully', () => {
+  it('should retgurn assets successfully', () => {
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)

@@ -144,7 +144,7 @@ export function TransactionHistoryPage() {
               href={csvLink}
               target="_blanc"
               download="Transaction History.csv"
-              sx={{ color: 'blue', textDecoration: 'underline' }}
+              sx={{ color: 'info.main', textDecoration: 'underline' }}
             >
               Click to download Transaction History
             </Link>

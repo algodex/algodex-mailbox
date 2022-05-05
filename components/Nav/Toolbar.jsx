@@ -132,9 +132,9 @@ function Toolbar({
             value={environmentText}
             onChange={handleChange}
             inputProps={{ 'aria-label': 'Without label' }}
-            style={{
+            sx={{
               ...styles.select,
-              color: environmentText === 'TESTNET' ? 'green' : 'blue',
+              color: environmentText === 'TESTNET' ? 'info.success' : 'info.main',
             }}
           >
             {environmentLinks.map((environment) => (

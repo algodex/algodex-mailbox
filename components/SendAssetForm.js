@@ -39,6 +39,7 @@ const SendAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid='assetId-input'
             required
             id="outlined-required"
             name="AssetId"
@@ -80,9 +81,7 @@ const SendAssetForm = ({
   }
   return (
     <>
-      <Box
-        sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
-      >
+      <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
         <FormControl>
           <RadioGroup
             aria-labelledby="wallet"
@@ -95,7 +94,9 @@ const SendAssetForm = ({
               <FormControlLabel
                 key={address}
                 value={address}
-                control={<Radio color="secondary" />}
+                control={
+                  <Radio color="secondary" data-testid="wallet-radio-input" />
+                }
                 label={address}
               />
             ))}
@@ -119,6 +120,7 @@ const SendAssetForm = ({
         <Grid container spacing={2} marginTop={'2rem'}>
           <Grid item xs={6} lg={4}>
             <LoadingButton
+              data-testid='submit-btn'
               loading={isLoading}
               variant="contained"
               disabled={checkDisabledState()}

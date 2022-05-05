@@ -57,6 +57,7 @@ const ReturnAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid='assetId-input'
             required
             id="outlined-required"
             name="AssetId"
@@ -92,7 +93,7 @@ const ReturnAssetForm = ({
               <FormControlLabel
                 key={address}
                 value={address}
-                control={<Radio color="secondary" />}
+                control={<Radio color="secondary" data-testid="wallet-radio-input" />}
                 label={address}
               />
             ))}
@@ -115,6 +116,7 @@ const ReturnAssetForm = ({
         <Grid container spacing={2} marginTop={'2rem'}>
           <Grid item xs={6} lg={4}>
             <LoadingButton
+              data-testid='submit-btn'
               loading={isLoading}
               variant="contained"
               disabled={formattedAddresses.length < 1}

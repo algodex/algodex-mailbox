@@ -199,7 +199,7 @@ export function RedeemAssetPage() {
                     <Typography
                       variant="error-message"
                       marginTop="1rem"
-                      color={escrowBalance.success ? 'green' : 'error'}
+                      color={escrowBalance.success ? 'info.success' : 'info.error'}
                     >
                       {escrowBalance.message}{' '}
                       {escrowBalance.success && 'available'}
