@@ -5,14 +5,11 @@ const assetId = '33698417'
 
 describe('Transaction history page', () => {
   beforeEach(() => {
-    cy.visit('/redeem-assets')
+    cy.visit('/transaction-history')
   })
 
   it('should query and display transaction history', () => {
-    cy.get('[data-testid=senderAddress-input]').type(
-      `${formattedAddresses[0]}`
-    )
-    cy.get('[data-testid=assetId-input]').type(`${assetId}`)
-    // cy.get('[data-testid=submit-btn]').click()
+    cy.get('input').eq(2).type(`${formattedAddresses[0]}`)
+    cy.get('input').eq(1).type(`${assetId}`)
   })
 })

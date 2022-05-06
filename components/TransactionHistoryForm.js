@@ -39,7 +39,6 @@ const TransactionHistoryForm = ({
 
   return (
     <Form
-      data-testid="transaction-form"
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
