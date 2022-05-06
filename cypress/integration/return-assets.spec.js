@@ -10,7 +10,7 @@ describe('Return assets Page', () => {
   })
 
   
-  it('should retgurn assets successfully', () => {
+  it('should return assets successfully', () => {
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)

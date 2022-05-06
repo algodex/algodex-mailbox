@@ -39,6 +39,7 @@ const TransactionHistoryForm = ({
 
   return (
     <Form
+      data-testid="transaction-form"
       schema={schema}
       uiSchema={uiSchema}
       onSubmit={onSubmit}
@@ -55,6 +56,7 @@ const TransactionHistoryForm = ({
       <Grid container spacing={2} marginTop={'2rem'}>
         <Grid item xs={6} lg={4}>
           <LoadingButton
+            data-testid="submit-btn"
             loading={isLoading}
             variant="contained"
             type="submit"
