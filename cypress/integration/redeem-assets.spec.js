@@ -16,6 +16,10 @@ describe('Return assets Page', () => {
       `${formattedAddresses[0]}`
     )
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)
-    // cy.get('[data-testid=submit-btn]').click()
+    cy.get('[data-testid=submit-btn]').then(($button) => {
+      if ($button.is('enabled')) {
+        cy.get($button).click()
+      }
+    })
   })
 })
