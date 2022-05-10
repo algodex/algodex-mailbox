@@ -76,7 +76,6 @@ const ReturnAssetForm = ({
   const widgets = {
     CustomInput: CustomInputComponent,
   }
-  console.log({disableButton})
   return (
     <>
       <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
