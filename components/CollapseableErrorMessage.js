@@ -40,7 +40,7 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
             {extraContent && (
               <>
                 {showContent && (
-                  <Typography fontWeight={700}>{extraContent}</Typography>
+                  <Typography variant='span' fontWeight={700}>{extraContent}</Typography>
                 )}
                 <Typography
                   variant="span"
@@ -48,9 +48,8 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
                     textDecoration: 'underline',
                     cursor: 'pointer',
                     fontSize: 11,
-                    paddingLeft: readmore ? '4px' : 0,
+                    paddingLeft: '4px',
                     lineHeight: 2.5,
-                    color: 'primary',
                   }}
                   onClick={() => {
                     setShowContent(!showContent)

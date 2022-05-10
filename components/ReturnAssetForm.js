@@ -29,6 +29,7 @@ const ReturnAssetForm = ({
   onSubmit,
   setDuplicateList,
   updateStatusMessage,
+  disableButton
 }) => {
   const { t } = useTranslation('common')
   const schema = {
@@ -57,7 +58,7 @@ const ReturnAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            data-testid='assetId-input'
+            data-testid="assetId-input"
             required
             id="outlined-required"
             name="AssetId"
@@ -75,12 +76,10 @@ const ReturnAssetForm = ({
   const widgets = {
     CustomInput: CustomInputComponent,
   }
-
+  console.log({disableButton})
   return (
     <>
-      <Box
-        sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
-      >
+      <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
         <FormControl>
           <RadioGroup
             aria-labelledby="senderAddress"
@@ -93,44 +92,50 @@ const ReturnAssetForm = ({
               <FormControlLabel
                 key={address}
                 value={address}
-                control={<Radio color="secondary" data-testid="wallet-radio-input" />}
+                control={
+                  <Radio color="secondary" data-testid="wallet-radio-input" />
+                }
                 label={address}
               />
             ))}
           </RadioGroup>
         </FormControl>
       </Box>
-      <Form
-        schema={schema}
-        uiSchema={uiSchema}
-        onSubmit={onSubmit}
-        widgets={widgets}
-        disabled={formattedAddresses.length < 1}
-        autoComplete="on"
-      >
-        <UploadContainer
-          setCsvTransactions={setCsvTransactions}
-          updateStatusMessage={updateStatusMessage}
-          setDuplicateList={setDuplicateList}
-        />
-        <Grid container spacing={2} marginTop={'2rem'}>
-          <Grid item xs={6} lg={4}>
-            <LoadingButton
-              data-testid='submit-btn'
-              loading={isLoading}
-              variant="contained"
-              disabled={formattedAddresses.length < 1}
-              type="submit"
-              sx={{ textDecoration: 'capitalize' }}
-            >
-              {t('/return-assets')}
-            </LoadingButton>
-          </Grid>
-          <Grid item xs={6} marginLeft="auto" textAlign="end">
-            <CollapseableErrorMessage actionStatus={actionStatus} />
-          </Grid>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Form
+            schema={schema}
+            uiSchema={uiSchema}
+            onSubmit={onSubmit}
+            widgets={widgets}
+            disabled={formattedAddresses.length < 1}
+            autoComplete="on"
+          >
+            <UploadContainer
+              setCsvTransactions={setCsvTransactions}
+              updateStatusMessage={updateStatusMessage}
+              setDuplicateList={setDuplicateList}
+            />
+            <Box marginTop={'2rem'}>
+              <LoadingButton
+                data-testid="submit-btn"
+                loading={isLoading}
+                variant="contained"
+                disabled={disableButton}
+                type="submit"
+                sx={{ textDecoration: 'capitalize' }}
+              >
+                {t('/return-assets')}
+              </LoadingButton>
+            </Box>
+          </Form>
         </Grid>
-      </Form>
+      </Grid>
+
+      <Box marginTop={'2rem'}>
+        <CollapseableErrorMessage actionStatus={actionStatus} />
+      </Box>
     </>
   )
 }
@@ -145,5 +150,6 @@ ReturnAssetForm.propTypes = {
   setDuplicateList: PropTypes.any,
   updateStatusMessage: PropTypes.func,
   setCsvTransactions: PropTypes.any,
+  disableButton: PropTypes.bool
 }
 export default ReturnAssetForm

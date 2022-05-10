@@ -192,151 +192,144 @@ export function SendAssetPage() {
       <Head>
         <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          {/*<Typography variant="h1" sx={{color: 'purple'}}>
-          Example Event Status: {status}
-          </Typography>*/}
+      <Typography
+        variant="h5"
+        sx={{ marginBottom: '1rem' }}
+        data-testid="page-title"
+      >
+        {t('/send-assets')}
+      </Typography>
+      <Button variant="contained" onClick={connect}>
+        {t('connect-wallet')}
+      </Button>
+      {assetBalance.message != '' && (
+        <Typography
+          variant="error-message"
+          display="block"
+          marginTop="1rem"
+          color={assetBalance.success ? 'info.success' : 'info.error'}
+        >
+          {assetBalance.message} {assetBalance.success ? 'available' : ''}
+        </Typography>
+      )}
+      <SendAssetForm
+        formattedAddresses={formattedAddresses}
+        onSubmit={submitForm}
+        isLoading={loading}
+        setWallet={setWallet}
+        actionStatus={actionStatus}
+        setAssetId={setAssetId}
+        csvTransactions={csvTransactions}
+        assetId={assetId}
+        wallet={wallet}
+        assetBalance={assetBalance}
+        setCsvTransactions={setCsvTransactions}
+        setDuplicateList={setDuplicateList}
+        updateStatusMessage={updateStatusMessage}
+      />
+      {hasStatusBar && (
+        <LinearProgressWithLabel
+          status={status}
+          progress={progress}
+          total={total}
+          hideProgress={hideProgress}
+        />
+      )}
+      {duplicateList.length > 0 && (
+        <>
           <Typography
-            variant="h5"
-            sx={{ marginBottom: '1rem' }}
-            data-testid="page-title"
+            variant="error-message"
+            display="block"
+            marginTop="1rem"
+            marginBottom="0"
+            color={'info.error'}
           >
-            {t('/send-assets')}
+            {t('Find below the duplicate wallet address')}
+            {duplicateList.length > 1 && 'es'}:
           </Typography>
-          <Button variant="contained" onClick={connect}>
-            {t('connect-wallet')}
-          </Button>
-          {assetBalance.message != '' && (
-            <Typography
-              variant="error-message"
-              display="block"
-              marginTop="1rem"
-              color={assetBalance.success ? 'info.success' : 'info.error'}
+          <List dense={false}>
+            {duplicateList.map((d) => (
+              <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                <ListItemText
+                  primary={d}
+                  sx={{ color: 'info.error', marginBlock: '0' }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
+      {actionStatus.success == true && (
+        <Box
+          marginTop="3rem"
+          sx={{
+            border: 'solid 2px',
+            borderColor: 'secondary.main',
+            padding: '1rem',
+            borderRadius: '0.2rem',
+          }}
+        >
+          <Box
+            variant="error-message"
+            sx={{ display: 'flex', alignItems: 'center' }}
+          >
+            <Link
+              href={shareableLink}
+              target="_blanc"
+              sx={{ color: 'info.main' }}
             >
-              {assetBalance.message} {assetBalance.success ? 'available' : ''}
-            </Typography>
-          )}
-          <SendAssetForm
-            formattedAddresses={formattedAddresses}
-            onSubmit={submitForm}
-            isLoading={loading}
-            setWallet={setWallet}
-            actionStatus={actionStatus}
-            setAssetId={setAssetId}
-            csvTransactions={csvTransactions}
-            assetId={assetId}
-            wallet={wallet}
-            assetBalance={assetBalance}
-            setCsvTransactions={setCsvTransactions}
-            setDuplicateList={setDuplicateList}
-            updateStatusMessage={updateStatusMessage}
-          />
-          {hasStatusBar && (
-            <LinearProgressWithLabel
-              status={status}
-              progress={progress}
-              total={total}
-              hideProgress={hideProgress}
-            />
-          )}
-          {duplicateList.length > 0 && (
-            <>
-              <Typography
-                variant="error-message"
-                display="block"
-                marginTop="1rem"
-                marginBottom="0"
-                color={'error'}
-              >
-                {t('Find below the duplicate wallet address')}
-                {duplicateList.length > 1 && 'es'}:
-              </Typography>
-              <List dense={false}>
-                {duplicateList.map((d) => (
-                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
-                    <ListItemText
-                      primary={d}
-                      sx={{ color: 'red', marginBlock: '0' }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </>
-          )}
-          {actionStatus.success == true && (
-            <Box
-              marginTop="3rem"
+              {t('Share this link with receiver(s) to redeem asset(s)')}:
+            </Link>
+            <Tooltip
+              title={tooltiptext}
+              placement="top"
+              arrow
               sx={{
-                border: 'solid 2px',
-                borderColor: 'secondary.main',
-                padding: '1rem',
-                borderRadius: '0.2rem',
+                cursor: 'pointer',
+                marginLeft: '0.5rem',
               }}
             >
-              <Box
-                variant="error-message"
-                sx={{ display: 'flex', alignItems: 'center' }}
-              >
-                <Link
-                  href={shareableLink}
-                  target="_blanc"
-                  sx={{ color: 'info.main' }}
-                >
-                  {t('Share this link with receiver(s) to redeem asset(s)')}:
-                </Link>
-                <Tooltip
-                  title={tooltiptext}
-                  placement="top"
-                  arrow
-                  sx={{
-                    cursor: 'pointer',
-                    marginLeft: '0.5rem',
-                  }}
-                >
-                  <ContentCopyIcon
-                    onClick={copyLink}
-                    className="copyToClipboard"
-                    fontSize="0.9rem"
-                  />
-                </Tooltip>
-              </Box>
-              <Typography variant="p" marginY={'1rem'}>
-                {t(
-                  'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
-                )}
-                .
-              </Typography>
-              <Typography
-                variant="p"
-                fontStyle="italic"
-                marginLeft="1rem"
-                color={(theme) => theme.palette.grey.main}
-              >
-                *{' '}
-                {t(
-                  'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
-                )}
-                .
-              </Typography>
-            </Box>
-          )}
-          <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
-            <Grid item xs={6} lg={5} className="mr-2">
-              <Link
-                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                target="blanc"
-                color="primary.dark"
-              >
-                {t('view-instructions-link')}
-              </Link>
-            </Grid>
-            <Grid item xs={6} lg={5}>
-              <Link href={'/sample.csv'} download color="primary.dark">
-                {t('download-csv-example-link')}
-              </Link>
-            </Grid>
-          </Grid>
+              <ContentCopyIcon
+                onClick={copyLink}
+                className="copyToClipboard"
+                fontSize="0.9rem"
+              />
+            </Tooltip>
+          </Box>
+          <Typography variant="p" marginY={'1rem'}>
+            {t(
+              'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
+            )}
+            .
+          </Typography>
+          <Typography
+            variant="p"
+            fontStyle="italic"
+            marginLeft="1rem"
+            color={(theme) => theme.palette.grey.main}
+          >
+            *{' '}
+            {t(
+              'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
+            )}
+            .
+          </Typography>
+        </Box>
+      )}
+      <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
+        <Grid item xs={6} lg={5} className="mr-2">
+          <Link
+            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            target="blanc"
+            color="primary.dark"
+          >
+            {t('view-instructions-link')}
+          </Link>
+        </Grid>
+        <Grid item xs={6} lg={5}>
+          <Link href={'/sample.csv'} download color="primary.dark">
+            {t('download-csv-example-link')}
+          </Link>
         </Grid>
       </Grid>
     </Container>
