@@ -46,6 +46,7 @@ const styles = {
   linkStyles: {
     fontWeight: '700',
     marginRight: '1.6rem',
+    textDecoration: 'none',
     color: (theme) => theme.palette.accent.contrastText,
   },
 }

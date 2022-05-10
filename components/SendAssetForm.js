@@ -109,7 +109,7 @@ const SendAssetForm = ({
       </Box>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+        <Grid item xs={12} md={8} lg={7} xl={6}>
           <Form
             schema={schema}
             disabled={formattedAddresses.length < 1}
@@ -123,7 +123,11 @@ const SendAssetForm = ({
               updateStatusMessage={updateStatusMessage}
               setDuplicateList={setDuplicateList}
             />
-            <Tooltip title="If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
+            <Tooltip sx={{marginTop:'1rem'}}
+              title={t(
+                'If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.'
+              )}
+            >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -131,7 +135,7 @@ const SendAssetForm = ({
                     onChange={(e) => setEscrowPermission(e.target.checked)}
                   />
                 }
-                label="Send to escrow if recipient is not opted in"
+                label={t('Send to escrow if recipient is not opted in')}
               />
             </Tooltip>
             <Box marginTop={'2rem'}>

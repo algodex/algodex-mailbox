@@ -150,18 +150,18 @@ export function ReturnAssetPage() {
           !(senderAddress && assetId && csvTransactions) ? true : false
         }
       />
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12} lg={8} xl={7}>
-          {hasStatusBar && (
+      {hasStatusBar && (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12} lg={7} xl={6}>
             <LinearProgressWithLabel
               status={status}
               progress={progress}
               total={total}
               hideProgress={hideProgress}
             />
-          )}
+          </Grid>
         </Grid>
-      </Grid>
+      )}
       {duplicateList.length > 0 && (
         <>
           <Typography
@@ -186,7 +186,7 @@ export function ReturnAssetPage() {
           </List>
         </>
       )}
-      <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+      <Grid container spacing={2} sx={{ paddingBlock: '2rem' }}>
         <Grid item xs={6} lg={5} className="mr-2">
           <Link
             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
