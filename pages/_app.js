@@ -2,7 +2,7 @@
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
-
+import React from 'react'
 import '@/styles/global.css'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
@@ -50,7 +50,8 @@ const desktopMuiTheme = createTheme({
 })
 
 export function App(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props
+  console.debug(props)
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -63,7 +64,7 @@ export function App(props) {
       >
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Layout>
+        <Layout router={router}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

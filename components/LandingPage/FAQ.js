@@ -72,22 +72,23 @@ export const FAQ = () => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography fontWeight={700}>{faq.q}</Typography>
+                      <Typography fontWeight={700}>{t(faq.q)}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        {faq.a}
+                        {t(faq.a)}
                         {faq.guideLink && (
-                          <a
-                            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ marginLeft: '3px' }}
-                          >
-                            guide
-                          </a>
+                          <span>
+                            <a
+                              href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ marginLeft: '3px' }}
+                            >
+                              {t('guide')}
+                            </a>.
+                          </span>
                         )}
-                        .
                       </Typography>
                       {faq.socialLink && (
                         <ul>
@@ -133,6 +134,16 @@ export const FAQ = () => {
                               rel="noreferrer"
                             >
                               @AlgodexOfficial
+                            </a>
+                          </li>
+                          <li>
+                            Discord:{' '}
+                            <a
+                              href="https://discord.gg/b6gTsNrPB8"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Algodex Discussion
                             </a>
                           </li>
                         </ul>

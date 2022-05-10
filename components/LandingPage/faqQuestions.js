@@ -53,7 +53,7 @@ export const FaqQuestions = [
   },
   {
     q: 'Where can I follow Algodex and keep up with announcements?',
-    a: ' You can follow Algodex on the following social media websites:',
+    a: 'You can follow Algodex on the following social media websites',
     socialLink: true,
   },
 ]

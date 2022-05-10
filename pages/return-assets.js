@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -16,12 +16,15 @@ import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
-import useMyAlgo from '@/hooks/use-my-algo'
+import useFormattedAddress from '@/hooks/useFormattedAddress'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
+import useSendAsset from '@/hooks/useSendAsset'
 
 /**
  * Generate Static Properties
@@ -42,7 +45,10 @@ export async function getServerSideProps({ locale }) {
  */
 export function ReturnAssetPage() {
   const [loading, setLoading] = useState(false)
+  const { progress, status, total, hideProgress, setHideProgress, setStatus } =
+    useSendAsset()
   const [senderAddress, setSenderAddress] = useState('')
+  const { formattedAddresses, connect } = useFormattedAddress()
   const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
   const [duplicateList, setDuplicateList] = useState([])
@@ -51,36 +57,11 @@ export function ReturnAssetPage() {
     success: false,
   })
 
-  const [formattedAddresses, setFormattedAddresses] = useState([])
-
-  useEffect(() => {
-    setFormattedAddresses(
-      JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
-    )
-  }, [])
-
   useEffect(() => {
     if (actionStatus.message != '') {
       updateStatusMessage()
     }
   }, [assetId, senderAddress, csvTransactions])
-
-  const updateAddresses = useCallback(
-    (addresses) => {
-      if (addresses == null) {
-        return
-      }
-      // console.debug({ addresses })
-      localStorage.setItem(
-        'algodex_user_wallet_addresses',
-        JSON.stringify(addresses)
-      )
-      setFormattedAddresses(addresses)
-    },
-    [setFormattedAddresses]
-  )
-
-  const { connect } = useMyAlgo(updateAddresses)
 
   const { t } = useTranslation('common')
 
@@ -90,6 +71,11 @@ export function ReturnAssetPage() {
       success: status || false,
     })
   }
+
+  const hasStatusBar = useMemo(() => {
+    return typeof status !== 'undefined'
+  }, [status])
+
   const submitForm = async ({ formData }) => {
     console.debug(formData)
     if (senderAddress != '' && assetId != '' && csvTransactions != '') {
@@ -102,102 +88,122 @@ export function ReturnAssetPage() {
       )
       // console.debug('responseData', responseData)
       setLoading(false)
+
       if (responseData?.error == false) {
         const totalAssets = responseData.confirmedTransactions.length
         const sentAssets = responseData.confirmedTransactions.filter(
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} transaction(s) returned successfully`,
+          `${sentAssets}/${totalAssets} ${t(
+            'transaction(s) returned successfully'
+          )}`,
           true
         )
       } else {
-        if (/PopupOpenError|blocked|Can not open popup window/.test(responseData)) {
+        setStatus()
+        setHideProgress(true)
+        if (
+          /PopupOpenError|blocked|Can not open popup window/.test(responseData)
+        ) {
           updateStatusMessage(
-            'Please disable your popup blocker (likely in the top-right of your browser window)',
+            t(
+              'Please disable your popup blocker (likely in the top-right of your browser window)'
+            ),
             false
           )
           return
         }
         updateStatusMessage(
-          responseData.body?.message || 'Sorry, an error occurred',
+          responseData.body?.message ||
+            responseData.message ||
+            t('Sorry, an error occurred'),
           false
         )
       }
     }
   }
 
-
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
+      <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+        {t('/return-assets')}
+      </Typography>
+      <Button variant="contained" onClick={connect}>
+        {t('connect-wallet')}
+      </Button>
+      <ReturnAssetForm
+        formattedAddresses={formattedAddresses}
+        onSubmit={submitForm}
+        actionStatus={actionStatus}
+        isLoading={loading}
+        setSenderAddress={setSenderAddress}
+        setAssetId={setAssetId}
+        csvTransactions={csvTransactions}
+        setCsvTransactions={setCsvTransactions}
+        setDuplicateList={setDuplicateList}
+        updateStatusMessage={updateStatusMessage}
+        disableButton={
+          !(senderAddress && assetId && csvTransactions) ? true : false
+        }
+      />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={7} xl={6}>
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-            {t('/return-assets')}
-          </Typography>
-          <Button variant="contained" onClick={connect}>
-            {t('connect-wallet')}
-          </Button>
-          <ReturnAssetForm
-            formattedAddresses={formattedAddresses}
-            onSubmit={submitForm}
-            actionStatus={actionStatus}
-            isLoading={loading}
-            setSenderAddress={setSenderAddress}
-            setAssetId={setAssetId}
-            csvTransactions={csvTransactions}
-            setCsvTransactions={setCsvTransactions}
-            setDuplicateList={setDuplicateList}
-            updateStatusMessage={updateStatusMessage}
-          />
-          {duplicateList.length > 0 && (
-            <>
-              <Typography
-                variant="error-message"
-                display="block"
-                marginTop="1rem"
-                marginBottom="0"
-                color={'error'}
-              >
-                Find below the duplicate wallet address
-                {duplicateList.length > 1 && 'es'}:
-              </Typography>
-              <List dense={false}>
-                {duplicateList.map((d) => (
-                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
-                    <ListItemText
-                      primary={d}
-                      sx={{ color: 'red', marginBlock: '0' }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </>
+        <Grid item xs={12} md={12} lg={8} xl={7}>
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
           )}
-          <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
-            <Grid item xs={6} lg={5} className="mr-2">
-              <Link
-                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                target="blanc"
-                color="primary.dark"
-              >
-                {t('view-instructions-link')}
-              </Link>
-            </Grid>
-            <Grid item xs={6} lg={5} marginLeft="auto" textAlign="end">
-              <Link href={'/sample.csv'} download color="primary.dark">
-                {t('download-csv-example-link')}
-              </Link>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
-    </>
+      {duplicateList.length > 0 && (
+        <>
+          <Typography
+            variant="error-message"
+            display="block"
+            marginTop="1rem"
+            marginBottom="0"
+            color={'info.error'}
+          >
+            Find below the duplicate wallet address
+            {duplicateList.length > 1 && 'es'}:
+          </Typography>
+          <List dense={false}>
+            {duplicateList.map((d) => (
+              <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                <ListItemText
+                  primary={d}
+                  sx={{ color: 'info.error', marginBlock: '0' }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
+      <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+        <Grid item xs={6} lg={5} className="mr-2">
+          <Link
+            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            target="blanc"
+            color="primary.dark"
+          >
+            {t('view-instructions-link')}
+          </Link>
+        </Grid>
+        <Grid item xs={6} lg={5}>
+          <Link href={'/sample.csv'} download color="primary.dark">
+            {t('download-csv-example-link')}
+          </Link>
+        </Grid>
+      </Grid>
+    </Container>
   )
 }
 
 export default ReturnAssetPage
-

@@ -139,7 +139,10 @@ export const LandingPageFooter = () => {
               link="https://about.algodex.com/docs/"
               linkName={t('docs')}
             />
-
+            <FooterLinks
+              link="https://github.com/algodex/algodex-mailbox"
+              linkName={'Github'}
+            />
             <FooterLinks
               link="https://about.algodex.com/support/"
               linkName={t('support')}

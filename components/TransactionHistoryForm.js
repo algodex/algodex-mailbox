@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
+import Box from '@mui/material/Box'
 
 const TransactionHistoryForm = ({
   onSubmit,
@@ -38,36 +39,41 @@ const TransactionHistoryForm = ({
   }
 
   return (
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      onSubmit={onSubmit}
-      onChange={({ formData }) => {
-        onSubmit({ formData })
-      }}
-      formData={{
-        assetId: formData.assetId,
-        senderAddress: formData.senderAddress,
-        csvTransactions: formData.csvTransactions,
-      }}
-      autoComplete="on"
-    >
-      <Grid container spacing={2} marginTop={'2rem'}>
-        <Grid item xs={6} lg={4}>
-          <LoadingButton
-            loading={isLoading}
-            variant="contained"
-            type="submit"
-            sx={{ textDecoration: 'capitalize' }}
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Form
+            schema={schema}
+            uiSchema={uiSchema}
+            onSubmit={onSubmit}
+            onChange={({ formData }) => {
+              onSubmit({ formData })
+            }}
+            formData={{
+              assetId: formData.assetId,
+              senderAddress: formData.senderAddress,
+              csvTransactions: formData.csvTransactions,
+            }}
+            autoComplete="on"
           >
-            {t('Refresh')}
-          </LoadingButton>
-        </Grid>
-        <Grid item xs={6} marginLeft="auto" textAlign="end">
-          <CollapseableErrorMessage actionStatus={actionStatus} />
+            <Box marginTop={'2rem'}>
+              <LoadingButton
+                data-testid="submit-btn"
+                loading={isLoading}
+                variant="contained"
+                type="submit"
+                sx={{ textDecoration: 'capitalize' }}
+              >
+                {t('Refresh')}
+              </LoadingButton>
+            </Box>
+          </Form>
         </Grid>
       </Grid>
-    </Form>
+      <Box marginTop={'2rem'}>
+        <CollapseableErrorMessage actionStatus={actionStatus} />
+      </Box>
+    </>
   )
 }
 

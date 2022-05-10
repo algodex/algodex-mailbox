@@ -43,6 +43,7 @@ const SendAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid="assetId-input"
             required
             id="outlined-required"
             name="AssetId"
@@ -77,16 +78,14 @@ const SendAssetForm = ({
 
   const checkDisabledState = () => {
     const balance = parseFloat(assetBalance.message)
-    if (!(balance > 0) && (!wallet || !assetId || !csvTransactions)) {
-      return true
+    if (balance > 0 && wallet && assetId && csvTransactions) {
+      return false
     }
-    return false
+    return true
   }
   return (
     <>
-      <Box
-        sx={{ marginBlock: formattedAddresses.length > 0 ? '1rem' : '0rem' }}
-      >
+      <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
         <FormControl>
           <RadioGroup
             aria-labelledby="wallet"
@@ -99,54 +98,60 @@ const SendAssetForm = ({
               <FormControlLabel
                 key={address}
                 value={address}
-                control={<Radio color="secondary" />}
+                control={
+                  <Radio color="secondary" data-testid="wallet-radio-input" />
+                }
                 label={address}
               />
             ))}
           </RadioGroup>
         </FormControl>
       </Box>
-      <Form
-        schema={schema}
-        disabled={formattedAddresses.length < 1}
-        uiSchema={uiSchema}
-        widgets={widgets}
-        onSubmit={onSubmit}
-        autoComplete="on"
-      >
-        <UploadContainer
-          setCsvTransactions={setCsvTransactions}
-          updateStatusMessage={updateStatusMessage}
-          setDuplicateList={setDuplicateList}
-        />
-        <Tooltip title="If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
-          <FormControlLabel
-            control={
-              <Checkbox
-                defaultChecked
-                onChange={(e) => setEscrowPermission(e.target.checked)}
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Form
+            schema={schema}
+            disabled={formattedAddresses.length < 1}
+            uiSchema={uiSchema}
+            widgets={widgets}
+            onSubmit={onSubmit}
+            autoComplete="on"
+          >
+            <UploadContainer
+              setCsvTransactions={setCsvTransactions}
+              updateStatusMessage={updateStatusMessage}
+              setDuplicateList={setDuplicateList}
+            />
+            <Tooltip title="If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked
+                    onChange={(e) => setEscrowPermission(e.target.checked)}
+                  />
+                }
+                label="Send to escrow if recipient is not opted in"
               />
-            }
-            label="Send to escrow if recipient is not opted in"
-          />
-        </Tooltip>
-        <Grid container spacing={2} marginTop={'2rem'}>
-          <Grid item xs={6} lg={4}>
-            <LoadingButton
-              loading={isLoading}
-              variant="contained"
-              disabled={checkDisabledState()}
-              type="submit"
-              sx={{ textDecoration: 'capitalize' }}
-            >
-              {t('/send-assets')}
-            </LoadingButton>
-          </Grid>
-          <Grid item xs={6} marginLeft="auto">
-            <CollapseableErrorMessage actionStatus={actionStatus} />
-          </Grid>
+            </Tooltip>
+            <Box marginTop={'2rem'}>
+              <LoadingButton
+                data-testid="submit-btn"
+                loading={isLoading}
+                variant="contained"
+                disabled={checkDisabledState()}
+                type="submit"
+                sx={{ textDecoration: 'capitalize' }}
+              >
+                {t('/send-assets')}
+              </LoadingButton>
+            </Box>
+          </Form>
         </Grid>
-      </Form>
+      </Grid>
+      <Box marginTop={'2rem'}>
+        <CollapseableErrorMessage actionStatus={actionStatus} />
+      </Box>
     </>
   )
 }

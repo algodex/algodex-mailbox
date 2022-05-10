@@ -13,6 +13,7 @@ import { defaults } from '@/next-i18next.config'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import TransactionHistoryForm from '@/components/TransactionHistoryForm'
@@ -74,7 +75,7 @@ export function TransactionHistoryPage() {
           )
         // console.debug('responseData', responseData)
         setLoading(false)
-        if (responseData.error == true) {
+        if (responseData instanceof Error || responseData.error == true) {
           updateStatusMessage(
             responseData.body?.message || 'Sorry an error occured'
           )
@@ -116,22 +117,20 @@ export function TransactionHistoryPage() {
     }
   }
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/transaction-history')} | ${t('app-title')}`}</title>
       </Head>
+      <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+        {t('/transaction-history')}
+      </Typography>
+      <TransactionHistoryForm
+        onSubmit={submitForm}
+        isLoading={loading}
+        formData={formData}
+        actionStatus={actionStatus}
+      />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={7} xl={6}>
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-            {t('/transaction-history')}
-          </Typography>
-          <TransactionHistoryForm
-            onSubmit={submitForm}
-            isLoading={loading}
-            formData={formData}
-            actionStatus={actionStatus}
-          />
-        </Grid>
         <Grid item xs={12} md={12} lg={11} xl={10} marginBottom="2rem">
           {tableRows.length > 0 && (
             <Box sx={{ marginBlock: '1rem' }}>
@@ -143,14 +142,14 @@ export function TransactionHistoryPage() {
               href={csvLink}
               target="_blanc"
               download="Transaction History.csv"
-              sx={{ color: 'blue', textDecoration: 'underline' }}
+              sx={{ color: 'info.main', textDecoration: 'underline' }}
             >
               Click to download Transaction History
             </Link>
           )}
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

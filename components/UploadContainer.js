@@ -34,6 +34,11 @@ const UploadContainer = ({
 }) => {
   const { t } = useTranslation('common')
   const [fileName, setFileName] = useState()
+
+  // if (typeof window !== 'undefined' && typeof window.end2end !== 'undefined') {
+    
+  // }
+
   const getFileUpload = async (e) => {
     const csvFiles = e.target.files[0]
     if (csvFiles) {
@@ -65,7 +70,7 @@ const UploadContainer = ({
       Object.entries(count).forEach((c) => {
         c[1] > 1 && duplicate.push(c[0])
       })
-      if (duplicate.length > 0) {
+      if (!process.env.NEXT_PUBLIC_IGNORE_DUPLICATES && duplicate.length > 0) {
         setCsvTransactions()
         setDuplicateList(duplicate)
         updateStatusMessage(
@@ -77,10 +82,12 @@ const UploadContainer = ({
       }
     }
   }
+
   return (
     <Box>
       <label htmlFor="contained-button-file">
         <input
+          data-testid='file-input'
           accept="text/csv"
           id="contained-button-file"
           type="file"
@@ -98,7 +105,7 @@ const UploadContainer = ({
           </Button>
         ) : (
           <Box style={styles.uploadWrapper}>
-            <Typography variant="p" marginBottom="1rem">
+            <Typography variant="p" marginBottom="1rem" textAlign={'center'}>
               {t('Click to upload CSV transactions')}
             </Typography>
 

@@ -46,7 +46,7 @@ const styles = {
   linkStyles: {
     fontWeight: '700',
     marginRight: '1.6rem',
-    color: (theme) => theme.palette.primary.contrastText,
+    color: (theme) => theme.palette.accent.contrastText,
   },
 }
 
@@ -59,9 +59,13 @@ function Toolbar({
   isMobile,
   onClick,
   toggleDrawer,
-  isDashboard,
+  router,
   ...rest
 }) {
+  const CURRENT_PAGE = router.pathname
+
+  const isDashboard = router.pathname !== '/'
+
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -76,9 +80,9 @@ function Toolbar({
     if (ENABLE_NETWORK_SELECTION) {
       setEnvironmentText(value)
       if (value === 'MAINNET') {
-        window.location = MAINNET_LINK
+        window.location = `${MAINNET_LINK}${CURRENT_PAGE}`
       } else {
-        window.location = TESTNET_LINK
+        window.location = `${TESTNET_LINK}${CURRENT_PAGE}`
       }
     }
   }
@@ -102,28 +106,35 @@ function Toolbar({
           <Image
             src="/algodex-logo.svg"
             alt="Algodex logo"
-            height={28}
-            width={170}
+            height={25}
+            width={165}
           />
           <Typography
             variant="h6"
             component="div"
+            sx={{
+              fontSize: '24px',
+              '@media (max-width: 780px)': {
+                fontSize: '18px',
+              },
+              color: 'accent.contrastText',
+            }}
             marginRight={2}
-            marginLeft="0.5rem"
+            marginLeft="0.2rem"
             lineHeight={0}
           >
             {title || t('mailbox')}
           </Typography>
         </Box>
         {isDashboard && (
-          <Select
+          <Select data-testid='environment-selection'
             className="environment-select-wrapper"
             value={environmentText}
             onChange={handleChange}
             inputProps={{ 'aria-label': 'Without label' }}
-            style={{
+            sx={{
               ...styles.select,
-              color: environmentText == 'TESTNET' ? 'green' : 'blue',
+              color: environmentText === 'TESTNET' ? 'info.success' : 'info.main',
             }}
           >
             {environmentLinks.map((environment) => (
@@ -135,7 +146,7 @@ function Toolbar({
         )}
       </Box>
       {!isMobile && (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }} data-testid='toolbar-links'>
           <Link
             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
             target="_blanc"
@@ -156,7 +167,7 @@ function Toolbar({
         </Box>
       )}
       {isMobile && !isDashboard && (
-        <IconButton onClick={toggleDrawer}>
+        <IconButton onClick={toggleDrawer} data-testid='menu-btn'>
           <MenuIcon />
         </IconButton>
       )}
