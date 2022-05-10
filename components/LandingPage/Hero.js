@@ -109,7 +109,7 @@ export const Hero = () => {
                     {t('Try on')} {environment} {t('now')}:
                   </strong>
                 </p>
-                <Link href="/send-assets">
+                <Link href="/send-assets" data-testid='launch-btn'>
                   <Button
                     variant="outlined"
                     sx={{

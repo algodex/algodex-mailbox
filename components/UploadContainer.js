@@ -34,6 +34,11 @@ const UploadContainer = ({
 }) => {
   const { t } = useTranslation('common')
   const [fileName, setFileName] = useState()
+
+  // if (typeof window !== 'undefined' && typeof window.end2end !== 'undefined') {
+    
+  // }
+
   const getFileUpload = async (e) => {
     const csvFiles = e.target.files[0]
     if (csvFiles) {
@@ -77,10 +82,12 @@ const UploadContainer = ({
       }
     }
   }
+
   return (
     <Box>
       <label htmlFor="contained-button-file">
         <input
+          data-testid='file-input'
           accept="text/csv"
           id="contained-button-file"
           type="file"

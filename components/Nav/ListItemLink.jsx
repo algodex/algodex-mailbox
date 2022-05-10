@@ -20,6 +20,7 @@ import CustomLink from '@/components/Nav/Link'
  * @param icon
  * @param primary
  * @param to
+ * @param rest
  * @returns {JSX.Element}
  * @see https://mui.com/guides/routing/#list
  * @constructor

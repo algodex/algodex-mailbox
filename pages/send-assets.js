@@ -197,7 +197,11 @@ export function SendAssetPage() {
           {/*<Typography variant="h1" sx={{color: 'purple'}}>
           Example Event Status: {status}
           </Typography>*/}
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+          <Typography
+            variant="h5"
+            sx={{ marginBottom: '1rem' }}
+            data-testid="page-title"
+          >
             {t('/send-assets')}
           </Typography>
           <Button variant="contained" onClick={connect}>
@@ -208,7 +212,7 @@ export function SendAssetPage() {
               variant="error-message"
               display="block"
               marginTop="1rem"
-              color={assetBalance.success ? 'green' : 'error'}
+              color={assetBalance.success ? 'info.success' : 'info.error'}
             >
               {assetBalance.message} {assetBalance.success ? 'available' : ''}
             </Typography>
@@ -277,7 +281,7 @@ export function SendAssetPage() {
                 <Link
                   href={shareableLink}
                   target="_blanc"
-                  sx={{ color: 'blue' }}
+                  sx={{ color: 'info.main' }}
                 >
                   {t('Share this link with receiver(s) to redeem asset(s)')}:
                 </Link>

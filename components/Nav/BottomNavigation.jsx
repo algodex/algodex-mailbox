@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
@@ -45,24 +45,28 @@ function BottomNavigation({onChange, ...rest}) {
       {...rest}
     >
       <BottomNavigationAction
+        data-testid="nav-mobile-send-assets"
         to="/send-assets"
         value="/send-assets"
         label={t('/send')}
         icon={<SendIcon />}
       />
       <BottomNavigationAction
+        data-testid="nav-mobile-transaction-history"
         to="/transaction-history"
         value="/transaction-history"
         label={t('/history')}
         icon={<HistoryIcon />}
       />
       <BottomNavigationAction
+        data-testid="nav-mobile-redeem-assets"
         to="/redeem-assets"
         value="/redeem-assets"
         label={t('/redeem')}
         icon={<RedeemIcon />}
       />
       <BottomNavigationAction
+        data-testid="nav-mobile-return-assets"
         to="/return-assets"
         value="/return-assets"
         label={t('/return')}
