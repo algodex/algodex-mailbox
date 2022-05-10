@@ -16,12 +16,12 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
     if (message) {
       const list = message.split('')
       const listLength = list.length
-      if (listLength < 40) {
+      if (listLength < 45) {
         setPreviewtext(message)
         setExtraContent()
       } else {
         setReadmore(true)
-        const preview = list.slice(0, 40).join('')
+        const preview = list.slice(0, 44).join('')
         setPreviewtext(`${preview}...`)
         setExtraContent(message)
       }
@@ -33,7 +33,7 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
         <Typography
           variant="error-message"
           // sx={{ display: 'flex', justifyContent: 'end' }}
-          color={actionStatus.success ? 'green' : 'error'}
+          color={actionStatus.success ? 'info.success' : 'info.error'}
         >
           <>
             {readmore ? previewtext : ''}

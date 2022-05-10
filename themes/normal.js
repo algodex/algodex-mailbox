@@ -110,7 +110,12 @@ const theme = {
     },
     progress:{
       main:'#7B61FF'
-    }
+    },
+    info: {
+      main: '#3944BC',
+      success: '#3BB042',
+      error: '#EF0F1E',
+    },
   },
 }
 

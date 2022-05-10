@@ -23,7 +23,6 @@ import LocaleNavMenu from '@/components/Nav/LocaleNavMenu'
 //Algodex
 import Helper from '@/lib/helper'
 import Link from './Link'
-import { useRouter } from 'next/router'
 
 /**
  * Toolbar
@@ -60,10 +59,13 @@ function Toolbar({
   isMobile,
   onClick,
   toggleDrawer,
-  isDashboard,
+  router,
   ...rest
 }) {
-  const CURRENT_PAGE = useRouter().pathname
+  const CURRENT_PAGE = router.pathname
+
+  const isDashboard = router.pathname !== '/'
+
   const { t } = useTranslation('common')
   const { environment } = Helper.getAlgodex()
 
@@ -125,14 +127,14 @@ function Toolbar({
           </Typography>
         </Box>
         {isDashboard && (
-          <Select
+          <Select data-testid='environment-selection'
             className="environment-select-wrapper"
             value={environmentText}
             onChange={handleChange}
             inputProps={{ 'aria-label': 'Without label' }}
-            style={{
+            sx={{
               ...styles.select,
-              color: environmentText == 'TESTNET' ? 'green' : 'blue',
+              color: environmentText === 'TESTNET' ? 'info.success' : 'info.main',
             }}
           >
             {environmentLinks.map((environment) => (
@@ -144,7 +146,7 @@ function Toolbar({
         )}
       </Box>
       {!isMobile && (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }} data-testid='toolbar-links'>
           <Link
             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
             target="_blanc"
@@ -165,7 +167,7 @@ function Toolbar({
         </Box>
       )}
       {isMobile && !isDashboard && (
-        <IconButton onClick={toggleDrawer}>
+        <IconButton onClick={toggleDrawer} data-testid='menu-btn'>
           <MenuIcon />
         </IconButton>
       )}

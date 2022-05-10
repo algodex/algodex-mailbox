@@ -48,6 +48,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid='assetId-input'
             name="AssetId"
             defaultValue={formData.assetId}
             required={props.required}
@@ -68,6 +69,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid='senderAddress-input'
             name="SenderAddress"
             required={props.required}
             defaultValue={formData.senderAddress}
@@ -88,6 +90,7 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
+            data-testid='receiverAddress-input'
             name="ReceiverAddress"
             required={props.required}
             id="outlined-required"
@@ -147,6 +150,7 @@ const RedeemAssetForm = ({
       <Grid container spacing={2} marginTop={'2rem'} marginBottom={'2rem'}>
         <Grid item xs={6} lg={3}>
           <LoadingButton
+            data-testid='submit-btn'
             loading={loading}
             variant="contained"
             type="submit"

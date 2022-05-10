@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import RedeemAssetForm from '@/components/RedeemAssetForm'
@@ -162,7 +163,7 @@ export function RedeemAssetPage() {
   }, [assetId, receiverAddress, senderAddress])
 
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/redeem-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -198,7 +199,7 @@ export function RedeemAssetPage() {
                     <Typography
                       variant="error-message"
                       marginTop="1rem"
-                      color={escrowBalance.success ? 'green' : 'error'}
+                      color={escrowBalance.success ? 'info.success' : 'info.error'}
                     >
                       {escrowBalance.message}{' '}
                       {escrowBalance.success && 'available'}
@@ -249,7 +250,7 @@ export function RedeemAssetPage() {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

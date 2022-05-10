@@ -16,6 +16,8 @@ import ListSubheader from '@mui/material/ListSubheader'
 
 // Custom MUI Components
 import ListItemLink from '@/components/Nav/ListItemLink'
+import {useTheme} from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 /**
  * Drawer
@@ -26,14 +28,19 @@ import ListItemLink from '@/components/Nav/ListItemLink'
  * @returns {JSX.Element}
  * @constructor
  */
-function Drawer({ width, offset, links, toggleDrawer, ...props }) {
+function Drawer({ width, offset, links, toggleDrawer, router,open, ...props }) {
   const { t } = useTranslation('common')
+  const isHomepage = router.pathname === '/'
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <MUIDrawer
-      variant="persistent"
+      variant={ isHomepage || isMobile ? 'temporary' : 'persistent'}
       anchor="left"
+      open={open}
       sx={{
-        width,
+        width:isHomepage ? width : (!isHomepage && open) ? width : 0,
         flexShrink: 0,
         ['& .MuiDrawer-paper']: { width, boxSizing: 'border-box' },
       }}
@@ -55,6 +62,7 @@ function Drawer({ width, offset, links, toggleDrawer, ...props }) {
               to={link.to}
               icon={link.icon}
               primary={link.primary}
+              router={router}
               onClick={() => {
                 if (toggleDrawer) {
                   toggleDrawer()

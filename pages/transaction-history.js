@@ -13,6 +13,7 @@ import { defaults } from '@/next-i18next.config'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import TransactionHistoryForm from '@/components/TransactionHistoryForm'
@@ -116,7 +117,7 @@ export function TransactionHistoryPage() {
     }
   }
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/transaction-history')} | ${t('app-title')}`}</title>
       </Head>
@@ -143,14 +144,14 @@ export function TransactionHistoryPage() {
               href={csvLink}
               target="_blanc"
               download="Transaction History.csv"
-              sx={{ color: 'blue', textDecoration: 'underline' }}
+              sx={{ color: 'info.main', textDecoration: 'underline' }}
             >
               Click to download Transaction History
             </Link>
           )}
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

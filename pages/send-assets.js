@@ -18,6 +18,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import Container from '@mui/material/Container'
 
 // Custom Components
 import SendAssetForm from '@/components/SendAssetForm'
@@ -98,7 +99,9 @@ export function SendAssetPage() {
         /PopupOpenError|blocked|Can not open popup window/.test(responseData)
       ) {
         updateStatusMessage(
-          t('Please disable your popup blocker (likely in the top-right of your browser window)'),
+          t(
+            'Please disable your popup blocker (likely in the top-right of your browser window)'
+          ),
           false
         )
         return
@@ -122,7 +125,9 @@ export function SendAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} ${t('transaction(s) sent successfully')}`,
+          `${sentAssets}/${totalAssets} ${t(
+            'transaction(s) sent successfully'
+          )}`,
           true
         )
         setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
@@ -183,7 +188,7 @@ export function SendAssetPage() {
   }
 
   return (
-    <>
+    <Container sx={{ margin: 4 }}>
       <Head>
         <title>{`${t('/send-assets')} | ${t('app-title')}`}</title>
       </Head>
@@ -192,7 +197,11 @@ export function SendAssetPage() {
           {/*<Typography variant="h1" sx={{color: 'purple'}}>
           Example Event Status: {status}
           </Typography>*/}
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+          <Typography
+            variant="h5"
+            sx={{ marginBottom: '1rem' }}
+            data-testid="page-title"
+          >
             {t('/send-assets')}
           </Typography>
           <Button variant="contained" onClick={connect}>
@@ -203,7 +212,7 @@ export function SendAssetPage() {
               variant="error-message"
               display="block"
               marginTop="1rem"
-              color={assetBalance.success ? 'green' : 'error'}
+              color={assetBalance.success ? 'info.success' : 'info.error'}
             >
               {assetBalance.message} {assetBalance.success ? 'available' : ''}
             </Typography>
@@ -272,7 +281,7 @@ export function SendAssetPage() {
                 <Link
                   href={shareableLink}
                   target="_blanc"
-                  sx={{ color: 'blue' }}
+                  sx={{ color: 'info.main' }}
                 >
                   {t('Share this link with receiver(s) to redeem asset(s)')}:
                 </Link>
@@ -330,7 +339,7 @@ export function SendAssetPage() {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 

@@ -1,6 +1,7 @@
 {
   "env": {
-    "jest/globals": true
+    "jest/globals": true,
+    "cypress/globals": true
   },
   "extends": [
     "eslint:recommended",
@@ -10,7 +11,7 @@
     "plugin:storybook/recommended",
     "next/core-web-vitals"
   ],
-  "plugins": ["jest"],
+  "plugins": ["jest", "cypress"],
   "rules": {
     "semi": ["error", "never"],
     "quotes": ["error", "single"],
