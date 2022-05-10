@@ -146,16 +146,22 @@ export function ReturnAssetPage() {
         setCsvTransactions={setCsvTransactions}
         setDuplicateList={setDuplicateList}
         updateStatusMessage={updateStatusMessage}
-        disableButton={!(senderAddress && assetId && csvTransactions) ? true : false}
+        disableButton={
+          !(senderAddress && assetId && csvTransactions) ? true : false
+        }
       />
-      {hasStatusBar && (
-        <LinearProgressWithLabel
-          status={status}
-          progress={progress}
-          total={total}
-          hideProgress={hideProgress}
-        />
-      )}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12} lg={8} xl={7}>
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
+        </Grid>
+      </Grid>
       {duplicateList.length > 0 && (
         <>
           <Typography

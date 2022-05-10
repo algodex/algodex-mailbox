@@ -227,95 +227,103 @@ export function SendAssetPage() {
         setDuplicateList={setDuplicateList}
         updateStatusMessage={updateStatusMessage}
       />
-      {hasStatusBar && (
-        <LinearProgressWithLabel
-          status={status}
-          progress={progress}
-          total={total}
-          hideProgress={hideProgress}
-        />
-      )}
-      {duplicateList.length > 0 && (
-        <>
-          <Typography
-            variant="error-message"
-            display="block"
-            marginTop="1rem"
-            marginBottom="0"
-            color={'info.error'}
-          >
-            {t('Find below the duplicate wallet address')}
-            {duplicateList.length > 1 && 'es'}:
-          </Typography>
-          <List dense={false}>
-            {duplicateList.map((d) => (
-              <ListItem key={d} sx={{ paddingBlock: '0' }}>
-                <ListItemText
-                  primary={d}
-                  sx={{ color: 'info.error', marginBlock: '0' }}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
-      {actionStatus.success == true && (
-        <Box
-          marginTop="3rem"
-          sx={{
-            border: 'solid 2px',
-            borderColor: 'secondary.main',
-            padding: '1rem',
-            borderRadius: '0.2rem',
-          }}
-        >
-          <Box
-            variant="error-message"
-            sx={{ display: 'flex', alignItems: 'center' }}
-          >
-            <Link
-              href={shareableLink}
-              target="_blanc"
-              sx={{ color: 'info.main' }}
-            >
-              {t('Share this link with receiver(s) to redeem asset(s)')}:
-            </Link>
-            <Tooltip
-              title={tooltiptext}
-              placement="top"
-              arrow
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12} lg={8} xl={7}>
+          {hasStatusBar && (
+            <LinearProgressWithLabel
+              status={status}
+              progress={progress}
+              total={total}
+              hideProgress={hideProgress}
+            />
+          )}
+        </Grid>
+        <Grid item xl={12}>
+          {duplicateList.length > 0 && (
+            <>
+              <Typography
+                variant="error-message"
+                display="block"
+                marginTop="1rem"
+                marginBottom="0"
+                color={'info.error'}
+              >
+                {t('Find below the duplicate wallet address')}
+                {duplicateList.length > 1 && 'es'}:
+              </Typography>
+              <List dense={false}>
+                {duplicateList.map((d) => (
+                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                    <ListItemText
+                      primary={d}
+                      sx={{ color: 'info.error', marginBlock: '0' }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
+        </Grid>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          {actionStatus.success == true && (
+            <Box
+              marginTop="3rem"
               sx={{
-                cursor: 'pointer',
-                marginLeft: '0.5rem',
+                border: 'solid 2px',
+                borderColor: 'secondary.main',
+                padding: '1rem',
+                borderRadius: '0.2rem',
               }}
             >
-              <ContentCopyIcon
-                onClick={copyLink}
-                className="copyToClipboard"
-                fontSize="0.9rem"
-              />
-            </Tooltip>
-          </Box>
-          <Typography variant="p" marginY={'1rem'}>
-            {t(
-              'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
-            )}
+              <Box
+                variant="error-message"
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                <Link
+                  href={shareableLink}
+                  target="_blanc"
+                  sx={{ color: 'info.main' }}
+                >
+                  {t('Share this link with receiver(s) to redeem asset(s)')}:
+                </Link>
+                <Tooltip
+                  title={tooltiptext}
+                  placement="top"
+                  arrow
+                  sx={{
+                    cursor: 'pointer',
+                    marginLeft: '0.5rem',
+                  }}
+                >
+                  <ContentCopyIcon
+                    onClick={copyLink}
+                    className="copyToClipboard"
+                    fontSize="0.9rem"
+                  />
+                </Tooltip>
+              </Box>
+              <Typography variant="p" marginY={'1rem'}>
+                {t(
+                  'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
+                )}
             .
-          </Typography>
-          <Typography
-            variant="p"
-            fontStyle="italic"
-            marginLeft="1rem"
-            color={(theme) => theme.palette.grey.main}
-          >
+              </Typography>
+              <Typography
+                variant="p"
+                fontStyle="italic"
+                marginLeft="1rem"
+                color={(theme) => theme.palette.grey.main}
+              >
             *{' '}
-            {t(
-              'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
-            )}
+                {t(
+                  'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
+                )}
             .
-          </Typography>
-        </Box>
-      )}
+              </Typography>
+            </Box>
+          )}
+        </Grid>
+      </Grid>
       <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
         <Grid item xs={6} lg={5} className="mr-2">
           <Link
