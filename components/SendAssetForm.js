@@ -39,7 +39,7 @@ const SendAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <TextField
-            data-testid='assetId-input'
+            data-testid="assetId-input"
             required
             id="outlined-required"
             name="AssetId"
@@ -103,38 +103,41 @@ const SendAssetForm = ({
           </RadioGroup>
         </FormControl>
       </Box>
-      <Form
-        schema={schema}
-        disabled={formattedAddresses.length < 1}
-        uiSchema={uiSchema}
-        widgets={widgets}
-        onSubmit={onSubmit}
-        autoComplete="on"
-      >
-        <UploadContainer
-          setCsvTransactions={setCsvTransactions}
-          updateStatusMessage={updateStatusMessage}
-          setDuplicateList={setDuplicateList}
-        />
 
-        <Grid container spacing={2} marginTop={'2rem'}>
-          <Grid item xs={6} lg={4}>
-            <LoadingButton
-              data-testid='submit-btn'
-              loading={isLoading}
-              variant="contained"
-              disabled={checkDisabledState()}
-              type="submit"
-              sx={{ textDecoration: 'capitalize' }}
-            >
-              {t('/send-assets')}
-            </LoadingButton>
-          </Grid>
-          <Grid item xs={6} marginLeft="auto">
-            <CollapseableErrorMessage actionStatus={actionStatus} />
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
+          <Form
+            schema={schema}
+            disabled={formattedAddresses.length < 1}
+            uiSchema={uiSchema}
+            widgets={widgets}
+            onSubmit={onSubmit}
+            autoComplete="on"
+          >
+            <UploadContainer
+              setCsvTransactions={setCsvTransactions}
+              updateStatusMessage={updateStatusMessage}
+              setDuplicateList={setDuplicateList}
+            />
+
+            <Box marginTop={'2rem'}>
+              <LoadingButton
+                data-testid="submit-btn"
+                loading={isLoading}
+                variant="contained"
+                disabled={checkDisabledState()}
+                type="submit"
+                sx={{ textDecoration: 'capitalize' }}
+              >
+                {t('/send-assets')}
+              </LoadingButton>
+            </Box>
+          </Form>
         </Grid>
-      </Form>
+      </Grid>
+      <Box marginTop={'2rem'}>
+        <CollapseableErrorMessage actionStatus={actionStatus} />
+      </Box>
     </>
   )
 }

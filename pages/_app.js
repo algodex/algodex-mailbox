@@ -51,7 +51,7 @@ const desktopMuiTheme = createTheme({
 
 export function App(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props
-  console.log(props)
+  console.debug(props)
   return (
     <CacheProvider value={emotionCache}>
       <Head>

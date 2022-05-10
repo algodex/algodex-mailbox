@@ -121,18 +121,16 @@ export function TransactionHistoryPage() {
       <Head>
         <title>{`${t('/transaction-history')} | ${t('app-title')}`}</title>
       </Head>
+      <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+        {t('/transaction-history')}
+      </Typography>
+      <TransactionHistoryForm
+        onSubmit={submitForm}
+        isLoading={loading}
+        formData={formData}
+        actionStatus={actionStatus}
+      />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={7} xl={6}>
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-            {t('/transaction-history')}
-          </Typography>
-          <TransactionHistoryForm
-            onSubmit={submitForm}
-            isLoading={loading}
-            formData={formData}
-            actionStatus={actionStatus}
-          />
-        </Grid>
         <Grid item xs={12} md={12} lg={11} xl={10} marginBottom="2rem">
           {tableRows.length > 0 && (
             <Box sx={{ marginBlock: '1rem' }}>

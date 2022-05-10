@@ -95,7 +95,9 @@ export function ReturnAssetPage() {
           (asset) => asset.value.status == 'confirmed'
         ).length
         updateStatusMessage(
-          `${sentAssets}/${totalAssets} ${t('transaction(s) returned successfully')}`,
+          `${sentAssets}/${totalAssets} ${t(
+            'transaction(s) returned successfully'
+          )}`,
           true
         )
       } else {
@@ -105,7 +107,9 @@ export function ReturnAssetPage() {
           /PopupOpenError|blocked|Can not open popup window/.test(responseData)
         ) {
           updateStatusMessage(
-            t('Please disable your popup blocker (likely in the top-right of your browser window)'),
+            t(
+              'Please disable your popup blocker (likely in the top-right of your browser window)'
+            ),
             false
           )
           return
@@ -125,26 +129,29 @@ export function ReturnAssetPage() {
       <Head>
         <title>{`${t('/return-assets')} | ${t('app-title')}`}</title>
       </Head>
+      <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+        {t('/return-assets')}
+      </Typography>
+      <Button variant="contained" onClick={connect}>
+        {t('connect-wallet')}
+      </Button>
+      <ReturnAssetForm
+        formattedAddresses={formattedAddresses}
+        onSubmit={submitForm}
+        actionStatus={actionStatus}
+        isLoading={loading}
+        setSenderAddress={setSenderAddress}
+        setAssetId={setAssetId}
+        csvTransactions={csvTransactions}
+        setCsvTransactions={setCsvTransactions}
+        setDuplicateList={setDuplicateList}
+        updateStatusMessage={updateStatusMessage}
+        disableButton={
+          !(senderAddress && assetId && csvTransactions) ? true : false
+        }
+      />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={7} xl={6}>
-          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
-            {t('/return-assets')}
-          </Typography>
-          <Button variant="contained" onClick={connect}>
-            {t('connect-wallet')}
-          </Button>
-          <ReturnAssetForm
-            formattedAddresses={formattedAddresses}
-            onSubmit={submitForm}
-            actionStatus={actionStatus}
-            isLoading={loading}
-            setSenderAddress={setSenderAddress}
-            setAssetId={setAssetId}
-            csvTransactions={csvTransactions}
-            setCsvTransactions={setCsvTransactions}
-            setDuplicateList={setDuplicateList}
-            updateStatusMessage={updateStatusMessage}
-          />
+        <Grid item xs={12} md={12} lg={8} xl={7}>
           {hasStatusBar && (
             <LinearProgressWithLabel
               status={status}
@@ -153,46 +160,46 @@ export function ReturnAssetPage() {
               hideProgress={hideProgress}
             />
           )}
-          {duplicateList.length > 0 && (
-            <>
-              <Typography
-                variant="error-message"
-                display="block"
-                marginTop="1rem"
-                marginBottom="0"
-                color={'error'}
-              >
-                Find below the duplicate wallet address
-                {duplicateList.length > 1 && 'es'}:
-              </Typography>
-              <List dense={false}>
-                {duplicateList.map((d) => (
-                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
-                    <ListItemText
-                      primary={d}
-                      sx={{ color: 'red', marginBlock: '0' }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </>
-          )}
-          <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
-            <Grid item xs={6} lg={5} className="mr-2">
-              <Link
-                href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
-                target="blanc"
-                color="primary.dark"
-              >
-                {t('view-instructions-link')}
-              </Link>
-            </Grid>
-            <Grid item xs={6} lg={5} marginLeft="auto" textAlign="end">
-              <Link href={'/sample.csv'} download color="primary.dark">
-                {t('download-csv-example-link')}
-              </Link>
-            </Grid>
-          </Grid>
+        </Grid>
+      </Grid>
+      {duplicateList.length > 0 && (
+        <>
+          <Typography
+            variant="error-message"
+            display="block"
+            marginTop="1rem"
+            marginBottom="0"
+            color={'info.error'}
+          >
+            Find below the duplicate wallet address
+            {duplicateList.length > 1 && 'es'}:
+          </Typography>
+          <List dense={false}>
+            {duplicateList.map((d) => (
+              <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                <ListItemText
+                  primary={d}
+                  sx={{ color: 'info.error', marginBlock: '0' }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
+      <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+        <Grid item xs={6} lg={5} className="mr-2">
+          <Link
+            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            target="blanc"
+            color="primary.dark"
+          >
+            {t('view-instructions-link')}
+          </Link>
+        </Grid>
+        <Grid item xs={6} lg={5}>
+          <Link href={'/sample.csv'} download color="primary.dark">
+            {t('download-csv-example-link')}
+          </Link>
         </Grid>
       </Grid>
     </Container>
