@@ -8,7 +8,6 @@ describe('Transaction history page', () => {
     cy.visit('/transaction-history')
   })
 
-  
   it('should query and display transaction history', () => {
     cy.get('input').eq(2).type(`${formattedAddresses[0]}`)
     cy.get('input').eq(1).type(`${assetId}`)
