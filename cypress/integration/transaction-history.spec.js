@@ -11,6 +11,7 @@ describe('Transaction history page', () => {
   it('should query and display transaction history', () => {
     cy.get('input').eq(2).type(`${formattedAddresses[0]}`)
     cy.get('input').eq(1).type(`${assetId}`)
-    cy.get('[data-testid=submit-btn]').click()
+    cy.wait(4000)
+    cy.get('[data-testid=transaction-table]').should('be.visible')
   })
 })
