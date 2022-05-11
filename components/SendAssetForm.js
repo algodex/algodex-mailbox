@@ -123,21 +123,24 @@ const SendAssetForm = ({
               updateStatusMessage={updateStatusMessage}
               setDuplicateList={setDuplicateList}
             />
-            <Tooltip sx={{marginTop:'1rem'}}
-              title={t(
-                'If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.'
-              )}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    defaultChecked
-                    onChange={(e) => setEscrowPermission(e.target.checked)}
-                  />
-                }
-                label={t('Send to escrow if recipient is not opted in')}
-              />
-            </Tooltip>
+            <Box>
+              <Tooltip
+                sx={{ marginTop: '1rem' }}
+                title={t(
+                  'If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.'
+                )}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      defaultChecked
+                      onChange={(e) => setEscrowPermission(e.target.checked)}
+                    />
+                  }
+                  label={t('Send to escrow if recipient is not opted in')}
+                />
+              </Tooltip>
+            </Box>
             <Box marginTop={'2rem'}>
               <LoadingButton
                 data-testid="submit-btn"
