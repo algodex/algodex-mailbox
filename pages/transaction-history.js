@@ -133,7 +133,7 @@ export function TransactionHistoryPage() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={11} xl={10} marginBottom="2rem">
           {tableRows.length > 0 && (
-            <Box sx={{ marginBlock: '1rem' }}>
+            <Box sx={{ marginBlock: '1rem' }} data-testid='transaction-table'>
               <TransactionTable rows={tableRows} />
             </Box>
           )}
