@@ -11,6 +11,7 @@ describe('Send assets Page', () => {
 
   
   it('should send assets successfully', () => {
+    cy.wait(3000)
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.contains(`${formattedAddresses[0]}`).click()
