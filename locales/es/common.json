@@ -86,5 +86,6 @@
   "Share this link with receiver(s) to redeem asset(s)":"Comparta este enlace con los destinatarios para canjear activos",
   "Find below the duplicate wallet address":"Encuentre debajo la dirección de la billetera duplicada",
   "transaction(s) sent successfully":"transacciones enviadas con éxito",
-  "transaction(s) returned successfully":"transacciones devueltas con éxito"
+  "transaction(s) returned successfully":"transacciones devueltas con éxito",
+  "This feature is currently not available":"Esta característica no está disponible actualmente"
 }
