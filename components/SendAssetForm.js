@@ -8,6 +8,7 @@ import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
+
 import Box from '@mui/material/Box'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -18,6 +19,8 @@ import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
+import FormGroup from '@mui/material/FormGroup'
+
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 
@@ -123,7 +126,7 @@ const SendAssetForm = ({
               updateStatusMessage={updateStatusMessage}
               setDuplicateList={setDuplicateList}
             />
-            <Box>
+            <FormGroup>
               <Tooltip
                 sx={{ marginTop: '1rem' }}
                 title={t(
@@ -140,7 +143,7 @@ const SendAssetForm = ({
                   label={t('Send to escrow if recipient is not opted in')}
                 />
               </Tooltip>
-            </Box>
+            </FormGroup>
             <Box marginTop={'2rem'}>
               <LoadingButton
                 data-testid="submit-btn"
