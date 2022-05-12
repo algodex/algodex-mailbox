@@ -24,7 +24,7 @@ describe('Send assets Page', () => {
     cy.wait(3000)
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.get('[data-testid=assetId-input]').should('be.visible')
-    cy.get('[data-testid=checkbox-input]').click()
+    cy.get('input').eq(4).click()
     cy.get('input').eq(2).type(`${assetId}`, { force: true })
     cy.contains(`${formattedAddresses[0]}`).click({ force: true })
     cy.get('[data-testid=submit-btn]').click()
