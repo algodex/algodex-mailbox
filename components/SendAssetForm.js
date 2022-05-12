@@ -132,6 +132,7 @@ const SendAssetForm = ({
               )}
             >
               <FormControlLabel
+                data-testid="checkbox-input"
                 control={
                   <Checkbox
                     defaultChecked
