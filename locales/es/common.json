@@ -88,5 +88,6 @@
   "transaction(s) sent successfully":"transacciones enviadas con éxito",
   "transaction(s) returned successfully":"transacciones devueltas con éxito",
   "Send to escrow if recipient is not opted in":"Enviar a depósito en garantía si el destinatario no está habilitado",
-  "If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.":"Si está marcado, esto se enviará a los depósitos en garantía en nombre de las billeteras que no han optado por el activo. De lo contrario, omitirá el envío a estas direcciones de billetera."
+  "If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.":"Si está marcado, esto se enviará a los depósitos en garantía en nombre de las billeteras que no han optado por el activo. De lo contrario, omitirá el envío a estas direcciones de billetera.",
+  "This feature is currently not available":"Esta característica no está disponible actualmente"
 }

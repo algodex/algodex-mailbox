@@ -124,6 +124,13 @@ export function TransactionHistoryPage() {
       <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
         {t('/transaction-history')}
       </Typography>
+
+      <Typography
+        variant="p"
+        sx={{ marginBottom: '1rem', color: 'info.error' }}
+      >
+        *{t('This feature is currently not available')}*
+      </Typography>
       <TransactionHistoryForm
         onSubmit={submitForm}
         isLoading={loading}
@@ -133,7 +140,7 @@ export function TransactionHistoryPage() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={11} xl={10} marginBottom="2rem">
           {tableRows.length > 0 && (
-            <Box sx={{ marginBlock: '1rem' }} data-testid='transaction-table'>
+            <Box sx={{ marginBlock: '1rem' }} data-testid="transaction-table">
               <TransactionTable rows={tableRows} />
             </Box>
           )}
