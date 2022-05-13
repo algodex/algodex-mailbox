@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
@@ -7,6 +8,7 @@ import React from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
+
 import Box from '@mui/material/Box'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -15,6 +17,9 @@ import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
+import Checkbox from '@mui/material/Checkbox'
+import Tooltip from '@mui/material/Tooltip'
+
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 
@@ -28,6 +33,7 @@ const SendAssetForm = ({
   assetId,
   wallet,
   csvTransactions,
+  setEscrowPermission,
   assetBalance,
   setCsvTransactions,
   setDuplicateList,
@@ -105,7 +111,7 @@ const SendAssetForm = ({
       </Box>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+        <Grid item xs={12} md={8} lg={7} xl={6}>
           <Form
             schema={schema}
             disabled={formattedAddresses.length < 1}
@@ -119,7 +125,23 @@ const SendAssetForm = ({
               updateStatusMessage={updateStatusMessage}
               setDuplicateList={setDuplicateList}
             />
-
+            <Tooltip
+              sx={{ marginTop: '1rem' }}
+              title={t(
+                'If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.'
+              )}
+            >
+              <FormControlLabel
+                data-testid="checkbox-input"
+                control={
+                  <Checkbox
+                    defaultChecked
+                    onChange={(e) => setEscrowPermission(e.target.checked)}
+                  />
+                }
+                label={t('Send to escrow if recipient is not opted in')}
+              />
+            </Tooltip>
             <Box marginTop={'2rem'}>
               <LoadingButton
                 data-testid="submit-btn"
@@ -152,6 +174,7 @@ SendAssetForm.propTypes = {
   assetId: PropTypes.any,
   wallet: PropTypes.any,
   csvTransactions: PropTypes.any,
+  setEscrowPermission: PropTypes.any,
   assetBalance: PropTypes.object,
   setDuplicateList: PropTypes.any,
   updateStatusMessage: PropTypes.func,

@@ -57,6 +57,7 @@ export function SendAssetPage() {
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
   const [wallet, setWallet] = useState()
+  const [escrowPermission, setEscrowPermission] = useState(true)
   const [csvTransactions, setCsvTransactions] = useState()
   const [assetBalance, setAssetBalance] = useState({
     success: false,
@@ -81,17 +82,19 @@ export function SendAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
-
-    // console.debug('not blocked')
     setLoading(true)
     updateStatusMessage()
     const responseData = await SendAssets.send(
       assetId,
       wallet,
-      csvTransactions
+      csvTransactions,
+      escrowPermission
     )
     // console.debug('responseData', responseData)
     setLoading(false)
+    if (responseData.error == 'info') {
+      updateStatusMessage(responseData.message, false)
+    }
     if (responseData instanceof Error) {
       setStatus()
       setHideProgress(true)
@@ -226,46 +229,47 @@ export function SendAssetPage() {
         setCsvTransactions={setCsvTransactions}
         setDuplicateList={setDuplicateList}
         updateStatusMessage={updateStatusMessage}
+        setEscrowPermission={setEscrowPermission}
       />
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12} lg={8} xl={7}>
-          {hasStatusBar && (
+      {hasStatusBar && (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12} lg={7} xl={6}>
             <LinearProgressWithLabel
               status={status}
               progress={progress}
               total={total}
               hideProgress={hideProgress}
             />
-          )}
+          </Grid>
         </Grid>
-        <Grid item xl={12}>
-          {duplicateList.length > 0 && (
-            <>
-              <Typography
-                variant="error-message"
-                display="block"
-                marginTop="1rem"
-                marginBottom="0"
-                color={'info.error'}
-              >
-                {t('Find below the duplicate wallet address')}
-                {duplicateList.length > 1 && 'es'}:
-              </Typography>
-              <List dense={false}>
-                {duplicateList.map((d) => (
-                  <ListItem key={d} sx={{ paddingBlock: '0' }}>
-                    <ListItemText
-                      primary={d}
-                      sx={{ color: 'info.error', marginBlock: '0' }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </>
-          )}
-        </Grid>
-        <Grid item xs={12} md={8} lg={6} xl={5}>
-          {actionStatus.success == true && (
+      )}
+      {duplicateList.length > 0 && (
+        <>
+          <Typography
+            variant="error-message"
+            display="block"
+            marginTop="1rem"
+            marginBottom="0"
+            color={'info.error'}
+          >
+            {t('Find below the duplicate wallet address')}
+            {duplicateList.length > 1 && 'es'}:
+          </Typography>
+          <List dense={false}>
+            {duplicateList.map((d) => (
+              <ListItem key={d} sx={{ paddingBlock: '0' }}>
+                <ListItemText
+                  primary={d}
+                  sx={{ color: 'info.error', marginBlock: '0' }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
+      {actionStatus.success == true && (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={8} lg={6} xl={5}>
             <Box
               marginTop="3rem"
               sx={{
@@ -306,7 +310,7 @@ export function SendAssetPage() {
                 {t(
                   'Link above takes users to the redeem page of this site and autofills sender address. Receivers will need to opt into the asset before claiming'
                 )}
-            .
+                .
               </Typography>
               <Typography
                 variant="p"
@@ -314,17 +318,17 @@ export function SendAssetPage() {
                 marginLeft="1rem"
                 color={(theme) => theme.palette.grey.main}
               >
-            *{' '}
+                *{' '}
                 {t(
                   'Receivers already opted into the asset before it was sent will automatically receive them without needing to redeem via Algodex Mailbox or other steps'
                 )}
-            .
+                .
               </Typography>
             </Box>
-          )}
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container spacing={2} sx={{ marginBlock: '2rem' }}>
+      )}
+      <Grid container spacing={2} sx={{ paddingBlock: '2rem' }}>
         <Grid item xs={6} lg={5} className="mr-2">
           <Link
             href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
