@@ -133,7 +133,9 @@ export function SendAssetPage() {
           )}`,
           true
         )
-        setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
+        if (responseData.fundEscrowCount > 0) {
+          setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
+        }
         getAssetBalance()
       }
     }
@@ -267,7 +269,7 @@ export function SendAssetPage() {
           </List>
         </>
       )}
-      {actionStatus.success == true && (
+      {actionStatus.success == true && shareableLink && (
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} lg={6} xl={5}>
             <Box
