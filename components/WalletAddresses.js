@@ -12,12 +12,28 @@ import { ANS } from '@algonameservice/sdk'
 
 // Library Files
 import Helper from '@/lib/helper'
+import algosdk from 'algosdk'
+
+const { purestakeIndexerServer, purestakeIndexerToken, purestakeClientServer } =
+  Helper.getAlgodex()
+const client = new algosdk.Algodv2(
+  {
+    'X-API-Key': purestakeIndexerToken,
+  },
+  purestakeClientServer,
+  ''
+)
+const indexer = new algosdk.Indexer(
+  {
+    'X-API-Key': purestakeIndexerToken,
+  },
+  purestakeIndexerServer,
+  ''
+)
 
 export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
   const [finalAddresses, setFinalAddresses] = useState([])
-  const { algodClient, indexerServer } = Helper.getAlgodex()
-  const client = algodClient.c.bc.baseURL.origin
-  let sdk = new ANS(client, indexerServer)
+  let sdk = new ANS(client, indexer)
 
   useEffect(() => {
     getAddyNames()
@@ -25,27 +41,17 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
 
   const getAddyNames = useCallback(async () => {
     const options = {
-      socials: false, // get socials with .algo name
-      metadata: false, // // get metadata like expiry, avatar with .algo name;
-      limit: 1, // number of names to be retrieved
+      socials: false, 
+      metadata: false, 
+      limit: 1,
     }
     let addresses = []
     for (let address of formattedAddresses) {
       let names = await sdk.address(address).getNames(options)
-
-      // Names appear in a reverse chronological order (names[0] returns recently purchased name)
-      if (names.length > 0) {
-        addresses.push({
-          name: names[0].name,
-          wallet: address,
-        })
-      } else {
-        //No names registered by this address
-        addresses.push({
-          name: null,
-          wallet: address,
-        })
-      }
+      addresses.push({
+        name: names[0]?.name || null,
+        wallet: address,
+      })
     }
     setFinalAddresses(addresses)
   }, [formattedAddresses])
