@@ -14,10 +14,12 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
+
+
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
+import { AssetSearchInput } from './AssetSearchInput'
 
 const ReturnAssetForm = ({
   formattedAddresses,
@@ -29,7 +31,7 @@ const ReturnAssetForm = ({
   onSubmit,
   setDuplicateList,
   updateStatusMessage,
-  disableButton
+  disableButton,
 }) => {
   const { t } = useTranslation('common')
   const schema = {
@@ -57,17 +59,10 @@ const ReturnAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="assetId-input"
-            required
-            id="outlined-required"
-            name="AssetId"
+          <AssetSearchInput
             disabled={formattedAddresses.length < 1}
-            label="Asset Id"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setAssetId(value)
-            }}
+            setAssetId={setAssetId}
+            parentProp={props}
           />
         </FormControl>
       </Box>
@@ -149,6 +144,6 @@ ReturnAssetForm.propTypes = {
   setDuplicateList: PropTypes.any,
   updateStatusMessage: PropTypes.func,
   setCsvTransactions: PropTypes.any,
-  disableButton: PropTypes.bool
+  disableButton: PropTypes.bool,
 }
 export default ReturnAssetForm
