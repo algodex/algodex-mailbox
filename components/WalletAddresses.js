@@ -6,6 +6,7 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
+import Tooltip from '@mui/material/Tooltip'
 
 //Algonameservice SDK
 import { ANS } from '@algonameservice/sdk'
@@ -41,8 +42,8 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
 
   const getAddyNames = useCallback(async () => {
     const options = {
-      socials: false, 
-      metadata: false, 
+      socials: false,
+      metadata: false,
       limit: 1,
     }
     let addresses = []
@@ -67,14 +68,20 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
           }}
         >
           {finalAddresses.map((address) => (
-            <FormControlLabel
+            <Tooltip
+              placement="top"
+              arrow
               key={address.wallet}
-              value={address.wallet}
-              control={
-                <Radio color="secondary" data-testid="wallet-radio-input" />
-              }
-              label={address.name || address.wallet}
-            />
+              title={address.name ? address.wallet : ''}
+            >
+              <FormControlLabel
+                value={address.wallet}
+                control={
+                  <Radio color="secondary" data-testid="wallet-radio-input" />
+                }
+                label={address.name || address.wallet}
+              />
+            </Tooltip>
           ))}
         </RadioGroup>
       </FormControl>
