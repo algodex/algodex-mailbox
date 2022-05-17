@@ -10,8 +10,6 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
 import Box from '@mui/material/Box'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -22,6 +20,7 @@ import Tooltip from '@mui/material/Tooltip'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
+import { WalletAddresses } from './WalletAddresses'
 
 const SendAssetForm = ({
   formattedAddresses,
@@ -80,28 +79,10 @@ const SendAssetForm = ({
   }
   return (
     <>
-      <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
-        <FormControl>
-          <RadioGroup
-            aria-labelledby="wallet"
-            name="wallet"
-            onChange={(event, value) => {
-              setWallet(value)
-            }}
-          >
-            {formattedAddresses.map((address) => (
-              <FormControlLabel
-                key={address}
-                value={address}
-                control={
-                  <Radio color="secondary" data-testid="wallet-radio-input" />
-                }
-                label={address}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      </Box>
+      <WalletAddresses
+        setWallet={setWallet}
+        formattedAddresses={formattedAddresses}
+      />
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={7} xl={6}>
