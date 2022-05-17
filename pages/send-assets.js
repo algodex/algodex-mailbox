@@ -28,10 +28,10 @@ import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
 import useSendAsset from '@/hooks/useSendAsset'
 import useFormattedAddress from '@/hooks/useFormattedAddress'
+import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 // Library Files
 import SendAssets from '@/lib/send_assets'
-import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 /**
  * Generate Static Properties

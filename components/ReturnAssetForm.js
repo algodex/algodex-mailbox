@@ -10,14 +10,13 @@ import { useTranslation } from 'next-i18next'
 
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
+
+import { WalletAddresses } from './WalletAddresses'
 
 const ReturnAssetForm = ({
   formattedAddresses,
@@ -29,7 +28,7 @@ const ReturnAssetForm = ({
   onSubmit,
   setDuplicateList,
   updateStatusMessage,
-  disableButton
+  disableButton,
 }) => {
   const { t } = useTranslation('common')
   const schema = {
@@ -78,28 +77,10 @@ const ReturnAssetForm = ({
   }
   return (
     <>
-      <Box sx={{ marginTop: formattedAddresses.length > 0 ? '1rem' : '0rem' }}>
-        <FormControl>
-          <RadioGroup
-            aria-labelledby="senderAddress"
-            name="SenderAddress"
-            onChange={(event, value) => {
-              setSenderAddress(value)
-            }}
-          >
-            {formattedAddresses.map((address) => (
-              <FormControlLabel
-                key={address}
-                value={address}
-                control={
-                  <Radio color="secondary" data-testid="wallet-radio-input" />
-                }
-                label={address}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      </Box>
+      <WalletAddresses
+        setWallet={setSenderAddress}
+        formattedAddresses={formattedAddresses}
+      />
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={6} xl={5}>
@@ -149,6 +130,6 @@ ReturnAssetForm.propTypes = {
   setDuplicateList: PropTypes.any,
   updateStatusMessage: PropTypes.func,
   setCsvTransactions: PropTypes.any,
-  disableButton: PropTypes.bool
+  disableButton: PropTypes.bool,
 }
 export default ReturnAssetForm
