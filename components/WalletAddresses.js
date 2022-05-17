@@ -69,8 +69,7 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
         >
           {finalAddresses.map((address) => (
             <Tooltip
-              placement="top"
-              arrow
+              placement="top-start"
               key={address.wallet}
               title={address.name ? address.wallet : ''}
             >
