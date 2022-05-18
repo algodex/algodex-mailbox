@@ -3,14 +3,14 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 //mui files
-import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 //Lib files
-import Helper from '@/lib/helper'
+import Helper from "@/lib/helper";
 
 export const AssetSearchInput = ({
   disabled,
@@ -18,34 +18,46 @@ export const AssetSearchInput = ({
   parentProp,
   defaultValue,
 }) => {
-  const [query, setQuery] = useState('')
-  const top100Films = [
-    { label: 'The Shawshank Redemption', id: 1994 },
-    { label: 'The Godfather', id: 1972 },
-  ]
+  const [query, setQuery] = useState("");
+  const [suggestedAssets, setSuggestedAssets] = useState([]);
+  const [timer, setTimer] = useState(null);
+
+  const fetchData = () => {
+    clearTimeout(timer);
+    const newTimer = setTimeout(async () => {
+      const res = await Helper.searchAlgoAssets(query);
+      const list = [...res.data.assets].filter((asset) => !asset.destroyed);
+      setSuggestedAssets(
+        list.map((asset) => {
+          return { ...asset, name: `${asset.id} - ${asset.name}` };
+        })
+      );
+    }, 500);
+    setTimer(newTimer);
+  };
 
   useEffect(() => {
-    if (query) {
-      const res = Helper.searchAlgoAssets(query)
-      console.log({ res })
+    if (query.split("").length > 2) {
+      fetchData();
     }
-  }, [query])
+  }, [query]);
 
   return (
     <Autocomplete
       disablePortal
-      options={top100Films}
+      getOptionLabel={(option) => option.name}
+      options={suggestedAssets}
       defaultValue={
         defaultValue
           ? {
-            id: defaultValue,
-            label: defaultValue,
-          }
+              id: defaultValue,
+              name: defaultValue,
+            }
           : null
       }
       onChange={(event, value) => {
-        parentProp.onChange(value?.id || '')
-        setAssetId(value?.id || '')
+        parentProp.onChange(value?.id || "");
+        setAssetId(value?.id || "");
       }}
       renderInput={(params) => (
         <TextField
@@ -57,10 +69,10 @@ export const AssetSearchInput = ({
           disabled={disabled}
           label="Asset Id"
           onChange={({ target: { value } }) => {
-            setQuery(value)
+            setQuery(value);
           }}
         />
       )}
     />
-  )
-}
+  );
+};
