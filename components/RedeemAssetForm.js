@@ -17,7 +17,6 @@ import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
-import Tooltip from '@mui/material/Tooltip'
 
 // Lib Files
 import Helper from '@/lib/helper'
@@ -78,19 +77,17 @@ const RedeemAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <Tooltip arrow placement="top" title={senderAddress || ''}>
-            <TextField
-              data-testid="senderAddress-input"
-              name="SenderAddress"
-              required={props.required}
-              defaultValue={formData.senderAddress}
-              id="outlined-required"
-              label="Sender Address"
-              onChange={({ target: { value } }) => {
-                updateField(value, props, setSenderAddress)
-              }}
-            />
-          </Tooltip>
+          <TextField
+            data-testid="senderAddress-input"
+            name="SenderAddress"
+            required={props.required}
+            defaultValue={formData.senderAddress}
+            id="outlined-required"
+            label="Sender Address"
+            onChange={({ target: { value } }) => {
+              updateField(value, props, setSenderAddress)
+            }}
+          />
         </FormControl>
       </Box>
     )
@@ -100,19 +97,17 @@ const RedeemAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <Tooltip arrow placement="top" title={receiverAddress || ''}>
-            <TextField
-              data-testid="receiverAddress-input"
-              name="ReceiverAddress"
-              required={props.required}
-              id="outlined-required"
-              defaultValue={formData.receiverAddress}
-              label="Receiver Address"
-              onChange={({ target: { value } }) => {
-                updateField(value, props, setReceiverAddress)
-              }}
-            />
-          </Tooltip>
+          <TextField
+            data-testid="receiverAddress-input"
+            name="ReceiverAddress"
+            required={props.required}
+            id="outlined-required"
+            defaultValue={formData.receiverAddress}
+            label="Receiver Address"
+            onChange={({ target: { value } }) => {
+              updateField(value, props, setReceiverAddress)
+            }}
+          />
         </FormControl>
       </Box>
     )
