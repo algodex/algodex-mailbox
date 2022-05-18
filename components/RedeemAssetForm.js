@@ -5,7 +5,10 @@
 
 import React from 'react'
 import { useTranslation } from 'next-i18next'
+
 import { MuiForm5 as Form } from '@rjsf/material-ui'
+
+//MUI Components
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
@@ -14,6 +17,9 @@ import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
+
+// Lib Files
+import Helper from '@/lib/helper'
 
 const RedeemAssetForm = ({
   onSubmit,
@@ -76,8 +82,9 @@ const RedeemAssetForm = ({
             id="outlined-required"
             label="Sender Address"
             onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setSenderAddress(value)
+              updateField(value, props, setSenderAddress)
+              // props.onChange(value)
+              // setSenderAddress(value)
             }}
           />
         </FormControl>
@@ -129,6 +136,21 @@ const RedeemAssetForm = ({
     }
     return false
   }
+
+  const updateField = async (value, parentProps, setState) => {
+    let names = await Helper.getAlgoNames(value)
+    console.log({ names })
+    if (names && names.length > 0) {
+      console.log(names[0].name)
+      parentProps.onChange(names[0].name)
+      setState(names[0].name)
+      // setState(names[0].address)
+    } else {
+      parentProps.onChange(value)
+      setState(value)
+    }
+  }
+
   return (
     <>
       <Grid container spacing={2}>
