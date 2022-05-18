@@ -41,6 +41,8 @@ export async function getServerSideProps({ locale }) {
  */
 export function RedeemAssetPage() {
   const { t } = useTranslation('common')
+  const [balanceTimer, setBalanceTimer] = useState(null)
+  const [optinTimer, setOptinTimer] = useState(null)
   const [loading, setLoading] = useState(false)
   const [escrowBalance, setEscrowBalance] = useState({
     success: false,
@@ -102,40 +104,48 @@ export function RedeemAssetPage() {
   }
 
   const getBalance = async () => {
-    setGettingBalance(true)
-    const res = await RedeemAssetsHelper.getEscrowBalance(
-      parseInt(assetId),
-      receiverAddress,
-      senderAddress
-    )
-    console.debug({ res })
-    setGettingBalance(false)
-    if (res.error == false) {
-      setEscrowBalance({
-        success: true,
-        message: res.balance,
-        algoExplorerLink: res.algoExplorerLink,
-      })
-    } else {
-      setEscrowBalance({
-        success: false,
-        message:
-          res?.data?.message ||
-          // eslint-disable-next-line max-len
-          'An error occurred while getting your asset balance, please ensure you enter valid inputs',
-        algoExplorerLink: '',
-      })
-    }
+    clearTimeout(balanceTimer)
+    const newTimer = setTimeout(async () => {
+      setGettingBalance(true)
+      const res = await RedeemAssetsHelper.getEscrowBalance(
+        parseInt(assetId),
+        receiverAddress,
+        senderAddress
+      )
+      console.debug({ res })
+      setGettingBalance(false)
+      if (res.error == false) {
+        setEscrowBalance({
+          success: true,
+          message: res.balance,
+          algoExplorerLink: res.algoExplorerLink,
+        })
+      } else {
+        setEscrowBalance({
+          success: false,
+          message:
+            res?.data?.message ||
+            // eslint-disable-next-line max-len
+            'An error occurred while getting your asset balance, please ensure you enter valid inputs',
+          algoExplorerLink: '',
+        })
+      }
+    }, 500)
+    setBalanceTimer(newTimer)
   }
 
   const checkOptIn = async () => {
-    try {
-      const res = await Helper.checkOptIn(receiverAddress, parseInt(assetId))
-      // console.debug(res)
-      setOptInStatus(res)
-    } catch (error) {
-      console.debug(error)
-    }
+    clearTimeout(optinTimer)
+    const newTimer = setTimeout(async () => {
+      try {
+        const res = await Helper.checkOptIn(receiverAddress, parseInt(assetId))
+        // console.debug(res)
+        setOptInStatus(res)
+      } catch (error) {
+        console.debug(error)
+      }
+    }, 500)
+    setOptinTimer(newTimer)
   }
 
   useEffect(() => {
@@ -181,8 +191,13 @@ export function RedeemAssetPage() {
         optInStatus={optInStatus}
         formData={formData}
         balance={parseFloat(escrowBalance.message)}
+        updateStatusMessage={updateStatusMessage}
       />
-      <Grid container spacing={7} sx={{ marginBottom: '2rem', flexWrap:'nowrap' }}>
+      <Grid
+        container
+        spacing={7}
+        sx={{ marginBottom: '2rem', flexWrap: 'nowrap' }}
+      >
         <Grid item>
           <Typography variant="p" component="p">
             {t('escrow-balance')}:

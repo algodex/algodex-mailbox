@@ -100,12 +100,14 @@ const SendAssetForm = ({
               setDuplicateList={setDuplicateList}
             />
             <Tooltip
-              sx={{ marginTop: '1rem' }}
+              placement="top"
               title={t(
                 'If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.'
               )}
+              arrow
             >
               <FormControlLabel
+                sx={{ marginTop: '1rem' }}
                 data-testid="checkbox-input"
                 control={
                   <Checkbox

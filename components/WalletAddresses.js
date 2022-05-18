@@ -4,6 +4,7 @@
  */
 
 import React, { useCallback, useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
 //MUI components
 import Box from '@mui/material/Box'
@@ -13,47 +14,20 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import Tooltip from '@mui/material/Tooltip'
 
-//Algonameservice SDK
-import { ANS } from '@algonameservice/sdk'
-
-// Library Files
+// Lib Files
 import Helper from '@/lib/helper'
-import algosdk from 'algosdk'
-
-const { purestakeIndexerServer, purestakeIndexerToken, purestakeClientServer } =
-  Helper.getAlgodex()
-const client = new algosdk.Algodv2(
-  {
-    'X-API-Key': purestakeIndexerToken,
-  },
-  purestakeClientServer,
-  ''
-)
-const indexer = new algosdk.Indexer(
-  {
-    'X-API-Key': purestakeIndexerToken,
-  },
-  purestakeIndexerServer,
-  ''
-)
 
 export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
   const [finalAddresses, setFinalAddresses] = useState([])
-  let sdk = new ANS(client, indexer)
 
   useEffect(() => {
     getAddyNames()
   }, [formattedAddresses, getAddyNames])
 
   const getAddyNames = useCallback(async () => {
-    const options = {
-      socials: false,
-      metadata: false,
-      limit: 1,
-    }
     let addresses = []
     for (let address of formattedAddresses) {
-      let names = await sdk.address(address).getNames(options)
+      let names = await Helper.getAlgoNamesOrAddress(address, 'getNames')
       addresses.push({
         name: names[0]?.name || null,
         wallet: address,
@@ -92,3 +66,10 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
     </Box>
   )
 }
+
+
+WalletAddresses.propTypes = {
+  setWallet: PropTypes.func,
+  formattedAddresses: PropTypes.array,
+}
+export default WalletAddresses

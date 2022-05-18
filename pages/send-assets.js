@@ -30,7 +30,7 @@ import useSendAsset from '@/hooks/useSendAsset'
 import useFormattedAddress from '@/hooks/useFormattedAddress'
 import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
-// Library Files
+// Lib Files
 import SendAssets from '@/lib/send_assets'
 
 /**
