@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { MuiForm5 as Form } from '@rjsf/material-ui'
@@ -34,8 +34,11 @@ const RedeemAssetForm = ({
   optInStatus,
   formData,
   balance,
+  updateStatusMessage,
 }) => {
   const { t } = useTranslation('common')
+  const [timer, setTimer] = useState(null)
+
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
@@ -83,8 +86,6 @@ const RedeemAssetForm = ({
             label="Sender Address"
             onChange={({ target: { value } }) => {
               updateField(value, props, setSenderAddress)
-              // props.onChange(value)
-              // setSenderAddress(value)
             }}
           />
         </FormControl>
@@ -104,8 +105,7 @@ const RedeemAssetForm = ({
             defaultValue={formData.receiverAddress}
             label="Receiver Address"
             onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setReceiverAddress(value)
+              updateField(value, props, setReceiverAddress)
             }}
           />
         </FormControl>
@@ -137,18 +137,28 @@ const RedeemAssetForm = ({
     return false
   }
 
-  const updateField = async (value, parentProps, setState) => {
-    let names = await Helper.getAlgoNames(value)
-    console.log({ names })
-    if (names && names.length > 0) {
-      console.log(names[0].name)
-      parentProps.onChange(names[0].name)
-      setState(names[0].name)
-      // setState(names[0].address)
-    } else {
-      parentProps.onChange(value)
-      setState(value)
+  const fetchData = (value, type, setState) => {
+    clearTimeout(timer)
+    const newTimer = setTimeout(async () => {
+      let response = await Helper.getAlgoNamesOrAddress(value, type)
+      if (response instanceof Error) {
+        updateStatusMessage('This is not a valid Algorand address', false)
+      } else {
+        setState(response)
+      }
+    }, 500)
+    setTimer(newTimer)
+  }
+
+  const updateField = (value, props, setState) => {
+    updateStatusMessage()
+    const lastWord = value.split('.')[value.split('.').length - 1]
+    if (lastWord == 'algo') {
+      fetchData(value, 'getOwner', setState)
+      return
     }
+    props.onChange(value)
+    setState(value)
   }
 
   return (
@@ -188,7 +198,7 @@ const RedeemAssetForm = ({
           </Form>
         </Grid>
       </Grid>
-      <Box marginTop={'2rem'}>
+      <Box marginTop={'2rem'} marginBottom={'1rem'}>
         <CollapseableErrorMessage actionStatus={actionStatus} />
       </Box>
     </>
@@ -208,5 +218,6 @@ RedeemAssetForm.propTypes = {
   senderAddress: PropTypes.string,
   receiverAddress: PropTypes.string,
   assetId: PropTypes.string,
+  updateStatusMessage: PropTypes.func,
 }
 export default RedeemAssetForm
