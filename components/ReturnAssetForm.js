@@ -13,7 +13,6 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 
-
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
@@ -58,10 +57,7 @@ const ReturnAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <AssetSearchInput
-            setAssetId={setAssetId}
-            parentProp={props}
-          />
+          <AssetSearchInput setAssetId={setAssetId} parentProp={props} />
         </FormControl>
       </Box>
     )

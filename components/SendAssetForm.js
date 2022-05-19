@@ -43,10 +43,7 @@ const SendAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <AssetSearchInput
-            setAssetId={setAssetId}
-            parentProp={props}
-          />
+          <AssetSearchInput setAssetId={setAssetId} parentProp={props} />
         </FormControl>
       </Box>
     )
