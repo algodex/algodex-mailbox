@@ -12,8 +12,11 @@ describe('Return assets Page', () => {
   
   it('should return assets successfully', () => {
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
-    cy.contains(`${formattedAddresses[0]}`).click()
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)
+    cy.wait(3000)
+    cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
+    cy.wait(3000)
+    cy.contains(`${formattedAddresses[0]}`).click()
     cy.get('[data-testid=submit-btn]').click()
   })
 })
