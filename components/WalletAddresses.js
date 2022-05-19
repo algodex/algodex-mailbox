@@ -42,8 +42,8 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
         <RadioGroup
           aria-labelledby="wallet"
           name="wallet"
-          onChange={(e) => {
-            setWallet(e.target.value)
+          onChange={({ target: { value } }) => {
+            setWallet(value)
           }}
         >
           {finalAddresses.map((address) => (
@@ -66,7 +66,6 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
     </Box>
   )
 }
-
 
 WalletAddresses.propTypes = {
   setWallet: PropTypes.func,

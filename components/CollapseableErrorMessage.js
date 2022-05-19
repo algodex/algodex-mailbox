@@ -9,6 +9,8 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
   const [extraContent, setExtraContent] = useState()
 
   useEffect(() => {
+    setShowContent(false)
+    setReadmore(true)
     checkContent(actionStatus.message)
   }, [actionStatus.message])
 

@@ -4,11 +4,12 @@
  * All Rights Reserved.
  */
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'next-i18next'
 
+//MUI components
 import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
@@ -16,11 +17,17 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 
+// Custom Components
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
 import { WalletAddresses } from './WalletAddresses'
+import { WalletAddressTextField } from './WalletAddressTextField'
 
 const SendAssetForm = ({
   formattedAddresses,
@@ -39,6 +46,10 @@ const SendAssetForm = ({
   updateStatusMessage,
 }) => {
   const { t } = useTranslation('common')
+  const [uploadType, setUploadType] = useState()
+  const [ToWallet, setToWallet] = useState()
+  const [Amount, setAmount] = useState()
+
   const CustomInputComponent = (props) => {
     return (
       <Box>
@@ -73,6 +84,16 @@ const SendAssetForm = ({
     }
     return true
   }
+
+  useEffect(() => {
+    setCsvTransactions()
+    if (ToWallet && Amount) {
+      const csv = `ToWallet,Amount\n${ToWallet},${Amount}`
+      setCsvTransactions(csv)
+    }
+  }, [ToWallet, Amount])
+
+
   return (
     <>
       <WalletAddresses
@@ -90,11 +111,80 @@ const SendAssetForm = ({
             onSubmit={onSubmit}
             autoComplete="on"
           >
-            <UploadContainer
-              setCsvTransactions={setCsvTransactions}
-              updateStatusMessage={updateStatusMessage}
-              setDuplicateList={setDuplicateList}
-            />
+            <Box mt={'1rem'} mb={'.8rem'}>
+              <Typography variant="h7" fontWeight={700}>
+                How many address to send to?
+              </Typography>
+              <RadioGroup
+                aria-labelledby="uploadType"
+                name="uploadType"
+                onChange={({ target: { value } }) => {
+                  setUploadType(value)
+                  setToWallet()
+                  setAmount()
+                  setCsvTransactions()
+                }}
+              >
+                <FormControlLabel
+                  value={'multiple'}
+                  control={
+                    <Radio
+                      color="secondary"
+                      data-testid="multiple-address-radio"
+                    />
+                  }
+                  sx={{ opacity: uploadType == 'single' ? 0.5 : 1 }}
+                  label={t('Send to multiple address with a .CSV file')}
+                />
+                <FormControlLabel
+                  value={'single'}
+                  control={
+                    <Radio
+                      color="secondary"
+                      data-testid="single-address-radio"
+                    />
+                  }
+                  sx={{ opacity: uploadType == 'multiple' ? 0.5 : 1 }}
+                  label={t('Send to one address')}
+                />
+              </RadioGroup>
+            </Box>
+            {uploadType == 'single' && (
+              <>
+                <Box marginBottom={'0.8rem'}>
+                  <FormControl fullWidth>
+                    <TextField
+                      data-testid="amount-input"
+                      required
+                      id="outlined-required"
+                      name="Amount"
+                      label="Amount"
+                      onChange={({ target: { value } }) => {
+                        setAmount(value)
+                      }}
+                    />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl fullWidth>
+                    <WalletAddressTextField
+                      setState={setToWallet}
+                      updateStatusMessage={updateStatusMessage}
+                      dataTestid="receiverAddress-input"
+                      name="ReceiverAddress"
+                      label="Receiver Address"
+                    />
+                  </FormControl>
+                </Box>
+              </>
+            )}
+            {uploadType == 'multiple' && (
+              <UploadContainer
+                setCsvTransactions={setCsvTransactions}
+                updateStatusMessage={updateStatusMessage}
+                setDuplicateList={setDuplicateList}
+              />
+            )}
             <Tooltip
               placement="top"
               title={t(
