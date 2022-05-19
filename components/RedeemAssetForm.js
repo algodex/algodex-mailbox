@@ -58,7 +58,6 @@ const RedeemAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <AssetSearchInput
-            disabled={false}
             setAssetId={setAssetId}
             parentProp={props}
             defaultValue={formData.assetId}

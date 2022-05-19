@@ -59,7 +59,6 @@ const ReturnAssetForm = ({
       <Box>
         <FormControl fullWidth>
           <AssetSearchInput
-            disabled={formattedAddresses.length < 1}
             setAssetId={setAssetId}
             parentProp={props}
           />

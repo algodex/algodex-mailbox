@@ -12,12 +12,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 //Lib files
 import Helper from '@/lib/helper'
 
-export const AssetSearchInput = ({
-  disabled,
-  setAssetId,
-  parentProp,
-  defaultValue,
-}) => {
+export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
   const [query, setQuery] = useState('')
   const [suggestedAssets, setSuggestedAssets] = useState([])
   const [timer, setTimer] = useState(null)
@@ -66,7 +61,6 @@ export const AssetSearchInput = ({
           required
           id="outlined-required"
           name="AssetId"
-          disabled={disabled}
           label="Asset Id"
           onChange={({ target: { value } }) => {
             setQuery(value)
