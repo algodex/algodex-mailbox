@@ -13,13 +13,13 @@ import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
-import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
 
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
+import { AssetSearchInput } from './AssetSearchInput'
 import { WalletAddresses } from './WalletAddresses'
 
 const SendAssetForm = ({
@@ -43,18 +43,7 @@ const SendAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="assetId-input"
-            required
-            id="outlined-required"
-            name="AssetId"
-            disabled={formattedAddresses.length < 1}
-            label="Asset Id"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setAssetId(value)
-            }}
-          />
+          <AssetSearchInput setAssetId={setAssetId} parentProp={props} />
         </FormControl>
       </Box>
     )

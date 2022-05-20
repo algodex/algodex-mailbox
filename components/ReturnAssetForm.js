@@ -11,10 +11,11 @@ import { useTranslation } from 'next-i18next'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
-import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
+
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import UploadContainer from './UploadContainer'
+import { AssetSearchInput } from './AssetSearchInput'
 
 import { WalletAddresses } from './WalletAddresses'
 
@@ -56,18 +57,7 @@ const ReturnAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="assetId-input"
-            required
-            id="outlined-required"
-            name="AssetId"
-            disabled={formattedAddresses.length < 1}
-            label="Asset Id"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setAssetId(value)
-            }}
-          />
+          <AssetSearchInput setAssetId={setAssetId} parentProp={props} />
         </FormControl>
       </Box>
     )

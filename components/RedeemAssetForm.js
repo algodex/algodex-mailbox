@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
+import { AssetSearchInput } from './AssetSearchInput'
 
 // Lib Files
 import Helper from '@/lib/helper'
@@ -56,17 +57,10 @@ const RedeemAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="assetId-input"
-            name="AssetId"
+          <AssetSearchInput
+            setAssetId={setAssetId}
+            parentProp={props}
             defaultValue={formData.assetId}
-            required={props.required}
-            id="outlined-required"
-            label="Asset Id"
-            onChange={({ target: { value } }) => {
-              props.onChange(value)
-              setAssetId(value)
-            }}
           />
         </FormControl>
       </Box>
