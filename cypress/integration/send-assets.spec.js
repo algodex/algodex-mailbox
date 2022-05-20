@@ -48,7 +48,7 @@ describe('Send assets Page', () => {
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
     cy.wait(3000)
     cy.contains(`${formattedAddresses[0]}`).click({ force: true })
-    cy.get('[data-testid=submit-btn]').click()
+    cy.get('[data-testid=submit-btn]').click({ force: true })
   })
 
  
