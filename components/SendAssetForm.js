@@ -93,7 +93,6 @@ const SendAssetForm = ({
     }
   }, [ToWallet, Amount])
 
-
   return (
     <>
       <WalletAddresses
@@ -113,7 +112,7 @@ const SendAssetForm = ({
           >
             <Box mt={'1rem'} mb={'.8rem'}>
               <Typography variant="h7" fontWeight={700}>
-                How many address to send to?
+                How many addresses to send to?
               </Typography>
               <RadioGroup
                 aria-labelledby="uploadType"
@@ -133,7 +132,6 @@ const SendAssetForm = ({
                       data-testid="multiple-address-radio"
                     />
                   }
-                  sx={{ opacity: uploadType == 'single' ? 0.5 : 1 }}
                   label={t('Send to multiple address with a .CSV file')}
                 />
                 <FormControlLabel
@@ -144,7 +142,6 @@ const SendAssetForm = ({
                       data-testid="single-address-radio"
                     />
                   }
-                  sx={{ opacity: uploadType == 'multiple' ? 0.5 : 1 }}
                   label={t('Send to one address')}
                 />
               </RadioGroup>
