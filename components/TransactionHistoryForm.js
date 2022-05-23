@@ -9,7 +9,7 @@ import { MuiForm5 as Form } from '@rjsf/material-ui'
 import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
-import CollapseableErrorMessage from './CollapseableErrorMessage'
+import CollapseableStatusMessage from './CollapseableStatusMessage'
 import Box from '@mui/material/Box'
 
 const TransactionHistoryForm = ({
@@ -73,7 +73,7 @@ const TransactionHistoryForm = ({
         </Grid>
       </Grid>
       <Box marginTop={'2rem'}>
-        <CollapseableErrorMessage actionStatus={actionStatus} />
+        <CollapseableStatusMessage actionStatus={actionStatus} />
       </Box>
     </>
   )

@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
-import CollapseableErrorMessage from './CollapseableErrorMessage'
+import CollapseableStatusMessage from './CollapseableStatusMessage'
 import { AssetSearchInput } from './AssetSearchInput'
 
 // Lib Files
@@ -139,7 +139,7 @@ const RedeemAssetForm = ({
           >
             {optInStatus == false && (
               <Box marginTop="2rem">
-                <Typography variant="error-message" color="error">
+                <Typography variant="status-message" color="error">
                   {t(
                     // eslint-disable-next-line max-len
                     'Warning: You have not yet opted into the asset. Please do so in another wallet app.'
@@ -163,7 +163,7 @@ const RedeemAssetForm = ({
         </Grid>
       </Grid>
       <Box marginTop={'2rem'} marginBottom={'1rem'}>
-        <CollapseableErrorMessage actionStatus={actionStatus} />
+        <CollapseableStatusMessage actionStatus={actionStatus} />
       </Box>
     </>
   )

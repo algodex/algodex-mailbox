@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 
-const CollapseableErrorMessage = ({ actionStatus }) => {
+const CollapseableStatusMessage = ({ actionStatus }) => {
   const [readmore, setReadmore] = useState(true)
   const [showContent, setShowContent] = useState(false)
   const [previewtext, setPreviewtext] = useState()
@@ -33,9 +33,10 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
     <>
       {actionStatus.message != '' && (
         <Typography
-          variant="error-message"
+          variant="status-message"
           // sx={{ display: 'flex', justifyContent: 'end' }}
           color={actionStatus.success ? 'info.success' : 'info.error'}
+          data-testid='statusMessage'
         >
           <>
             {readmore ? previewtext : ''}
@@ -69,8 +70,8 @@ const CollapseableErrorMessage = ({ actionStatus }) => {
   )
 }
 
-CollapseableErrorMessage.propTypes = {
+CollapseableStatusMessage.propTypes = {
   actionStatus: PropTypes.object.isRequired,
 }
 
-export default CollapseableErrorMessage
+export default CollapseableStatusMessage
