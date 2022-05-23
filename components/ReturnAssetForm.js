@@ -123,7 +123,6 @@ const ReturnAssetForm = ({
                       data-testid="multiple-address-radio"
                     />
                   }
-                  sx={{ opacity: uploadType == 'single' ? 0.5 : 1 }}
                   label={t('Return to multiple addresses with a .CSV file')}
                 />
                 <FormControlLabel
@@ -134,7 +133,6 @@ const ReturnAssetForm = ({
                       data-testid="single-address-radio"
                     />
                   }
-                  sx={{ opacity: uploadType == 'multiple' ? 0.5 : 1 }}
                   label={t('Return to one address')}
                 />
               </RadioGroup>
