@@ -103,7 +103,7 @@ const ReturnAssetForm = ({
           >
             <Box mt={'1rem'} mb={'.8rem'}>
               <Typography variant="h7" fontWeight={700}>
-                How many address to send to?
+                How many addresses to return to?
               </Typography>
               <RadioGroup
                 aria-labelledby="uploadType"
@@ -124,7 +124,7 @@ const ReturnAssetForm = ({
                     />
                   }
                   sx={{ opacity: uploadType == 'single' ? 0.5 : 1 }}
-                  label={t('Send to multiple address with a .CSV file')}
+                  label={t('Return to multiple addresses with a .CSV file')}
                 />
                 <FormControlLabel
                   value={'single'}
@@ -135,7 +135,7 @@ const ReturnAssetForm = ({
                     />
                   }
                   sx={{ opacity: uploadType == 'multiple' ? 0.5 : 1 }}
-                  label={t('Send to one address')}
+                  label={t('Return to one address')}
                 />
               </RadioGroup>
             </Box>

@@ -132,7 +132,7 @@ const SendAssetForm = ({
                       data-testid="multiple-address-radio"
                     />
                   }
-                  label={t('Send to multiple address with a .CSV file')}
+                  label={t('Send to multiple addresses with a .CSV file')}
                 />
                 <FormControlLabel
                   value={'single'}
