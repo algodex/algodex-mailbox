@@ -89,5 +89,14 @@
   "transaction(s) returned successfully":"transacciones devueltas con éxito",
   "Send to escrow if recipient is not opted in":"Enviar a depósito en garantía si el destinatario no está habilitado",
   "If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.":"Si está marcado, esto se enviará a los depósitos en garantía en nombre de las billeteras que no han optado por el activo. De lo contrario, omitirá el envío a estas direcciones de billetera.",
-  "This feature is currently not available":"Esta característica no está disponible actualmente"
+  "This feature is currently not available":"Esta característica no está disponible actualmente",
+  "Send to multiple address with a .CSV file":"Enviar a varias direcciones con un archivo .CSV",
+  "Send to one address":"Enviar a una dirección",
+  "Enter the account which the assets need to be returned from":"Ingrese la cuenta desde la cual se deben devolver los activos",
+  "How many addresses to return from?":"¿De cuántas direcciones volver?",
+  "How many addresses to send to?":"¿A cuántas direcciones enviar?",
+  "Return from multiple addresses with a .CSV file":"Devolver desde varias direcciones con un archivo .CSV",
+  "Return from single address":"Regreso desde una sola dirección",
+  "Send to multiple addresses with a .CSV file":"Enviar a varias direcciones con un archivo .CSV",
+  "Send to single address":"Enviar a una sola dirección"
 }

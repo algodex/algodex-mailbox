@@ -89,5 +89,14 @@
   "transaction(s) returned successfully":"transaction(s) returned successfully",
   "Send to escrow if recipient is not opted in":"Send to escrow if recipient is not opted in",
   "If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.":"If checked, this will send to escrows on behalf of wallets that have not opted into the asset. Otherwise, it will skip sending to these wallet addresses.",
-  "This feature is currently not available":"This feature is currently not available"
+  "This feature is currently not available":"This feature is currently not available",
+  "Send to multiple address with a .CSV file":"Send to multiple address with a .CSV file",
+  "Send to one address":"Send to one address",
+  "Enter the account which the assets need to be returned from":"Enter the account which the assets need to be returned from",
+  "How many addresses to return from?":"How many addresses to return from?",
+  "How many addresses to send to?":"How many addresses to send to?",
+  "Return from multiple addresses with a .CSV file":"Return from multiple addresses with a .CSV file",
+  "Return from single address":"Return from single address",
+  "Send to multiple addresses with a .CSV file":"Send to multiple addresses with a .CSV file",
+  "Send to single address":"Send to single address"
 }

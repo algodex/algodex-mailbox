@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { MuiForm5 as Form } from '@rjsf/material-ui'
@@ -15,12 +15,11 @@ import PropTypes from 'prop-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
 import CollapseableErrorMessage from './CollapseableErrorMessage'
 import { AssetSearchInput } from './AssetSearchInput'
 
 // Lib Files
-import Helper from '@/lib/helper'
+import { WalletAddressTextField } from './WalletAddressTextField'
 
 const RedeemAssetForm = ({
   onSubmit,
@@ -38,12 +37,11 @@ const RedeemAssetForm = ({
   updateStatusMessage,
 }) => {
   const { t } = useTranslation('common')
-  const [timer, setTimer] = useState(null)
 
   const schema = {
     required: ['assetId', 'senderAddress', 'receiverAddress'],
     properties: {
-      assetId: { type: 'string', title: 'Asset Id', default: '' },
+      assetId: { type: 'string', title: 'Asset Id' },
       senderAddress: { type: 'string', title: 'Sender Address', default: '' },
       receiverAddress: {
         type: 'string',
@@ -71,16 +69,14 @@ const RedeemAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="senderAddress-input"
-            name="SenderAddress"
-            required={props.required}
+          <WalletAddressTextField
+            setState={setSenderAddress}
+            parentProp={props}
             defaultValue={formData.senderAddress}
-            id="outlined-required"
+            updateStatusMessage={updateStatusMessage}
+            dataTestid="senderAddress-input"
+            name="SenderAddress"
             label="Sender Address"
-            onChange={({ target: { value } }) => {
-              updateField(value, props, setSenderAddress)
-            }}
           />
         </FormControl>
       </Box>
@@ -91,16 +87,14 @@ const RedeemAssetForm = ({
     return (
       <Box>
         <FormControl fullWidth>
-          <TextField
-            data-testid="receiverAddress-input"
-            name="ReceiverAddress"
-            required={props.required}
-            id="outlined-required"
+          <WalletAddressTextField
+            setState={setReceiverAddress}
+            parentProp={props}
             defaultValue={formData.receiverAddress}
+            updateStatusMessage={updateStatusMessage}
+            dataTestid="receiverAddress-input"
+            name="ReceiverAddress"
             label="Receiver Address"
-            onChange={({ target: { value } }) => {
-              updateField(value, props, setReceiverAddress)
-            }}
           />
         </FormControl>
       </Box>
@@ -125,34 +119,10 @@ const RedeemAssetForm = ({
   }
 
   const confirmDisabledState = () => {
-    if (!assetId || !receiverAddress || !senderAddress || !(balance > 0)) {
+    if (!assetId || !receiverAddress || !senderAddress || !(balance > 0) || !optInStatus) {
       return true
     }
     return false
-  }
-
-  const fetchData = (value, type, setState) => {
-    clearTimeout(timer)
-    const newTimer = setTimeout(async () => {
-      let response = await Helper.getAlgoNamesOrAddress(value, type)
-      if (response instanceof Error) {
-        updateStatusMessage('This is not a valid Algorand address', false)
-      } else {
-        setState(response)
-      }
-    }, 500)
-    setTimer(newTimer)
-  }
-
-  const updateField = (value, props, setState) => {
-    updateStatusMessage()
-    const lastWord = value.split('.')[value.split('.').length - 1]
-    if (lastWord == 'algo') {
-      fetchData(value, 'getOwner', setState)
-      return
-    }
-    props.onChange(value)
-    setState(value)
   }
 
   return (
@@ -211,7 +181,7 @@ RedeemAssetForm.propTypes = {
   balance: PropTypes.number,
   senderAddress: PropTypes.string,
   receiverAddress: PropTypes.string,
-  assetId: PropTypes.string,
+  assetId: PropTypes.number,
   updateStatusMessage: PropTypes.func,
 }
 export default RedeemAssetForm
