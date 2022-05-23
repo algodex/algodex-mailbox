@@ -118,8 +118,9 @@ export function SendAssetPage() {
     }
     if (responseData?.error == false) {
       if (responseData.confirmedTransactions.accepted == false) {
+        setStatus()
         updateStatusMessage(
-          'Please, ensure you enter a valid wallet address with the asset id provided',
+          'Unable to process this transaction, please ensure your asset balance is enough',
           false
         )
       } else {
