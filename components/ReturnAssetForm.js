@@ -13,11 +13,12 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import Tooltip from '@mui/material/Tooltip'
+import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone'
 
 // Custom Components
 import CollapseableErrorMessage from './CollapseableErrorMessage'
@@ -41,7 +42,6 @@ const ReturnAssetForm = ({
   const { t } = useTranslation('common')
   const [uploadType, setUploadType] = useState()
   const [ToWallet, setToWallet] = useState()
-  const [Amount, setAmount] = useState()
 
   const schema = {
     required: ['assetId', 'csvTransactions'],
@@ -79,11 +79,11 @@ const ReturnAssetForm = ({
 
   useEffect(() => {
     setCsvTransactions()
-    if (ToWallet && Amount) {
-      const csv = `ToWallet,Amount\n${ToWallet},${Amount}`
+    if (ToWallet) {
+      const csv = `ToWallet\n${ToWallet},}`
       setCsvTransactions(csv)
     }
-  }, [ToWallet, Amount])
+  }, [ToWallet])
   return (
     <>
       <WalletAddresses
@@ -103,7 +103,7 @@ const ReturnAssetForm = ({
           >
             <Box mt={'1rem'} mb={'.8rem'}>
               <Typography variant="h7" fontWeight={700}>
-                How many addresses to return to?
+                {t('How many addresses to return from?')}
               </Typography>
               <RadioGroup
                 aria-labelledby="uploadType"
@@ -111,7 +111,6 @@ const ReturnAssetForm = ({
                 onChange={({ target: { value } }) => {
                   setUploadType(value)
                   setToWallet()
-                  setAmount()
                   setCsvTransactions()
                 }}
               >
@@ -123,7 +122,7 @@ const ReturnAssetForm = ({
                       data-testid="multiple-address-radio"
                     />
                   }
-                  label={t('Return to multiple addresses with a .CSV file')}
+                  label={t('Return from multiple addresses with a .CSV file')}
                 />
                 <FormControlLabel
                   value={'single'}
@@ -133,38 +132,36 @@ const ReturnAssetForm = ({
                       data-testid="single-address-radio"
                     />
                   }
-                  label={t('Return to one address')}
+                  label={t('Return from single address')}
                 />
               </RadioGroup>
             </Box>
             {uploadType == 'single' && (
-              <>
-                <Box marginBottom={'0.8rem'}>
-                  <FormControl fullWidth>
-                    <TextField
-                      data-testid="amount-input"
-                      required
-                      id="outlined-required"
-                      name="Amount"
-                      label="Amount"
-                      onChange={({ target: { value } }) => {
-                        setAmount(value)
-                      }}
-                    />
-                  </FormControl>
+              <Box>
+                <Box sx={{ textAlign: 'right' }}>
+                  <Tooltip
+                    placement="top"
+                    title={t(
+                      'Enter the account which the assets need to be returned from'
+                    )}
+                    arrow
+                  >
+                    <TipsAndUpdatesTwoToneIcon color='info' fontSize='0.5rem' />
+                  </Tooltip>
                 </Box>
-                <Box>
-                  <FormControl fullWidth>
-                    <WalletAddressTextField
-                      setState={setToWallet}
-                      updateStatusMessage={updateStatusMessage}
-                      dataTestid="receiverAddress-input"
-                      name="ReceiverAddress"
-                      label="Receiver Address"
-                    />
-                  </FormControl>
-                </Box>
-              </>
+                <FormControl fullWidth>
+                  <WalletAddressTextField
+                    setState={setToWallet}
+                    updateStatusMessage={updateStatusMessage}
+                    dataTestid="receiverAddress-input"
+                    name="ReceiverAddress"
+                    label="Receiver Address"
+                    placeholder={t(
+                      'Enter the account which the assets need to be returned from'
+                    )}
+                  />
+                </FormControl>
+              </Box>
             )}
             {uploadType == 'multiple' && (
               <UploadContainer

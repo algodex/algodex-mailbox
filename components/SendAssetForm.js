@@ -112,7 +112,7 @@ const SendAssetForm = ({
           >
             <Box mt={'1rem'} mb={'.8rem'}>
               <Typography variant="h7" fontWeight={700}>
-                How many addresses to send to?
+                {t('How many addresses to send to?')}
               </Typography>
               <RadioGroup
                 aria-labelledby="uploadType"
@@ -142,7 +142,7 @@ const SendAssetForm = ({
                       data-testid="single-address-radio"
                     />
                   }
-                  label={t('Send to one address')}
+                  label={t('Send to single address')}
                 />
               </RadioGroup>
             </Box>

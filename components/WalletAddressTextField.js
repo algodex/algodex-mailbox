@@ -19,6 +19,7 @@ export const WalletAddressTextField = ({
   dataTestid,
   name,
   label,
+  placeholder
 }) => {
   const [timer, setTimer] = useState(null)
 
@@ -57,6 +58,7 @@ export const WalletAddressTextField = ({
       data-testid={dataTestid}
       name={name}
       label={label}
+      placeholder={placeholder || ''}
     />
   )
 }
