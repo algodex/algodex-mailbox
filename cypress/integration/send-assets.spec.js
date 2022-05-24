@@ -47,21 +47,20 @@ describe('Send assets Page', () => {
     cy.wait(3000)
     cy.contains(`${formattedAddresses[0]}`).click({ force: true })
     cy.wait(300)
-    // cy.get('[data-testid=submit-btn]').click()
-    // cy.contains('Send Assets').click()
-    // cy.wait(10000)
-    // cy.get('[data-testid=shareableLink]')
-    //   .should('have.attr', 'href')
-    //   .then((href) => {
-    //     cy.visit(href)
-    //   })
-    // cy.wait(3000)
-    // cy.get('[data-testid=receiverAddress-input]').type(
-    //   `${formattedAddresses[0]}`
-    // )
-    // cy.wait(3000)
-    // cy.get('[data-testid=submit-btn]').click()
-    // cy.wait(5000)
-    // cy.get('[data-testid=statusMessage]').should('contain', 'confirmed')
+    cy.get('[data-testid=submit-btn]').click()
+    cy.wait(10000)
+    cy.get('[data-testid=shareableLink]')
+      .should('have.attr', 'href')
+      .then((href) => {
+        cy.visit(href)
+      })
+    cy.wait(3000)
+    cy.get('[data-testid=receiverAddress-input]').type(
+      `${formattedAddresses[0]}`
+    )
+    cy.wait(3000)
+    cy.get('[data-testid=submit-btn]').click()
+    cy.wait(5000)
+    cy.get('[data-testid=statusMessage]').should('contain', 'confirmed')
   })
 })
