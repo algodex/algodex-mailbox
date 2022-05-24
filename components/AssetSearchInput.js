@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 //mui files
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
+import CircularProgress from '@mui/material/CircularProgress'
 
 //Lib files
 import Helper from '@/lib/helper'
@@ -16,11 +17,14 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
   const [query, setQuery] = useState('')
   const [suggestedAssets, setSuggestedAssets] = useState([])
   const [timer, setTimer] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const fetchData = () => {
     clearTimeout(timer)
     const newTimer = setTimeout(async () => {
-      const res = await Helper.searchAlgoAssets(query)
+      setLoading(true)
+      const res = await Helper.searchAlgoAssets(query.trim())
+      setLoading(false)
       const list = [...res.data.assets].filter((asset) => !asset.destroyed)
       setSuggestedAssets(
         list.map((asset) => {
@@ -42,6 +46,8 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       disablePortal
       getOptionLabel={(option) => option.name}
       options={suggestedAssets}
+      loading={loading}
+      filterOptions={(x) => x}
       defaultValue={
         defaultValue
           ? {
@@ -57,11 +63,21 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       renderInput={(params) => (
         <TextField
           {...params}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? <CircularProgress color="primary" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
           data-testid="assetId-input"
           required
           id="outlined-required"
           name="AssetId"
           label="Asset Id"
+          value={query.trim()}
           onChange={({ target: { value } }) => {
             setQuery(value)
           }}
