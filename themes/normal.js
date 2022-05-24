@@ -67,8 +67,8 @@ const theme = {
       lineHeight: '0.9',
       letterSpacing: '-0.04em',
     },
-    // Add custom error message variant
-    'error-message': {
+    // Add custom status message variant
+    'status-message': {
       fontStyle: 'italic',
       fontFamily: fontFamilies.body,
       fontWeight: 700,

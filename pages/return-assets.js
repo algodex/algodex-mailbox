@@ -165,7 +165,7 @@ export function ReturnAssetPage() {
       {duplicateList.length > 0 && (
         <>
           <Typography
-            variant="error-message"
+            variant="status-message"
             display="block"
             marginTop="1rem"
             marginBottom="0"

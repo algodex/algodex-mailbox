@@ -23,7 +23,7 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 
 // Custom Components
-import CollapseableErrorMessage from './CollapseableErrorMessage'
+import CollapseableStatusMessage from './CollapseableStatusMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
 import { WalletAddresses } from './WalletAddresses'
@@ -217,7 +217,7 @@ const SendAssetForm = ({
         </Grid>
       </Grid>
       <Box marginTop={'2rem'}>
-        <CollapseableErrorMessage actionStatus={actionStatus} />
+        <CollapseableStatusMessage actionStatus={actionStatus} />
       </Box>
     </>
   )

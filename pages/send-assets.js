@@ -210,7 +210,7 @@ export function SendAssetPage() {
       </Button>
       {assetBalance.message != '' && (
         <Typography
-          variant="error-message"
+          variant="status-message"
           display="block"
           marginTop="1rem"
           color={assetBalance.success ? 'info.success' : 'info.error'}
@@ -249,7 +249,7 @@ export function SendAssetPage() {
       {duplicateList.length > 0 && (
         <>
           <Typography
-            variant="error-message"
+            variant="status-message"
             display="block"
             marginTop="1rem"
             marginBottom="0"
@@ -283,10 +283,10 @@ export function SendAssetPage() {
               }}
             >
               <Box
-                variant="error-message"
+                variant="status-message"
                 sx={{ display: 'flex', alignItems: 'center' }}
               >
-                <Link
+                <Link data-testid='shareableLink'
                   href={shareableLink}
                   target="_blanc"
                   sx={{ color: 'info.main' }}

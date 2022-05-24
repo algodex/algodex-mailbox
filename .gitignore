@@ -4,6 +4,8 @@ public/workbox*
 *.diff
 *.log
 *Zone.Identifier
+cypress/videos
+cypress/screenshots
 
 # dependencies
 /node_modules

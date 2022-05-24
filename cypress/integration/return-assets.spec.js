@@ -8,7 +8,7 @@ describe('Return assets Page', () => {
     cy.visit('/return-assets')
   })
 
-  it('Should return assets to multiple addresses', () => {
+  it('Should return assets from multiple addresses', () => {
     cy.get('[data-testid=multiple-address-radio]').click({ force: true })
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.wait(3000)
@@ -20,7 +20,7 @@ describe('Return assets Page', () => {
     cy.get('[data-testid=submit-btn]').click({ force: true })
   })
 
-  it('Should return assets to a single address', () => {
+  it('Should return assets from a single address', () => {
     cy.get('[data-testid=single-address-radio]').click({ force: true })
     cy.wait(3000)
     cy.get('input').eq(6).type(`${formattedAddresses[0]}`, { force: true })

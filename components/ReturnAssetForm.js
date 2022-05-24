@@ -21,7 +21,7 @@ import Tooltip from '@mui/material/Tooltip'
 import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone'
 
 // Custom Components
-import CollapseableErrorMessage from './CollapseableErrorMessage'
+import CollapseableStatusMessage from './CollapseableStatusMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
 import { WalletAddresses } from './WalletAddresses'
@@ -187,7 +187,7 @@ const ReturnAssetForm = ({
       </Grid>
 
       <Box marginTop={'2rem'}>
-        <CollapseableErrorMessage actionStatus={actionStatus} />
+        <CollapseableStatusMessage actionStatus={actionStatus} />
       </Box>
     </>
   )
