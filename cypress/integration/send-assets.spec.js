@@ -21,7 +21,6 @@ describe('Send assets Page', () => {
     cy.get('[data-testid=submit-btn]').click({ force: true })
   })
 
-
   it('Should not send to escrow if recipient is not opted in', () => {
     cy.wait(3000)
     cy.get('[data-testid=multiple-address-radio]').click({ force: true })

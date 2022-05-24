@@ -9,6 +9,9 @@ import React, { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 //Lib files
 import Helper from '@/lib/helper'
@@ -60,6 +63,32 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
         parentProp.onChange(value?.id || '')
         setAssetId(value?.id || '')
       }}
+      renderOption={(props, option) => (
+        <Box
+          component="li"
+          sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+          {...props}
+        >
+          {option.name}
+          {option.verification && (
+            <>
+              {option.verification.reputation == 'Verified' && (
+                <VerifiedUserIcon
+                  fontSize="10px"
+                  sx={{ marginLeft: 2, color: 'info.main' }}
+                />
+              )}
+              {(option.verification.reputation == 'Notable' ||
+                option.verification.reputation == 'Neutral') && (
+                <CheckCircleIcon
+                  fontSize="10px"
+                  sx={{ marginLeft: 2, color: 'info.success' }}
+                />
+              )}
+            </>
+          )}
+        </Box>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -67,7 +96,9 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? <CircularProgress color="primary" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="primary" size={20} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),
