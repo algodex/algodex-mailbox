@@ -48,7 +48,7 @@ describe('Send assets Page', () => {
     cy.wait(3000)
     cy.contains(`${formattedAddresses[0]}`).click({ force: true })
     cy.wait(300)
-    cy.get('[data-testid=submit-btn]').click()
+    // cy.get('[data-testid=submit-btn]').click()
     // cy.contains('Send Assets').click()
     // cy.wait(10000)
     // cy.get('[data-testid=shareableLink]')
