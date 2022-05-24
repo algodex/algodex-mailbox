@@ -21,6 +21,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
   const [suggestedAssets, setSuggestedAssets] = useState([])
   const [timer, setTimer] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [assetValue, setAssetValue] = useState(null)
 
   const fetchData = () => {
     clearTimeout(timer)
@@ -51,6 +52,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       options={suggestedAssets}
       loading={loading}
       filterOptions={(x) => x}
+      value={suggestedAssets.length == 1? suggestedAssets[0]: assetValue}
       defaultValue={
         defaultValue
           ? {
@@ -62,6 +64,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       onChange={(event, value) => {
         parentProp.onChange(value?.id || '')
         setAssetId(value?.id || '')
+        setAssetValue(value)
       }}
       renderOption={(props, option) => (
         <Box
