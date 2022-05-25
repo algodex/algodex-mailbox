@@ -27,6 +27,9 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       const res = await Helper.searchAlgoAssets(query.trim())
       setLoading(false)
       const list = [...res.data.assets].filter((asset) => !asset.destroyed)
+      if (list.length == 1){
+        setAssetId(list[0].id)
+      }
       setSuggestedAssets(
         list.map((asset) => {
           return { ...asset, name: `${asset.id} - ${asset.name}` }
