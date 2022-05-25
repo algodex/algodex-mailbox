@@ -84,11 +84,16 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
                   sx={{ marginLeft: 2, color: 'info.main' }}
                 />
               )}
-              {(option.verification.reputation == 'Notable' ||
-                option.verification.reputation == 'Neutral') && (
+              {option.verification.reputation == 'Notable' && (
                 <CheckCircleIcon
                   fontSize="10px"
-                  sx={{ marginLeft: 2, color: 'info.success' }}
+                  sx={{ marginLeft: 2, color: 'info.success', opacity:'0.8' }}
+                />
+              )}
+              {option.verification.reputation == 'Neutral' && (
+                <CheckCircleIcon
+                  fontSize="10px"
+                  sx={{ marginLeft: 2, color: 'info.success', opacity:'0.3'}}
                 />
               )}
             </>
