@@ -30,7 +30,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       const res = await Helper.searchAlgoAssets(query.trim())
       setLoading(false)
       const list = [...res.data.assets].filter((asset) => !asset.destroyed)
-      if (list.length == 1){
+      if (list.length == 1) {
         setAssetId(list[0].id)
       }
       setSuggestedAssets(
@@ -55,7 +55,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       options={suggestedAssets}
       loading={loading}
       filterOptions={(x) => x}
-      value={suggestedAssets.length == 1? suggestedAssets[0]: assetValue}
+      value={suggestedAssets.length == 1 ? suggestedAssets[0] : assetValue}
       defaultValue={
         defaultValue
           ? {
