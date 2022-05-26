@@ -30,16 +30,18 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
       setLoading(true)
       const res = await Helper.searchAlgoAssets(query.trim())
       setLoading(false)
-      const list = [...res.data.assets].filter((asset) => !asset.destroyed)
-      if (list.length == 1) {
-        setAssetId(list[0].id)
-        setAssetValue(list[0])
+      if (res.data?.assets) {
+        const list = [...res.data.assets].filter((asset) => !asset.destroyed)
+        if (list.length == 1) {
+          setAssetId(list[0].id)
+          setAssetValue(list[0])
+        }
+        setSuggestedAssets(
+          list.map((asset) => {
+            return { ...asset, name: `${asset.id} - ${asset.name}` }
+          })
+        )
       }
-      setSuggestedAssets(
-        list.map((asset) => {
-          return { ...asset, name: `${asset.id} - ${asset.name}` }
-        })
-      )
     }, 500)
     setTimer(newTimer)
   }
