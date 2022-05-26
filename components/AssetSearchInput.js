@@ -90,7 +90,6 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
           : null
       }
       onChange={(event, value) => {
-        console.log(value)
         parentProp.onChange(value?.id || '')
         setAssetId(value?.id || '')
         setAssetValue(value)
