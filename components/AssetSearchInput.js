@@ -26,20 +26,47 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
   const fetchData = () => {
     clearTimeout(timer)
     const newTimer = setTimeout(async () => {
+      setAssetValue(null)
       setLoading(true)
       const res = await Helper.searchAlgoAssets(query.trim())
       setLoading(false)
-      const list = [...res.data.assets].filter((asset) => !asset.destroyed)
-      if (list.length == 1) {
-        setAssetId(list[0].id)
+      if (res.data?.assets) {
+        const list = [...res.data.assets].filter((asset) => !asset.destroyed)
+        if (list.length == 1) {
+          setAssetId(list[0].id)
+          setAssetValue(list[0])
+        }
+        setSuggestedAssets(
+          list.map((asset) => {
+            return { ...asset, name: `${asset.id} - ${asset.name}` }
+          })
+        )
       }
-      setSuggestedAssets(
-        list.map((asset) => {
-          return { ...asset, name: `${asset.id} - ${asset.name}` }
-        })
-      )
     }, 500)
     setTimer(newTimer)
+  }
+
+  const VerifyIcon = ({ reputation }) => {
+    return (
+      <>
+        {reputation == 'Verified' ? (
+          <VerifiedUserIcon
+            fontSize="10px"
+            sx={{ marginLeft: 2, color: 'info.main' }}
+          />
+        ) : reputation == 'Notable' ? (
+          <CheckCircleIcon
+            fontSize="10px"
+            sx={{ marginLeft: 2, color: 'info.success', opacity: '0.8' }}
+          />
+        ) : reputation == 'Neutral' ? (
+          <CheckCircleIcon
+            fontSize="10px"
+            sx={{ marginLeft: 2, color: 'info.success', opacity: '0.3' }}
+          />
+        ) : null}
+      </>
+    )
   }
 
   useEffect(() => {
@@ -77,26 +104,7 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
         >
           {option.name}
           {option.verification && (
-            <>
-              {option.verification.reputation == 'Verified' && (
-                <VerifiedUserIcon
-                  fontSize="10px"
-                  sx={{ marginLeft: 2, color: 'info.main' }}
-                />
-              )}
-              {option.verification.reputation == 'Notable' && (
-                <CheckCircleIcon
-                  fontSize="10px"
-                  sx={{ marginLeft: 2, color: 'info.success', opacity: '0.8' }}
-                />
-              )}
-              {option.verification.reputation == 'Neutral' && (
-                <CheckCircleIcon
-                  fontSize="10px"
-                  sx={{ marginLeft: 2, color: 'info.success', opacity: '0.3' }}
-                />
-              )}
-            </>
+            <VerifyIcon reputation={option.verification.reputation} />
           )}
         </Box>
       )}
@@ -109,7 +117,11 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
               <>
                 {loading ? (
                   <CircularProgress color="primary" size={20} />
-                ) : null}
+                ) : (
+                  <VerifyIcon
+                    reputation={assetValue?.verification?.reputation}
+                  />
+                )}
                 {params.InputProps.endAdornment}
               </>
             ),
