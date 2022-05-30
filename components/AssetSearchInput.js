@@ -90,7 +90,6 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
         parentProp.onChange(value?.id || '')
         setAssetId(value?.id || '')
         setAssetValue(value)
-        console.log({value})
       }}
       renderOption={(props, option) => (
         <Box
