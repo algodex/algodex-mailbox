@@ -21,10 +21,14 @@ export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
   const [suggestedAssets, setSuggestedAssets] = useState([])
   const [timer, setTimer] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [assetValue, setAssetValue] = useState({
-    id: defaultValue,
-    name: defaultValue,
-  })
+  const [assetValue, setAssetValue] = useState(
+    defaultValue
+      ? {
+        id: defaultValue,
+        name: defaultValue,
+      }
+      : null
+  )
 
   const fetchData = () => {
     clearTimeout(timer)
