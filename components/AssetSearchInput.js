@@ -17,7 +17,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import Helper from '@/lib/helper'
 
 export const AssetSearchInput = ({ setAssetId, parentProp, defaultValue }) => {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(defaultValue || '')
   const [suggestedAssets, setSuggestedAssets] = useState([])
   const [timer, setTimer] = useState(null)
   const [loading, setLoading] = useState(false)
