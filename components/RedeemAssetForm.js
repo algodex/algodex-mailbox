@@ -139,7 +139,7 @@ const RedeemAssetForm = ({
           >
             {optInStatus == false && (
               <Box marginTop="2rem">
-                <Typography variant="status-message" color="error">
+                <Typography variant="status-message" color="error" data-testid='optinMessage'>
                   {t(
                     // eslint-disable-next-line max-len
                     'Warning: You have not yet opted into the asset. Please do so in another wallet app.'

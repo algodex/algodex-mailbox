@@ -1,5 +1,6 @@
 const formattedAddresses = [
   'WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI',
+  'KC2L7KRSQ7GQIILO4F4AQQCLDWHCPK2FVUSFIRXEONT6TJIOK44B3ZOYMM',
 ]
 const assetId = '33698417'
 
@@ -39,7 +40,7 @@ describe('Send assets Page', () => {
     cy.get('[data-testid=single-address-radio]').click()
     cy.get('[data-testid=assetId-input]').should('be.visible')
     cy.get('input').eq(4).type(1)
-    cy.get('input').eq(5).type(`${formattedAddresses[0]}`)
+    cy.get('input').eq(5).type(`${formattedAddresses[1]}`)
     cy.get('input').eq(2).type(`${assetId}`)
     cy.wait(3000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
@@ -54,11 +55,9 @@ describe('Send assets Page', () => {
       })
     cy.wait(3000)
     cy.get('[data-testid=receiverAddress-input]').type(
-      `${formattedAddresses[0]}`
+      `${formattedAddresses[1]}`
     )
     cy.wait(3000)
-    cy.get('[data-testid=submit-btn]').click()
-    cy.wait(5000)
-    cy.get('[data-testid=statusMessage]').should('contain', 'confirmed')
+    cy.get('[data-testid=optinMessage]').should('contain', 'Warning')
   })
 })
