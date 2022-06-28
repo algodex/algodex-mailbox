@@ -286,7 +286,8 @@ export function SendAssetPage() {
                 variant="status-message"
                 sx={{ display: 'flex', alignItems: 'center' }}
               >
-                <Link data-testid='shareableLink'
+                <Link
+                  data-testid="shareableLink"
                   href={shareableLink}
                   target="_blanc"
                   sx={{ color: 'info.main' }}
