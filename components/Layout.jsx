@@ -93,7 +93,7 @@ export function Layout({ children, components, componentsProps, router }) {
       primary: t('faq'),
     },
     {
-      to: 'https://about.algodex.com/support/',
+      to: 'https://app.algodex.com/support/',
       icon: <HelpOutlineIcon />,
       primary: t('support'),
     },
