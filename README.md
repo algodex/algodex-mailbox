@@ -8,13 +8,13 @@ This is a decentralized application on the Algorand blockchain to batch send ass
 
 Try it here on Testnet: https://mailbox-testnet.algodex.com/
 
-Documentation can be found here: https://about.algodex.com/docs/algodex-mailbox-user-guide/
+Documentation can be found here: https://docs.algodex.com/algodex-mailbox/mailbox-user-guide
 
-The FAQ is here: https://about.algodex.com/docs/algodex-mailbox-faq/
+The FAQ is here: https://docs.algodex.com/algodex-mailbox/mailbox-faq
 
 Telegram: https://t.me/algodex
 
 Discord: https://discord.gg/qS3Q7AqwF6
 
-Support: https://about.algodex.com/support
+Support: https://app.algodex.com/support
 

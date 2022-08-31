@@ -131,12 +131,7 @@ export const LandingPageFooter = () => {
             </Typography>
 
             <FooterLinks
-              link="https://about.algodex.com/disclaimers/"
-              linkName={t('disclaimers')}
-            />
-
-            <FooterLinks
-              link="https://about.algodex.com/docs/"
+              link="https://docs.algodex.com/algodex-mailbox"
               linkName={t('docs')}
             />
             <FooterLinks
@@ -144,7 +139,7 @@ export const LandingPageFooter = () => {
               linkName={'Github'}
             />
             <FooterLinks
-              link="https://about.algodex.com/support/"
+              link="https://app.algodex.com/support/"
               linkName={t('support')}
             />
 
@@ -162,7 +157,7 @@ export const LandingPageFooter = () => {
               {t('COMPANY')}
             </Typography>
             <FooterLinks
-              link="https://about.algodex.com/"
+              link="https://app.algodex.com/about"
               linkName={t('about')}
             />
             <FooterLinks

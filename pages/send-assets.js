@@ -334,7 +334,7 @@ export function SendAssetPage() {
       <Grid container spacing={2} sx={{ paddingBlock: '2rem' }}>
         <Grid item xs={6} lg={5} className="mr-2">
           <Link
-            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            href="https://docs.algodex.com/algodex-mailbox/mailbox-user-guide"
             target="blanc"
             color="primary.dark"
           >

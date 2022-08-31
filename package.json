@@ -20,6 +20,7 @@
   "dependencies": {
     "@algodex/algodex-sdk": "^1.1.14",
     "@algonameservice/sdk": "0.2.1",
+    "@babel/preset-typescript": "^7.18.6",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/server": "^11.4.0",
@@ -33,6 +34,8 @@
     "@randlabs/myalgo-connect": "^1.1.1",
     "@rjsf/core": "^4.0.1",
     "@rjsf/material-ui": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
     "algosdk": "^1.16.0",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",

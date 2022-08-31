@@ -80,7 +80,7 @@ export const FAQ = () => {
                         {faq.guideLink && (
                           <span>
                             <a
-                              href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                              href="https://docs.algodex.com/algodex-mailbox/mailbox-user-guide"
                               target="_blank"
                               rel="noreferrer"
                               style={{ marginLeft: '3px' }}
