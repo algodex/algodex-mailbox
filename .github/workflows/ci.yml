@@ -46,11 +46,11 @@ jobs:
       #      - run: cd ./node_modules/@algodex/algodex-sdk && yarn
       - name: Run Unit Tests
         run: yarn test
-      - uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: 4b3e3e5a978502656bddf62aabc22b936888099fdbcf92190c4659c90b451836
-        with:
-          coverageCommand: yarn coverage
+      # - uses: paambaati/codeclimate-action@v3.0.0
+      #  env:
+      #    CC_TEST_REPORTER_ID: 90a5213f2bf5a8aaeace52d002f56245e62bf7bf08b219c5aab70c2681c6d6ad
+      #  with:
+      #    coverageCommand: yarn coverage
   e2e:
     name: End<->End
     runs-on: ubuntu-latest

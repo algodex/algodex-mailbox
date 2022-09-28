@@ -139,7 +139,7 @@ export const UserGuide = () => {
               >
                 {t('More detailed instructions here')}:{' '}
                 <Link
-                  href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+                  href="https://docs.algodex.com/algodex-mailbox/mailbox-user-guide"
                   target="_blanc"
                   color="secondary.contrastText"
                   fontStyle="italic"

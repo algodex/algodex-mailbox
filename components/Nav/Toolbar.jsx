@@ -149,7 +149,7 @@ function Toolbar({
       {!isMobile && (
         <Box sx={{ display: 'flex', alignItems: 'center' }} data-testid='toolbar-links'>
           <Link
-            href="https://about.algodex.com/docs/algodex-mailbox-user-guide/"
+            href="https://docs.algodex.com/algodex-mailbox/mailbox-user-guide"
             target="_blanc"
             sx={styles.linkStyles}
           >
@@ -159,7 +159,7 @@ function Toolbar({
             {t('faq')}
           </Link>
           <Link
-            href="https://about.algodex.com/support/"
+            href="https://app.algodex.com/support/"
             target="_blanc"
             sx={styles.linkStyles}
           >

@@ -13,20 +13,15 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import { makeStyles } from '@mui/styles'
-import { useTheme } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const TransactionTable = ({ rows }) => {
-  const theme = useTheme()
-  
-  const useStyles = makeStyles({
-    root: {
-      '& .MuiTableCell-head': {
-        backgroundColor: `${theme.palette.primary.main}`,
-      },
+  const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    '& .MuiTableCell-head': {
+      backgroundColor: `${theme.palette.primary.main}`,
     },
-  })
-  const classes = useStyles()
+  }))
+
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
@@ -74,7 +69,7 @@ const TransactionTable = ({ rows }) => {
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead className={classes.root}>
+          <StyledTableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -88,7 +83,7 @@ const TransactionTable = ({ rows }) => {
                 </TableCell>
               ))}
             </TableRow>
-          </TableHead>
+          </StyledTableHead>
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
