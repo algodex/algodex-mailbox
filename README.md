@@ -14,7 +14,7 @@ The FAQ is here: https://about.algodex.com/docs/algodex-mailbox-faq/
 
 Telegram: https://t.me/algodex
 
-Discord: https://discord.com/invite/8sDzWVDf
+Discord: https://discord.gg/qS3Q7AqwF6
 
 Support: https://about.algodex.com/support
 

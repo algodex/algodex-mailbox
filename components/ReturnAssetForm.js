@@ -80,7 +80,7 @@ const ReturnAssetForm = ({
   useEffect(() => {
     setCsvTransactions()
     if (ToWallet) {
-      const csv = `ToWallet\n${ToWallet},}`
+      const csv = `ToWallet,Amount\n${ToWallet},0`
       setCsvTransactions(csv)
     }
   }, [ToWallet])

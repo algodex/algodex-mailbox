@@ -55,14 +55,14 @@ const TransactionHistoryForm = ({
               csvTransactions: formData.csvTransactions,
             }}
             autoComplete="on"
-            disabled={true}
+            disabled={false}
           >
             <Box marginTop={'2rem'}>
               <LoadingButton
                 data-testid="submit-btn"
                 loading={isLoading}
                 variant="contained"
-                disabled={true}
+                disabled={false}
                 type="submit"
                 sx={{ textDecoration: 'capitalize' }}
               >
