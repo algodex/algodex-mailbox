@@ -3,9 +3,7 @@
  * All Rights Reserved.
  */
 
- @tailwind components;
-@tailwind utilities;
-
+ 
 #__next,
 html,
 body {

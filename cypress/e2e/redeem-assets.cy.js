@@ -3,7 +3,7 @@ const formattedAddresses = [
 ]
 const assetId = '33698417'
 
-describe('Return assets Page', () => {
+describe('Redeem assets Page', () => {
   beforeEach(() => {
     cy.visit('/redeem-assets')
   })
