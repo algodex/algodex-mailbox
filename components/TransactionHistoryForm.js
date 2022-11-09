@@ -71,7 +71,7 @@ const TransactionHistoryForm = ({
               csvTransactions: formData.csvTransactions,
             }}
             autoComplete="on"
-            disabled={false}
+            disabled={true} // FIXME: change to enable transaction history
           >
             <Box marginTop={'2rem'}>
               <LoadingButton

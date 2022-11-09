@@ -35,6 +35,7 @@ import Helper from '@/lib/helper'
 
 export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
   const [finalAddresses, setFinalAddresses] = useState([])
+  const [radioVal, setRadioVal] = useState(null)
 
   useEffect(() => {
     getAddyNames()
@@ -43,13 +44,18 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
   const getAddyNames = useCallback(async () => {
     let addresses = []
     for (let address of formattedAddresses) {
-      let names = await Helper.getAlgoNamesOrAddress(address, 'getNames')
+      // let names = await Helper.getAlgoNamesOrAddress(address, 'getNames')
+      // DISABLE ANS DUE TO INDEXER ISSUES
       addresses.push({
-        name: names[0]?.name || null,
+        // name: names[0]?.name || null,
+        name: null,
         wallet: address,
       })
     }
     setFinalAddresses(addresses)
+    if (formattedAddresses.length === 1) {
+      setRadioVal(formattedAddresses[0])
+    }
   }, [formattedAddresses])
 
   return (
@@ -59,8 +65,10 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
           aria-labelledby="wallet"
           name="wallet"
           onChange={({ target: { value } }) => {
+            setRadioVal(value)
             setWallet(value)
           }}
+          value={radioVal}
         >
           {finalAddresses.map((address) => (
             <Tooltip

@@ -145,6 +145,7 @@ export function TransactionHistoryPage() {
         variant="p"
         sx={{ marginBottom: '1rem', color: 'info.error' }}
       >
+        *{t('This feature is currently not available')}*
       </Typography>
       <TransactionHistoryForm
         onSubmit={submitForm}
