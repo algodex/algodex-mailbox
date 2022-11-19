@@ -172,7 +172,7 @@ export function SendAssetPage() {
     if (actionStatus.message != '') {
       updateStatusMessage()
     }
-  }, [assetId, csvTransactions, wallet])
+  }, [actionStatus.message, assetId, csvTransactions, wallet])
 
   const getAssetBalance = async () => {
     if (wallet && assetId) {

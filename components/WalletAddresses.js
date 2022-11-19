@@ -55,8 +55,9 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
     setFinalAddresses(addresses)
     if (formattedAddresses.length === 1) {
       setRadioVal(formattedAddresses[0])
+      setWallet(formattedAddresses[0])
     }
-  }, [formattedAddresses])
+  }, [formattedAddresses, setWallet])
 
   return (
     <Box sx={{ marginTop: finalAddresses.length > 0 ? '1rem' : '0rem' }}>
