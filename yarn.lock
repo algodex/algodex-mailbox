@@ -19,15 +19,6 @@
     tslib "^2.3.1"
     util "^0.12.4"
 
-"@algonameservice/sdk@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@algonameservice/sdk/-/sdk-0.2.1.tgz#285c075e685ead810f60a3d5cc72184f6e718d53"
-  integrity sha512-Yz6mJaCwTwoLQzDhElI3hyAVBy6Yfeuy63YLn/58BgAa/bjCY/xh7/2YXTIn18Vbbg4lrVs5POm3z+0I9Oq3Gg==
-  dependencies:
-    "@types/node" "^17.0.21"
-    algosdk "^1.13.1"
-    typescript "^4.6.4"
-
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -2271,11 +2262,6 @@
   version "14.18.16"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.16.tgz#878f670ba3f00482bf859b6550b6010610fc54b5"
   integrity sha512-X3bUMdK/VmvrWdoTkz+VCn6nwKwrKCFTHtqwBIaQJNx4RUIBBUFXM00bqPz/DsDd+Icjmzm6/tyYZzeGVqb6/Q==
-
-"@types/node@^17.0.21":
-  version "17.0.33"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.33.tgz#3c1879b276dc63e73030bb91165e62a4509cd506"
-  integrity sha512-miWq2m2FiQZmaHfdZNcbpp9PuXg34W5JZ5CrJ/BaS70VuhoJENBEQybeiYSaPBRNq6KQGnjfEnc/F3PN++D+XQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -7578,10 +7564,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
-  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
+typescript@^4.9.4:
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
+  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 ua-parser-js@^1.0.2:
   version "1.0.2"

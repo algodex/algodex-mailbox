@@ -53,12 +53,13 @@ describe('Send assets Page', () => {
   })
 
   it('Should send to single address with or without the recipient opt-in and redeem', () => {
+    cy.wait(3000)
     cy.get('[data-testid=single-address-radio]').click()
     cy.get('[data-testid=assetId-input]').should('be.visible')
     cy.get('input').eq(4).type(1)
     cy.get('input').eq(5).type(`${formattedAddresses[1]}`)
     cy.get('input').eq(2).type(`${assetId}`)
-    cy.wait(3000)
+    cy.wait(4000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.wait(300)

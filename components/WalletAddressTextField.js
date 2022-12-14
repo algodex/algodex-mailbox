@@ -25,7 +25,7 @@ import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
 //Lib files
-import Helper from '@/lib/helper'
+import { useGetWalletOwner } from '../hooks/useGetWalletOwner'
 
 export const WalletAddressTextField = ({
   setState,
@@ -35,28 +35,20 @@ export const WalletAddressTextField = ({
   dataTestid,
   name,
   label,
-  placeholder
+  placeholder,
 }) => {
+  const { getWalletOwner } = useGetWalletOwner(updateStatusMessage)
   const [timer, setTimer] = useState(null)
-
-  const fetchData = (value, type, setState) => {
-    clearTimeout(timer)
-    const newTimer = setTimeout(async () => {
-      let response = await Helper.getAlgoNamesOrAddress(value, type)
-      if (response instanceof Error) {
-        updateStatusMessage('This is not a valid Algorand address', false)
-      } else {
-        setState(response)
-      }
-    }, 500)
-    setTimer(newTimer)
-  }
 
   const updateField = (value) => {
     updateStatusMessage()
     const lastWord = value.split('.')[value.split('.').length - 1]
     if (lastWord == 'algo') {
-      fetchData(value, 'getOwner', setState)
+      clearTimeout(timer)
+      const newTimer = setTimeout(async () => {
+        getWalletOwner(value, 'getOwner', setState)
+      }, 500)
+      setTimer(newTimer)
       return
     }
     parentProp && parentProp.onChange(value)

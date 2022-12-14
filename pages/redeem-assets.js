@@ -128,7 +128,6 @@ export function RedeemAssetPage() {
         receiverAddress,
         senderAddress
       )
-      console.debug({ res })
       setGettingBalance(false)
       if (res.error == false) {
         setEscrowBalance({
@@ -155,7 +154,6 @@ export function RedeemAssetPage() {
     const newTimer = setTimeout(async () => {
       try {
         const res = await Helper.checkOptIn(receiverAddress, parseInt(assetId))
-        // console.debug(res)
         setOptInStatus(res)
       } catch (error) {
         console.debug(error)

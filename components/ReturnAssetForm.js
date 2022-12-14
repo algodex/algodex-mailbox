@@ -94,12 +94,14 @@ const ReturnAssetForm = ({
   }
 
   useEffect(() => {
-    setCsvTransactions()
     if (ToWallet) {
       const csv = `ToWallet,Amount\n${ToWallet},0`
       setCsvTransactions(csv)
+    } else {
+      setCsvTransactions()
     }
   }, [ToWallet])
+
   return (
     <>
       <WalletAddresses
@@ -162,7 +164,7 @@ const ReturnAssetForm = ({
                     )}
                     arrow
                   >
-                    <TipsAndUpdatesTwoToneIcon color='info' fontSize='0.5rem' />
+                    <TipsAndUpdatesTwoToneIcon color="info" fontSize="0.5rem" />
                   </Tooltip>
                 </Box>
                 <FormControl fullWidth>

@@ -168,12 +168,6 @@ export function SendAssetPage() {
     }
   }, [assetId, csvTransactions, wallet, gettingBalance])
 
-  useEffect(() => {
-    if (actionStatus.message != '') {
-      updateStatusMessage()
-    }
-  }, [actionStatus.message, assetId, csvTransactions, wallet])
-
   const getAssetBalance = async () => {
     if (wallet && assetId) {
       setGettingBalance(true)

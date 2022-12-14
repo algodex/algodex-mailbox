@@ -52,14 +52,16 @@ const CollapseableStatusMessage = ({ actionStatus }) => {
           variant="status-message"
           // sx={{ display: 'flex', justifyContent: 'end' }}
           color={actionStatus.success ? 'info.success' : 'info.error'}
-          data-testid='statusMessage'
+          data-testid="statusMessage"
         >
           <>
             {readmore ? previewtext : ''}
             {extraContent && (
               <>
                 {showContent && (
-                  <Typography variant='span' fontWeight={700}>{extraContent}</Typography>
+                  <Typography variant="span" fontWeight={700}>
+                    {extraContent}
+                  </Typography>
                 )}
                 <Typography
                   variant="span"

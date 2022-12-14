@@ -73,12 +73,6 @@ export function ReturnAssetPage() {
     success: false,
   })
 
-  useEffect(() => {
-    if (actionStatus.message != '') {
-      updateStatusMessage()
-    }
-  }, [assetId, senderAddress, csvTransactions])
-
   const { t } = useTranslation('common')
 
   const updateStatusMessage = (message, status) => {
@@ -102,7 +96,6 @@ export function ReturnAssetPage() {
         senderAddress,
         csvTransactions
       )
-      // console.debug('responseData', responseData)
       setLoading(false)
 
       if (responseData?.error == false) {
