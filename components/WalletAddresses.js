@@ -44,11 +44,9 @@ export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
   const getAddyNames = useCallback(async () => {
     let addresses = []
     for (let address of formattedAddresses) {
-      // let names = await Helper.getAlgoNamesOrAddress(address, 'getNames')
-      // DISABLE ANS DUE TO INDEXER ISSUES
+      let names = await Helper.getAlgoNamesOrAddress(address, 'getNames')
       addresses.push({
-        // name: names[0]?.name || null,
-        name: null,
+        name: names[0]?.name || null,
         wallet: address,
       })
     }
