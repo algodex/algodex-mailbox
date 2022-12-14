@@ -29,6 +29,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import PropTypes from 'prop-types'
+import { useGetWalletOwner } from '../hooks/useGetWalletOwner'
 
 const styles = {
   uploadWrapper: {
@@ -50,13 +51,11 @@ const UploadContainer = ({
 }) => {
   const { t } = useTranslation('common')
   const [fileName, setFileName] = useState()
+  const { getWalletOwner } = useGetWalletOwner()
 
-  // if (typeof window !== 'undefined' && typeof window.end2end !== 'undefined') {
-    
-  // }
-
-  const getFileUpload = async (e) => {
-    const csvFiles = e.target.files[0]
+  const getFileUpload = async ({ target }) => {
+    const csvFiles = target.files[0]
+    target.value = null
     if (csvFiles) {
       updateStatusMessage()
       setDuplicateList([])
@@ -64,37 +63,71 @@ const UploadContainer = ({
       const reader = new FileReader()
       reader.onloadend = ({ target }) => {
         const text = target.result
-        checkForDuplicate(text)
+        checkForDuplicateandValidity(text)
       }
       reader.readAsText(csvFiles)
     }
   }
 
-  const checkForDuplicate = (csv) => {
+  const checkForDuplicateandValidity = async (csv) => {
     const rows = csv.slice(csv.indexOf('\n') + 1).split('\n')
     const count = {}
+    let invalidWalletNames = []
     if (rows[0] == '') {
       updateStatusMessage('Oops, empty CSV file', false)
     } else {
-      rows.forEach((v) => {
-        if (v) {
-          const value = v.split(',')[0]
-          count[value] = count[value] + 1 || 1
-        }
-      })
+      const finalData = []
+      finalData.push(['ToWallet', 'Amount'])
+      await Promise.all(
+        rows.map(async (v) => {
+          if (v) {
+            const value = v.split(',')[0]
+            const lastWord = value.split('.')[value.split('.').length - 1]
+            if (lastWord == 'algo') {
+              const res = await getWalletOwner(value, 'getOwner')
+              if (res instanceof Error) {
+                invalidWalletNames = [...invalidWalletNames, value]
+              } else {
+                count[res] = count[res] + 1 || 1
+                finalData.push([res, v.split(',')[1]])
+              }
+              return
+            }
+            count[value] = count[value] + 1 || 1
+            finalData.push([value, v.split(',')[1]])
+          }
+        })
+      )
+
+      setCsvTransactions()
+      if (invalidWalletNames.length > 0) {
+        updateStatusMessage(
+          `Invalid Algorand address${
+            invalidWalletNames.length > 1 ? 'es' : ''
+          }: ${invalidWalletNames.map(
+            (name, index) =>
+              `${name}${invalidWalletNames.length > index + 1 ? ', ' : ''}`
+          )}`,
+          false
+        )
+        return
+      }
       const duplicate = []
       Object.entries(count).forEach((c) => {
         c[1] > 1 && duplicate.push(c[0])
       })
       if (!process.env.NEXT_PUBLIC_IGNORE_DUPLICATES && duplicate.length > 0) {
-        setCsvTransactions()
         setDuplicateList(duplicate)
         updateStatusMessage(
           'Same wallet address on multiple rows of your CSV file is not allowed. This causes race conditions and we can\'t support it',
           false
         )
       } else {
-        setCsvTransactions(csv.replace(/\r?\r/g, ''))
+        let csvContent = ''
+        finalData.forEach((row) => {
+          csvContent += row.join(',') + '\n'
+        })
+        setCsvTransactions(csvContent.replace(/\r?\r/g, ''))
       }
     }
   }
@@ -103,7 +136,7 @@ const UploadContainer = ({
     <Box>
       <label htmlFor="contained-button-file">
         <input
-          data-testid='file-input'
+          data-testid="file-input"
           accept="text/csv"
           id="contained-button-file"
           type="file"
