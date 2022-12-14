@@ -83,8 +83,8 @@ const UploadContainer = ({
           if (v) {
             const value = v.split(',')[0]
             const lastWord = value.split('.')[value.split('.').length - 1]
-            if (lastWord == 'algo') {
-              const res = await getWalletOwner(value, 'getOwner')
+            if (lastWord.toLowerCase() == 'algo') {
+              const res = await getWalletOwner(value.toLowerCase(), 'getOwner')
               if (res instanceof Error) {
                 invalidWalletNames = [...invalidWalletNames, value]
               } else {

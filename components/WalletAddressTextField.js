@@ -43,10 +43,10 @@ export const WalletAddressTextField = ({
   const updateField = (value) => {
     updateStatusMessage()
     const lastWord = value.split('.')[value.split('.').length - 1]
-    if (lastWord == 'algo') {
+    if (lastWord.toLowerCase() == 'algo') {
       clearTimeout(timer)
       const newTimer = setTimeout(async () => {
-        getWalletOwner(value, 'getOwner', setState)
+        getWalletOwner(value.toLowerCase(), 'getOwner', setState)
       }, 500)
       setTimer(newTimer)
       return
