@@ -35,18 +35,18 @@ export const WalletAddressTextField = ({
   dataTestid,
   name,
   label,
-  placeholder
+  placeholder,
 }) => {
   const [timer, setTimer] = useState(null)
 
   const fetchData = (value, type, setState) => {
     clearTimeout(timer)
     const newTimer = setTimeout(async () => {
-      let response = await Helper.getAlgoNamesOrAddress(value, type)
-      if (response instanceof Error) {
-        updateStatusMessage('This is not a valid Algorand address', false)
-      } else {
+      try {
+        let response = await Helper.getAlgoNamesOrAddress(value, type)
         setState(response)
+      } catch (error) {
+        updateStatusMessage('This is not a valid Algorand address', false)
       }
     }, 500)
     setTimer(newTimer)
