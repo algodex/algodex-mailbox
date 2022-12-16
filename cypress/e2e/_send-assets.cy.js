@@ -57,9 +57,11 @@ describe('Send assets Page', () => {
     cy.get('[data-testid=assetId-input]').should('be.visible')
     cy.get('[data-testid=amount-input]').type(1)
     cy.get('[data-testid=assetId-input]').should('be.visible')
-    cy.get('[data-testid=receiverAddress-input]').type(
-      `${formattedAddresses[1]}`
-    )
+    // cy.get('[data-testid=receiverAddress-input]').type(
+    //   `${formattedAddresses[1]}`
+    // )
+    cy.get('input').eq(6).type(`${formattedAddresses[1]}`)
+
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.wait(4000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
