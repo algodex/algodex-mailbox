@@ -53,7 +53,6 @@ describe('Send assets Page', () => {
   })
 
   it('Should send to single address with or without the recipient opt-in and redeem', () => {
-    cy.wait(3000)
     cy.get('[data-testid=single-address-radio]').click()
     cy.get('[data-testid=assetId-input]').should('be.visible')
     cy.get('input').eq(4).type(1)
