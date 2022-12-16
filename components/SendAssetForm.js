@@ -186,7 +186,7 @@ const SendAssetForm = ({
                       updateStatusMessage={updateStatusMessage}
                       dataTestid="receiverAddress-input"
                       name="ReceiverAddress"
-                      label="Receiver Address"
+                      label="Receiver Address or NFD"
                     />
                   </FormControl>
                 </Box>
