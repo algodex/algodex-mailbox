@@ -30,7 +30,7 @@ describe('Send assets Page', () => {
     cy.get('[data-testid=multiple-address-radio]').click()
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.get('[data-testid=assetId-input]').should('be.visible')
-    cy.get('input').eq(2).type(`${assetId}`)
+    cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.wait(3000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
     cy.wait(3000)
@@ -44,7 +44,7 @@ describe('Send assets Page', () => {
     cy.get('[data-testid=file-input]').attachFile('sample.csv')
     cy.get('[data-testid=assetId-input]').should('be.visible')
     cy.get('input').eq(6).click()
-    cy.get('input').eq(2).type(`${assetId}`)
+    cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.wait(3000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
     cy.wait(3000)
@@ -55,9 +55,12 @@ describe('Send assets Page', () => {
   it('Should send to single address with or without the recipient opt-in and redeem', () => {
     cy.get('[data-testid=single-address-radio]').click()
     cy.get('[data-testid=assetId-input]').should('be.visible')
-    cy.get('input').eq(4).type(1)
-    cy.get('input').eq(5).type(`${formattedAddresses[1]}`)
-    cy.get('input').eq(2).type(`${assetId}`)
+    cy.get('[data-testid=amount-input]').type(1)
+    cy.get('[data-testid=assetId-input]').should('be.visible')
+    cy.get('[data-testid=receiverAddress-input]').type(
+      `${formattedAddresses[1]}`
+    )
+    cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.wait(4000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
     cy.contains(`${formattedAddresses[0]}`).click()
@@ -74,6 +77,6 @@ describe('Send assets Page', () => {
       `${formattedAddresses[1]}`
     )
     cy.wait(3000)
-    cy.get('[data-testid=optinMessage]').should('contain', 'Warning')
+    cy.get('[data-testid=statusMessage]').should('contain', 'available')
   })
 })

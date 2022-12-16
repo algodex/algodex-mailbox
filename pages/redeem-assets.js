@@ -225,6 +225,7 @@ export function RedeemAssetPage() {
               {escrowBalance.message && escrowBalance.message != '' && (
                 <Typography
                   variant="status-message"
+                  data-testid="statusMessage"
                   marginTop="1rem"
                   color={escrowBalance.success ? 'info.success' : 'info.error'}
                 >
