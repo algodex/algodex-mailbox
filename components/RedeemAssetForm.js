@@ -92,7 +92,7 @@ const RedeemAssetForm = ({
             updateStatusMessage={updateStatusMessage}
             dataTestid="senderAddress-input"
             name="SenderAddress"
-            label="Sender Address"
+            label="Sender Address or NFD"
           />
         </FormControl>
       </Box>
@@ -110,7 +110,7 @@ const RedeemAssetForm = ({
             updateStatusMessage={updateStatusMessage}
             dataTestid="receiverAddress-input"
             name="ReceiverAddress"
-            label="Receiver Address"
+            label="Receiver Address or NFD"
           />
         </FormControl>
       </Box>

@@ -173,7 +173,7 @@ const ReturnAssetForm = ({
                     updateStatusMessage={updateStatusMessage}
                     dataTestid="receiverAddress-input"
                     name="ReceiverAddress"
-                    label="Receiver Address"
+                    label="Receiver Address or NFD"
                     placeholder={t(
                       'Enter the account which the assets need to be returned from'
                     )}
