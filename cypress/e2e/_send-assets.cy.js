@@ -68,7 +68,7 @@ describe('Send assets Page', () => {
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.wait(300)
     cy.get('[data-testid=submit-btn]').click()
-    cy.wait(30000)
+    cy.wait(40000)
     cy.get('[data-testid=shareableLink]')
       .should('have.attr', 'href')
       .then((href) => {
