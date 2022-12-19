@@ -68,7 +68,7 @@ describe('Send assets Page', () => {
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.wait(300)
     cy.get('[data-testid=submit-btn]').click()
-    cy.wait(20000)
+    cy.wait(30000)
     cy.get('[data-testid=shareableLink]')
       .should('have.attr', 'href')
       .then((href) => {
@@ -79,6 +79,7 @@ describe('Send assets Page', () => {
       `${formattedAddresses[1]}`
     )
     cy.wait(3000)
+    //Not actually redeeming it so that the sending wallet won't run out of token
     cy.get('[data-testid=statusMessage]').should('contain', 'available')
   })
 })
