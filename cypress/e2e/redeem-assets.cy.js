@@ -15,7 +15,7 @@
  */
 
 const formattedAddresses = [
-  'NN3BAWDPHEJAPIGO3IDB6I4ITGUMYG3QMN26ZYICXEZM3QRWISGXUK6J4Y',
+  'KC2L7KRSQ7GQIILO4F4AQQCLDWHCPK2FVUSFIRXEONT6TJIOK44B3ZOYMM',
 ]
 const assetId = '33698417'
 
@@ -34,7 +34,6 @@ describe('Redeem assets Page', () => {
     cy.get('[data-testid=assetId-input]').type(`${assetId}`)
     cy.wait(3000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
-    cy.wait(3000)
     cy.get('[data-testid=submit-btn]').then(($button) => {
       if ($button.is('enabled')) {
         cy.get($button).click()

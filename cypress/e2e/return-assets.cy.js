@@ -16,6 +16,7 @@
 
 const formattedAddresses = [
   'WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI',
+  'KC2L7KRSQ7GQIILO4F4AQQCLDWHCPK2FVUSFIRXEONT6TJIOK44B3ZOYMM',
 ]
 const assetId = '33698417'
 
@@ -39,7 +40,11 @@ describe('Return assets Page', () => {
   it('Should return assets from a single address', () => {
     cy.get('[data-testid=single-address-radio]').click({ force: true })
     cy.wait(3000)
+    // cy.get('[data-testid=receiverAddress-input]').type(
+    //   `${formattedAddresses[1]}`
+    // )
     cy.get('input').eq(6).type(`${formattedAddresses[0]}`, { force: true })
+
     cy.get('input').eq(2).type(`${assetId}`, { force: true })
     cy.wait(3000)
     cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click()
