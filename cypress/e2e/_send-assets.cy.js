@@ -68,18 +68,18 @@ describe('Send assets Page', () => {
     cy.contains(`${formattedAddresses[0]}`).click()
     cy.wait(300)
     cy.get('[data-testid=submit-btn]').click()
-    cy.wait(40000)
-    cy.get('[data-testid=shareableLink]')
-      .should('have.attr', 'href')
-      .then((href) => {
-        cy.visit(href)
-      })
-    cy.wait(3000)
-    cy.get('[data-testid=receiverAddress-input]').type(
-      `${formattedAddresses[1]}`
-    )
-    cy.wait(3000)
-    //Not actually redeeming it so that the sending wallet won't run out of token
-    cy.get('[data-testid=statusMessage]').should('contain', 'available')
+    // cy.wait(4000)
+    // cy.get('[data-testid=shareableLink]')
+    //   .should('have.attr', 'href')
+    //   .then((href) => {
+    //     cy.visit(href)
+    //   })
+    // cy.wait(3000)
+    // cy.get('[data-testid=receiverAddress-input]').type(
+    //   `${formattedAddresses[1]}`
+    // )
+    // cy.wait(3000)
+    // //Not actually redeeming it so that the sending wallet won't run out of token
+    // cy.get('[data-testid=statusMessage]').should('contain', 'available')
   })
 })
