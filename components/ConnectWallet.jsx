@@ -70,8 +70,8 @@ export const ConnectWallet = () => {
             <Image
               src="/Pera-logo.png"
               alt="Pera-wallet logo"
-              height={24}
-              width={24}
+              height={28}
+              width={28}
             />
             <LoadingButton
               variant="contained"
