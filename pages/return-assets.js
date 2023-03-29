@@ -19,7 +19,7 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -27,7 +27,6 @@ import Head from 'next/head'
 
 // MUI Components
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
@@ -38,9 +37,10 @@ import Container from '@mui/material/Container'
 import Link from '@/components/Nav/Link'
 import ReturnAssetForm from '@/components/ReturnAssetForm'
 import * as ReturnAssetHelper from '@/lib/return_assets.js'
-import useFormattedAddress from '@/hooks/useFormattedAddress'
 import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 import useSendAsset from '@/hooks/useSendAsset'
+import WalletAddresses from '../components/WalletAddresses'
+import { WalletContext } from '../context/walletContext'
 
 /**
  * Generate Static Properties
@@ -60,11 +60,10 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function ReturnAssetPage() {
+  const { formattedAddresses, selectedWallet } = useContext(WalletContext)
   const [loading, setLoading] = useState(false)
   const { progress, status, total, hideProgress, setHideProgress, setStatus } =
     useSendAsset()
-  const [senderAddress, setSenderAddress] = useState('')
-  const { formattedAddresses, connect } = useFormattedAddress()
   const [assetId, setAssetId] = useState('')
   const [csvTransactions, setCsvTransactions] = useState()
   const [duplicateList, setDuplicateList] = useState([])
@@ -88,12 +87,12 @@ export function ReturnAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
-    if (senderAddress != '' && assetId != '' && csvTransactions != '') {
+    if (selectedWallet != '' && assetId != '' && csvTransactions != '') {
       setLoading(true)
       updateStatusMessage()
       const responseData = await ReturnAssetHelper.returnAssetsToSender(
         assetId,
-        senderAddress,
+        selectedWallet,
         csvTransactions
       )
       setLoading(false)
@@ -141,22 +140,20 @@ export function ReturnAssetPage() {
       <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
         {t('/return-assets')}
       </Typography>
-      <Button variant="contained" onClick={connect}>
-        {t('connect-wallet')}
-      </Button>
+
+      <WalletAddresses />
       <ReturnAssetForm
         formattedAddresses={formattedAddresses}
         onSubmit={submitForm}
         actionStatus={actionStatus}
         isLoading={loading}
-        setSenderAddress={setSenderAddress}
         setAssetId={setAssetId}
         csvTransactions={csvTransactions}
         setCsvTransactions={setCsvTransactions}
         setDuplicateList={setDuplicateList}
         updateStatusMessage={updateStatusMessage}
         disableButton={
-          !(senderAddress && assetId && csvTransactions) ? true : false
+          !(selectedWallet && assetId && csvTransactions) ? true : false
         }
       />
       {hasStatusBar && (

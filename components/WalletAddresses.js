@@ -19,8 +19,8 @@
  * All Rights Reserved.
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useEffect, useState } from 'react'
+import Image from 'next/image'
 
 //MUI components
 import Box from '@mui/material/Box'
@@ -29,68 +29,140 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
-// Lib Files
-import Helper from '@/lib/helper'
+// Custom components, hooks, contexts
+import { ConnectWallet } from './ConnectWallet'
+import { WalletContext } from '@/context/walletContext'
+import { WalletTypes } from '@/context/walletContext'
 
-export const WalletAddresses = ({ setWallet, formattedAddresses }) => {
-  const [finalAddresses, setFinalAddresses] = useState([])
+export const WalletAddresses = () => {
+  const { formattedAddresses, setSelectedWallet, disconnect } =
+    useContext(WalletContext)
   const [radioVal, setRadioVal] = useState(null)
 
   useEffect(() => {
-    getAddyNames()
-  }, [formattedAddresses, getAddyNames])
-
-  const getAddyNames = useCallback(async () => {
-    let addresses = []
-    for (let address of formattedAddresses) {
-      addresses.push({
-        name: await Helper.getAlgoNamesOrAddress(address, 'getNames') || null,
-        wallet: address,
-      })
-    }
-    setFinalAddresses(addresses)
     if (formattedAddresses.length === 1) {
-      setRadioVal(formattedAddresses[0])
-      setWallet(formattedAddresses[0])
+      setRadioVal(formattedAddresses[0].address)
+      setSelectedWallet(formattedAddresses[0].address)
     }
-  }, [formattedAddresses, setWallet])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formattedAddresses])
 
+  console.log({ formattedAddresses })
   return (
-    <Box sx={{ marginTop: finalAddresses.length > 0 ? '1rem' : '0rem' }}>
-      <FormControl>
-        <RadioGroup
-          aria-labelledby="wallet"
-          name="wallet"
-          onChange={({ target: { value } }) => {
-            setRadioVal(value)
-            setWallet(value)
-          }}
-          value={radioVal}
-        >
-          {finalAddresses.map((address) => (
-            <Tooltip
-              placement="top-start"
-              key={address.wallet}
-              title={address.name ? address.wallet : ''}
+    <>
+      <Box
+        sx={{
+          border: 'solid 1px',
+          borderColor: 'secondary.main',
+          padding: '1rem',
+          borderRadius: '0.2rem',
+        }}
+      >
+        <Typography variant="p" fontWeight={600} fontSize="1.2rem">
+          Sending Wallet:
+        </Typography>
+
+        <Typography variant="p" sx={{ fontSize: '.75rem', mb: '.7rem' }}>
+          Connect a wallet using the options below. MyAlgo can only sign 50
+          transactions at a time, so if sending to a longer list, you must
+          connect with a different wallet provider.
+        </Typography>
+
+        {formattedAddresses.length > 0 && (
+          <Box
+            sx={{
+              marginTop: '1rem',
+              ['@media(min-width:1200px)']: {
+                marginLeft: '2.5rem',
+              },
+            }}
+          >
+            <Typography
+              variant="p"
+              fontWeight={700}
+              textTransform={'uppercase'}
+              fontSize={'.9rem'}
             >
-              <FormControlLabel
-                value={address.wallet}
-                control={
-                  <Radio color="secondary" data-testid="wallet-radio-input" />
-                }
-                label={address.name || address.wallet}
-              />
-            </Tooltip>
-          ))}
-        </RadioGroup>
-      </FormControl>
-    </Box>
+              Connected Wallets
+            </Typography>
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="wallet"
+                name="wallet"
+                onChange={({ target: { value } }) => {
+                  setRadioVal(value)
+                  setSelectedWallet(value)
+                }}
+                value={radioVal}
+              >
+                {formattedAddresses.map((wallet) => (
+                  <Tooltip
+                    placement="top-start"
+                    key={wallet.address}
+                    title={wallet.name ? wallet.address : ''}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        columnGap: '.6rem',
+                        img: {
+                          borderRadius: '100%',
+                        },
+                      }}
+                    >
+                      <Box lineHeight={'0'}>
+                        <Image
+                          src={
+                            wallet.type === WalletTypes.pera
+                              ? '/Pera-logo.png'
+                              : '/My-Algo-Wallet-icon.svg'
+                          }
+                          alt="Pera-wallet logo"
+                          height={22}
+                          width={22}
+                        />
+                      </Box>
+                      <FormControlLabel
+                        value={wallet.address}
+                        sx={{ '.MuiTypography-root': { fontSize: '.8rem' } }}
+                        control={
+                          <Radio
+                            color="secondary"
+                            data-testid="wallet-radio-input"
+                          />
+                        }
+                        label={wallet.name || wallet.address}
+                      />
+                      <div>
+                        <Button
+                          variant="outlined"
+                          component="span"
+                          sx={{
+                            fontSize: '.6rem',
+                            padding: '.1rem .4rem',
+                            color: 'secondary.main',
+                            borderColor: 'secondary.main',
+                          }}
+                          onClick={() => disconnect(wallet)}
+                        >
+                          DISCONNECT
+                        </Button>
+                      </div>
+                    </Box>
+                  </Tooltip>
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </Box>
+        )}
+        <ConnectWallet />
+      </Box>
+    </>
   )
 }
 
-WalletAddresses.propTypes = {
-  setWallet: PropTypes.func,
-  formattedAddresses: PropTypes.array,
-}
 export default WalletAddresses
