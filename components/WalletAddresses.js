@@ -66,9 +66,8 @@ export const WalletAddresses = () => {
         </Typography>
 
         <Typography variant="p" sx={{ fontSize: '.75rem', mb: '.7rem' }}>
-          Connect a wallet using the options below. MyAlgo can only sign 50
-          transactions at a time, so if sending to a longer list, you must
-          connect with a different wallet provider.
+          Connect a wallet using the options below. MyAlgo can sign 50
+          transactions at a time and Pera can sign 64 transactions at a time.
         </Typography>
 
         {formattedAddresses.length > 0 && (
