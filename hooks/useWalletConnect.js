@@ -17,7 +17,7 @@
 import { useCallback, useEffect } from 'react'
 
 import QRCodeModal from 'algorand-walletconnect-qrcode-modal'
-import { WalletTypes } from '../context/walletContext'
+import { WalletTypes } from '@/context/walletContext'
 const ERROR = {
   FAILED_TO_INIT: 'WalletConnect Wallet failed to initialize.',
   FAILED_TO_CONNECT: 'WalletConnect Wallet failed to connect.',
@@ -81,7 +81,7 @@ export default function useWalletConnect({
       const prevAddresses =
         JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
       updateAddresses(
-        prevAddresses.filter(({ type }) => type !== WalletTypes.pera)
+        prevAddresses.filter(({ type }) => type !== WalletTypes.WC)
       )
     },
     [updateAddresses, walletConnect]

@@ -47,7 +47,7 @@ import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 // Lib Files
 import SendAssets from '@/lib/send_assets'
 import WalletAddresses from '../components/WalletAddresses'
-import { WalletContext } from '../context/walletContext'
+import { WalletContext, WalletTypes } from '../context/walletContext'
 
 /**
  * Generate Static Properties
@@ -67,7 +67,8 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
-  const { formattedAddresses, selectedWallet } = useContext(WalletContext)
+  const { formattedAddresses, selectedWallet, walletConnect } =
+    useContext(WalletContext)
   const { progress, status, total, hideProgress, setHideProgress, setStatus } =
     useSendAsset()
   const [loading, setLoading] = useState(false)
@@ -97,13 +98,15 @@ export function SendAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
+    console.log(selectedWallet)
     setLoading(true)
     updateStatusMessage()
     const responseData = await SendAssets.send(
       assetId,
-      selectedWallet,
+      selectedWallet.address,
       csvTransactions,
-      escrowPermission
+      escrowPermission,
+      selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
     )
     // console.debug('responseData', responseData)
     setLoading(false)
@@ -151,7 +154,7 @@ export function SendAssetPage() {
         )
         if (responseData.fundEscrowCount > 0) {
           setShareableLink(
-            Helper.getShareableRedeemLink(selectedWallet, assetId)
+            Helper.getShareableRedeemLink(selectedWallet.address, assetId)
           )
         }
         getAssetBalance()
@@ -174,9 +177,10 @@ export function SendAssetPage() {
     if (selectedWallet && assetId) {
       setGettingBalance(true)
       const responseData = await Helper.getFormattedAssetBalance(
-        selectedWallet,
+        selectedWallet.address,
         parseInt(assetId),
-        true
+        true,
+        selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
       )
       setTimeout(() => {
         setGettingBalance(false)
@@ -236,7 +240,7 @@ export function SendAssetPage() {
         setAssetId={setAssetId}
         csvTransactions={csvTransactions}
         assetId={assetId}
-        wallet={selectedWallet}
+        wallet={selectedWallet?.address}
         assetBalance={assetBalance}
         setCsvTransactions={setCsvTransactions}
         setDuplicateList={setDuplicateList}

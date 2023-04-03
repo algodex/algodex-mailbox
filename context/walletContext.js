@@ -32,7 +32,7 @@ import useWalletConnect from '@/hooks/useWalletConnect'
 
 export const WalletTypes = {
   myAlgo: 'myAlgo',
-  pera: 'wallet-connect',
+  WC: 'wallet-connect',
 }
 
 export const WalletContext = createContext(undefined)
@@ -106,7 +106,7 @@ export const WalletProvider = ({ children }) => {
   }
 
   const disconnect = (wallet) => {
-    if (wallet.type === WalletTypes.pera) {
+    if (wallet.type === WalletTypes.WC) {
       disconnectWC()
     }
     updateAddresses(
@@ -122,6 +122,7 @@ export const WalletProvider = ({ children }) => {
         selectedWallet,
         setSelectedWallet,
         disconnect,
+        walletConnect
       }}
     >
       {children}

@@ -45,12 +45,11 @@ export const WalletAddresses = () => {
   useEffect(() => {
     if (formattedAddresses.length === 1) {
       setRadioVal(formattedAddresses[0].address)
-      setSelectedWallet(formattedAddresses[0].address)
+      setSelectedWallet(formattedAddresses[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formattedAddresses])
 
-  console.log({ formattedAddresses })
   return (
     <>
       <Box
@@ -93,7 +92,9 @@ export const WalletAddresses = () => {
                 name="wallet"
                 onChange={({ target: { value } }) => {
                   setRadioVal(value)
-                  setSelectedWallet(value)
+                  setSelectedWallet(
+                    formattedAddresses.find(({ address }) => address === value)
+                  )
                 }}
                 value={radioVal}
               >
@@ -116,7 +117,7 @@ export const WalletAddresses = () => {
                       <Box lineHeight={'0'}>
                         <Image
                           src={
-                            wallet.type === WalletTypes.pera
+                            wallet.type === WalletTypes.WC
                               ? '/Pera-logo.png'
                               : '/My-Algo-Wallet-icon.svg'
                           }
