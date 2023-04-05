@@ -103,7 +103,7 @@ export function SendAssetPage() {
     updateStatusMessage()
     const responseData = await SendAssets.send(
       assetId,
-      selectedWallet.address,
+      selectedWallet,
       csvTransactions,
       escrowPermission,
       selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
