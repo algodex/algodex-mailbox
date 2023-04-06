@@ -98,7 +98,6 @@ export function SendAssetPage() {
 
   const submitForm = async ({ formData }) => {
     console.debug(formData)
-    console.log(selectedWallet)
     setLoading(true)
     updateStatusMessage()
     const responseData = await SendAssets.send(

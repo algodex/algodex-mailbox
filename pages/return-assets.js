@@ -40,7 +40,7 @@ import * as ReturnAssetHelper from '@/lib/return_assets.js'
 import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 import useSendAsset from '@/hooks/useSendAsset'
 import WalletAddresses from '../components/WalletAddresses'
-import { WalletContext } from '../context/walletContext'
+import { WalletContext, WalletTypes } from '../context/walletContext'
 
 /**
  * Generate Static Properties
@@ -60,7 +60,7 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function ReturnAssetPage() {
-  const { formattedAddresses, selectedWallet } = useContext(WalletContext)
+  const { formattedAddresses, selectedWallet, walletConnect } = useContext(WalletContext)
   const [loading, setLoading] = useState(false)
   const { progress, status, total, hideProgress, setHideProgress, setStatus } =
     useSendAsset()
@@ -93,7 +93,8 @@ export function ReturnAssetPage() {
       const responseData = await ReturnAssetHelper.returnAssetsToSender(
         assetId,
         selectedWallet,
-        csvTransactions
+        csvTransactions,
+        selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
       )
       setLoading(false)
 
