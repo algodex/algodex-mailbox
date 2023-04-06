@@ -37,7 +37,7 @@
     "@typescript-eslint/parser": "^5.34.0",
     "@walletconnect/client": "^1.8.0",
     "algorand-walletconnect-qrcode-modal": "^1.8.0",
-    "algosdk": "^1.18.0",
+    "algosdk": "^1.16.0",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",
     "convert-csv-to-array": "^1.0.3",
