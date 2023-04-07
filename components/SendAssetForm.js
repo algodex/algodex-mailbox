@@ -42,14 +42,12 @@ import RadioGroup from '@mui/material/RadioGroup'
 import CollapseableStatusMessage from './CollapseableStatusMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
-import { WalletAddresses } from './WalletAddresses'
 import { WalletAddressTextField } from './WalletAddressTextField'
 
 const SendAssetForm = ({
   formattedAddresses,
   onSubmit,
   isLoading,
-  setWallet,
   setAssetId,
   actionStatus,
   assetId,
@@ -108,15 +106,11 @@ const SendAssetForm = ({
       const csv = `ToWallet,Amount\n${ToWallet},${Amount}`
       setCsvTransactions(csv)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ToWallet, Amount])
 
   return (
     <>
-      <WalletAddresses
-        setWallet={setWallet}
-        formattedAddresses={formattedAddresses}
-      />
-
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={7} xl={6}>
           <Form
@@ -241,10 +235,9 @@ const SendAssetForm = ({
 }
 
 SendAssetForm.propTypes = {
-  formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  formattedAddresses: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  setWallet: PropTypes.any,
   setAssetId: PropTypes.any,
   actionStatus: PropTypes.object,
   assetId: PropTypes.any,

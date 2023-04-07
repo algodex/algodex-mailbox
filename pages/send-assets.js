@@ -20,13 +20,12 @@
  * All Rights Reserved.
  */
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 // MUI Components
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
@@ -43,11 +42,12 @@ import { defaults } from 'next-i18next.config'
 import { useTranslation } from 'next-i18next'
 import Helper from '@/lib/helper'
 import useSendAsset from '@/hooks/useSendAsset'
-import useFormattedAddress from '@/hooks/useFormattedAddress'
 import { LinearProgressWithLabel } from '@/components/LinearProgressWithLabel'
 
 // Lib Files
 import SendAssets from '@/lib/send_assets'
+import WalletAddresses from '../components/WalletAddresses'
+import { WalletContext, WalletTypes } from '../context/walletContext'
 
 /**
  * Generate Static Properties
@@ -67,12 +67,12 @@ export async function getServerSideProps({ locale }) {
  * @constructor
  */
 export function SendAssetPage() {
-  const { formattedAddresses, connect } = useFormattedAddress()
+  const { formattedAddresses, selectedWallet, walletConnect } =
+    useContext(WalletContext)
   const { progress, status, total, hideProgress, setHideProgress, setStatus } =
     useSendAsset()
   const [loading, setLoading] = useState(false)
   const [assetId, setAssetId] = useState()
-  const [wallet, setWallet] = useState()
   const [escrowPermission, setEscrowPermission] = useState(true)
   const [csvTransactions, setCsvTransactions] = useState()
   const [assetBalance, setAssetBalance] = useState({
@@ -102,9 +102,10 @@ export function SendAssetPage() {
     updateStatusMessage()
     const responseData = await SendAssets.send(
       assetId,
-      wallet,
+      selectedWallet,
       csvTransactions,
-      escrowPermission
+      escrowPermission,
+      selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
     )
     // console.debug('responseData', responseData)
     setLoading(false)
@@ -151,7 +152,9 @@ export function SendAssetPage() {
           true
         )
         if (responseData.fundEscrowCount > 0) {
-          setShareableLink(Helper.getShareableRedeemLink(wallet, assetId))
+          setShareableLink(
+            Helper.getShareableRedeemLink(selectedWallet.address, assetId)
+          )
         }
         getAssetBalance()
       }
@@ -166,15 +169,17 @@ export function SendAssetPage() {
     if (!gettingBalance) {
       getAssetBalance()
     }
-  }, [assetId, csvTransactions, wallet, gettingBalance])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assetId, csvTransactions, selectedWallet, gettingBalance])
 
   const getAssetBalance = async () => {
-    if (wallet && assetId) {
+    if (selectedWallet && assetId) {
       setGettingBalance(true)
       const responseData = await Helper.getFormattedAssetBalance(
-        wallet,
+        selectedWallet.address,
         parseInt(assetId),
-        true
+        true,
+        selectedWallet.type === WalletTypes.WC ? walletConnect : undefined
       )
       setTimeout(() => {
         setGettingBalance(false)
@@ -215,9 +220,7 @@ export function SendAssetPage() {
       >
         {t('/send-assets')}
       </Typography>
-      <Button variant="contained" onClick={connect}>
-        {t('connect-wallet')}
-      </Button>
+      <WalletAddresses />
       {assetBalance.message != '' && (
         <Typography
           variant="status-message"
@@ -232,12 +235,11 @@ export function SendAssetPage() {
         formattedAddresses={formattedAddresses}
         onSubmit={submitForm}
         isLoading={loading}
-        setWallet={setWallet}
         actionStatus={actionStatus}
         setAssetId={setAssetId}
         csvTransactions={csvTransactions}
         assetId={assetId}
-        wallet={wallet}
+        wallet={selectedWallet?.address}
         assetBalance={assetBalance}
         setCsvTransactions={setCsvTransactions}
         setDuplicateList={setDuplicateList}

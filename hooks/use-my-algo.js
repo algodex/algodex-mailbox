@@ -14,21 +14,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* 
+/*
  * Copyright Algodex VASP (BVI) Corp., 2022
  * All Rights Reserved.
  */
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { WalletTypes } from '@/context/walletContext'
 
 const ERROR = {
   FAILED_TO_INIT: 'MyAlgo Wallet failed to initialize.',
-  FAILED_TO_CONNECT: 'MyAlgo Wallet failed to connect.'
+  FAILED_TO_CONNECT: 'MyAlgo Wallet failed to connect.',
 }
 
 export default function useMyAlgo(updateAddresses) {
-  const [addresses, setAddresses] = useState()
-
   const myAlgoWallet = useRef()
 
   const connect = async () => {
@@ -39,9 +38,20 @@ export default function useMyAlgo(updateAddresses) {
       }
 
       const accounts = await myAlgoWallet.current.connect()
-      const _addresses = accounts.map((acct) => acct.address)
-      setAddresses(_addresses)
-      updateAddresses(_addresses)
+      const _addresses = accounts.map((acct) => ({
+        address: acct.address,
+        type: WalletTypes.myAlgo,
+      }))
+      const prevAddresses =
+        JSON.parse(localStorage.getItem('algodex_user_wallet_addresses')) || []
+
+      const result = prevAddresses.reduce((current, newItem) => {
+        return current.find((addr) => addr.address === newItem.address)
+          ? current
+          : [...current, newItem]
+      }, _addresses)
+
+      updateAddresses(result)
     } catch (e) {
       console.error(ERROR.FAILED_TO_CONNECT, e)
     }
@@ -59,6 +69,5 @@ export default function useMyAlgo(updateAddresses) {
 
   return {
     connect,
-    addresses
   }
 }

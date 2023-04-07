@@ -35,16 +35,22 @@ import 'cypress-react-selector'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-Cypress.on('window:before:load', win => {
+Cypress.on('window:before:load', (win) => {
   win.end2end = {
-    wallet:{
+    wallet: {
       address: 'WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI',
-      // eslint-disable-next-line max-len
-      mnemonic: 'mass army warrior number blush distance enroll vivid horse become spend asthma hat desert amazing room asset ivory lucky ridge now deputy erase absorb above',
-    }
+      mnemonic:
+        // eslint-disable-next-line max-len
+        'mass army warrior number blush distance enroll vivid horse become spend asthma hat desert amazing room asset ivory lucky ridge now deputy erase absorb above',
+    },
   }
   win.localStorage.setItem(
     'algodex_user_wallet_addresses',
-    JSON.stringify(['WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI'])
+    JSON.stringify([
+      {
+        address: 'WYWRYK42XADLY3O62N52BOLT27DMPRA3WNBT2OBRT65N6OEZQWD4OSH6PI',
+        type: 'myAlgo',
+      },
+    ])
   )
 })

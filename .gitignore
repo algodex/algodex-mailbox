@@ -43,3 +43,4 @@ yarn-error.log*
 
 # NPM Config for Algodex private repo
 .npmrc
+.vscode

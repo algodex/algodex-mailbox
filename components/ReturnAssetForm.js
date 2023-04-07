@@ -40,7 +40,6 @@ import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone
 import CollapseableStatusMessage from './CollapseableStatusMessage'
 import UploadContainer from './UploadContainer'
 import { AssetSearchInput } from './AssetSearchInput'
-import { WalletAddresses } from './WalletAddresses'
 import { WalletAddressTextField } from './WalletAddressTextField'
 
 const ReturnAssetForm = ({
@@ -48,7 +47,6 @@ const ReturnAssetForm = ({
   isLoading,
   setAssetId,
   actionStatus,
-  setSenderAddress,
   setCsvTransactions,
   onSubmit,
   setDuplicateList,
@@ -100,15 +98,11 @@ const ReturnAssetForm = ({
     } else {
       setCsvTransactions()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ToWallet])
 
   return (
     <>
-      <WalletAddresses
-        setWallet={setSenderAddress}
-        formattedAddresses={formattedAddresses}
-      />
-
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} lg={6} xl={5}>
           <Form
@@ -212,10 +206,9 @@ const ReturnAssetForm = ({
 }
 
 ReturnAssetForm.propTypes = {
-  formattedAddresses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  formattedAddresses: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  setSenderAddress: PropTypes.func,
   setAssetId: PropTypes.func,
   actionStatus: PropTypes.object,
   setDuplicateList: PropTypes.any,
