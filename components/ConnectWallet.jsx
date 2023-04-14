@@ -68,8 +68,8 @@ export const ConnectWallet = () => {
             }}
           >
             <Image
-              src="/Pera-logo.png"
-              alt="Pera-wallet logo"
+              src="/Wallet-Connect.svg"
+              alt="Wallet-Connect logo"
               height={28}
               width={28}
             />
@@ -78,7 +78,7 @@ export const ConnectWallet = () => {
               onClick={() => connect('pera')}
               sx={{ width: '100%' }}
             >
-              Connect with Pera
+              Connect with Wallet Connect
             </LoadingButton>
           </Box>
           <Box
