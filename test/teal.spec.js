@@ -15,8 +15,8 @@
  */
 
 const generateTxns = require('../lib/generate_transaction_types.js')
-const testHelper = require('@algodex/algodex-sdk/test_helper.js')
-const transactionGenerator = require('@algodex/algodex-sdk/generate_transaction_types.js')
+const testHelper = require('@algodex/algodex-sdk-patch/test_helper.js')
+const transactionGenerator = require('@algodex/algodex-sdk-patch/generate_transaction_types.js')
 const helper = require('../lib/helper.js')
 const algosdk = require('algosdk')
 const { algodex } = helper.getAlgodex()
