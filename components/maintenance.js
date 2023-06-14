@@ -1,18 +1,18 @@
-import React from 'react';
-import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
+import React from 'react'
+import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 // MUI Components
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 // Hooks
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'
 
 // Algodex
-import Helper from '@/lib/helper';
+import Helper from '@/lib/helper'
 
 const styles = {
   hero: {
@@ -65,10 +65,10 @@ const styles = {
       padding: '4vw',
     },
   },
-};
+}
 export default function UnderMaintenance() {
-  const { t } = useTranslation('common');
-  const { environment } = Helper.getAlgodex();
+  const { t } = useTranslation('common')
+  const { environment } = Helper.getAlgodex()
 
   return (
     <Box sx={styles.hero}>
@@ -109,5 +109,5 @@ export default function UnderMaintenance() {
         </Grid>
       </Container>
     </Box>
-  );
+  )
 }
