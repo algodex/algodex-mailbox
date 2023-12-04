@@ -56,7 +56,7 @@ export const ConnectWallet = () => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box
+          {/* <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -80,7 +80,7 @@ export const ConnectWallet = () => {
             >
               Connect with Wallet Connect
             </LoadingButton>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               display: 'flex',

@@ -78,7 +78,7 @@ export function App(props) {
   } = props
   console.debug(props)
 
-  const maintenance = true
+  const maintenance = false
   return (
     <CacheProvider value={emotionCache}>
       <Head>
